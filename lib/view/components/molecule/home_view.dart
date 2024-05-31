@@ -3,6 +3,9 @@ import '../atoms/appbar.dart';
 import '../atoms/screenview.dart';
 import '../atoms/bottombar.dart';
 
+/**
+ * ホーム画面雛形　戻るボタンがないよ　
+ */
 class BasicScreenView extends StatelessWidget {
   const BasicScreenView({
     super.key,
@@ -10,7 +13,6 @@ class BasicScreenView extends StatelessWidget {
     required this.widget,
     this.featureIconButton,
   });
-
   final String title;
   final Widget widget;
   final IconButton? featureIconButton;

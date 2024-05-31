@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 class Fonts {
-  // 見出し用フォント
-  static const TextStyle h1 = TextStyle(fontSize: 32, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
+  // タイトル用フォント
+  static const TextStyle titleFont = TextStyle(fontSize: 26, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
+
+  // 文章
+  static const TextStyle h1 = TextStyle(fontSize: 28, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
+  static const TextStyle h2 = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
+  static const TextStyle p = TextStyle(fontSize: 15, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
 }

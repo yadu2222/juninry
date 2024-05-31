@@ -1,16 +1,47 @@
-# juninry
+### clone後の手順
+  ルートフォルダに`aseets/fonts/`フォルダを作成。フォントファイルをもらうか[ここ](https://fonts.google.com/noto/specimen/Noto+Sans+JP)からダウンロードし配置。
 
-A new Flutter project.
+  ターミナルで以下のコマンドを実行し、パッケージを読み込む
+  ```
+  flutter pub get
+  ```
+  エラーが解消しなければご報告ください。
 
-## Getting Started
+### 今回やりたいこと
+- アトミックデザインを使っての設計
+  - Atoms（原子）
+    - コンポーネントの最小単位
+    - flutterから提供されている標準のウィジェットもこれにあたる
+  - Molecules（分子）
+    - Atomの組み合わせつくるウィジェット
+    - 例：〇〇入力フォーム
+    - ただの入力フォームはatom に分類される
+    - ただのパーツなので、Stateをもたせてはいけない
+  - Organisms（有機体）
+    - 原子や分子を組み合わせる
+    - 例：明日までの宿題
+    - この段階から状態管理が必要になる
+  - Templates（テンプレート）
+    - コンポーネントがページ上で正しくレイアウトされるかを確認する
+    - ページの雛形。小さなプロジェクトではいらなかったりするらしいですが、今回似たようなレイアウトばかりなので採用。
+  - Pages（ページ）
+    - Template 層のコンポーネントにorganismsなどを流し込んだもの
+    - 
+     
+つまり、Moleculesを作って、Organismsで組み合わせて、Templatesに流し込んで、Pagesにしていこうということ
 
-This project is a starting point for a Flutter application.
+### 開発の流れ
+1\. developからブランチを切る！！！！！！！！！！！！！！！！！！！！！！！！！！
+2\. アイテムを作っていく。箱はatomsフォルダに用意したので、それを使ってMoleculeフォルダにパーツのファイルを作成。
+3\. なんかできてきたな、、と思ったらもう１段階大きなパーツに手を付けて、それを繰り返す
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 定数の置き場所 
+`/lib/constant/`にファイルを置いています。各ファイルimportして使ってください
+  - 色やテキストスタイルはここから使ってください。足していってもらう分には構わないので、コード内に直打ちしないでね、、。
+  - 
+  ```
+  Text(
+    'さんぷる',
+    style: fonts.h1     // ここでfontsから指定
+  )
+  ```

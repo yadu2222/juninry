@@ -5,7 +5,7 @@ import '../../../constant/colors.dart';
 
 
 /**
- * 画面の基本設定
+ * 画面の雛形
  */
 class ScreenView extends StatelessWidget {
   const ScreenView({

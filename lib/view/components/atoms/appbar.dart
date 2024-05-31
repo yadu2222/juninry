@@ -6,31 +6,23 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   const AppBarView({
     super.key,
     required this.titleText,
+    this.popIconButton,
     this.featureIconButton,
   });
 
   final String titleText;
+  final IconButton? popIconButton;
   final IconButton? featureIconButton; // 必要なときとそうでないときがあるため、nullを許容する
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       // 左側のアイコン
-      leading: IconButton(
-        onPressed: () {
-          // 一つ前にもどる
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(
-          Icons.arrow_back,
-          color: AppColors.iconLight,
-          size: 35,
-        ),
-      ),
+      leading: popIconButton != null ? popIconButton : null,
       // タイトル
       title: Text(
         titleText,
-        style: Fonts.h1,
+        style: Fonts.titleFont,
       ),
       backgroundColor: AppColors.main,
       // 右側のアイコン

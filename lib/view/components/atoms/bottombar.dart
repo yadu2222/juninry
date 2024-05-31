@@ -11,6 +11,8 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemTapped;
 
+  
+
   @override
   Widget build(BuildContext context) => BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -33,7 +35,10 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
         ],
         currentIndex: selectedIndex,
         backgroundColor: AppColors.main,
-        onTap: onItemTapped,
+        selectedItemColor: AppColors.iconLight,   // 選択中のアイコンの色
+        // unselectedItemColor: AppColors.fontLight,
+        onTap: onItemTapped, // タップ時の処理
+        type: BottomNavigationBarType.fixed,
       );
 
   // 高さの設定
