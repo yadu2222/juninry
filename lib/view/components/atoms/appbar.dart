@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../constant/colors.dart';
 import '../../../constant/fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   const AppBarView({
@@ -18,13 +18,27 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       // 左側のアイコン
-      leading: popIconButton != null ? popIconButton : null,
+      // 戻るボタンか空かの二択　これ以外は　許さない　絶対に
+      leading: popIconButton == null
+          // もどる
+          ? IconButton(
+              onPressed: () {
+                // TODO: 戻る先がなくても出しゃばってきてエラー吐くので修正
+                context.pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                size: 35,
+              ),
+            )
+          // なんか入ってたら空にする
+          : null,
+
       // タイトル
       title: Text(
         titleText,
         style: Fonts.titleFont,
       ),
-      backgroundColor: AppColors.main,
       // 右側のアイコン
       // nullチェック　!でnullでないことを保証
       actions: featureIconButton != null ? <Widget>[featureIconButton!] : [],

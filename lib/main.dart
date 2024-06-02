@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import './view/pages/junior/page_home.dart';
+import 'router/router.dart';
 import './constant/colors.dart';
-
-import 'view/components/organism/basic_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,17 +8,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false, //デバッグの表示を消す
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
-        useMaterial3: true,
+        // useMaterial3: true,
+        appBarTheme: const AppBarTheme(backgroundColor: AppColors.main, iconTheme: IconThemeData(color: AppColors.iconLight)),
       ),
-      home: const PageHomeJunior(),
+      // ルーティングの設定
+      routerConfig: router,
     );
   }
 }

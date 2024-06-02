@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '././../../../constant/fonts.dart';
-import '../../components/molecule/home_view.dart';
-import './page_sample.dart';
+
+import '../../components/atoms/appbar.dart';
 import '../../components/molecule/sampleListItem.dart';
 
 class PageHomeJunior extends StatelessWidget {
   const PageHomeJunior({Key? key}) : super(key: key);
 
+  final String title = 'ホーム';
+
   @override
   Widget build(BuildContext context) {
-    return BasicScreenView(
-        title: 'ホーム',
-        widget: Center(
-            child: Column(children: [
-          ElevatedButton(
-            onPressed: () {
-              // ボタンを押したときの処理
-              // 遷移
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PageSample()),
-              );
-            },
-            child: const Text(
-              '遷移するよ',
-              style: Fonts.h2,
-            ),
-          ),
-          const SampleListItem(),
-        ])));
+    return Center(
+        child: Column(children: [
+      AppBarView(titleText: title),
+      ElevatedButton(
+        onPressed: () {
+          // 画面遷移
+          context.push('/sample');
+        },
+        child: const Text(
+          '遷移するよ',
+          style: Fonts.h2,
+        ),
+      ),
+      const SampleListItem(),
+    ]));
   }
 }
