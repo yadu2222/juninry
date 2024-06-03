@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../components/molecule/studentCard.dart';
-import '../atoms/listItemBox.dart';
+import '../molecule/student_card.dart';
+import '../atoms/listItem_box.dart';
 
 class StudentList extends StatefulWidget {
   const StudentList({Key? key}) : super(key: key);

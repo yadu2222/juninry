@@ -5,11 +5,25 @@ import '../../../constant/colors.dart';
 import '../atoms/listitem.dart';
 
 class StudentCard extends StatelessWidget {
-  const StudentCard({
+  StudentCard({
     super.key,
     required this.studentData,
   });
   final Map studentData;
+
+  // 男性アイコン
+  final Icon maleIcon = const Icon(
+    Icons.face_5,
+    color: AppColors.subjectMath,
+    size: 30,
+  );
+
+  // 女性アイコン
+  final Icon femaleIcon = const Icon(
+    Icons.face_5,
+    color: AppColors.subjectJapanese,
+    size: 30,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +31,7 @@ class StudentCard extends StatelessWidget {
         height: 60.0,
         widget: Row(
           children: [
+            // 出席番号
             Container(
               width: 30,
               height: 30,
@@ -31,6 +46,7 @@ class StudentCard extends StatelessWidget {
                 ),
               ),
             ),
+            // 名前
             Container(
               height: 30,
               margin: const EdgeInsets.only(left: 15),
@@ -41,17 +57,16 @@ class StudentCard extends StatelessWidget {
                 ),
               ),
             ),
-
             const Spacer(), // 間隔を埋める
 
+            // 性別アイコン
             Container(
               alignment: Alignment.center,
               child: Center(
-                  child: Icon(
-                studentData['gender'] == '男' ? Icons.face_5 : Icons.face_3_outlined,
-                color: studentData['gender'] == '男' ? AppColors.subjectMath : AppColors.subjectJapanese,
-                size: 30,
-              )),
+                  child:
+                      // 性別を判別
+                      // TODO:条件文分かり次第変更
+                      studentData['gender'] == '男' ? maleIcon : femaleIcon),
             ),
           ],
         ));

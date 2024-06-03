@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import '././../../../constant/fonts.dart';
 
 import '../../components/atoms/appbar.dart';
-import '../../components/organism/studentList.dart';
+import '../../components/organism/student_list.dart';
+import '../../components/organism/task_list.dart';
 
 class PageHomeJunior extends StatelessWidget {
   PageHomeJunior({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class PageHomeJunior extends StatelessWidget {
 
       // newExoandedでラップするとサイズを自動調整してくれるようになる
       // べんり〜〜！！！
-      new Expanded(child: StudentList())
+      new Expanded(child: TaskList())
     ]));
   }
 }
