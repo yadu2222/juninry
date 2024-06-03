@@ -5,13 +5,13 @@ class ListItem extends StatelessWidget {
     super.key,
     this.padding = const EdgeInsets.all(15),
     this.margin = const EdgeInsets.all(5),
-    required this.height,
+    this.height,
     required this.widget,
   });
 
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
-  final double height;
+  final double? height;
   final Widget widget;
 
   @override
