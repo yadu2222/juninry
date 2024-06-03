@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 
 // 遷移先
 import '../view/components/organism/basic_view.dart';
@@ -72,10 +73,17 @@ final router = GoRouter(
           StatefulShellBranch(
             navigatorKey: homeworkNavigatorKey,
             routes: [
+              // GoRoute(
+              //   name: 'homework',
+              //   path: '/homework',
+              //   pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+              // ),
               GoRoute(
+                // name: 'nextdayTask',
+                // path: '/nextday',
                 name: 'homework',
                 path: '/homework',
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
               )
             ],
           ),
