@@ -22,4 +22,11 @@ class Fonts {
   static const TextStyle h3w = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   static const TextStyle h4w = TextStyle(fontSize: 18, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   static const TextStyle pw = TextStyle(fontSize: 15, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
+
+  // そんなに目立たない
+  static const TextStyle h1y = TextStyle(fontSize: 28, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
+  static const TextStyle h2y = TextStyle(fontSize: 24, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
+  static const TextStyle h3y = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
+  static const TextStyle h4y = TextStyle(fontSize: 18, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
+  static const TextStyle py = TextStyle(fontSize: 15, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
 }

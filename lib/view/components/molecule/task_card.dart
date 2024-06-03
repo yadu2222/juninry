@@ -83,7 +83,7 @@ class TaskCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   "${taskData['start_page']} ~ ${(int.parse(taskData['start_page']) + int.parse(taskData['page_count']) - 1).toString()}ｐ",
-                  style: Fonts.h3,
+                  style: Fonts.h4,
                 ),
               ),
             ),
