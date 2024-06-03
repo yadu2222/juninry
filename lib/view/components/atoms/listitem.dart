@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-class ListItemBox extends StatelessWidget {
-  const ListItemBox({
+class ListItem extends StatelessWidget {
+  const ListItem({
     super.key,
-    this.padding = const EdgeInsets.all(0.0),
-    this.margin = const EdgeInsets.all(0.0),
+    this.padding = const EdgeInsets.all(15),
+    this.margin = const EdgeInsets.all(5),
     required this.height,
     required this.widget,
   });
@@ -23,6 +22,14 @@ class ListItemBox extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            // spreadRadius: 1.0,
+            blurRadius: 1,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
       height: height,
       width: MediaQuery.of(context).size.width * 0.92,

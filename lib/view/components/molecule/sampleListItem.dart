@@ -7,7 +7,7 @@ class SampleListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListItemBox(
+    return const ListItem(
       height: 50.0,
       // ここに箱の中に表示したいウィジェットを入れる
       widget: Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+// 遷移先
 import '../view/components/organism/basic_view.dart';
 import '../view/pages/junior/page_home.dart';
 import '../view/pages/junior/page_homework.dart';
@@ -38,7 +39,7 @@ final router = GoRouter(
                 path: '/home',
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageHomeJunior(),
+                  child:  PageHomeJunior(),
                 ),
               ),
                GoRoute(

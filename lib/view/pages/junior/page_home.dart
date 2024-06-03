@@ -3,10 +3,10 @@ import 'package:go_router/go_router.dart';
 import '././../../../constant/fonts.dart';
 
 import '../../components/atoms/appbar.dart';
-import '../../components/molecule/sampleListItem.dart';
+import '../../components/organism/studentList.dart';
 
 class PageHomeJunior extends StatelessWidget {
-  const PageHomeJunior({Key? key}) : super(key: key);
+  PageHomeJunior({Key? key}) : super(key: key);
 
   final String title = 'ホーム';
 
@@ -25,7 +25,10 @@ class PageHomeJunior extends StatelessWidget {
           style: Fonts.h2,
         ),
       ),
-      const SampleListItem(),
+
+      // newExoandedでラップするとサイズを自動調整してくれるようになる
+      // べんり〜〜！！！
+      new Expanded(child: StudentList())
     ]));
   }
 }

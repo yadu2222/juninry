@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-
   // メインカラー
   static const Color main = Color(0xFFF8CE64);
 
@@ -13,7 +12,7 @@ class AppColors {
   // フォントカラー
   static const Color font = Color(0xFF353535);
   static const Color fontLight = Color(0xFFC1A14E);
-  static const Color fontDark = Color(0xFF000000);  
+  static const Color fontDark = Color(0xFF000000);
 
   // 教科カラー
   static const Color subjectJapanese = Color(0xFFE35200);
@@ -27,4 +26,6 @@ class AppColors {
   static const Color buttonOk = Color(0xFF98CD00);
   static const Color buttonCheck = Color(0xFFFF4C00);
 
+  // つかいやすい色
+  static const Color glay = Color(0xFFE8EAED);
 }
