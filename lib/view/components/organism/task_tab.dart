@@ -46,7 +46,7 @@ class TaskTab extends StatelessWidget {
       'page_count': '3',
       'task_poster_uuid': 'aaaaa',
       'task_note': 'aaaaa',
-      'teaching_material_name': '計算ドリル',
+      'teaching_material_name': '理科ワーク',
       'subject_id': '2',
       'image_uuid': 'aaaaa',
       'class_uuid': 'aaaaa',

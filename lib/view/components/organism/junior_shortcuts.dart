@@ -8,7 +8,7 @@ class JuniorShortcuts extends StatelessWidget {
   final List<String> shortcutList = [
     'ホーム',
     'おしらせ',
-    'ユーザー',
+    '生徒一覧',
     '課題一覧',
   ];
 
@@ -16,7 +16,7 @@ class JuniorShortcuts extends StatelessWidget {
   final List<String> movePages = [
     '/home',
     '/notice',
-    '/userData',
+    '/students',
     '/homework',
   ];
 

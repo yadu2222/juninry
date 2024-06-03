@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 
 // 遷移先
+// junior
 import '../view/components/organism/basic_view.dart';
 import '../view/pages/junior/page_home.dart';
 import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
-import '../view/pages/junior/page_sample.dart';
+import 'package:juninry/view/pages/junior/page_nextday_task.dart';
+import '../view/pages/junior/page_students.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final noticeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'notice');
 final homeworkNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'homework');
 final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
-
-
 
 final router = GoRouter(
   debugLogDiagnostics: true,
@@ -40,15 +39,15 @@ final router = GoRouter(
                 path: '/home',
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child:  PageHomeJunior(),
+                  child: PageHomeJunior(),
                 ),
               ),
-               GoRoute(
-                name: 'sample',
-                path: '/sample',
+              GoRoute(
+                name: 'students',
+                path: '/students',
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageSample(),
+                  child: const PageStudentsJunior(),
                 ),
               )
             ],
