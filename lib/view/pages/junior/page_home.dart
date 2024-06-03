@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '././../../../constant/fonts.dart';
 
 import '../../components/atoms/appbar.dart';
-import '../../components/organism/student_list.dart';
+
 import '../../components/organism/task_list.dart';
 
 class PageHomeJunior extends StatelessWidget {
@@ -23,13 +23,10 @@ class PageHomeJunior extends StatelessWidget {
         },
         child: const Text(
           '遷移するよ',
-          style: Fonts.h2,
+          style: Fonts.h3,
         ),
       ),
-
-      // newExoandedでラップするとサイズを自動調整してくれるようになる
-      // べんり〜〜！！！
-      new Expanded(child: TaskList())
+      
     ]));
   }
 }

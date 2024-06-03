@@ -11,7 +11,7 @@ final String title = 'ユーザー';
   Widget build(BuildContext context) {
     return Center(
           child: Column(children: [ 
-            AppBarView(titleText: title),Text('設定画面ともいう まよう', style: Fonts.h2),])
+            AppBarView(titleText: title),Text('設定画面ともいう まよう', style: Fonts.h3),])
     );
   }
 }

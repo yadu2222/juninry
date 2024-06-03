@@ -12,7 +12,7 @@ class PageNoticeJunior extends StatelessWidget {
     return Center(
           child: Column(children: [ 
             AppBarView(titleText: title),
-            Text('おしらせがたくさん', style: Fonts.h2),
+            Text('おしらせがたくさん', style: Fonts.h3),
           ])
         );
   }

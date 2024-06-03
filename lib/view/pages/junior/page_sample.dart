@@ -13,7 +13,7 @@ final String title = 'さんぷる';
           child: Column(
             children: [ 
             AppBarView(titleText: title),
-            Text('いどうしたよ', style: Fonts.h2),
+            Text('いどうしたよ', style: Fonts.h3),
             ])
         );
   }
