@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../constant/fonts.dart';
 import '../atoms/listitem.dart';
 
+// おしらせカード
+// まだかいてない
 class NoticeCard extends StatelessWidget {
   const NoticeCard({Key? key}) : super(key: key);
 

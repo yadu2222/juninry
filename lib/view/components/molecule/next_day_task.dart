@@ -10,8 +10,8 @@ class NextDayTask extends StatelessWidget {
   NextDayTask({Key? key, this.widget}) : super(key: key);
 
   final String message = 'キメラ先生からのコメント';
-  double progress = 0.5;
-  Widget? widget;
+  double progress = 0.5;  // TODO:進捗バーの進捗度 値をもらいたい 今は定数
+  Widget? widget;         // 進捗バーの下に表示するウィジェット
 
   @override
   Widget build(BuildContext context) {

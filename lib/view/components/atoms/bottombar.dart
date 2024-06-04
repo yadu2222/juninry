@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../constant/colors.dart';
 
+// bottombar
+// 基本触らない
 class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
   const BottomBarView({
     super.key,

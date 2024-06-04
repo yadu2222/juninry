@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../molecule/student_card.dart';
 import '../atoms/listItem_box.dart';
 
+
+// 生徒リスト
 class StudentList extends StatefulWidget {
   const StudentList({Key? key}) : super(key: key);
 

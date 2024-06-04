@@ -4,6 +4,8 @@ import '../atoms/teaching_item.dart';
 
 import '../atoms/listitem.dart';
 
+
+// 提出ボタン
 class SubmittionCard extends StatelessWidget {
   const SubmittionCard({Key? key}) : super(key: key);
 

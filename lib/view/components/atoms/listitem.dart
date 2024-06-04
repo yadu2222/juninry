@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// これを使ってリストカードをつくってね
 class ListItem extends StatelessWidget {
   const ListItem({
     super.key,
@@ -9,10 +10,10 @@ class ListItem extends StatelessWidget {
     required this.widget,
   });
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final double? height;
-  final Widget widget;
+  final EdgeInsetsGeometry padding; // デフォルト値を用意しているので渡さなくても良い
+  final EdgeInsetsGeometry margin;  // 同上
+  final double? height;             // 値を入れなければ中身に合わせて調整される
+  final Widget widget;              // 中身
 
   @override
   Widget build(BuildContext context) {

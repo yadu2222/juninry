@@ -6,6 +6,7 @@ import '../atoms/listitem.dart';
 import '../molecule/latest_notice_card.dart';
 import '../molecule/divider.dart';
 
+// 最新のお知らせタブ
 class LatestNoticeTab extends StatelessWidget {
   LatestNoticeTab({Key? key}) : super(key: key);
 

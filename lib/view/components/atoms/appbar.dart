@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../constant/fonts.dart';
 import 'package:go_router/go_router.dart';
 
+
+// AppBar
+// 戻るボタンとタイトルと機能ボタンを表示する
 class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   const AppBarView({
     super.key,
@@ -10,15 +13,18 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
     this.featureIconButton,
   });
 
-  final String titleText;
-  final IconButton? popIconButton;
-  final IconButton? featureIconButton; // 必要なときとそうでないときがあるため、nullを許容する
+
+  // 必ず必要
+  final String titleText;           // タイトル
+  // null許容
+  final IconButton? popIconButton;  // 左側のアイコン
+  final IconButton? featureIconButton; // 右側のアイコン　必要なときとそうでないときがあるため、nullを許容する
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       // 左側のアイコン
-      // 戻るボタンか空かの二択　これ以外は　許さない　絶対に
+      // 戻るボタンか空かの二択 これ以外は 許さない 絶対に
       leading: popIconButton == null
           // もどる
           ? IconButton(
@@ -40,7 +46,7 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
         style: Fonts.titleFont,
       ),
       // 右側のアイコン
-      // nullチェック　!でnullでないことを保証
+      // nullチェック !でnullでないことを保証
       actions: featureIconButton != null ? <Widget>[featureIconButton!] : [],
     );
   }

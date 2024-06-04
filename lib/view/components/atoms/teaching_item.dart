@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
 
+
+// 教材と課題の表示
 class TeachingItem extends StatelessWidget {
   TeachingItem({
     super.key,

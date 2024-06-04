@@ -7,10 +7,10 @@ class DividerView extends StatelessWidget {
 
   // null許容
   final IconData? icon; // 表示したいアイコン
-  final String? title; // タイトル
-  final Color dividColor;
-  final double indent;
-  final double endIndent;
+  final String? title;  // タイトル
+  final Color dividColor;   // 線の色
+  final double indent;      // 線の左の空白
+  final double endIndent;   // 線の右の空白
 
   @override
   Widget build(BuildContext context) {

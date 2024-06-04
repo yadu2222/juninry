@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
 
+
+// 最新のお知らせカード
 class LatestNoticeCard extends StatelessWidget {
   const LatestNoticeCard({super.key, required this.noticeData});
 

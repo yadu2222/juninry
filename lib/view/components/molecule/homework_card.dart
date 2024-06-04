@@ -4,6 +4,8 @@ import '../atoms/teaching_item.dart';
 
 import '../atoms/listitem.dart';
 
+
+// 課題カード
 class HomeworkCard extends StatelessWidget {
   HomeworkCard({
     super.key,
@@ -48,6 +50,7 @@ class HomeworkCard extends StatelessWidget {
             // アイコン
             Container(
               alignment: Alignment.center,
+              // 課題の提出状態を判別している
               child: Center(child: int.parse(taskData['submit_flg']) == 1 ? checkIcon : cameraIcon),
             ),
           ],

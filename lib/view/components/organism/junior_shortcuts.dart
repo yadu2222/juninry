@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../components/molecule/shortcut_set.dart';
 
+
+// こんなふうに各ユーザータイプにあわせたショートカットのセットをつくる
 class JuniorShortcuts extends StatelessWidget {
   JuniorShortcuts({Key? key}) : super(key: key);
 

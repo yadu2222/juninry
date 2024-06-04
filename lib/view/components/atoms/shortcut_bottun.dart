@@ -4,12 +4,14 @@ import '././../../../constant/fonts.dart';
 import '././../../../constant/colors.dart';
 import 'package:go_router/go_router.dart';
 
+// ショートカットボタン
+// 遷移する
 class ShortcutButton extends StatelessWidget {
   const ShortcutButton({Key? key, required this.title, required this.icon, required this.movePage}) : super(key: key);
 
-  final String title;
-  final IconData icon;
-  final String movePage;
+  final String title;     // ボタンのタイトル
+  final IconData icon;    // ボタンを押したときのアイコン
+  final String movePage;  // 遷移先のパス
 
   @override
   Widget build(BuildContext context) {

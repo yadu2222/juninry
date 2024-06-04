@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+// これを使ってリストをつくってね
 class ListItemBox extends StatelessWidget {
   const ListItemBox({
     super.key,
@@ -10,7 +12,7 @@ class ListItemBox extends StatelessWidget {
 
   final double? height; // 高さ
   final List itemDatas; // リストデータ
-  final Widget Function(Map map) listItem; // ウィジェット関数
+  final Widget Function(Map map) listItem; // カード ウィジェット関数
 
   @override
   Widget build(BuildContext context) {

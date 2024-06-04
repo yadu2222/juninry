@@ -4,6 +4,7 @@ import '../../../constant/colors.dart';
 
 import '../atoms/listitem.dart';
 
+// 生徒カード
 class StudentCard extends StatelessWidget {
   StudentCard({
     super.key,

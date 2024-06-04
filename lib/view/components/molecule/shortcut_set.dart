@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/atoms/shortcut_bottun.dart';
 
+// ショートカットの4つセット
 class ShortcutSet extends StatelessWidget {
   const ShortcutSet({Key? key, required this.shortcutList, required this.icons, required this.movePages}) : super(key: key);
 
@@ -19,35 +20,43 @@ class ShortcutSet extends StatelessWidget {
           right: 5,
         ),
         alignment: Alignment.center,
-        child: Column(children: [
-          Row(
-            children: [
-              ShortcutButton(
-                icon: icons[0],
-                title: shortcutList[0],
-                movePage: movePages[0],
-              ),
-              ShortcutButton(
-                icon: icons[1],
-                title: shortcutList[1],
-                movePage: movePages[1],
-              ),
-            ],
+        width: double.infinity,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Row(
+              children: [
+                ShortcutButton(
+                  icon: icons[0],
+                  title: shortcutList[0],
+                  movePage: movePages[0],
+                ),
+                ShortcutButton(
+                  icon: icons[1],
+                  title: shortcutList[1],
+                  movePage: movePages[1],
+                ),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              ShortcutButton(
-                icon: icons[2],
-                title: shortcutList[2],
-                movePage: movePages[2],
-              ),
-              ShortcutButton(
-                icon: icons[3],
-                title: shortcutList[3],
-                movePage: movePages[3],
-              ),
-            ],
-          )
+          Container(
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  ShortcutButton(
+                    icon: icons[2],
+                    title: shortcutList[2],
+                    movePage: movePages[2],
+                  ),
+                  ShortcutButton(
+                    icon: icons[3],
+                    title: shortcutList[3],
+                    movePage: movePages[3],
+                  ),
+                ],
+              ))
         ]));
   }
 }

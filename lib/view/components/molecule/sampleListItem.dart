@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '././../../../constant/fonts.dart';
 import '../../components/atoms/listitem.dart';
 
+// 最小構成のリストアイテム
 class SampleListItem extends StatelessWidget {
   const SampleListItem({Key? key}) : super(key: key);
 
