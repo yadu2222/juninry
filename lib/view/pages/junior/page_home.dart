@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../components/atoms/appbar.dart';
 import '../../components/organism/latest_notice_tab.dart';
-import '../../components/molecule/next_day_task.dart';
 import '../../components/organism/junior_shortcuts.dart';
 import '../../components/organism/homework_tab.dart';
 
