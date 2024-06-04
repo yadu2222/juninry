@@ -27,7 +27,7 @@ class LatestNoticeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListItem(
-        height: 130,
+        // height: 130,
         padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
         // ここに箱の中に表示したいウィジェットを入れる
         widget: Column(
