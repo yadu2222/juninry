@@ -4,8 +4,8 @@ import '../atoms/teaching_item.dart';
 
 import '../atoms/listitem.dart';
 
-class TaskCard extends StatelessWidget {
-  TaskCard({
+class HomeworkCard extends StatelessWidget {
+  HomeworkCard({
     super.key,
     required this.taskData,
   });

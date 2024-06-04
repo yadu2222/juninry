@@ -5,7 +5,7 @@ import '../../components/atoms/appbar.dart';
 import '../../components/organism/latest_notice_tab.dart';
 import '../../components/molecule/next_day_task.dart';
 import '../../components/organism/junior_shortcuts.dart';
-import '../../components/organism/task_tab.dart';
+import '../../components/organism/homework_tab.dart';
 
 class PageHomeJunior extends StatelessWidget {
   PageHomeJunior({Key? key}) : super(key: key);

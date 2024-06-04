@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../components/atoms/appbar.dart';
-import '../../components/organism/task_list.dart';
+import '../../components/organism/homework_list.dart';
 import '../../components/molecule/next_day_task.dart';
 import '../../components/molecule/divider.dart';
 
@@ -19,7 +19,7 @@ class PageNextDayTaskJunior extends StatelessWidget {
           icon: Icons.menu_book_outlined,
           title: 'test',
         ),
-        const Expanded(child: TaskList()),
+        const Expanded(child: HomeworkList()),
       ]),
     );
   }

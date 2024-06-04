@@ -6,11 +6,7 @@ class Fonts {
   static const TextStyle titleFont = TextStyle(fontSize: 26, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
 
   // 文章
-  static const TextStyle h1 = TextStyle(
-    fontSize: 28,
-    fontFamily: 'Noto Sans JP',
-    color: AppColors.font,
-  );
+  static const TextStyle h1 = TextStyle(fontSize: 28, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.normal);
   static const TextStyle h2 = TextStyle(fontSize: 24, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
   static const TextStyle h3 = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
   static const TextStyle h4 = TextStyle(fontSize: 18, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);

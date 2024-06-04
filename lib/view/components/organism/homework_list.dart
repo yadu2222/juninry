@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../molecule/task_card.dart';
+import '../molecule/homework_card.dart';
 import '../atoms/listItem_box.dart';
 
-class TaskList extends StatefulWidget {
-  const TaskList({Key? key}) : super(key: key);
+class HomeworkList extends StatefulWidget {
+  const HomeworkList({Key? key}) : super(key: key);
 
   @override
-  _StudentListState createState() => _StudentListState();
+  _HomeworkList createState() => _HomeworkList();
 }
 
-class _StudentListState extends State<TaskList> {
+class _HomeworkList extends State<HomeworkList> {
   // sumple
   // ここで通信を行う
   final List<Map<String, String>> sumpleData = [
@@ -54,7 +54,7 @@ class _StudentListState extends State<TaskList> {
         },
         child: ListItemBox(
           itemDatas: sumpleData,
-          listItem: (map) => TaskCard(taskData: map),
+          listItem: (map) => HomeworkCard(taskData: map),
         ));
   }
 }

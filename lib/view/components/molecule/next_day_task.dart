@@ -21,7 +21,7 @@ class NextDayTask extends StatelessWidget {
           left: 15,
           right: 15,
           top: 10,
-          bottom: 15,
+          bottom: 10,
         ),
         widget: Column(
             crossAxisAlignment: CrossAxisAlignment.start, // 左寄せ
