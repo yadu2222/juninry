@@ -28,7 +28,7 @@ class LatestNoticeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListItem(
         // height: 130,
-        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
         // ここに箱の中に表示したいウィジェットを入れる
         widget: Column(
             crossAxisAlignment: CrossAxisAlignment.start, //これをつける
