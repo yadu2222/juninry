@@ -12,6 +12,12 @@ class PageHomeJunior extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Column(children: [AppBarView(titleText: title), LatestNoticeTab(), TaskTab(), JuniorShortcuts()]));
+    return Center(
+        child: Column(children: [
+      AppBarView(titleText: title), // appbar
+      LatestNoticeTab(), // 最新のお知らせタブ
+      TaskTab(), // 明日提出の課題タブ
+      JuniorShortcuts() // ショートカットボタン
+    ])); 
   }
 }
