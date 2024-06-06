@@ -10,6 +10,7 @@ import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
+import '../view/pages/teacher/page_notice_detail.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
@@ -19,7 +20,7 @@ final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
 
 final router = GoRouter(
   debugLogDiagnostics: true,
-  initialLocation: '/home',
+  initialLocation: '/detail',
   routes: [
     // ボトムバーが必要な画面のルーティング
     // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
@@ -59,10 +60,17 @@ final router = GoRouter(
             routes: [
               GoRoute(
                 name: 'notice',
-                path: '/notice',
+                path: '/notice', // notice
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
                   child: const PageNoticeJunior(),
+                ),
+              ),
+              GoRoute(
+                path: '/detail',
+                pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child: const PageNoticeDetail(),
                 ),
               )
             ],
