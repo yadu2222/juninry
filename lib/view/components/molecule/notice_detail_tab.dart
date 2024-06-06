@@ -2,9 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
+import '../molecule/divider.dart';
+
+import '../../../constant/fonts.dart';
+import '../../../constant/colors.dart';
 
 class NoticeDetailTab extends StatelessWidget {
-  const NoticeDetailTab({super.key, required this.tabData});
+  NoticeDetailTab({super.key, required this.tabData});
 
   // fields
   final Map tabData;
@@ -12,18 +16,43 @@ class NoticeDetailTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListItem(
+        padding: EdgeInsets.all(20),
         widget: Column(
-      children: [
-        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 日付
-            // クラス名
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, //  両端寄せ
+              children: [
+                // ひづけ
+                Text(
+                  tabData["noticeDate"],
+                  style: Fonts.p,
+                ),
+                // クラス名
+                Text(
+                  tabData["className"],
+                  style: Fonts.p,
+                )
+              ],
+            ),
+            // おてがみのタイトル
+            Text(
+              tabData["noticeTitle"],
+              style: Fonts.h4,
+            ),
+            // バー
+            DividerView(
+              dividColor: AppColors.main,
+              dividWeight: 2.5,
+              indent: 0,
+              endIndent: 0,
+            ),
+            // 本文
+            Text(
+              tabData["noticeExplanatory"],
+              style: Fonts.p,
+            )
           ],
-        ),
-        // おてがみのタイトル
-        // バー
-        // 本文
-      ],
-    ));
+        ));
   }
 }

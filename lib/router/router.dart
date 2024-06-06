@@ -70,7 +70,7 @@ final router = GoRouter(
                 path: '/detail',
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageNoticeDetail(),
+                  child: PageNoticeDetail(),
                 ),
               )
             ],
