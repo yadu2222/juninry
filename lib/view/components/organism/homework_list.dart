@@ -7,10 +7,7 @@ import '../atoms/listItem_box.dart';
 
 // 宿題のリスト
 class HomeworkList extends StatelessWidget {
-  const HomeworkList({
-    super.key,
-    required this.homeworkData
-  });
+  const HomeworkList({super.key, required this.homeworkData});
 
   final List<Homework> homeworkData;
   @override
@@ -22,7 +19,7 @@ class HomeworkList extends StatelessWidget {
                 // 画面遷移
                 context.push('/homework/submittion');
               },
-              child: HomeworkCard(homeworkData: homeworkData[0]),
+              child: HomeworkCard(homeworkData: homework),
             ));
   }
 }
