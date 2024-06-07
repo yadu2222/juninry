@@ -77,15 +77,15 @@ final router = GoRouter(
               GoRoute(
                 name: 'homework',
                 path: '/homework',
+                routes: [
+                  GoRoute(
+                    name: 'nextdayTask',
+                    path: 'nextday',
+                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
+                  )
+                ],
                 pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
               ),
-              GoRoute(
-                name: 'nextdayTask',
-                path: '/nextday',
-                // name: 'homework',
-                // path: '/homework',
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
-              )
             ],
           ),
 

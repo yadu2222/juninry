@@ -84,7 +84,7 @@ class TaskTab extends StatelessWidget {
     return InkWell(
         onTap: () {
           // 画面遷移
-          context.push('/nextday');
+          context.push('/homework/nextday');
         },
         child: Stack(children: [
           NextDayTask(

@@ -49,14 +49,18 @@ class _HomeworkList extends State<HomeworkList> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          // 画面遷移
-          // context.push('/sample');
-        },
-        child: ListItemBox(
+    return ListItemBox(
           itemDatas: sumpleData,
-          listItem: (map) => HomeworkCard(taskData: map),
+          listItem: (map) => 
+          InkWell(
+              onTap: () {
+                // 画面遷移
+                // context.push('/sample');
+              },
+              child: 
+          
+          
+          HomeworkCard(taskData: map),
         ));
   }
 }

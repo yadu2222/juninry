@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../components/molecule/shortcut_set.dart';
 
-
 // こんなふうに各ユーザータイプにあわせたショートカットのセットをつくる
 class JuniorShortcuts extends StatelessWidget {
- 
-
   // ショートカットボタンのタイトル
   final List<String> shortcutList = [
     'ホーム',
@@ -24,9 +21,9 @@ class JuniorShortcuts extends StatelessWidget {
 
   // ショートカットボタンのアイコン
   final List<IconData> icons = [
-    Icons.home,
-    Icons.notifications,
-    Icons.person,
+    Icons.home_outlined,
+    Icons.notifications_none,
+    Icons.face_outlined,
     Icons.menu_book_rounded,
   ];
 
