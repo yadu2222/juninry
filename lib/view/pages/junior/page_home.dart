@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../models/notice_model.dart';
+// import '../../../models/notice_model.dart';
 
 import '../../components/template/basic_template.dart';
 import '../../components/organism/latest_notice_tab.dart';
@@ -9,7 +9,7 @@ import '../../components/organism/homework_tab.dart';
 import '../../../constant/sample_data.dart'; // sampleData
 
 class PageHomeJunior extends StatelessWidget {
-  PageHomeJunior({super.key});
+  const PageHomeJunior({super.key});
 
 
 

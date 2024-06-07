@@ -4,13 +4,13 @@ import '../../components/atoms/appbar.dart';
 // appbar + Column
 class BasicTemplate extends StatelessWidget {
   final String title;
-  final bool appIcon;
+  final bool popIcon;
   final List<Widget> children;
   final IconButton? featureIconButton;
 
   BasicTemplate({
     required this.title,
-    this.appIcon = false,
+    this.popIcon = false,
     required this.children,
     this.featureIconButton,
   });
@@ -21,7 +21,7 @@ class BasicTemplate extends StatelessWidget {
         child: Column(children: [
       AppBarView(
         titleText: title,
-        popIconButton: appIcon,
+        popIconButton: popIcon,
         featureIconButton: featureIconButton,
       ), // appbar
       ...children,
