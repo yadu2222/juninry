@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../molecule/student_card.dart';
+import '../molecule/notice_card.dart';
 import '../atoms/listItem_box.dart';
 
 // お知らせリストのステートフルウィジェット
@@ -42,7 +42,7 @@ class _NoticeListState extends State<NoticeList> {
           itemDatas: sumpleData,
           listItem: 
           
-          (map) => StudentCard(studentData: map),
+          (map) => NoticeCard(noticeData: map),
         ));
   }
 }

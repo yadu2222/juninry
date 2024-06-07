@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:juninry/constant/colors.dart';
 
 import '../../../constant/fonts.dart';
@@ -20,14 +22,26 @@ class NoticeCard extends StatelessWidget {
     size: 30,
   );
 
+
   @override
   Widget build(BuildContext context) {
-    return const ListItem(
-      height: 50.0,
+    return ListItem(
+      
       // ここに箱の中に表示したいウィジェットを入れる
-      widget: Column(
+      widget: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-
+          Column(
+            children: [
+              //日付け
+              Container(
+                width: 50,
+                height: 50,
+                child: ,
+              )
+            ],    
+          ),
+          unknowIcon
         ],
         
         ),
