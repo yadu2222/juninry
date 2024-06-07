@@ -15,7 +15,7 @@ class HomeworkList extends StatelessWidget {
   final List<Homework> homeworkData;
   @override
   Widget build(BuildContext context) {
-    return ListItemBox(
+    return ListItemBox<Homework>(
         itemDatas: homeworkData,
         listItem: (homework) => InkWell(
               onTap: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/student_model.dart';
 
 import '../molecule/student_card.dart';
@@ -11,14 +12,14 @@ class StudentList extends StatelessWidget {
   final List<Student> studentData;
   @override
   Widget build(BuildContext context) {
-    return ListItemBox(
+    return ListItemBox<Student>(
       itemDatas: studentData,
       listItem: (map) => InkWell(
           onTap: () {
             // 画面遷移
             context.push('/sample');
           },
-          child: StudentCard(studentData: map)),
+          child: StudentCard(studentData: SampleData.studentData[0])),
     );
   }
 }
