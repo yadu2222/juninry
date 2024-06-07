@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../constant/colors.dart';
-import '../atoms/teaching_item.dart';
+import '../../../constant/fonts.dart';
 
 import '../atoms/listitem.dart';
 
-
-// 提出ボタン
+// 提出カード
 class SubmittionCard extends StatelessWidget {
-  const SubmittionCard({Key? key}) : super(key: key);
+  SubmittionCard({Key? key, required this.count}) : super(key: key);
 
   // カメラアイコン
   final Icon cameraIcon = const Icon(
@@ -16,37 +15,26 @@ class SubmittionCard extends StatelessWidget {
     size: 30,
   );
 
+  // 提出するページ
+  final Map count;
   @override
   Widget build(BuildContext context) {
     return ListItem(
-      height: 30.0,
-      widget: Row(
-        children: [
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.blue,
+        widget: Row(
+      children: [
+        // カメラアイコン
+        cameraIcon,
+        // 教材の表示
+        Container(
+          margin: const EdgeInsets.only(left: 10),
+          child: Center(
+            child: Text(
+              '${count['count']}p',
+              style: Fonts.h4,
+            ),
           ),
-          Column(
-            children: [
-              Text(
-                'タイトル',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                '説明',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ));
   }
 }

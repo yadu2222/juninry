@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../../models/homework_model.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
+import '../atoms/count_item.dart';
 
-
-// 教材と課題の表示
+// 教材ラベルの表示
 class TeachingItem extends StatelessWidget {
   TeachingItem({
     super.key,
@@ -20,40 +21,29 @@ class TeachingItem extends StatelessWidget {
     AppColors.subjectOthers,
   ];
 
-  final Map itemData;
+  final Homework itemData;
 
   // TODO: 「枚数」対応
   @override
   Widget build(BuildContext context) {
     return Container(
-        
         child: Row(children: [
-          // 教材の表示
-          Container(
-            width: 100,
-            height: 25,
-            decoration: BoxDecoration(
-              color: colors[int.parse(itemData['subject_id'])],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(
-                itemData['teaching_material_name'],
-                style: Fonts.pw,
-              ),
-            ),
+      // 教材の表示
+      Container(
+        width: 100,
+        height: 25,
+        decoration: BoxDecoration(
+          color: colors[itemData.subjectId],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            itemData.teachingMaterialName,
+            style: Fonts.pw,
           ),
-
-          // ページ数の表示
-          Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Center(
-              child: Text(
-                "${itemData['start_page']} ~ ${(int.parse(itemData['start_page']) + int.parse(itemData['page_count']) - 1).toString()}ｐ",
-                style: Fonts.h4,
-              ),
-            ),
-          ),
-        ]));
+        ),
+      ),
+      CountItem(itemData: itemData)
+    ]));
   }
 }

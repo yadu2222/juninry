@@ -10,6 +10,7 @@ import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
+import '../view/pages/junior/page_submission.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
@@ -37,19 +38,21 @@ final router = GoRouter(
               GoRoute(
                 name: 'home',
                 path: '/home',
+                routes: [
+                  GoRoute(
+                    name: 'students',
+                    path: 'students',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageStudentsJunior(),
+                    ),
+                  ),
+                ],
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
                   child: PageHomeJunior(),
                 ),
               ),
-              GoRoute(
-                name: 'students',
-                path: '/students',
-                pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const PageStudentsJunior(),
-                ),
-              )
             ],
           ),
 
@@ -75,15 +78,18 @@ final router = GoRouter(
               GoRoute(
                 name: 'homework',
                 path: '/homework',
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+                routes: [
+                  GoRoute(
+                    name: 'nextdayTask',
+                    path: 'nextday',
+                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
+                  ),
+                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageSubmissionJunior()))
+                ],
+                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageHomeworkJunior()),
+
               ),
-              GoRoute(
-                name: 'nextdayTask',
-                path: '/nextday',
-                // name: 'homework',
-                // path: '/homework',
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
-              )
+              
             ],
           ),
 

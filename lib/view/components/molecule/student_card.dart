@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
 
+import '../../../models/student_model.dart';
 import '../atoms/listitem.dart';
 
 // 生徒カード
@@ -10,7 +11,7 @@ class StudentCard extends StatelessWidget {
     super.key,
     required this.studentData,
   });
-  final Map studentData;
+  final Student studentData;
 
   // 男性アイコン
   final Icon maleIcon = const Icon(
@@ -42,7 +43,7 @@ class StudentCard extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  studentData['num'],
+                  studentData.num.toString(),
                   style: Fonts.h3,
                 ),
               ),
@@ -53,7 +54,7 @@ class StudentCard extends StatelessWidget {
               margin: const EdgeInsets.only(left: 15),
               child: Center(
                 child: Text(
-                  studentData['name'],
+                  studentData.name,
                   style: Fonts.h3,
                 ),
               ),
@@ -67,7 +68,7 @@ class StudentCard extends StatelessWidget {
                   child:
                       // 性別を判別
                       // TODO:条件文分かり次第変更
-                      studentData['gender'] == '男' ? maleIcon : femaleIcon),
+                      studentData.gender == '男' ? maleIcon : femaleIcon),
             ),
           ],
         ));

@@ -1,84 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/constant/sample_data.dart';
+import 'package:juninry/models/student_model.dart';
 
 import '../molecule/student_card.dart';
 import '../atoms/listItem_box.dart';
 
+class StudentList extends StatelessWidget {
+  const StudentList({super.key,required this.studentData});
 
-// 生徒リスト
-class StudentList extends StatefulWidget {
-  const StudentList({Key? key}) : super(key: key);
-
-  @override
-  _StudentListState createState() => _StudentListState();
-}
-
-class _StudentListState extends State<StudentList> {
-  // sumple
-  // ここで通信を行う
-  final List<Map<String, String>> sumpleData = [
-    {
-      'name': '山田太郎',
-      'num': '34',
-      'gender': '男',
-    },
-    {
-      'name': '山田花子',
-      'num': '35',
-      'gender': '女',
-    },
-    {
-      'name': '山田太郎',
-      'num': '34',
-      'gender': '男',
-    },
-    {
-      'name': '山田花子',
-      'num': '35',
-      'gender': '女',
-    },
-    {
-      'name': '山田太郎',
-      'num': '34',
-      'gender': '男',
-    },
-    {
-      'name': '山田花子',
-      'num': '35',
-      'gender': '女',
-    },
-    {
-      'name': '山田太郎',
-      'num': '34',
-      'gender': '男',
-    },
-    {
-      'name': '山田花子',
-      'num': '35',
-      'gender': '女',
-    },
-    {
-      'name': '山田太郎',
-      'num': '34',
-      'gender': '男',
-    },
-    {
-      'name': '山田花子',
-      'num': '35',
-      'gender': '女',
-    },
-  ];
-
+  final List<Student> studentData;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          // 画面遷移
-          context.push('/sample');
-        },
-        child: ListItemBox(
-          itemDatas: sumpleData,
-          listItem: (map) => StudentCard(studentData: map),
-        ));
+    return ListItemBox<Student>(
+      itemDatas: studentData,
+      listItem: (map) => InkWell(
+          onTap: () {
+            // 画面遷移
+            context.push('/sample');
+          },
+          child: StudentCard(studentData: SampleData.studentData[0])),
+    );
   }
 }

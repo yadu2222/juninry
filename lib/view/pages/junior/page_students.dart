@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../../components/template/basic_template.dart';
 import '../../components/organism/student_List.dart';
-import '../../components/atoms/appbar.dart';
+import '../../../constant/sample_data.dart'; // sampleData
 
 class PageStudentsJunior extends StatelessWidget {
-  const PageStudentsJunior({Key? key}) : super(key: key);
+  const PageStudentsJunior({super.key});
 
   final String title = '生徒一覧';
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(children: [
-      AppBarView(titleText: title),
-      const Expanded(child: StudentList()),
-    ]));
+    return BasicTemplate(
+      title: title, 
+      popIcon: true,
+      children: [
+      Expanded(child: StudentList(studentData: SampleData.studentData)),
+    ]);
   }
 }

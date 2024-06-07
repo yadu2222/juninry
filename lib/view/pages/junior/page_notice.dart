@@ -3,10 +3,10 @@ import 'package:juninry/view/components/molecule/notice_card.dart';
 import 'package:juninry/view/components/organism/notice_list.dart';
 import '././../../../constant/fonts.dart';
 
-import '../../components/atoms/appbar.dart';
+import '../../components/template/basic_template.dart';
 
 class PageNoticeJunior extends StatelessWidget {
-  const PageNoticeJunior({Key? key}) : super(key: key);
+  const PageNoticeJunior({super.key});
 
   final String title = 'おしらせ';
   @override
@@ -14,7 +14,7 @@ class PageNoticeJunior extends StatelessWidget {
     return Center(
           child: Column(children: [ 
             AppBarView(titleText: title),
-            const Expanded(child: NoticeList()),
+            Text('おしらせがたくさん', style: Fonts.h3),
           ])
         );
   }
