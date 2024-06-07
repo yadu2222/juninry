@@ -5,24 +5,13 @@ import '../../../constant/fonts.dart';
 import '../atoms/listitem.dart';
 import '../molecule/latest_notice_card.dart';
 import '../molecule/divider.dart';
+import '../../../models/notice_model.dart';
 
 // 最新のお知らせタブ
 class LatestNoticeTab extends StatelessWidget {
-  LatestNoticeTab({Key? key}) : super(key: key);
+  LatestNoticeTab({super.key, required this.noticeData});
 
-  // たった２件表示のために、ファイルを分けるんか、、、！？という気持ちが、ある、検討
-  final List<Map> sampleData = [
-    {
-      'notice_date': '2024-6-3',
-      'notice_title': 'お知らせがたくさん',
-      'notice_reads': '0',
-    },
-    {
-      'notice_date': '2024-6-2',
-      'notice_title': 'ほんのすこしのしんじつ',
-      'notice_reads': '1',
-    }
-  ];
+  final List<Notice> noticeData;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +28,8 @@ class LatestNoticeTab extends StatelessWidget {
                 indent: 0,
                 endIndent: 0,
               ),
-              LatestNoticeCard(noticeData: sampleData[0]),
-              LatestNoticeCard(noticeData: sampleData[1])
+              LatestNoticeCard(noticeData: noticeData[0]),
+              LatestNoticeCard(noticeData: noticeData[1])
             ]));
   }
 }

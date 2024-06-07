@@ -6,7 +6,7 @@ import '../atoms/listItem_box.dart';
 
 // 生徒リスト
 class StudentList extends StatefulWidget {
-  const StudentList({Key? key}) : super(key: key);
+  const StudentList({super.key});
 
   @override
   _StudentListState createState() => _StudentListState();

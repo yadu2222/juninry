@@ -4,7 +4,7 @@ import '../../../constant/fonts.dart';
 
 import '../atoms/listitem.dart';
 
-// 提出ボタン
+// 提出カード
 class SubmittionCard extends StatelessWidget {
   SubmittionCard({Key? key, required this.count}) : super(key: key);
 
