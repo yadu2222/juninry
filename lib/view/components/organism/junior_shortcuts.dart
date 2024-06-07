@@ -18,7 +18,7 @@ class JuniorShortcuts extends StatelessWidget {
   final List<String> movePages = [
     '/home',
     '/notice',
-    '/students',
+    '/home/students',
     '/homework',
   ];
 

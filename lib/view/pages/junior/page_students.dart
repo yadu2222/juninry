@@ -11,7 +11,10 @@ class PageStudentsJunior extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(children: [
-      AppBarView(titleText: title),
+      AppBarView(
+        titleText: title,
+        popIconButton: true,
+      ),
       const Expanded(child: StudentList()),
     ]));
   }

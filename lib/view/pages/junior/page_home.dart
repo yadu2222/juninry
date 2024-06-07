@@ -14,10 +14,13 @@ class PageHomeJunior extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(children: [
-      AppBarView(titleText: title), // appbar
+      AppBarView(
+        titleText: title,
+       
+      ), // appbar
       LatestNoticeTab(), // 最新のお知らせタブ
       TaskTab(), // 明日提出の課題タブ
       JuniorShortcuts() // ショートカットボタン
-    ])); 
+    ]));
   }
 }

@@ -6,12 +6,33 @@ import 'package:juninry/constant/colors.dart';
 import '../../components/molecule/next_day_task.dart';
 import '../../components/atoms/teaching_item.dart';
 
-
 // 明日の宿題 タスクタブ
 class TaskTab extends StatelessWidget {
   TaskTab({
     Key? key,
   }) : super(key: key);
+
+  // ソートはサーバー側でやってもらえるとうれしいなあという希望
+  // 提出期限ソート
+  // クラスでソート
+  // 提出状況でソート // こっちはクライアントでも簡単にできる軽い処理なのでなくてもいいです
+  // 以上３つがあるといいかもです
+  final List<Map> sample = [
+    {
+      'task_limit':'',
+      'taskData': {
+        'task_uuid': 'aaaaa', // 課題ID
+        'start_page': '1', // 開始ページ
+        'page_count': '10', // ページ数
+        'task_note': 'aaaaa', // 課題の説明
+        'teaching_material_name': '漢字ドリル', // 教材名
+        'subject_id': '0', // 教科ID
+        'image_uuid': 'aaaaa', // 画像ID どういう扱いになるのかな
+        'class_name': '3-2 ふたば学級', // クラス名
+        'submit_flg': '0', // 提出済みかどうか
+      }
+    }
+  ];
 
   final List<Map> taskData = [
     {

@@ -45,4 +45,3 @@
     style: fonts.h1     // ここでfontsから指定
   )
   ```
-

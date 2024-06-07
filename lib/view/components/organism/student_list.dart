@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../molecule/student_card.dart';
 import '../atoms/listItem_box.dart';
 
-
 // 生徒リスト
 class StudentList extends StatefulWidget {
   const StudentList({Key? key}) : super(key: key);
@@ -72,13 +71,13 @@ class _StudentListState extends State<StudentList> {
   @override
   Widget build(BuildContext context) {
     return ListItemBox(
-          itemDatas: sumpleData,
-          listItem: (map) => ElevatedButton(
-            onPressed: () {
-              // 画面遷移
-              context.push('/sample');
-            },
-            child: StudentCard(studentData: map)),
-        );
+      itemDatas: sumpleData,
+      listItem: (map) => InkWell(
+          onTap: () {
+            // 画面遷移
+            context.push('/sample');
+          },
+          child: StudentCard(studentData: map)),
+    );
   }
 }

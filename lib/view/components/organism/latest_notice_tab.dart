@@ -31,7 +31,7 @@ class LatestNoticeTab extends StatelessWidget {
         padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
         // ここに箱の中に表示したいウィジェットを入れる
         widget: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, //これをつける
+            crossAxisAlignment: CrossAxisAlignment.start, // 左寄せ
             children: [
               const Text('最新のお知らせ', style: Fonts.h1),
               const DividerView(
