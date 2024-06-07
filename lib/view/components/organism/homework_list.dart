@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../molecule/homework_card.dart';
 import '../atoms/listItem_box.dart';
 
-
 // 宿題のリスト
 class HomeworkList extends StatefulWidget {
   const HomeworkList({Key? key}) : super(key: key);
@@ -50,17 +49,13 @@ class _HomeworkList extends State<HomeworkList> {
   @override
   Widget build(BuildContext context) {
     return ListItemBox(
-          itemDatas: sumpleData,
-          listItem: (map) => 
-          InkWell(
+        itemDatas: sumpleData,
+        listItem: (map) => InkWell(
               onTap: () {
                 // 画面遷移
-                // context.push('/sample');
+                context.push('/homework/submittion');
               },
-              child: 
-          
-          
-          HomeworkCard(taskData: map),
-        ));
+              child: HomeworkCard(taskData: map),
+            ));
   }
 }

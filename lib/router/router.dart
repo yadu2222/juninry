@@ -10,6 +10,7 @@ import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
+import '../view/pages/junior/page_submission.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
@@ -82,10 +83,13 @@ final router = GoRouter(
                     name: 'nextdayTask',
                     path: 'nextday',
                     pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
-                  )
+                  ),
+                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageSubmissionJunior()))
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+
               ),
+              
             ],
           ),
 
