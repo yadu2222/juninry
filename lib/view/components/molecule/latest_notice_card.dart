@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import '../../../models/notice_model.dart';
 
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
@@ -10,17 +10,7 @@ class LatestNoticeCard extends StatelessWidget {
   const LatestNoticeCard({super.key, required this.noticeData});
 
   // お知らせ情報
-  final Map noticeData;
-
-// おしらせID	notice_uuid
-// タイトル	notice_title
-// 内容	notice_explanatory
-// 日付	notice_date
-// 投稿者ID	user_uuid
-// クラスID	class_uuid
-// おしらせID	notice_uuid
-// ユーザーID	user_uuid
-// 確認の有無 notice_reads
+  final Notice noticeData;
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +20,19 @@ class LatestNoticeCard extends StatelessWidget {
         child: Row(children: [
           SizedBox(
             child: Text(
-              noticeData["notice_date"],
+              noticeData.noticeDate,
               style: Fonts.h4,
             ),
           ),
           Container(
             margin: const EdgeInsets.only(left: 10),
             child: Text(
-              noticeData["notice_title"],
+              noticeData.noticeTitle,
               style: Fonts.p,
             ),
           ),
           const Spacer(),
-          int.parse(noticeData['notice_reads']) == 0
+          int.parse(noticeData.noticeRead) == 0
               ? const Icon(
                   Icons.error_outline,
                   color: AppColors.buttonCheck,

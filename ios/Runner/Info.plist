@@ -49,6 +49,9 @@
 	<!-- カメラの権限要求 -->
 	<key>NSCameraUsageDescription</key>
 	<string>教材の登録・課題の提出に使用します</string>
+	<!-- アルバムの権限要求 -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>課題の提出に使用します</string>
 	<!-- マイク カメラアプリを使用する都合上動画の撮影も可能になるからだと思われ？ -->
 	<key>NSMicrophoneUsageDescription</key>
 	<string>マイクを使用する理由をここに記述します</string>

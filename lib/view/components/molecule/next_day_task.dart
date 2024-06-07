@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+// import 'package:go_router/go_router.dart';
 
 import '../../../constant/fonts.dart';
 import '../atoms/listitem.dart';
@@ -7,11 +7,11 @@ import './progress_bar.dart';
 
 // 提出ページ見出し
 class NextDayTask extends StatelessWidget {
-  NextDayTask({Key? key, this.widget}) : super(key: key);
+  const NextDayTask({super.key, this.widget});
 
   final String message = 'キメラ先生からのコメント';
-  double progress = 0.5;  // TODO:進捗バーの進捗度 値をもらいたい 今は定数
-  Widget? widget;         // 進捗バーの下に表示するウィジェット
+  final double progress = 0.5;  // TODO:進捗バーの進捗度 値をもらいたい 今は定数
+  final Widget? widget;         // 進捗バーの下に表示するウィジェット
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../constant/fonts.dart';
-import '../../../constant/colors.dart';
 
+import '../../../models/homework_model.dart';
 
 // ページ数カウント
 class CountItem extends StatelessWidget {
-  const CountItem({Key? key,
-      required this.itemData,
+  const CountItem({
+    Key? key,
+    required this.itemData,
   }) : super(key: key);
 
-  final Map itemData;
+  final Homework itemData;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class CountItem extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15),
       child: Center(
         child: Text(
-          "${itemData['start_page']} ~ ${(int.parse(itemData['start_page']) + int.parse(itemData['page_count']) - 1).toString()}ｐ",
+          "${itemData.startPage.toString()} ~ ${(itemData.startPage + itemData.pageCount - 1).toString()}ｐ",
           style: Fonts.h4,
         ),
       ),

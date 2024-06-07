@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../models/homework_model.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
 import '../atoms/count_item.dart';
@@ -20,7 +21,7 @@ class TeachingItem extends StatelessWidget {
     AppColors.subjectOthers,
   ];
 
-  final Map itemData;
+  final Homework itemData;
 
   // TODO: 「枚数」対応
   @override
@@ -32,12 +33,12 @@ class TeachingItem extends StatelessWidget {
         width: 100,
         height: 25,
         decoration: BoxDecoration(
-          color: colors[int.parse(itemData['subject_id'])],
+          color: colors[itemData.subjectId],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
           child: Text(
-            itemData['teaching_material_name'],
+            itemData.teachingMaterialName,
             style: Fonts.pw,
           ),
         ),

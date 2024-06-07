@@ -2,30 +2,18 @@ import 'package:flutter/material.dart';
 import '../../../constant/colors.dart';
 import '../atoms/teaching_item.dart';
 
+import '../../../models/homework_model.dart';
 import '../atoms/listitem.dart';
 
 
 // 課題カード
 class HomeworkCard extends StatelessWidget {
-  HomeworkCard({
+  const HomeworkCard({
     super.key,
-    required this.taskData,
+    required this.homeworkData,
   });
-  final Map taskData;
-  
-  // 課題ID	task_uuid
-  // 期限	task_limit
-  // 教材ID	teaching_material_uuid
-  // 開始ページ	start_page
-  // ページ枚数	page_count
-  // 投稿者ID	task_poster_uuid
-  // 説明	task_note
-  // 教材ID	teaching_material_uuid
-  // 教材名	teaching_material_name
-  // 教科ID	subject_id
-  // 画像ID	image_uuid
-  // クラスID	class_uuid
-  // 提出済みかどうか	submit_flg
+  final Homework homeworkData;
+
 
   final Icon checkIcon = const Icon(
     Icons.check,
@@ -45,13 +33,13 @@ class HomeworkCard extends StatelessWidget {
         widget: Row(
           children: [
             // 教材カード
-            TeachingItem(itemData: taskData),
+            TeachingItem(itemData: homeworkData),
             const Spacer(), // 間隔を埋める
             // アイコン
             Container(
               alignment: Alignment.center,
               // 課題の提出状態を判別している
-              child: Center(child: int.parse(taskData['submit_flg']) == 1 ? checkIcon : cameraIcon),
+              child: Center(child: homeworkData.submitFlg== 1 ? checkIcon : cameraIcon),
             ),
           ],
         ));
