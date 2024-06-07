@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:juninry/constant/colors.dart';
+import '../../../models/notice_model.dart';
 
+import 'package:juninry/constant/colors.dart';
 import '../../../constant/fonts.dart';
+
 import '../atoms/listitem.dart';
 import '../molecule/latest_notice_card.dart';
 import '../molecule/divider.dart';
-import '../../../models/notice_model.dart';
 
 // 最新のお知らせタブ
 class LatestNoticeTab extends StatelessWidget {
-  LatestNoticeTab({super.key, required this.noticeData});
+  const LatestNoticeTab({super.key, required this.noticeData});
 
   final List<Notice> noticeData;
 

@@ -5,8 +5,11 @@ import '../../components/organism/homework_list.dart';
 import '../../components/molecule/next_day_task.dart';
 import '../../components/molecule/divider.dart';
 
+import '../../../models/homework_model.dart';
+import '../../../constant/sample_data.dart'; // sampleData
+
 class PageNextDayTaskJunior extends StatelessWidget {
-  const PageNextDayTaskJunior({Key? key}) : super(key: key);
+  PageNextDayTaskJunior({super.key});
 
   final String title = '提出';
   @override
@@ -19,7 +22,7 @@ class PageNextDayTaskJunior extends StatelessWidget {
           icon: Icons.menu_book_outlined,
           title: 'test',
         ),
-        const Expanded(child: HomeworkList()),
+        Expanded(child: HomeworkList(homeworkData: SampleData.homeworkData)),
       ]),
     );
   }

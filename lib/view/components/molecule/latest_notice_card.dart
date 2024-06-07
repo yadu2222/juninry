@@ -12,8 +12,6 @@ class LatestNoticeCard extends StatelessWidget {
   // お知らせ情報
   final Notice noticeData;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(

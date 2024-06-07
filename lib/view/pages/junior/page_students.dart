@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/organism/student_List.dart';
 import '../../components/atoms/appbar.dart';
+import '../../../constant/sample_data.dart'; // sampleData
 
 class PageStudentsJunior extends StatelessWidget {
   const PageStudentsJunior({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class PageStudentsJunior extends StatelessWidget {
         titleText: title,
         popIconButton: true,
       ),
-      const Expanded(child: StudentList()),
+      Expanded(child: StudentList(studentData: SampleData.studentData)),
     ]));
   }
 }

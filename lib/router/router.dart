@@ -82,11 +82,11 @@ final router = GoRouter(
                   GoRoute(
                     name: 'nextdayTask',
                     path: 'nextday',
-                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
+                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
                   ),
-                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageSubmissionJunior()))
+                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageSubmissionJunior()))
                 ],
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageHomeworkJunior()),
 
               ),
               
