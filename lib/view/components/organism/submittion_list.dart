@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../models/homework_model.dart';
 import '../molecule/submittion_card.dart';
-import '../atoms/listItem_box.dart';
 import '../../../constant/fonts.dart';
 
 // カメラを使用するためのライブラリ
@@ -12,7 +12,8 @@ import 'dart:io';
 
 // 提出リスト
 class SubmittionList extends StatefulWidget {
-  const SubmittionList({super.key});
+  final Homework homeworkData;
+  const SubmittionList({super.key, required this.homeworkData});
   @override
   _SubmittionListState createState() => _SubmittionListState();
 }
@@ -33,17 +34,14 @@ class _SubmittionListState extends State<SubmittionList> {
   }
 
   // sumpleDataをinitState内で初期化
-  late final List<Map<String, String>> sampleData;
+  late int count;
   @override
   void initState() {
     super.initState();
     // sumpleDataを初期化
-    sampleData = [
-      {'count': '14'},
-      {'count': '15'},
-    ];
+    count = widget.homeworkData.pageCount - widget.homeworkData.startPage + 1;
     // pickedFilesをsampledataの要素数で初期化
-    _images = List.filled(sampleData.length, null);
+    _images = List.filled(count, null);
   }
 
   @override
@@ -52,7 +50,7 @@ class _SubmittionListState extends State<SubmittionList> {
         width: MediaQuery.of(context).size.width * 0.92,
         child: ListView.builder(
           // カメラの処理と条件分岐が複雑なためここで定義
-          itemCount: sampleData.length,
+          itemCount: count,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
                 onTap: () {
@@ -60,8 +58,8 @@ class _SubmittionListState extends State<SubmittionList> {
                   pickImage(index);
                 },
                 child: _images[index] != null
-                    ? Container(margin: const EdgeInsets.all(5), child: Column(children: [Image.file(_images[index]!), Text('${sampleData[index]['count']!}p', style: Fonts.h4)]))
-                    : SubmittionCard(count: sampleData[index]));
+                    ? Container(margin: const EdgeInsets.all(5), child: Column(children: [Image.file(_images[index]!), Text('${(count - (count - index - 1)).toString()}p', style: Fonts.h4)]))
+                    : SubmittionCard(count: count - (count - index - 1)));
           },
         ));
   }

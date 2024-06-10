@@ -57,9 +57,9 @@ class SampleData {
       gender: '男',
     ),
     Student(
-      name: '山田太郎',
-      num: 34,
-      gender: '男',
+      name: '山田花子',
+      num: 35,
+      gender: '女',
     )
   ];
 

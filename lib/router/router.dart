@@ -82,14 +82,32 @@ final router = GoRouter(
                   GoRoute(
                     name: 'nextdayTask',
                     path: 'nextday',
-                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
+                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
                   ),
-                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageSubmissionJunior()))
-                ],
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageHomeworkJunior()),
+                  GoRoute(
+                    name: 'submittion',
+                    path: 'submittion',
+                    pageBuilder: (context, state) {
+                      if (state.extra != null) {
+                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                        final String homeworkId = extraData['homeworkId'];
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          child: PageSubmissionJunior(homeworkUUId: homeworkId),
+                        );
 
+                      // TODO:errorpage
+                      } else {
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          child: const PageHomeworkJunior(),
+                        );
+                      }
+                    },
+                  )
+                ],
+                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
               ),
-              
             ],
           ),
 
