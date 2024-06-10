@@ -61,14 +61,14 @@ final router = GoRouter(
           StatefulShellBranch(
             navigatorKey: noticeNavigatorKey,
             routes: [
-              GoRoute(
-                name: 'notice',
-                path: '/notice', // notice
-                pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const PageNoticeJunior(),
-                ),
-              ),
+              // GoRoute(
+              //   name: 'notice',
+              //   path: '/notice', // notice
+              //   pageBuilder: (context, state) => NoTransitionPage(
+              //     key: state.pageKey,
+              //     child: const PageNoticeJunior(),
+              //   ),
+              // ),
               GoRoute(
                 path: '/detail',
                 pageBuilder: (context, state) => NoTransitionPage(
@@ -90,14 +90,12 @@ final router = GoRouter(
                   GoRoute(
                     name: 'nextdayTask',
                     path: 'nextday',
-                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
+                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
                   ),
-                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageSubmissionJunior()))
+                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageSubmissionJunior()))
                 ],
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageHomeworkJunior()),
-
+                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
               ),
-              
             ],
           ),
 

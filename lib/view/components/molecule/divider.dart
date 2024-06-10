@@ -11,7 +11,7 @@ class DividerView extends StatelessWidget {
   final Color dividColor; // 線の色
   final double indent; // 線の左の空白
   final double endIndent; // 線の右の空白
-  final double dividWeight;
+  final double dividWeight; // ふとさ
 
   @override
   Widget build(BuildContext context) {
