@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'bottombar.dart';
 import '../../../constant/colors.dart';
 
-/**
- * 常時表示部分
- */
+// 常時表示部分
 class ScreenView extends StatelessWidget {
   const ScreenView({
     super.key,

@@ -12,6 +12,9 @@ import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
 import '../view/pages/junior/page_submission.dart';
 
+// patron
+import '../view/pages/patron/page_home.dart';
+
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final noticeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'notice');
@@ -50,7 +53,8 @@ final router = GoRouter(
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: PageHomeJunior(),
+                  // child: PageHomeJunior(),
+                  child: PageHomePatron(),
                 ),
               ),
             ],

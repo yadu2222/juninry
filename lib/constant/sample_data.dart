@@ -50,6 +50,103 @@ class SampleData {
     ),
   ];
 
+  static List<Map> patronHomeworkData2 = [
+    {
+      'juniorName':'ほげた',
+      'homeworkData': [
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: '2022/12/12',
+          teachingMaterialUuid: 'aaaaa',
+          startPage: 1,
+          pageCount: 1,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          teachingMaterialName: '漢字ドリル',
+          subjectId: 0,
+          imageUuid: 'aaaaa',
+          classUuid: 'aaaaa',
+          submitFlg: 0,
+        ),
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: '2022/12/22',
+          teachingMaterialUuid: 'aaaaa',
+          startPage: 1,
+          pageCount: 5,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          teachingMaterialName: '計算ドリル',
+          subjectId: 1,
+          imageUuid: 'aaaaa',
+          classUuid: 'aaaaa',
+          submitFlg: 1,
+        ),
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: '2022/12/22',
+          teachingMaterialUuid: 'aaaaa',
+          startPage: 1,
+          pageCount: 5,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          teachingMaterialName: '理科ワーク',
+          subjectId: 2,
+          imageUuid: 'aaaaa',
+          classUuid: 'aaaaa',
+          submitFlg: 1,
+        )
+      ]
+    },
+    {
+      'juniorName': 'ほげみ',
+      'homeworkData': [
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: '2022/12/12',
+          teachingMaterialUuid: 'aaaaa',
+          startPage: 1,
+          pageCount: 1,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          teachingMaterialName: '漢字ドリル',
+          subjectId: 0,
+          imageUuid: 'aaaaa',
+          classUuid: 'aaaaa',
+          submitFlg: 0,
+        ),
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: '2022/12/22',
+          teachingMaterialUuid: 'aaaaa',
+          startPage: 1,
+          pageCount: 5,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          teachingMaterialName: '計算ドリル',
+          subjectId: 1,
+          imageUuid: 'aaaaa',
+          classUuid: 'aaaaa',
+          submitFlg: 1,
+        ),
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: '2022/12/22',
+          teachingMaterialUuid: 'aaaaa',
+          startPage: 1,
+          pageCount: 5,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          teachingMaterialName: '理科ワーク',
+          subjectId: 2,
+          imageUuid: 'aaaaa',
+          classUuid: 'aaaaa',
+          submitFlg: 1,
+        )
+      ]
+    }
+  ];
+
   static List<Student> studentData = [
     Student(
       name: '山田太郎',
