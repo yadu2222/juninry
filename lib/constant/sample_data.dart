@@ -11,7 +11,7 @@ class SampleData {
       homeworkLimit: '2022/12/12',
       teachingMaterialUuid: 'aaaaa',
       startPage: 1,
-      pageCount: 5,
+      pageCount: 1,
       homeworkPosterUuid: 'aaaaa',
       homeworkNote: 'aaaaa',
       teachingMaterialName: '漢字ドリル',

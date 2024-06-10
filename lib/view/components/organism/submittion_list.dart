@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../models/homework_model.dart';
 import '../molecule/submittion_card.dart';
@@ -13,7 +12,9 @@ import 'dart:io';
 // 提出リスト
 class SubmittionList extends StatefulWidget {
   final Homework homeworkData;
-  const SubmittionList({super.key, required this.homeworkData});
+  final void Function() onTakeCamera; // 撮影時の処理
+  SubmittionList({super.key, required this.homeworkData, required this.onTakeCamera});
+
   @override
   _SubmittionListState createState() => _SubmittionListState();
 }
@@ -26,8 +27,11 @@ class _SubmittionListState extends State<SubmittionList> {
   Future<void> pickImage(int index) async {
     XFile? pickedFile = await picker.pickImage(source: ImageSource.camera); // カメラ起動
     setState(() {
+      // 一時ファイルにデータが有れば
       if (pickedFile != null) {
-        // 一時ファイルにデータが有れば
+        if (_images[index] == null) {   // 画像が既にある場合、つまり撮り直しを除外
+          widget.onTakeCamera(); // 撮影時の処理 残り枚数のカウントを減らす
+        }
         _images[index] = (File(pickedFile.path)); // 画像用配列に保存
       }
     });
@@ -38,10 +42,8 @@ class _SubmittionListState extends State<SubmittionList> {
   @override
   void initState() {
     super.initState();
-    // sumpleDataを初期化
-    count = widget.homeworkData.pageCount - widget.homeworkData.startPage + 1;
-    // pickedFilesをsampledataの要素数で初期化
-    _images = List.filled(count, null);
+    count = widget.homeworkData.pageCount - widget.homeworkData.startPage + 1; // ページ数を取得
+    _images = List.filled(count, null); // ページ数で初期化
   }
 
   @override

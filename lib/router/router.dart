@@ -88,15 +88,19 @@ final router = GoRouter(
                     name: 'submittion',
                     path: 'submittion',
                     pageBuilder: (context, state) {
+                      // 遷移時のデータの受け渡し
+                      // extraがnullである場合trycatchでエラーを回避
                       if (state.extra != null) {
+                        // 遷移時に定義されたデータをrouterで再定義
                         final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                         final String homeworkId = extraData['homeworkId'];
                         return NoTransitionPage(
                           key: state.pageKey,
+                          // 先ほど再定義したデータをここで渡す
                           child: PageSubmissionJunior(homeworkUUId: homeworkId),
                         );
 
-                      // TODO:errorpage
+                        // TODO:errorpage ホームに戻すのでいいかな？
                       } else {
                         return NoTransitionPage(
                           key: state.pageKey,
