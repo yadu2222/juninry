@@ -10,7 +10,11 @@ import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
+import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/junior/page_submission.dart';
+
+// patron
+import '../view/pages/patron/page_home.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
@@ -20,7 +24,7 @@ final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
 
 final router = GoRouter(
   debugLogDiagnostics: true,
-  initialLocation: '/home',
+  initialLocation: '/detail',
   routes: [
     // ボトムバーが必要な画面のルーティング
     // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
@@ -50,7 +54,8 @@ final router = GoRouter(
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: PageHomeJunior(),
+                  // child: PageHomeJunior(),
+                  child: PageHomePatron(),
                 ),
               ),
             ],
@@ -60,12 +65,19 @@ final router = GoRouter(
           StatefulShellBranch(
             navigatorKey: noticeNavigatorKey,
             routes: [
+              // GoRoute(
+              //   name: 'notice',
+              //   path: '/notice', // notice
+              //   pageBuilder: (context, state) => NoTransitionPage(
+              //     key: state.pageKey,
+              //     child: const PageNoticeJunior(),
+              //   ),
+              // ),
               GoRoute(
-                name: 'notice',
-                path: '/notice',
+                path: '/detail',
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageNoticeJunior(),
+                  child: PageNoticeDetail(),
                 ),
               )
             ],
@@ -82,14 +94,38 @@ final router = GoRouter(
                   GoRoute(
                     name: 'nextdayTask',
                     path: 'nextday',
-                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
+                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
                   ),
-                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageSubmissionJunior()))
-                ],
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageHomeworkJunior()),
 
+                  GoRoute(
+                    name: 'submittion',
+                    path: 'submittion',
+                    pageBuilder: (context, state) {
+                      // 遷移時のデータの受け渡し
+                      // extraがnullである場合trycatchでエラーを回避
+                      if (state.extra != null) {
+                        // 遷移時に定義されたデータをrouterで再定義
+                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                        final String homeworkId = extraData['homeworkId'];
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          // 先ほど再定義したデータをここで渡す
+                          child: PageSubmissionJunior(homeworkUUId: homeworkId),
+                        );
+
+                        // TODO:errorpage ホームに戻すのでいいかな？
+                      } else {
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          child: const PageHomeworkJunior(),
+                        );
+                      }
+                    },
+                  )
+
+                ],
+                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
               ),
-              
             ],
           ),
 

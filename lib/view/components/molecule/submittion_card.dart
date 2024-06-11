@@ -16,7 +16,7 @@ class SubmittionCard extends StatelessWidget {
   );
 
   // 提出するページ
-  final Map count;
+  final int count;
   @override
   Widget build(BuildContext context) {
     return ListItem(
@@ -29,7 +29,7 @@ class SubmittionCard extends StatelessWidget {
           margin: const EdgeInsets.only(left: 10),
           child: Center(
             child: Text(
-              '${count['count']}p',
+              '${count.toString()}p',
               style: Fonts.h4,
             ),
           ),

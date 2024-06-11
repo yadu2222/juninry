@@ -12,7 +12,6 @@ class Homework {
   String classUuid;
   int submitFlg;
 
-    
   // 課題ID	task_uuid
   // 期限	task_limit
   // 教材ID	teaching_material_uuid

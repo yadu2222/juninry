@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../../models/homework_model.dart';
 import '../molecule/submittion_card.dart';
-import '../atoms/listItem_box.dart';
 import '../../../constant/fonts.dart';
 
 // カメラを使用するためのライブラリ
@@ -12,7 +11,10 @@ import 'dart:io';
 
 // 提出リスト
 class SubmittionList extends StatefulWidget {
-  const SubmittionList({super.key});
+  final Homework homeworkData;
+  final void Function() onTakeCamera; // 撮影時の処理
+  SubmittionList({super.key, required this.homeworkData, required this.onTakeCamera});
+
   @override
   _SubmittionListState createState() => _SubmittionListState();
 }
@@ -25,25 +27,23 @@ class _SubmittionListState extends State<SubmittionList> {
   Future<void> pickImage(int index) async {
     XFile? pickedFile = await picker.pickImage(source: ImageSource.camera); // カメラ起動
     setState(() {
+      // 一時ファイルにデータが有れば
       if (pickedFile != null) {
-        // 一時ファイルにデータが有れば
+        if (_images[index] == null) {   // 画像が既にある場合、つまり撮り直しを除外
+          widget.onTakeCamera(); // 撮影時の処理 残り枚数のカウントを減らす
+        }
         _images[index] = (File(pickedFile.path)); // 画像用配列に保存
       }
     });
   }
 
   // sumpleDataをinitState内で初期化
-  late final List<Map<String, String>> sampleData;
+  late int count;
   @override
   void initState() {
     super.initState();
-    // sumpleDataを初期化
-    sampleData = [
-      {'count': '14'},
-      {'count': '15'},
-    ];
-    // pickedFilesをsampledataの要素数で初期化
-    _images = List.filled(sampleData.length, null);
+    count = widget.homeworkData.pageCount - widget.homeworkData.startPage + 1; // ページ数を取得
+    _images = List.filled(count, null); // ページ数で初期化
   }
 
   @override
@@ -52,7 +52,7 @@ class _SubmittionListState extends State<SubmittionList> {
         width: MediaQuery.of(context).size.width * 0.92,
         child: ListView.builder(
           // カメラの処理と条件分岐が複雑なためここで定義
-          itemCount: sampleData.length,
+          itemCount: count,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
                 onTap: () {
@@ -60,8 +60,8 @@ class _SubmittionListState extends State<SubmittionList> {
                   pickImage(index);
                 },
                 child: _images[index] != null
-                    ? Container(margin: const EdgeInsets.all(5), child: Column(children: [Image.file(_images[index]!), Text('${sampleData[index]['count']!}p', style: Fonts.h4)]))
-                    : SubmittionCard(count: sampleData[index]));
+                    ? Container(margin: const EdgeInsets.all(5), child: Column(children: [Image.file(_images[index]!), Text('${(count - (count - index - 1)).toString()}p', style: Fonts.h4)]))
+                    : SubmittionCard(count: count - (count - index - 1)));
           },
         ));
   }
