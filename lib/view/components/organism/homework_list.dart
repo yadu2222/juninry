@@ -17,7 +17,8 @@ class HomeworkList extends StatelessWidget {
         listItem: (homework) => InkWell(
               onTap: () {
                 // 画面遷移
-                context.push('/homework/submittion');
+                context.push('/homework/submittion',
+                    extra: {'homeworkId': homework.homeworkUuid});
               },
               child: HomeworkCard(homeworkData: homework),
             ));

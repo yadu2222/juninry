@@ -13,6 +13,9 @@ import '../view/pages/junior/page_students.dart';
 import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/junior/page_submission.dart';
 
+// patron
+import '../view/pages/patron/page_home.dart';
+
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final noticeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'notice');
@@ -51,7 +54,8 @@ final router = GoRouter(
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: PageHomeJunior(),
+                  // child: PageHomeJunior(),
+                  child: PageHomePatron(),
                 ),
               ),
             ],
@@ -92,7 +96,33 @@ final router = GoRouter(
                     path: 'nextday',
                     pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
                   ),
-                  GoRoute(name: 'submittion', path: 'submittion', pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageSubmissionJunior()))
+
+                  GoRoute(
+                    name: 'submittion',
+                    path: 'submittion',
+                    pageBuilder: (context, state) {
+                      // 遷移時のデータの受け渡し
+                      // extraがnullである場合trycatchでエラーを回避
+                      if (state.extra != null) {
+                        // 遷移時に定義されたデータをrouterで再定義
+                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                        final String homeworkId = extraData['homeworkId'];
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          // 先ほど再定義したデータをここで渡す
+                          child: PageSubmissionJunior(homeworkUUId: homeworkId),
+                        );
+
+                        // TODO:errorpage ホームに戻すのでいいかな？
+                      } else {
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          child: const PageHomeworkJunior(),
+                        );
+                      }
+                    },
+                  )
+
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
               ),

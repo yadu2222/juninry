@@ -8,8 +8,8 @@ import '../../components/molecule/next_day_task.dart';
 import '../../components/atoms/teaching_item.dart';
 
 // 明日の宿題 タスクタブ
-class TaskTab extends StatelessWidget {
-  TaskTab({
+class HomeworkTab extends StatelessWidget {
+  HomeworkTab({
    super.key,
     required this.homeworkData, 
   });

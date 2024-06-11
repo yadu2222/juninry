@@ -39,8 +39,8 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
             label: '宿題',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '設定',
+            icon: Icon(Icons.person_outline),
+            label: 'マイページ',
           ),
         ],
         currentIndex: selectedIndex,
