@@ -52,7 +52,7 @@ class SampleData {
 
   static List<Map> patronHomeworkData2 = [
     {
-      'juniorName':'ほげた',
+      'juniorName': 'ほげた',
       'homeworkData': [
         Homework(
           homeworkUuid: 'aaaaa',
@@ -160,5 +160,9 @@ class SampleData {
     )
   ];
 
-  static List<Notice> noticeData = [Notice(noticeTitle: 'お知らせがたくさん', noticeDate: '2024-6-3', noticeRead: '0'), Notice(noticeTitle: 'ほんのすこしのしんじつ', noticeDate: '2024-6-2', noticeRead: '1')];
+  static List<Notice> noticesData = [
+    Notice(noticeDate: '2024-6-3', className: '4-5', noticeTitle: 'お知らせがたくさん', noticeExplanatory: '少子化じゃなかったころ', noticeRead: '0'),
+    Notice(noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;', noticeExplanatory: '少子化じゃなかったころ', noticeRead: '1'),
+    Notice(noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', noticeExplanatory: '最終日まで残さないように。\n二行目だよ。', noticeRead: '0')
+  ];
 }

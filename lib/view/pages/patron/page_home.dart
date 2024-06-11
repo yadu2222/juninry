@@ -13,7 +13,7 @@ class PageHomePatron extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasicTemplate(title: title, children: [
-      LatestNoticeTab(noticeData: SampleData.noticeData), // 最新のお知らせタブ
+      LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
       HomeWorkTabs(homeworkData: SampleData.patronHomeworkData2), // 横スクロール課題タブ
       PatronShortcuts() // ショートカットセット
     ]);
