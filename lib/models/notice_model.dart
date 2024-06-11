@@ -1,6 +1,8 @@
 class Notice {
-  final String noticeTitle;
   final String noticeDate;
+  final String className;
+  final String noticeTitle;
+  final String noticeExplanatory;
   final String noticeRead;
 
 // TODO :適用
@@ -15,8 +17,10 @@ class Notice {
 // 確認の有無 notice_reads
 
   Notice({
-    required this.noticeTitle,
     required this.noticeDate,
+    required this.className,
+    required this.noticeTitle,
+    required this.noticeExplanatory,
     required this.noticeRead,
   });
 }

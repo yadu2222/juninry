@@ -34,7 +34,7 @@ class PageNoticeDetail extends StatelessWidget {
                     Icons.attach_file, // 右側のアイコン
                     size: 30,
                   ))), // app bar
-          // 最新のお知らせ
+          // 詳細
           NoticeDetailTab(tabData: sample),
           // 明日までの宿題
           const DividerView(
