@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:juninry/constant/colors.dart';
+import '../../../models/notice_model.dart';
 
 import '../../../constant/fonts.dart';
 import '../atoms/listitem.dart';
@@ -13,8 +14,7 @@ class NoticeCard extends StatelessWidget {
     super.key,
     required this.noticeData,
   });
-  final Map noticeData;
-
+  final Notice noticeData;
   //未確認アイコン
   final Icon unknowIcon = const Icon(
     Icons.info,
@@ -37,7 +37,7 @@ class NoticeCard extends StatelessWidget {
               Container(
                 width: 50,
                 height: 50,
-                child: ,
+                
               )
             ],    
           ),

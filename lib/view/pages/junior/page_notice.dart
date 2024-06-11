@@ -11,11 +11,9 @@ class PageNoticeJunior extends StatelessWidget {
   final String title = 'おしらせ';
   @override
   Widget build(BuildContext context) {
-    return Center(
-          child: Column(children: [ 
-            AppBarView(titleText: title),
+    return BasicTemplate(title: title, children:[ 
             Text('おしらせがたくさん', style: Fonts.h3),
           ])
-        );
+        ;
   }
 }
