@@ -10,6 +10,7 @@ import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 import 'package:juninry/view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
+import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/junior/page_submission.dart';
 
 // patron
@@ -23,7 +24,7 @@ final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
 
 final router = GoRouter(
   debugLogDiagnostics: true,
-  initialLocation: '/home',
+  initialLocation: '/detail',
   routes: [
     // ボトムバーが必要な画面のルーティング
     // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
@@ -64,12 +65,19 @@ final router = GoRouter(
           StatefulShellBranch(
             navigatorKey: noticeNavigatorKey,
             routes: [
+              // GoRoute(
+              //   name: 'notice',
+              //   path: '/notice', // notice
+              //   pageBuilder: (context, state) => NoTransitionPage(
+              //     key: state.pageKey,
+              //     child: const PageNoticeJunior(),
+              //   ),
+              // ),
               GoRoute(
-                name: 'notice',
-                path: '/notice',
+                path: '/detail',
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageNoticeJunior(),
+                  child: PageNoticeDetail(),
                 ),
               )
             ],
@@ -88,6 +96,7 @@ final router = GoRouter(
                     path: 'nextday',
                     pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
                   ),
+
                   GoRoute(
                     name: 'submittion',
                     path: 'submittion',
@@ -113,6 +122,7 @@ final router = GoRouter(
                       }
                     },
                   )
+
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
               ),
