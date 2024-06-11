@@ -1,6 +1,7 @@
 // おしらせ詳細タブ
 
 import 'package:flutter/material.dart';
+import 'package:juninry/models/notice_model.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
 import '../molecule/divider.dart';
 
@@ -11,7 +12,7 @@ class NoticeDetailTab extends StatelessWidget {
   NoticeDetailTab({super.key, required this.tabData});
 
   // fields
-  final Map tabData;
+  final Notice tabData;
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +26,19 @@ class NoticeDetailTab extends StatelessWidget {
               children: [
                 // ひづけ
                 Text(
-                  tabData["noticeDate"],
+                  tabData.noticeDate,
                   style: Fonts.p,
                 ),
                 // クラス名
                 Text(
-                  tabData["className"],
+                  tabData.className,
                   style: Fonts.p,
                 )
               ],
             ),
             // おてがみのタイトル
             Text(
-              tabData["noticeTitle"],
+              tabData.noticeTitle,
               style: Fonts.h4,
             ),
             // バー
@@ -49,7 +50,7 @@ class NoticeDetailTab extends StatelessWidget {
             ),
             // 本文
             Text(
-              tabData["noticeExplanatory"],
+              tabData.noticeExplanatory,
               style: Fonts.p,
             )
           ],
