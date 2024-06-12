@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 // 遷移先
 // junior
-
 import '../view/pages/junior/page_home.dart';
 import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_notice.dart';
@@ -12,9 +11,10 @@ import '../view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_students.dart';
 import '../view/pages/junior/page_submission.dart';
 
+// こどもブランチ
 class JuniorBranch {
-
-  static List<StatefulShellBranch> juniorBranch = [
+  static List<StatefulShellBranch> juniorBranchs = [
+    // home
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'home'),
       routes: [
@@ -22,6 +22,7 @@ class JuniorBranch {
           name: 'home',
           path: '/home',
           routes: [
+            // 生徒一覧
             GoRoute(
               name: 'students',
               path: 'students',
@@ -47,28 +48,6 @@ class JuniorBranch {
         GoRoute(
           name: 'notice',
           path: '/notice', // notice
-
-          // routes: [
-          //   // TODO:先生のお知らせ詳細画面
-          //   // GoRoute(
-          //   //   path: 'detail',
-          //   //   pageBuilder: (context, state) => NoTransitionPage(
-          //   //     key: state.pageKey,
-          //   //     child: const PageNoticeDetailTeacher(),
-          //   //   ),
-          //   // ),
-          //   // TODO:保護者のお知らせ詳細画面
-          //   GoRoute(
-          //     path: 'detail',
-          //     pageBuilder: (context, state) => NoTransitionPage(
-          //       key: state.pageKey,
-          //       child: const PageNoticeDetailPatron(
-          //         noticeUUID: '123456',
-          //       ),
-          //     ),
-          //   )
-          // ],
-
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: const PageNoticeJunior(),
@@ -85,11 +64,13 @@ class JuniorBranch {
           name: 'homework',
           path: '/homework',
           routes: [
+            // 次の日の課題
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
             ),
+            // 提出
             GoRoute(
               name: 'submittion',
               path: 'submittion',
@@ -116,7 +97,7 @@ class JuniorBranch {
               },
             )
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
         ),
       ],
     ),

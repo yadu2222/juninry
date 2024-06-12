@@ -7,6 +7,7 @@ import '../view/components/organism/basic_view.dart';
 import 'junior_branch.dart';
 import 'patron_branch.dart';
 import 'teacher_branch.dart';
+import 'debug_branch.dart';   // デバッグ用 すきにさわっていいよ gitから外してね
 
 // sample
 import '../constant/sample_data.dart';
@@ -18,14 +19,17 @@ Future<GoRouter> createRouter() async {
   // final userRole = await userService.getUserRole();
 
   // ユーザータイプに合わせたbranchesを返す
-  final userRole = SampleData.user.userTypeId;
+  final userRole = SampleData.user2.userTypeId;   // とりあえずデバッグ用のユーザーを読み込んでるよ
   List<StatefulShellBranch> getRouter() {
     if (userRole == 0) {
-      return JuniorBranch.juniorBranch;
+      return JuniorBranch.juniorBranchs;
     } else if (userRole == 1) {
-      return PatronBranch.patronBranch;
+      return PatronBranch.patronBranchs;
     } else if (userRole == 2) {
-      return TeacherBranch.teacherBranch;
+      return TeacherBranch.teacherBranchs;
+
+    }else if (userRole == 3){
+      return DebugBranch.debugBranchs;
     } else {
       return [];
     }

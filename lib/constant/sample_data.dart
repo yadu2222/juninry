@@ -14,6 +14,14 @@ class SampleData {
     password: 'password',
   );
 
+    static User user2 = User(
+    userUUID: '',
+    userName: 'debugUser',
+    userTypeId: 3,
+    mailAddress: '',
+    password: 'password',
+  );
+
   static List<Homework> homeworkData = [
     Homework(
       homeworkUuid: 'aaaaa',

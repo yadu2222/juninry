@@ -10,24 +10,17 @@ import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 
+// 教員ブランチ
 class TeacherBranch {
-  static List<StatefulShellBranch> teacherBranch = [
+  static List<StatefulShellBranch> teacherBranchs = [
+
+    // home
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'home'),
       routes: [
         GoRoute(
           name: 'home',
           path: '/home',
-          // routes: [
-          //   GoRoute(
-          //     name: 'students',
-          //     path: 'students',
-          //     pageBuilder: (context, state) => NoTransitionPage(
-          //       key: state.pageKey,
-          //       child: const PageStudentsJunior(),
-          //     ),
-          //   ),
-          // ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: const PageHomeJunior(),
@@ -41,6 +34,7 @@ class TeacherBranch {
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'notice'),
       routes: [
+        // おしらせ一覧
         GoRoute(
           name: 'notice',
           path: '/notice', // notice
