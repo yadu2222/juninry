@@ -2,29 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:juninry/constant/colors.dart';
 import 'package:juninry/constant/fonts.dart';
 
-
 // TODO:活性と不活性をさ〜〜〜管理したいよな〜〜〜
 class BasicButton extends StatelessWidget {
   const BasicButton({
     super.key,
     required this.text,
+    this.icon,
     required this.isColor, // trueでみどり falseで赤
-    required this.onPressed,
+    this.onPressed,
   });
 
   final String text;
+  final IconData? icon;
   final bool isColor;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Container(
+        width: width * 0.475,
         margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese),
             onPressed: onPressed,
-            child: Text(
-              text,
-              style: Fonts.h4w,
-            )));
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              icon != null ? Icon(icon, color: AppColors.iconLight, size: 30) : const SizedBox.shrink(),
+              Expanded(
+                  child: Container(
+                      alignment: Alignment.center, // 残りのスペースの中央に配置
+                      child: Text(
+                        text,
+                        style: Fonts.h4w,
+                      )))
+            ])));
   }
 }

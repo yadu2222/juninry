@@ -3,10 +3,27 @@ import 'package:juninry/models/classes.dart';
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
 import '../models/student_model.dart';
+import '../models/user_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
 class SampleData {
+  static User user = User(
+    userUUID: '',
+    userName: 'ほげた',
+    userTypeId: 1,
+    mailAddress: '',
+    password: 'password',
+  );
+
+    static User user2 = User(
+    userUUID: '',
+    userName: 'debugUser',
+    userTypeId: 3,
+    mailAddress: '',
+    password: 'password',
+  );
+
   static List<Homework> homeworkData = [
     Homework(
       homeworkUuid: 'aaaaa',
@@ -164,10 +181,16 @@ class SampleData {
 
   static List<Notice> noticesData = [
     Notice(
+
         noticeDate: '2024-6-3',
+
         className: '4-5',
+
         noticeTitle: 'お知らせがたくさん',
-        noticeExplanatory: '少子化じゃなかったころ',
+
+        noticeExplanatory:
+            '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
+
         noticeRead: '0'),
     Notice(
         noticeDate: '2024-6-2',
