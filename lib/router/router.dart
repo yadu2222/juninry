@@ -30,7 +30,7 @@ Future<GoRouter> createRouter() async {
 
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/notice/detail',
+    initialLocation: '/home',
     routes: [
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く

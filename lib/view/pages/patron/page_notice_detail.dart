@@ -33,6 +33,7 @@ class PageNoticeDetailPatron extends HookWidget {
           // なかみ
           // TODO:文字数過多に対する処理
           NoticeDetailTab(tabData: SampleData.noticesData[0]), // 詳細
+          const Spacer(),
           isRead.value ? BasicButton(icon: Icons.check, text: '確認済', isColor: isRead.value) : BasicButton(icon: Icons.check, text: '確認しました', isColor: isRead.value, onPressed: isReadChange)
         ]);
   }
