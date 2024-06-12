@@ -16,6 +16,9 @@ import '../view/pages/junior/page_submission.dart';
 // patron
 import '../view/pages/patron/page_home.dart';
 
+// teacher
+import '../view/pages/teacher/page_create_notice.dart';
+
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final noticeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'notice');
@@ -24,7 +27,7 @@ final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
 
 final router = GoRouter(
   debugLogDiagnostics: true,
-  initialLocation: '/detail',
+  initialLocation: '/create',
   routes: [
     // ボトムバーが必要な画面のルーティング
     // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
@@ -79,6 +82,14 @@ final router = GoRouter(
                   key: state.pageKey,
                   child: PageNoticeDetail(),
                 ),
+              ),
+
+              GoRoute(
+                path: '/create',
+                pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child: PageCreateNotice(),
+                ),
               )
             ],
           ),
@@ -94,9 +105,9 @@ final router = GoRouter(
                   GoRoute(
                     name: 'nextdayTask',
                     path: 'nextday',
-                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
+                    pageBuilder: (context, state) => NoTransitionPage(
+                        key: state.pageKey, child: PageNextDayTaskJunior()),
                   ),
-
                   GoRoute(
                     name: 'submittion',
                     path: 'submittion',
@@ -105,7 +116,8 @@ final router = GoRouter(
                       // extraがnullである場合trycatchでエラーを回避
                       if (state.extra != null) {
                         // 遷移時に定義されたデータをrouterで再定義
-                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                        final Map<String, dynamic> extraData =
+                            state.extra as Map<String, dynamic>;
                         final String homeworkId = extraData['homeworkId'];
                         return NoTransitionPage(
                           key: state.pageKey,
@@ -122,9 +134,9 @@ final router = GoRouter(
                       }
                     },
                   )
-
                 ],
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
+                pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey, child: PageHomeworkJunior()),
               ),
             ],
           ),
@@ -136,7 +148,8 @@ final router = GoRouter(
               GoRoute(
                 name: 'userData',
                 path: '/userData',
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserDataJunior()),
+                pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey, child: const PageUserDataJunior()),
               )
             ],
           ),
