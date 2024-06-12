@@ -30,11 +30,10 @@ class PageNoticeDetailPatron extends HookWidget {
         title: title,
         popIcon: true, // 戻るボタン
         children: [
-            // なかみ
-            // TODO:文字数過多に対する処理
-            NoticeDetailTab(tabData: SampleData.noticesData[0]), // 詳細
-            isRead.value ? BasicButton(text: '確認済', isColor: isRead.value) : BasicButton(text: '確認しました', isColor: isRead.value, onPressed: isReadChange)
-          ]);
-        
+          // なかみ
+          // TODO:文字数過多に対する処理
+          NoticeDetailTab(tabData: SampleData.noticesData[0]), // 詳細
+          isRead.value ? BasicButton(icon: Icons.check, text: '確認済', isColor: isRead.value) : BasicButton(icon: Icons.check, text: '確認しました', isColor: isRead.value, onPressed: isReadChange)
+        ]);
   }
 }

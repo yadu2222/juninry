@@ -23,134 +23,143 @@ final noticeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'notice');
 final homeworkNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'homework');
 final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
 
-final router = GoRouter(
-  debugLogDiagnostics: true,
-  initialLocation: '/home',
-  routes: [
-    // ボトムバーが必要な画面のルーティング
-    // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
-    StatefulShellRoute.indexedStack(
-        // parentNavigatorKey: rootNavigatorKey,    // これがあると初期画面で/homeにたどり着けない 原因究明中
-        // ここで常時表示させたいクラスをビルドしている
-        builder: (context, state, navigationShell) {
-          return BasicScreenView(navigationShell: navigationShell);
-        },
-        branches: [
-          // home
-          StatefulShellBranch(
-            navigatorKey: homeNavigatorKey,
-            routes: [
-              GoRoute(
-                name: 'home',
-                path: '/home',
-                routes: [
-                  GoRoute(
-                    name: 'students',
-                    path: 'students',
-                    pageBuilder: (context, state) => NoTransitionPage(
-                      key: state.pageKey,
-                      child: const PageStudentsJunior(),
+Future<GoRouter> createRouter() async {
+  // final userService = UserService();
+  // final userRole = await userService.getUserRole();
+  // List<StatefulShellBranch> branches;
+
+  return GoRouter(
+    debugLogDiagnostics: true,
+    initialLocation: '/notice/detail',
+    routes: [
+      // ボトムバーが必要な画面のルーティング
+      // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
+      StatefulShellRoute.indexedStack(
+          // parentNavigatorKey: rootNavigatorKey,    // これがあると初期画面で/homeにたどり着けない 原因究明中
+          // ここで常時表示させたいクラスをビルドしている
+          builder: (context, state, navigationShell) {
+            return BasicScreenView(navigationShell: navigationShell);
+          },
+          branches: [
+            // home
+            StatefulShellBranch(
+              navigatorKey: homeNavigatorKey,
+              routes: [
+                GoRoute(
+                  name: 'home',
+                  path: '/home',
+                  routes: [
+                    GoRoute(
+                      name: 'students',
+                      path: 'students',
+                      pageBuilder: (context, state) => NoTransitionPage(
+                        key: state.pageKey,
+                        child: const PageStudentsJunior(),
+                      ),
                     ),
-                  ),
-                ],
-                pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: PageHomeJunior(),
-                  // child: PageHomePatron(),
-                ),
-              ),
-            ],
-          ),
-
-          // notice
-          StatefulShellBranch(
-            navigatorKey: noticeNavigatorKey,
-            routes: [
-              // GoRoute(
-              //   name: 'notice',
-              //   path: '/notice', // notice
-              //   pageBuilder: (context, state) => NoTransitionPage(
-              //     key: state.pageKey,
-              //     child: const PageNoticeJunior(),
-              //   ),
-              // ),
-
-              // TODO:先生のお知らせ詳細画面
-              // GoRoute(
-              //   path: '/detail',
-              //   pageBuilder: (context, state) => NoTransitionPage(
-              //     key: state.pageKey,
-              //     child: const PageNoticeDetailTeacher(),
-              //   ),
-              // ),
-              // TODO:保護者のお知らせ詳細画面
-              GoRoute(
-                path: '/detail',
-                pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const PageNoticeDetailPatron(
-                    noticeUUID: '123456',
+                  ],
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageHomeJunior(),
+                    // child: PageHomePatron(),
                   ),
                 ),
-              )
-            ],
-          ),
+              ],
+            ),
 
-          // homework
-          StatefulShellBranch(
-            navigatorKey: homeworkNavigatorKey,
-            routes: [
-              GoRoute(
-                name: 'homework',
-                path: '/homework',
-                routes: [
-                  GoRoute(
-                    name: 'nextdayTask',
-                    path: 'nextday',
-                    pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
+            // notice
+            StatefulShellBranch(
+              navigatorKey: noticeNavigatorKey,
+              routes: [
+                GoRoute(
+                  name: 'notice',
+                  path: '/notice', // notice
+
+                  routes: [
+                    // TODO:先生のお知らせ詳細画面
+                    // GoRoute(
+                    //   path: 'detail',
+                    //   pageBuilder: (context, state) => NoTransitionPage(
+                    //     key: state.pageKey,
+                    //     child: const PageNoticeDetailTeacher(),
+                    //   ),
+                    // ),
+                    // TODO:保護者のお知らせ詳細画面
+                    GoRoute(
+                      path: 'detail',
+                      pageBuilder: (context, state) => NoTransitionPage(
+                        key: state.pageKey,
+                        child: const PageNoticeDetailPatron(
+                          noticeUUID: '123456',
+                        ),
+                      ),
+                    )
+                  ],
+
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const PageNoticeJunior(),
                   ),
-                  GoRoute(
-                    name: 'submittion',
-                    path: 'submittion',
-                    pageBuilder: (context, state) {
-                      // 遷移時のデータの受け渡し
-                      // extraがnullである場合trycatchでエラーを回避
-                      if (state.extra != null) {
-                        // 遷移時に定義されたデータをrouterで再定義
-                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
-                        final String homeworkId = extraData['homeworkId'];
-                        return NoTransitionPage(
-                          key: state.pageKey,
-                          // 先ほど再定義したデータをここで渡す
-                          child: PageSubmissionJunior(homeworkUUId: homeworkId),
-                        );
+                ),
+              ],
+            ),
 
-                        // TODO:errorpage ホームに戻すのでいいかな？
-                      } else {
-                        return NoTransitionPage(
-                          key: state.pageKey,
-                          child: const PageHomeworkJunior(),
-                        );
-                      }
-                    },
-                  )
-                ],
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
-              ),
-            ],
-          ),
+            // homework
+            StatefulShellBranch(
+              navigatorKey: homeworkNavigatorKey,
+              routes: [
+                GoRoute(
+                  name: 'homework',
+                  path: '/homework',
+                  routes: [
+                    GoRoute(
+                      name: 'nextdayTask',
+                      path: 'nextday',
+                      pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
+                    ),
+                    GoRoute(
+                      name: 'submittion',
+                      path: 'submittion',
+                      pageBuilder: (context, state) {
+                        // 遷移時のデータの受け渡し
+                        // extraがnullである場合trycatchでエラーを回避
+                        if (state.extra != null) {
+                          // 遷移時に定義されたデータをrouterで再定義
+                          final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                          final String homeworkId = extraData['homeworkId'];
+                          return NoTransitionPage(
+                            key: state.pageKey,
+                            // 先ほど再定義したデータをここで渡す
+                            child: PageSubmissionJunior(homeworkUUId: homeworkId),
+                          );
 
-          // userData
-          StatefulShellBranch(
-            navigatorKey: userDataNavigatorKey,
-            routes: [
-              GoRoute(
-                name: 'userData',
-                path: '/userData',
-                pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserDataJunior()),
-              )
-            ],
-          ),
-        ])
-  ],
-);
+                          // TODO:errorpage ホームに戻すのでいいかな？
+                        } else {
+                          return NoTransitionPage(
+                            key: state.pageKey,
+                            child: const PageHomeworkJunior(),
+                          );
+                        }
+                      },
+                    )
+                  ],
+                  pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageHomeworkJunior()),
+                ),
+              ],
+            ),
+
+            // userData
+            StatefulShellBranch(
+              navigatorKey: userDataNavigatorKey,
+              routes: [
+                GoRoute(
+                  name: 'userData',
+                  path: '/userData',
+                  pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserDataJunior()),
+                )
+              ],
+            ),
+          ])
+    ],
+  );
+}
