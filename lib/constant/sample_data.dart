@@ -161,7 +161,13 @@ class SampleData {
   ];
 
   static List<Notice> noticesData = [
-    Notice(noticeDate: '2024-6-3', className: '4-5', noticeTitle: 'お知らせがたくさん', noticeExplanatory: '少子化じゃなかったころ', noticeRead: '0'),
+    Notice(
+        noticeDate: '2024-6-3',
+        className: '4-5',
+        noticeTitle: 'お知らせがたくさん',
+        noticeExplanatory:
+            '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
+        noticeRead: '0'),
     Notice(noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;', noticeExplanatory: '少子化じゃなかったころ', noticeRead: '1'),
     Notice(noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', noticeExplanatory: '最終日まで残さないように。\n二行目だよ。', noticeRead: '0')
   ];

@@ -7,7 +7,7 @@ import '../../components/organism/homework_tabs.dart';
 import '../../../constant/sample_data.dart'; // sampleData
 
 class PageHomePatron extends StatelessWidget {
-  const PageHomePatron({Key? key}) : super(key: key);
+  const PageHomePatron({super.key});
 
   final String title = 'ホーム';
   @override

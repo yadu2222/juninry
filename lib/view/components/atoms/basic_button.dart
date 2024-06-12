@@ -9,12 +9,12 @@ class BasicButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.isColor, // trueでみどり falseで赤
-    required this.onPressed,
+    this.onPressed,
   });
 
   final String text;
   final bool isColor;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return Container(
