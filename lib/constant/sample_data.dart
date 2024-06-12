@@ -1,10 +1,19 @@
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
 import '../models/student_model.dart';
+import '../models/user_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
 class SampleData {
+  static User user = User(
+    userUUID: '',
+    userName: 'ほげた',
+    userTypeId: 1,
+    mailAddress: '',
+    password: 'password',
+  );
+
   static List<Homework> homeworkData = [
     Homework(
       homeworkUuid: 'aaaaa',
