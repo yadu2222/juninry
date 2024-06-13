@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 
 // 遷移先
 // teacher
+import '../view/pages/teacher/page_home.dart';
 import '../view/pages/teacher/page_notice_detail.dart';
 // 暫定的ホームたちにjuniorを使用
-import '../view/pages/junior/page_home.dart';
 import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
@@ -13,7 +13,6 @@ import '../view/pages/junior/page_user.dart';
 // 教員ブランチ
 class TeacherBranch {
   static List<StatefulShellBranch> teacherBranchs = [
-
     // home
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'home'),
@@ -23,7 +22,7 @@ class TeacherBranch {
           path: '/home',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const PageHomeJunior(),
+            child: const PageHomeTeacher(),
             // child: PageHomePatron(),
           ),
         ),
@@ -45,8 +44,8 @@ class TeacherBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageNoticeDetailTeacher(
-                  // noticeUUID: '123456',
-                ),
+                    // noticeUUID: '123456',
+                    ),
               ),
             )
           ],

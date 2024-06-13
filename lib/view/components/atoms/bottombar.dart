@@ -13,6 +13,7 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemTapped;
 
+  // TODO:ここもユーザーのタイプに合わせて表示すべきですよね、、という話
   @override
   Widget build(BuildContext context) => Container(
       decoration: const BoxDecoration(

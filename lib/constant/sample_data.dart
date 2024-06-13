@@ -6,21 +6,39 @@ import '../models/user_model.dart';
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
 class SampleData {
-  static User user = User(
+  static User juniorUser = User(
+    userUUID: 'ほげおか',
+    userName: 'junior',
+    userTypeId: 0,
+    mailAddress: '',
+    password: 'password',
+  );
+
+     static User patronUser = User(
     userUUID: '',
-    userName: 'ほげた',
+    userName: 'patron',
     userTypeId: 1,
     mailAddress: '',
     password: 'password',
   );
 
-    static User user2 = User(
+     static User teacherUser = User(
+    userUUID: '',
+    userName: 'teacher',
+    userTypeId: 2,
+    mailAddress: '',
+    password: 'password',
+  );
+
+    static User debugUser = User(
     userUUID: '',
     userName: 'debugUser',
     userTypeId: 3,
     mailAddress: '',
     password: 'password',
   );
+
+
 
   static List<Homework> homeworkData = [
     Homework(

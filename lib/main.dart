@@ -2,23 +2,20 @@ import 'package:flutter/material.dart';
 import 'router/router.dart';
 import 'package:go_router/go_router.dart';
 import './constant/colors.dart';
+import './models/user_model.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
-  GoRouter? _router;  // GoRouterのインスタンス// null許容
+  GoRouter? _router; // GoRouterのインスタンス// null許容
   // ルーターの初期化を非同期で行う
   Future<void> _initializeRouter() async {
     final router = await createRouter(); // 非同期でルーターを取得
@@ -30,13 +27,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _initializeRouter();
+    User.dbSampleUserAdd();
+    _initializeRouter();  
+    
   }
 
   @override
   Widget build(BuildContext context) {
-
-      if (_router == null) {
+    if (_router == null) {
       // ルーターが初期化されていない場合、ローディングインジケーターを表示
       return const CircularProgressIndicator();
     }
@@ -53,4 +51,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
