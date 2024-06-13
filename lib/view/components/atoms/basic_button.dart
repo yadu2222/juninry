@@ -8,6 +8,7 @@ class BasicButton extends StatelessWidget {
     super.key,
     required this.text,
     this.icon,
+    this.width = 0.475,
     required this.isColor, // trueでみどり falseで赤
     this.onPressed,
   });
@@ -15,12 +16,13 @@ class BasicButton extends StatelessWidget {
   final String text;
   final IconData? icon;
   final bool isColor;
+  final double width;
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-        width: width * 0.475,
+        width: screenWidth * width,
         margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese),
