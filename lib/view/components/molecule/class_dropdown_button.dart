@@ -34,8 +34,9 @@ class _ClassDropdownButtonState extends State<ClassDropdownButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 200,
-        height: 50,
+        height: 40,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10)), // 角丸: 10,  // 角丸
         child: DropdownButton<Classes>(
             value: selectedClass,
             items: classesList.map((Classes classes) {

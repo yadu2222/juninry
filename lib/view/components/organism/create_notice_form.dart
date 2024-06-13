@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
 import 'package:juninry/view/components/molecule/class_dropdown_button.dart';
+import 'package:juninry/view/components/molecule/long_text_field.dart';
+import 'package:juninry/view/components/organism/quote_from_notice.dart';
 import '../../../constant/fonts.dart';
 //日付を扱えるクラスをインポート
 import 'dart:core';
@@ -13,8 +15,20 @@ class CreateNoticeForm extends StatefulWidget {
   final List<Classes> classesList;
   final void Function(Classes? value) onChanged;
   final Classes selectedClass;
+  final String name;
+  final String quoteNoticeTitle;
+  final void Function(String value) onTextChanged;
 
-  const CreateNoticeForm({super.key, required this.classesList,required this.onChanged, required this.selectedClass});
+  const CreateNoticeForm({
+    super.key,
+    required this.classesList,
+    required this.onChanged,
+    required this.selectedClass,
+    required this.name,
+    this.quoteNoticeTitle = "投稿の引用",
+    required this.onTextChanged,
+  });
+
   @override
   _CreateNoticeFormState createState() => _CreateNoticeFormState();
 }
@@ -22,8 +36,15 @@ class CreateNoticeForm extends StatefulWidget {
 class _CreateNoticeFormState extends State<CreateNoticeForm> {
   //クラスの選択項目
   late List<Classes> classesList;
+
+  //名前
+  late String name;
+
   //選択されているクラス
   late Classes selectedClass;
+
+  //入力された内容
+  late String noticeText;
 
   //初期化
   @override
@@ -31,6 +52,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
     super.initState();
     classesList = widget.classesList;
     selectedClass = widget.selectedClass;
+    name = widget.name;
   }
 
   @override
@@ -38,18 +60,36 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
     //日付を取得
     final String date = DateFormat('yyyy.MM.dd').format(DateTime.now());
 
+    //白い枠
     return ListItem(
-        //白い枠のある箱の中にある
-        widget: Column(//基本的に縦並びで表示する
-            children: [
-      Row(children: [
-        Text(date, style: Fonts.h4),
-        ClassDropdownButton(
-          selectedClass: selectedClass,
-          classesList: classesList,
-          onChanged: widget.onChanged,
-        ),
-      ]),
-    ]));
+        height: 500,
+        widget: Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            //日付とクラスのセレクトボックス
+            Text(date, style: Fonts.h4),
+            ClassDropdownButton(
+              selectedClass: selectedClass,
+              classesList: classesList,
+              onChanged: widget.onChanged,
+            ),
+          ]),
+
+          //名前ブロック
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(name, style: Fonts.p),
+          ),
+
+          //引用ブロック
+          QuoteFromNotice(
+            //引用するお知らせ
+            quoteNoticeTitle: widget.quoteNoticeTitle,
+          ),
+
+          // 入力ブロック
+          Expanded(
+            child: LongTextField(onTextChanged: widget.onTextChanged),
+          )
+        ]));
   }
 }

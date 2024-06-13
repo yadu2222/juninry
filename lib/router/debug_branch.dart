@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/teacher/page_create_notice.dart';
 
 
 
@@ -22,7 +23,7 @@ class DebugBranch {
           path: '/home',
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const PageHomeJunior(),
+            child: const PageCreateNotice(),
             // child: PageHomePatron(),
           ),
         ),
