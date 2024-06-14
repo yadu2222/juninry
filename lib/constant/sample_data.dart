@@ -14,7 +14,7 @@ class SampleData {
     password: 'password',
   );
 
-     static User patronUser = User(
+  static User patronUser = User(
     userUUID: '',
     userName: 'patron',
     userTypeId: 1,
@@ -22,7 +22,7 @@ class SampleData {
     password: 'password',
   );
 
-     static User teacherUser = User(
+  static User teacherUser = User(
     userUUID: '',
     userName: 'teacher',
     userTypeId: 2,
@@ -30,15 +30,13 @@ class SampleData {
     password: 'password',
   );
 
-    static User debugUser = User(
+  static User debugUser = User(
     userUUID: '',
     userName: 'debugUser',
     userTypeId: 3,
     mailAddress: '',
     password: 'password',
   );
-
-
 
   static List<Homework> homeworkData = [
     Homework(
@@ -130,7 +128,7 @@ class SampleData {
           imageUuid: 'aaaaa',
           classUuid: 'aaaaa',
           submitFlg: 1,
-        )
+        ),
       ]
     },
     {

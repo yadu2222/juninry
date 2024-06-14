@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../components/template/listview_template.dart';
+import 'package:flutter/widgets.dart';
+import '../../components/template/scroll_template.dart';
 import '../../components/organism/latest_notice_tab.dart';
 import '../../components/organism/patron_shortcuts.dart';
 import '../../components/organism/homework_tabs.dart';
@@ -11,13 +12,13 @@ class PageHomePatron extends StatelessWidget {
 
   final String title = 'ホーム';
 
-  // TODO:リストビューに謎の空白ができるので調整
   @override
   Widget build(BuildContext context) {
-    return ListViewTemplate(title: title, children: [
+    return ScrollTemplate(title: title, children: [
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
-      HomeWorkTabs(homeworkData: SampleData.patronHomeworkData2), // 横スクロール課題タブ
+       HomeWorkTabs(homeworkData: SampleData.patronHomeworkData2), // 横スクロール課題タブ
       PatronShortcuts(), // ショートカットセット
+      
     ]);
   }
 }

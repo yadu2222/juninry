@@ -26,7 +26,7 @@ class TeachingItem extends StatelessWidget {
   // TODO: 「枚数」対応
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         child: Row(children: [
       // 教材の表示
       Container(

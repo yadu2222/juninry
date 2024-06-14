@@ -10,7 +10,7 @@ import 'teacher_branch.dart';
 import 'debug_branch.dart'; // デバッグ用 すきにさわっていいよ gitから外してね
 
 // sample
-import '../constant/sample_data.dart';
+// import '../constant/sample_data.dart';
 import '../models/user_model.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();

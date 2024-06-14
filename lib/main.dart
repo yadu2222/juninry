@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'router/router.dart';
 import 'package:go_router/go_router.dart';
 import './constant/colors.dart';
+
+
 import './models/user_model.dart';
 
 void main() {
@@ -11,10 +13,10 @@ void main() {
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   GoRouter? _router; // GoRouterのインスタンス// null許容
   // ルーターの初期化を非同期で行う
   Future<void> _initializeRouter() async {
@@ -28,8 +30,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     User.dbSampleUserAdd();
-    _initializeRouter();  
-    
+    _initializeRouter();
   }
 
   @override

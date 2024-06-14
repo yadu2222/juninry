@@ -46,7 +46,7 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
         ],
         currentIndex: selectedIndex,
         backgroundColor: AppColors.main,
-        selectedItemColor: AppColors.iconLight, // 選択中のアイコンの色 かわってくれないのでこまっているよ
+        selectedItemColor: AppColors.iconLight,
         // unselectedItemColor: AppColors.fontLight,
         onTap: onItemTapped, // タップ時の処理
         type: BottomNavigationBarType.fixed,

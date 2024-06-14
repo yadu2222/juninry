@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import './dbcon.dart';
@@ -46,7 +44,7 @@ class User {
     if (await DatabaseHelper.firstdb()) {
       var user = await DatabaseHelper.queryAllRows('users');
       debugPrint(user.toString());
-      return toUser(user[2]);
+      return toUser(user[1]);
     } else {
       debugPrint('できてない？');
       return User(

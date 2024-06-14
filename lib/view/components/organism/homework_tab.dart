@@ -9,14 +9,13 @@ import '../../components/atoms/teaching_item.dart';
 
 // 明日の宿題 タスクタブ
 class HomeworkTab extends StatelessWidget {
-  HomeworkTab({
-   super.key,
-    required this.homeworkData, 
+  const HomeworkTab({
+    super.key,
+    required this.homeworkData,
   });
 
   // サンプルデータ
   final List<Homework> homeworkData;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -26,8 +25,9 @@ class HomeworkTab extends StatelessWidget {
         },
         child: Stack(children: [
           NextDayTask(
-              widget: Container(
-                  padding: const EdgeInsets.only(bottom: 10),
+              widget: SizedBox(
+                  // height: 35 * homeworkData.length + 0.0, // 35px * データ数
+                  // padding: const EdgeInsets.only(bottom: 10),
                   child: Column(
                       // 繰り返し表示
                       // スクロールはさせない！！！！！！！！！！
@@ -37,7 +37,7 @@ class HomeworkTab extends StatelessWidget {
                       child: TeachingItem(itemData: homeworkData[index]),
                     );
                   })))),
-          Positioned(bottom: 30, right: 15, child: Icon(Icons.launch, size: 25, color: AppColors.iconDark))
+          const Positioned(bottom: 35, right: 30, child: Icon(Icons.launch, size: 25, color: AppColors.iconDark))
         ]));
   }
 }
