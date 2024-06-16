@@ -16,7 +16,7 @@ class SampleData {
     password: 'password',
   );
 
-    static User user2 = User(
+  static User user2 = User(
     userUUID: '',
     userName: 'debugUser',
     userTypeId: 3,
@@ -181,16 +181,11 @@ class SampleData {
 
   static List<Notice> noticesData = [
     Notice(
-
         noticeDate: '2024-6-3',
-
         className: '4-5',
-
         noticeTitle: 'お知らせがたくさん',
-
         noticeExplanatory:
             '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
-
         noticeRead: '0'),
     Notice(
         noticeDate: '2024-6-2',
@@ -208,10 +203,12 @@ class SampleData {
 
   static List<Classes> classesData = [
     Classes(
-      classUuid: 'aaaaa', className: '4-5',
+      classUuid: 'aaaaa',
+      className: '3-2 ふたば学級',
     ),
     Classes(
-      classUuid: 'aaaaa', className: '3-A',
+      classUuid: 'aaaaa',
+      className: '3-5 みつば学級',
     ),
   ];
 }

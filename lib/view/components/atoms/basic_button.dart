@@ -6,27 +6,42 @@ import 'package:juninry/constant/fonts.dart';
 class BasicButton extends StatelessWidget {
   const BasicButton({
     super.key,
+    this.widthPercent = 0.475,
     required this.text,
     this.icon,
     required this.isColor, // trueでみどり falseで赤
     this.onPressed,
+    this.radius,
   });
 
+  final double widthPercent;
   final String text;
   final IconData? icon;
   final bool isColor;
   final void Function()? onPressed;
+  final double? radius;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
-        width: width * 0.475,
+        width: width * widthPercent,
         margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: isColor
+                  ? AppColors.subjectScience
+                  : AppColors.subjectJapanese,
+              shape: radius != null
+                  ? RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(radius!))
+                  : null,
+            ),
             onPressed: onPressed,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              icon != null ? Icon(icon, color: AppColors.iconLight, size: 30) : const SizedBox.shrink(),
+              icon != null
+                  ? Icon(icon, color: AppColors.iconLight, size: 30)
+                  : const SizedBox.shrink(),
               Expanded(
                   child: Container(
                       alignment: Alignment.center, // 残りのスペースの中央に配置

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
-import 'package:juninry/view/components/molecule/class_dropdown_button.dart';
+import 'package:juninry/view/components/molecule/custom_dropdown.dart';
 import 'package:juninry/view/components/molecule/long_text_field.dart';
-import 'package:juninry/view/components/organism/quote_from_notice.dart';
+import 'package:juninry/view/components/molecule/quote_from_notice.dart';
 import '../../../constant/fonts.dart';
 //日付を扱えるクラスをインポート
 import 'dart:core';
@@ -16,6 +16,7 @@ class CreateNoticeForm extends StatefulWidget {
   final void Function(Classes? value) onChanged;
   final Classes selectedClass;
   final String name;
+  final void Function(String value) onTitleChanged;
   final String quoteNoticeTitle;
   final void Function(String value) onTextChanged;
 
@@ -25,6 +26,7 @@ class CreateNoticeForm extends StatefulWidget {
     required this.onChanged,
     required this.selectedClass,
     required this.name,
+    required this.onTitleChanged,
     this.quoteNoticeTitle = "投稿の引用",
     required this.onTextChanged,
   });
@@ -67,17 +69,29 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             //日付とクラスのセレクトボックス
             Text(date, style: Fonts.h4),
-            ClassDropdownButton(
+            ClassDropdown(
               selectedClass: selectedClass,
-              classesList: classesList,
+              items: classesList,
               onChanged: widget.onChanged,
-            ),
+            )
           ]),
 
           //名前ブロック
           Container(
+            margin: const EdgeInsets.only(top: 20),
             alignment: Alignment.centerLeft,
             child: Text(name, style: Fonts.p),
+          ),
+
+          //タイトルブロック
+          TextField(
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: "タイトル",
+              hintStyle: TextStyle(color: Colors.grey),
+            ),
+            style: Fonts.h3,
+            onChanged: widget.onTitleChanged,
           ),
 
           //引用ブロック
@@ -89,7 +103,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
           // 入力ブロック
           Expanded(
             child: LongTextField(onTextChanged: widget.onTextChanged),
-          )
+          ),
         ]));
   }
 }

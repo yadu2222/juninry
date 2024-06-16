@@ -42,12 +42,20 @@ class PageCreateNotice extends HookWidget {
     //選択されているクラスを監視するという気持ち
     var selectedClass = useState<Classes>(classesList[0]);
 
+    //タイトルを監視するという気持ち
+    var noticeTitle = useState<String>("");
+
     //入力された内容を監視するという気持ち
     var noticeText = useState<String>("");
 
     //クラス選択時の処理
     void onChanged(Classes? value) {
       selectedClass.value = value!;
+    }
+
+    //タイトル入力時の処理
+    void onTitleChanged(String value) {
+      noticeTitle.value = value;
     }
 
     //テキスト入力時の処理
@@ -58,34 +66,45 @@ class PageCreateNotice extends HookWidget {
     // 1ページに必要な要素を並べる
     return BasicTemplate(title: "お知らせ作成", children: [
       // お知らせ作成フォーム
-      CreateNoticeForm(
-        classesList: classesList, //クラスリスト
-        onChanged: onChanged, //クラス選択時の処理
-        selectedClass: selectedClass.value, //現在選択されているクラス
-        name: name, //名前
-        quoteNoticeTitle: quoteNoticeTitle, //引用元のタイトル
-        onTextChanged: onTextChanged, //入力された内容
+      Expanded(
+        child: CreateNoticeForm(
+          classesList: classesList, //クラスリスト
+          onChanged: onChanged, //クラス選択時の処理
+          selectedClass: selectedClass.value, //現在選択されているクラス
+          name: name, //名前
+          onTitleChanged: onTitleChanged, //タイトル入力時の処理
+          quoteNoticeTitle: quoteNoticeTitle, //引用元のタイトル
+          onTextChanged: onTextChanged, //入力された内容
+        ),
       ),
 
+      // お知らせ作成フォーム
+
       //ボタン
-      Container(
+      Align(
+        heightFactor: 1.3,
+        alignment: Alignment.center,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             BasicButton(
+              widthPercent: 0.4,
               text: "下書きに保存",
               onPressed: () {}, //TODO: 下書き保存処理
               isColor: true,
+              radius: 5,
             ),
             BasicButton(
+              widthPercent: 0.4,
               text: "投稿",
               isColor: false,
               onPressed: () {}, //TODO: 投稿処理
               icon: Icons.check,
-            ),
+              radius: 5,
+            )
           ],
         ),
-      ),
+      )
     ]);
   }
 }
