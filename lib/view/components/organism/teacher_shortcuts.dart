@@ -21,10 +21,10 @@ class TeacherShortcuts extends StatelessWidget {
 
   // ショートカットボタンのアイコン
   final List<IconData> icons = [
-    Icons.home_outlined,
+    Icons.menu_book_rounded,
     Icons.notifications_none,
     Icons.face_outlined,
-    Icons.menu_book_rounded,
+    Icons.book_outlined,
   ];
 
   @override

@@ -44,7 +44,7 @@ class User {
     if (await DatabaseHelper.firstdb()) {
       var user = await DatabaseHelper.queryAllRows('users');
       debugPrint(user.toString());
-      return toUser(user[1]);
+      return toUser(user[2]);
     } else {
       debugPrint('できてない？');
       return User(

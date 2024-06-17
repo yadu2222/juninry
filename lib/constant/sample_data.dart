@@ -193,6 +193,10 @@ class SampleData {
     )
   ];
 
+  static List<Map> dueHomeworkData = [
+    {'dueDate': DateTime.now().add(const Duration(days: 1)), 'homeworkData': homeworkData},
+    {'dueDate': DateTime.now().add(const Duration(days: 2)), 'homeworkData': homeworkData},  ];
+
   static List<Notice> noticesData = [
     Notice(
         noticeDate: '2024-6-3',
