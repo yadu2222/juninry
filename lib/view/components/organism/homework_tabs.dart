@@ -9,22 +9,21 @@ class HomeWorkTabs extends StatelessWidget {
   final List<Map>? homeworkData;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 310,    // TODO: 定数になっているため、調整が必要
+    return Container(
+        margin: const EdgeInsets.only(top: 10),
+        height: 300, // TODO: 定数になっているため、調整が必要 可変にしたいよなあ〜〜！？
         child: homeworkData != null
             ? ListView.builder(
                 itemCount: homeworkData!.length,
                 scrollDirection: Axis.horizontal, // 横スクロール
                 itemBuilder: (context, index) {
-                  return Container(
-                      padding: const EdgeInsets.only(top: 15),
+                  return SizedBox(
                       child: Column(
-                        children: [
-                          Text(homeworkData![index]['juniorName'], style: Fonts.h4w), // 児童の名前
-                          HomeworkTab(
-                              homeworkData: homeworkData![index]['homeworkData']) // 進捗・課題内容の表示
-                        ],
-                      ));
+                    children: [
+                      Text(homeworkData![index]['juniorName'], style: Fonts.h4w), // 児童の名前
+                      HomeworkTab(homeworkData: homeworkData![index]['homeworkData']) // 進捗・課題内容の表示
+                    ],
+                  ));
                 },
               )
             : const SizedBox.shrink());

@@ -7,7 +7,7 @@ import './progress_bar.dart';
 
 // 提出ページ見出し
 class NextDayTask extends StatelessWidget {
-  const NextDayTask({super.key, this.widget,this.margin = const EdgeInsets.all(15)});
+  const NextDayTask({super.key, this.widget, this.margin = const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10)});
 
   final String message = 'キメラ先生からのコメント';
   final double progress = 0.5; // TODO:進捗バーの進捗度 値をもらいたい 今は定数

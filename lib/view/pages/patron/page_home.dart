@@ -16,7 +16,7 @@ class PageHomePatron extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScrollTemplate(title: title, children: [
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
-       HomeWorkTabs(homeworkData: SampleData.patronHomeworkData2), // 横スクロール課題タブ
+      HomeWorkTabs(homeworkData: SampleData.patronHomeworkData2), // 横スクロール課題タブ
       PatronShortcuts(), // ショートカットセット
       
     ]);

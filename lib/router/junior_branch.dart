@@ -87,7 +87,7 @@ class JuniorBranch {
                     child: PageSubmissionJunior(homeworkUUId: homeworkId),
                   );
 
-                  // TODO:errorpage ホームに戻すのでいいかな？
+                  // TODO:errorpage よういしたい
                 } else {
                   return NoTransitionPage(
                     key: state.pageKey,
