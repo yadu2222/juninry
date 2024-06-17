@@ -1,17 +1,20 @@
+import './teaching_item_model.dart';
+
 class Homework {
   String homeworkUuid;
-  String homeworkLimit;           // TODO:dateにすべきでは？
-  String teachingMaterialUuid;
+  String homeworkLimit; // TODO:dateにすべきでは？
   int startPage;
   int pageCount;
   String homeworkPosterUuid;
   String homeworkNote;
-  String teachingMaterialName;
-  int subjectId;
   String imageUuid;
   String classUuid;
   int submitFlg;
 
+  // String teachingMaterialUuid;
+  // String teachingMaterialName;
+  // int subjectId;
+  TeachingItem teachingItem;
   // 課題ID	task_uuid
   // 期限	task_limit
   // 教材ID	teaching_material_uuid
@@ -29,16 +32,17 @@ class Homework {
   Homework({
     required this.homeworkUuid,
     required this.homeworkLimit,
-    required this.teachingMaterialUuid,
     required this.startPage,
     required this.pageCount,
     required this.homeworkPosterUuid,
     required this.homeworkNote,
-    required this.teachingMaterialName,
-    required this.subjectId,
     required this.imageUuid,
     required this.classUuid,
     required this.submitFlg,
-  });
+    required this.teachingItem,
 
+    // required this.teachingMaterialUuid,
+    // required this.teachingMaterialName,
+    // required this.subjectId,
+  });
 }

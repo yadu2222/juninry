@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../models/homework_model.dart';
-import '../../../constant/fonts.dart';
-import '../../../constant/colors.dart';
 import '../atoms/count_item.dart';
+import '../atoms/teaching_tag.dart';
 
 // 教材ラベルの表示
 class TeachingItem extends StatelessWidget {
@@ -11,15 +10,6 @@ class TeachingItem extends StatelessWidget {
     required this.itemData,
   });
 
-  // 教科の色を配列で宣言
-  final List<Color> colors = [
-    AppColors.subjectJapanese,
-    AppColors.subjectMath,
-    AppColors.subjectScience,
-    AppColors.subjectSocial,
-    AppColors.subjectEnglish,
-    AppColors.subjectOthers,
-  ];
 
   final Homework itemData;
 
@@ -29,20 +19,7 @@ class TeachingItem extends StatelessWidget {
     return SizedBox(
         child: Row(children: [
       // 教材の表示
-      Container(
-        width: 100,
-        height: 25,
-        decoration: BoxDecoration(
-          color: colors[itemData.subjectId],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Center(
-          child: Text(
-            itemData.teachingMaterialName,
-            style: Fonts.pw,
-          ),
-        ),
-      ),
+      TeachingTag(itemData: itemData.teachingItem),
       CountItem(itemData: itemData)
     ]));
   }

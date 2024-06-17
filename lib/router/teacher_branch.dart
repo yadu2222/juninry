@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../view/pages/teacher/page_home.dart';
 import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_homework.dart';
+import '../view/pages/teacher/page_homework_register.dart';
 // 暫定的ホームたちにjuniorを使用
-import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 
@@ -66,7 +66,20 @@ class TeacherBranch {
         GoRoute(
           name: 'homework',
           path: '/homework',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkTeacher(classUUID: '',)),  // TODO:遷移処理？
+
+          routes: [
+            GoRoute(
+              name: 'register',
+              path: 'register',
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkRegisterTeacher()),
+            ),
+          ],
+
+          pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: const PageHomeworkTeacher(
+                classUUID: '',
+              )), // TODO:遷移処理？
         ),
       ],
     ),

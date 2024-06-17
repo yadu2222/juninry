@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
 import '../../../models/homework_model.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/due_homework_list.dart';
@@ -18,15 +19,15 @@ class PageHomeworkTeacher extends StatefulWidget {
 }
 
 class PageHomeworkTeacherState extends State<PageHomeworkTeacher> {
-  final String title = '宿題一覧'; // appbarのタイトル
+  late String title; // appbarのタイトル
   // 区切り線のプロパティ
   final IconData icon = Icons.menu_book_outlined;
-  final String divideTitle = 'test';
   late List<Homework> homeworkData;
 
   // 追加ボタン押下時の処理
   void addPressed() {
     // 遷移処理
+    context.push('/homework/register');
   }
 
   @override
@@ -35,6 +36,7 @@ class PageHomeworkTeacherState extends State<PageHomeworkTeacher> {
     super.initState();
     // ここで取得処理
     homeworkData = SampleData.homeworkData; // 現在はサンプルデータを使用
+    title = '青葉学級の課題一覧';
   }
 
   @override
@@ -48,7 +50,7 @@ class PageHomeworkTeacherState extends State<PageHomeworkTeacher> {
           homeworkData: SampleData.dueHomeworkData,
         )),
       ]),
-      Positioned(bottom: 35, right: 30, child: AddButton(onPressed: addPressed)), // 追加ボタン
+      Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addPressed)), // 追加ボタン
     ]);
   }
 }
