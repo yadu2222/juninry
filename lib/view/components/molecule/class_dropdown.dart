@@ -58,6 +58,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                         alignment: Alignment.center,
                         child: Text(
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             selectedClass.className,
                             style:
                                 const TextStyle(color: AppColors.fontDark)))),
@@ -146,6 +147,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                   child: Text(
                     item.className,
                     maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ]));
