@@ -4,8 +4,8 @@ import '../atoms/count_item.dart';
 import '../atoms/teaching_tag.dart';
 
 // 教材ラベルの表示
-class TeachingItem extends StatelessWidget {
-  TeachingItem({
+class TeachingMaterial extends StatelessWidget {
+  TeachingMaterial({
     super.key,
     required this.itemData,
   });

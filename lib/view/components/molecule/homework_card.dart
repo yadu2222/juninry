@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../constant/colors.dart';
-import '../atoms/teaching_item.dart';
+import '../atoms/teaching_material.dart';
 
 import '../../../models/homework_model.dart';
 import '../atoms/listitem.dart';
@@ -34,7 +34,7 @@ class HomeworkCard extends StatelessWidget {
         widget: Row(
           children: [
             // 教材カード
-            TeachingItem(itemData: homeworkData),
+            TeachingMaterial(itemData: homeworkData),
             const Spacer(), // 間隔を埋める
             // アイコン
             Container(

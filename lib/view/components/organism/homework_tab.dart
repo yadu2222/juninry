@@ -4,7 +4,7 @@ import 'package:juninry/constant/colors.dart';
 
 import '../../../models/homework_model.dart';
 import '../../components/molecule/next_day_task.dart';
-import '../../components/atoms/teaching_item.dart';
+import '../atoms/teaching_material.dart';
 
 // 明日の宿題 タスクタブ
 class HomeworkTab extends StatelessWidget {
@@ -34,7 +34,7 @@ class HomeworkTab extends StatelessWidget {
                       children: List.generate(homeworkData.length, (index) {
                 return Container(
                   margin: const EdgeInsets.only(top: 10),
-                  child: TeachingItem(itemData: homeworkData[index]),
+                  child: TeachingMaterial(itemData: homeworkData[index]),
                 );
               })))),
           const Positioned(bottom: 35, right: 30, child: Icon(Icons.launch, size: 25, color: AppColors.iconDark))
