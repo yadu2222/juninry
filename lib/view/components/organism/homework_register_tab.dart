@@ -8,7 +8,7 @@ class HomeworkRegisterTab extends StatelessWidget {
   const HomeworkRegisterTab({super.key, required this.teachingItemData, required this.onTap});
 
   final List<TeachingItem> teachingItemData;
-  final void Function() onTap;
+  final void Function(int) onTap;
   @override
   Widget build(BuildContext context) {
     return ListItem(
@@ -16,11 +16,13 @@ class HomeworkRegisterTab extends StatelessWidget {
             spacing: 5, // 子ウィジェット間のスペース
             runSpacing: 7, // 行間のスペース
             alignment: WrapAlignment.start, // 子ウィジェットの配置
-            children: teachingItemData.map((item) {
+            children: teachingItemData.asMap().entries.map((entry) {
+              final index = entry.key; // インデックス
+              final item = entry.value; // アイテム
               return InkWell(
                   onTap: () {
                     // 画面遷移
-                    onTap();
+                    onTap(index);
                   },
                   child: TeachingTag(
                     itemData: item,

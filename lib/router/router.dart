@@ -7,7 +7,7 @@ import '../view/components/organism/basic_view.dart';
 import 'junior_branch.dart';
 import 'patron_branch.dart';
 import 'teacher_branch.dart';
-import 'debug_branch.dart'; // デバッグ用 すきにさわっていいよ gitから外してね
+// import 'debug_branch.dart'; // デバッグ用 すきにさわっていいよ gitから外してね
 
 // sample
 // import '../constant/sample_data.dart';
@@ -31,8 +31,8 @@ Future<GoRouter> createRouter() async {
       return PatronBranch.patronBranchs;
     } else if (userRole == 2) {
       return TeacherBranch.teacherBranchs;
-    } else if (userRole == 3) {
-      return DebugBranch.debugBranchs;
+    // } else if (userRole == 3) {
+    //   return DebugBranch.debugBranchs;
     } else {
       return [];
     }
