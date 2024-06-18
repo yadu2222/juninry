@@ -214,5 +214,9 @@ class SampleData {
       classUuid: 'aaaaa',
       className: '4-2',
     ),
+    Classes(
+      classUuid: 'aaaaa',
+      className: 'つよつよガンギマリ塾 1-A',
+    ),
   ];
 }

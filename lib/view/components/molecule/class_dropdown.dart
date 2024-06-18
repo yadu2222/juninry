@@ -56,7 +56,9 @@ class _ClassDropdownState extends State<ClassDropdown> {
                     //アイコン除いたところの中央に表示するやつ
                     child: Container(
                         alignment: Alignment.center,
-                        child: Text(selectedClass.className,
+                        child: Text(
+                            maxLines: 1,
+                            selectedClass.className,
                             style:
                                 const TextStyle(color: AppColors.fontDark)))),
               ],
@@ -141,7 +143,10 @@ class _ClassDropdownState extends State<ClassDropdown> {
                 Container(
                   width: 100,
                   alignment: Alignment.center,
-                  child: Text(item.className),
+                  child: Text(
+                    item.className,
+                    maxLines: 1,
+                  ),
                 ),
               ]));
         })
