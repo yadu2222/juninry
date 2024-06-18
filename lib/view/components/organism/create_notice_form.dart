@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
-import 'package:juninry/view/components/molecule/custom_dropdown.dart';
+import 'package:juninry/view/components/molecule/class_dropdown.dart';
 import 'package:juninry/view/components/molecule/long_text_field.dart';
 import 'package:juninry/view/components/molecule/quote_from_notice.dart';
 import '../../../constant/fonts.dart';
-//日付を扱えるクラスをインポート
+//日付を扱うためのライブラリ
 import 'dart:core';
+// 日付整形
+import 'package:intl/intl.dart';
 //クラスのセレクトボックスに使うデータ型
 import 'package:juninry/models/classes.dart';
-//intl
-import 'package:intl/intl.dart';
 
 class CreateNoticeForm extends StatefulWidget {
   final List<Classes> classesList;
@@ -89,6 +89,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
               border: InputBorder.none,
               hintText: "タイトル",
               hintStyle: TextStyle(color: Colors.grey),
+              contentPadding: EdgeInsets.zero,
             ),
             style: Fonts.h3,
             onChanged: widget.onTitleChanged,

@@ -2,23 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/classes.dart';
-import 'package:juninry/models/notice_model.dart';
-import 'package:juninry/view/components/atoms/appbar.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
-import 'package:juninry/view/components/atoms/listitem.dart';
-import 'package:juninry/view/components/atoms/shortcut_bottun.dart';
-import 'package:juninry/view/components/molecule/notice_detail_tab.dart';
 import 'package:juninry/view/components/organism/create_notice_form.dart';
-import 'package:juninry/view/components/organism/student_list.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
-import '../../components/molecule/divider.dart';
-import '../../../constant/sample_data.dart';
-import '../../../constant/fonts.dart';
 
 //クラスの表示に必要なデータ型
-import 'package:juninry/models/classes.dart';
-import '../../../constant/colors.dart';
-import '../../../constant/sample_data.dart';
 
 class PageCreateNotice extends HookWidget {
   const PageCreateNotice({super.key});
@@ -64,47 +52,58 @@ class PageCreateNotice extends HookWidget {
     }
 
     // 1ページに必要な要素を並べる
-    return BasicTemplate(title: "お知らせ作成", children: [
-      // お知らせ作成フォーム
-      Expanded(
-        child: CreateNoticeForm(
-          classesList: classesList, //クラスリスト
-          onChanged: onChanged, //クラス選択時の処理
-          selectedClass: selectedClass.value, //現在選択されているクラス
-          name: name, //名前
-          onTitleChanged: onTitleChanged, //タイトル入力時の処理
-          quoteNoticeTitle: quoteNoticeTitle, //引用元のタイトル
-          onTextChanged: onTextChanged, //入力された内容
+    return BasicTemplate(
+        title: "お知らせ作成",
+        popIcon: true,
+        featureIconButton: IconButton(
+          icon: const Icon(
+            Icons.note_add_outlined,
+            size: 32,
+          ),
+          // TODO: 下書きに飛ぶ
+          onPressed: () {},
         ),
-      ),
-
-      // お知らせ作成フォーム
-
-      //ボタン
-      Align(
-        heightFactor: 1.3,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            BasicButton(
-              widthPercent: 0.4,
-              text: "下書きに保存",
-              onPressed: () {}, //TODO: 下書き保存処理
-              isColor: true,
-              radius: 5,
+        children: [
+          // お知らせ作成フォーム
+          Expanded(
+            child: CreateNoticeForm(
+              classesList: classesList, //クラスリスト
+              onChanged: onChanged, //クラス選択時の処理
+              selectedClass: selectedClass.value, //現在選択されているクラス
+              name: name, //名前
+              onTitleChanged: onTitleChanged, //タイトル入力時の処理
+              quoteNoticeTitle: quoteNoticeTitle, //引用元のタイトル
+              onTextChanged: onTextChanged, //入力された内容
             ),
-            BasicButton(
-              widthPercent: 0.4,
-              text: "投稿",
-              isColor: false,
-              onPressed: () {}, //TODO: 投稿処理
-              icon: Icons.check,
-              radius: 5,
-            )
-          ],
-        ),
-      )
-    ]);
+          ),
+
+          // お知らせ作成フォーム
+
+          //ボタン
+          Align(
+            heightFactor: 1.3,
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                BasicButton(
+                  widthPercent: 0.4,
+                  text: "下書きに保存",
+                  onPressed: () {}, //TODO: 下書き保存処理
+                  isColor: true,
+                  radius: 5,
+                ),
+                BasicButton(
+                  widthPercent: 0.4,
+                  text: "投稿",
+                  isColor: false,
+                  onPressed: () {}, //TODO: 投稿処理
+                  icon: Icons.check,
+                  radius: 5,
+                )
+              ],
+            ),
+          )
+        ]);
   }
 }

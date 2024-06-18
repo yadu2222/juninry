@@ -21,6 +21,7 @@ class DebugBranch {
         GoRoute(
           name: 'home',
           path: '/home',
+
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: const PageCreateNotice(),

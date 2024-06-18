@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import '../../../constant/colors.dart';
-import '../../../models/classes.dart';
+import 'package:juninry/constant/colors.dart';
+import 'package:juninry/models/classes.dart';
 
 class ClassDropdown extends StatefulWidget {
   final List<Classes> items;
@@ -36,7 +34,6 @@ class _ClassDropdownState extends State<ClassDropdown> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
         GestureDetector(
           onTap: () {
@@ -90,36 +87,42 @@ class _ClassDropdownState extends State<ClassDropdown> {
     final Classes? tapedClass = await showMenu<Classes>(
       context: context,
       position: position,
-
+      // アニメーションなんかあれば
+      // popUpAnimationStyle: AnimationStyle.noAnimation,
       color: AppColors.iconLight,
       elevation: 1,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
       ),
 
       //　中身だよ
+      // 書き方がカスな気しかしない
       items: [
         // 一番上のガイドみたいなやつ
         PopupMenuItem<Classes>(
-            enabled: false,
-            height: 30, // この項目は選択不可にする
-            child: Row(
-              children: [
-                const Icon(Icons.keyboard_arrow_down,
+          enabled: false, // この項目は選択不可にする
+          height: 30,
+          child: Row(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: 30,
+                child: const Icon(Icons.keyboard_arrow_down,
                     color: AppColors.subjectSocial, size: 25),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'クラスを選択',
-                      style: TextStyle(color: AppColors.fontDark),
-                    ),
-                  ),
+              ),
+              Container(
+                width: 100,
+                alignment: Alignment.center,
+                child: const Text(
+                  'クラスを選択',
+                  style: TextStyle(color: AppColors.fontDark),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
 
-        // 区切り線
+        //区切り線
         const PopupMenuDivider(
           height: 0,
         ),
@@ -127,14 +130,21 @@ class _ClassDropdownState extends State<ClassDropdown> {
         //続く中身
         ...items.map((item) {
           return PopupMenuItem<Classes>(
-            height: 30,
-            value: item,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(item.className),
-            ),
-          );
-        }).toList(),
+              value: item,
+              height: 30,
+              child: Row(children: [
+                SizedBox(
+                  width: 30,
+                  child: Icon(item == selectedClass ? Icons.check : null,
+                      color: AppColors.subjectSocial, size: 15),
+                ),
+                Container(
+                  width: 100,
+                  alignment: Alignment.center,
+                  child: Text(item.className),
+                ),
+              ]));
+        })
       ],
     );
 
