@@ -1,4 +1,4 @@
-import 'package:juninry/models/classes.dart';
+import 'package:juninry/models/class_model.dart';
 
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
@@ -201,20 +201,20 @@ class SampleData {
         noticeRead: '0')
   ];
 
-  static List<Classes> classesData = [
-    Classes(
+  static List<Class> classesData = [
+    Class(
       classUuid: 'aaaaa',
       className: '3-2 ふたば学級',
     ),
-    Classes(
+    Class(
       classUuid: 'aaaaa',
       className: '3-5 みつば学級',
     ),
-    Classes(
+    Class(
       classUuid: 'aaaaa',
       className: '4-2',
     ),
-    Classes(
+    Class(
       classUuid: 'aaaaa',
       className: 'つよつよガンギマリ塾 1-A',
     ),

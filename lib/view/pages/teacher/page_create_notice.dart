@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/sample_data.dart';
-import 'package:juninry/models/classes.dart';
+import 'package:juninry/models/class_model.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
 import 'package:juninry/view/components/organism/create_notice_form.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
@@ -28,7 +28,7 @@ class PageCreateNotice extends HookWidget {
     final String quoteNoticeTitle = SampleData.noticesData[0].noticeTitle;
 
     //選択されているクラスを監視するという気持ち
-    var selectedClass = useState<Classes>(classesList[0]);
+    var selectedClass = useState<Class>(classesList[0]);
 
     //タイトルを監視するという気持ち
     var noticeTitle = useState<String>("");
@@ -37,7 +37,7 @@ class PageCreateNotice extends HookWidget {
     var noticeText = useState<String>("");
 
     //クラス選択時の処理
-    void onChanged(Classes? value) {
+    void onChanged(Class? value) {
       selectedClass.value = value!;
     }
 

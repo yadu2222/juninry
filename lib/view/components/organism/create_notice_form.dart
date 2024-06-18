@@ -9,12 +9,12 @@ import 'dart:core';
 // 日付整形
 import 'package:intl/intl.dart';
 //クラスのセレクトボックスに使うデータ型
-import 'package:juninry/models/classes.dart';
+import 'package:juninry/models/class_model.dart';
 
 class CreateNoticeForm extends StatefulWidget {
-  final List<Classes> classesList;
-  final void Function(Classes? value) onChanged;
-  final Classes selectedClass;
+  final List<Class> classesList;
+  final void Function(Class? value) onChanged;
+  final Class selectedClass;
   final String name;
   final void Function(String value) onTitleChanged;
   final String quoteNoticeTitle;
@@ -37,13 +37,13 @@ class CreateNoticeForm extends StatefulWidget {
 
 class _CreateNoticeFormState extends State<CreateNoticeForm> {
   //クラスの選択項目
-  late List<Classes> classesList;
+  late List<Class> classesList;
 
   //名前
   late String name;
 
   //選択されているクラス
-  late Classes selectedClass;
+  late Class selectedClass;
 
   //入力された内容
   late String noticeText;

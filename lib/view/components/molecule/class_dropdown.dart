@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:juninry/constant/colors.dart';
-import 'package:juninry/models/classes.dart';
+import 'package:juninry/models/class_model.dart';
 
 class ClassDropdown extends StatefulWidget {
-  final List<Classes> items;
-  final void Function(Classes? value) onChanged;
-  final Classes selectedClass;
+  final List<Class> items;
+  final void Function(Class? value) onChanged;
+  final Class selectedClass;
 
   const ClassDropdown({
     super.key,
@@ -19,9 +19,9 @@ class ClassDropdown extends StatefulWidget {
 }
 
 class _ClassDropdownState extends State<ClassDropdown> {
-  late List<Classes> items;
-  late Classes selectedClass;
-  late Function(Classes? value) onChanged;
+  late List<Class> items;
+  late Class selectedClass;
+  late Function(Class? value) onChanged;
 
   @override
   void initState() {
@@ -87,7 +87,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
     );
 
     //表示する中身だよ
-    final Classes? tapedClass = await showMenu<Classes>(
+    final Class? tapedClass = await showMenu<Class>(
       context: context,
       position: position,
       // アニメーションなんかあれば
@@ -102,7 +102,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
       // 書き方がカスな気しかしない
       items: [
         // 一番上のガイドみたいなやつ
-        PopupMenuItem<Classes>(
+        PopupMenuItem<Class>(
           enabled: false, // この項目は選択不可にする
           height: 30,
           child: Row(
@@ -132,7 +132,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
 
         //続く中身
         ...items.map((item) {
-          return PopupMenuItem<Classes>(
+          return PopupMenuItem<Class>(
               value: item,
               height: 30,
               child: Row(children: [

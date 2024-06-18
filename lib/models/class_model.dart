@@ -1,11 +1,11 @@
-class Classes {
+class Class {
   String classUuid;
   String className;
 
   // クラスID class_uuid
   // クラス名 class_name
 
-  Classes({
+  Class({
     required this.classUuid,
     required this.className,
   });
