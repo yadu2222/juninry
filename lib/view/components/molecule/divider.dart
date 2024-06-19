@@ -18,7 +18,7 @@ class DividerView extends StatelessWidget {
     return Column(children: [
       Row(children: [
         Container(
-          margin: const EdgeInsets.only(left: 10),
+          margin: EdgeInsets.only(left: indent),
           child: icon != null
               ? Icon(
                   icon!,

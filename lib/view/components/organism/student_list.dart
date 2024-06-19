@@ -7,7 +7,7 @@ import '../molecule/student_card.dart';
 import '../atoms/listItem_box.dart';
 
 class StudentList extends StatelessWidget {
-  const StudentList({super.key,required this.studentData});
+  const StudentList({super.key, required this.studentData});
 
   final List<Student> studentData;
   @override
