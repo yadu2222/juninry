@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 // 遷移先
 // teacher
 import '../view/pages/teacher/page_notice_detail.dart';
+import '../view/pages/teacher/page_notice_register_teacher.dart';
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_home.dart';
 import '../view/pages/junior/page_homework.dart';
@@ -13,7 +14,6 @@ import '../view/pages/junior/page_user.dart';
 // 教員ブランチ
 class TeacherBranch {
   static List<StatefulShellBranch> teacherBranchs = [
-
     // home
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'home'),
@@ -45,10 +45,19 @@ class TeacherBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageNoticeDetailTeacher(
-                  // noticeUUID: '123456',
-                ),
+                    // noticeUUID: '123456',
+                    ),
               ),
-            )
+            ),
+            GoRoute(
+              path: 'register',
+              pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child: const PageNoticeRegisterTeacher(
+
+                  )),
+            ),
+            GoRoute(path: "draft", pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNoticeRegisterTeacher())),
           ],
 
           pageBuilder: (context, state) => NoTransitionPage(
@@ -66,7 +75,8 @@ class TeacherBranch {
         GoRoute(
           name: 'homework',
           path: '/homework',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey, child: const PageHomeworkJunior()),
         ),
       ],
     ),
@@ -78,7 +88,8 @@ class TeacherBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserDataJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey, child: const PageUserDataJunior()),
         )
       ],
     ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:juninry/constant/fonts.dart';
 
 class QuoteFromNotice extends StatelessWidget {
-  final String quoteNoticeTitle;
+  final String? quoteNoticeTitle;
   const QuoteFromNotice({super.key, required this.quoteNoticeTitle});
 
   @override
@@ -29,7 +29,7 @@ class QuoteFromNotice extends StatelessWidget {
                 color: AppColors.iconGray,
                 weight: 5,
               ),
-              Text(quoteNoticeTitle, style: Fonts.p),
+              Text(quoteNoticeTitle ?? "投稿の引用", style: Fonts.p),
             ]),
           ),
           const Divider(

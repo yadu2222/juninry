@@ -12,22 +12,23 @@ import 'package:intl/intl.dart';
 import 'package:juninry/models/class_model.dart';
 
 class CreateNoticeForm extends StatefulWidget {
-  final List<Class> classesList;
-  final void Function(Class? value) onChanged;
-  final Class selectedClass;
-  final String name;
-  final void Function(String value) onTitleChanged;
-  final String quoteNoticeTitle;
-  final void Function(String value) onTextChanged;
+  final List<Class> classesList;                    // クラス一覧
+  final Class selectedClass;                        // 選択されているクラス
+  final String name;                                // 名前
+  final String? quoteNoticeTitle;                    // 引用されているお知らせタイトル
+
+  final void Function(Class? value) onClassChanged; // クラス選択時の処理
+  final void Function(String value) onTitleChanged; // タイトル入力時の処理
+  final void Function(String value) onTextChanged;  // テキスト入力時の処理
 
   const CreateNoticeForm({
     super.key,
     required this.classesList,
-    required this.onChanged,
     required this.selectedClass,
     required this.name,
+    required this.quoteNoticeTitle,
+    required this.onClassChanged,
     required this.onTitleChanged,
-    this.quoteNoticeTitle = "投稿の引用",
     required this.onTextChanged,
   });
 
@@ -45,8 +46,6 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
   //選択されているクラス
   late Class selectedClass;
 
-  //入力された内容
-  late String noticeText;
 
   //初期化
   @override
@@ -72,7 +71,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
             ClassDropdown(
               selectedClass: selectedClass,
               items: classesList,
-              onChanged: widget.onChanged,
+              onChanged: widget.onClassChanged,
             )
           ]),
 

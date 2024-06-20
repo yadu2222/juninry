@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/view/pages/teacher/page_create_notice.dart';
-
+import '../view/pages/teacher/page_notice_register_teacher.dart';
 
 
 // でばっぐにつかうブランチ
@@ -24,7 +23,7 @@ class DebugBranch {
 
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const PageCreateNotice(),
+            child: const PageNoticeRegisterTeacher(),
             // child: PageHomePatron(),
           ),
         ),

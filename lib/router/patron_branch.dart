@@ -66,7 +66,7 @@ class PatronBranch {
         GoRoute(
           name: 'homework',
           path: '/homework',
-       
+      
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
         ),
       ],
