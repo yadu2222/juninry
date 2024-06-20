@@ -17,7 +17,7 @@ class NoticeDetailTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListItem(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         widget: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

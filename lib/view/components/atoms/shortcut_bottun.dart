@@ -46,7 +46,7 @@ class ShortcutButton extends StatelessWidget {
               Expanded(
                 child: Container(
                   alignment: Alignment.center, // 残りのスペースの中央に配置
-                  child: Text(title, style: Fonts.h4y),
+                  child: Text(title, style: Fonts.py),
                 ),
               ),
             ],

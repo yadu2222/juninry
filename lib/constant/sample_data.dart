@@ -4,19 +4,37 @@ import '../models/homework_model.dart';
 import '../models/notice_model.dart';
 import '../models/student_model.dart';
 import '../models/user_model.dart';
+import '../models/teaching_item_model.dart';
+import '../models/register_homework_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
 class SampleData {
-  static User user = User(
+  static User juniorUser = User(
+    userUUID: 'ほげおか',
+    userName: 'junior',
+    userTypeId: 0,
+    mailAddress: '',
+    password: 'password',
+  );
+
+  static User patronUser = User(
     userUUID: '',
-    userName: 'ほげた',
+    userName: 'patron',
     userTypeId: 1,
     mailAddress: '',
     password: 'password',
   );
 
-  static User user2 = User(
+  static User teacherUser = User(
+    userUUID: '',
+    userName: 'teacher',
+    userTypeId: 2,
+    mailAddress: '',
+    password: 'password',
+  );
+
+  static User debugUser = User(
     userUUID: '',
     userName: 'debugUser',
     userTypeId: 3,
@@ -24,49 +42,50 @@ class SampleData {
     password: 'password',
   );
 
+  static TeachingItem teachingItem1 = TeachingItem(
+    teachingMaterialName: '漢字ドリル',
+    subjectId: 0,
+    teachingMaterialUuid: 'aaaaa',
+  );
+
+  static TeachingItem teachingItem2 = TeachingItem(
+    teachingMaterialName: '計算ドリル',
+    subjectId: 1,
+    teachingMaterialUuid: 'aaaaa',
+  );
+
+  static TeachingItem teachingItem3 = TeachingItem(
+    teachingMaterialName: '理科ワーク',
+    subjectId: 2,
+    teachingMaterialUuid: 'aaaaa',
+  );
+
+  static TeachingItem teachingItem4 = TeachingItem(
+    teachingMaterialName: '社会に貢献しよう',
+    subjectId: 3,
+    teachingMaterialUuid: 'iiii',
+  );
+
   static List<Homework> homeworkData = [
     Homework(
       homeworkUuid: 'aaaaa',
       homeworkLimit: '2022/12/12',
-      teachingMaterialUuid: 'aaaaa',
       startPage: 1,
       pageCount: 1,
       homeworkPosterUuid: 'aaaaa',
       homeworkNote: 'aaaaa',
-      teachingMaterialName: '漢字ドリル',
-      subjectId: 0,
       imageUuid: 'aaaaa',
       classUuid: 'aaaaa',
       submitFlg: 0,
+      teachingItem: teachingItem1,
     ),
-    Homework(
-      homeworkUuid: 'aaaaa',
-      homeworkLimit: '2022/12/22',
-      teachingMaterialUuid: 'aaaaa',
-      startPage: 1,
-      pageCount: 5,
-      homeworkPosterUuid: 'aaaaa',
-      homeworkNote: 'aaaaa',
-      teachingMaterialName: '計算ドリル',
-      subjectId: 1,
-      imageUuid: 'aaaaa',
-      classUuid: 'aaaaa',
-      submitFlg: 1,
-    ),
-    Homework(
-      homeworkUuid: 'aaaaa',
-      homeworkLimit: '2022/12/22',
-      teachingMaterialUuid: 'aaaaa',
-      startPage: 1,
-      pageCount: 5,
-      homeworkPosterUuid: 'aaaaa',
-      homeworkNote: 'aaaaa',
-      teachingMaterialName: '理科ワーク',
-      subjectId: 2,
-      imageUuid: 'aaaaa',
-      classUuid: 'aaaaa',
-      submitFlg: 1,
-    ),
+  ];
+
+  // sampledata
+  static List<TeachingItem> teachingItemData = [
+    SampleData.teachingItem1,
+    SampleData.teachingItem2,
+    SampleData.teachingItem3,
   ];
 
   static List<Map> patronHomeworkData2 = [
@@ -76,94 +95,39 @@ class SampleData {
         Homework(
           homeworkUuid: 'aaaaa',
           homeworkLimit: '2022/12/12',
-          teachingMaterialUuid: 'aaaaa',
           startPage: 1,
           pageCount: 1,
           homeworkPosterUuid: 'aaaaa',
           homeworkNote: 'aaaaa',
-          teachingMaterialName: '漢字ドリル',
-          subjectId: 0,
           imageUuid: 'aaaaa',
           classUuid: 'aaaaa',
           submitFlg: 0,
+          teachingItem: teachingItem1,
         ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '計算ドリル',
-          subjectId: 1,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '理科ワーク',
-          subjectId: 2,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        )
       ]
     },
     {
       'juniorName': 'ほげみ',
       'homeworkData': [
         Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/12',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 1,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '漢字ドリル',
-          subjectId: 0,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 0,
-        ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '計算ドリル',
-          subjectId: 1,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '理科ワーク',
-          subjectId: 2,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        )
+            homeworkUuid: 'aaaaa',
+            homeworkLimit: '2022/12/12',
+            startPage: 1,
+            pageCount: 1,
+            homeworkPosterUuid: 'aaaaa',
+            homeworkNote: 'aaaaa',
+            imageUuid: 'aaaaa',
+            classUuid: 'aaaaa',
+            submitFlg: 0,
+            teachingItem: teachingItem2),
       ]
     }
+  ];
+
+  static List<RegisterHomework> registerHomeworkData = [
+    RegisterHomework(teachingItem: teachingItem1),
+    RegisterHomework(teachingItem: teachingItem2),
+    RegisterHomework(teachingItem: teachingItem3),
   ];
 
   static List<Student> studentData = [
@@ -177,6 +141,11 @@ class SampleData {
       num: 35,
       gender: '女',
     )
+  ];
+
+  static List<Map> dueHomeworkData = [
+    {'dueDate': DateTime.now().add(const Duration(days: 1)), 'homeworkData': homeworkData},
+    {'dueDate': DateTime.now().add(const Duration(days: 2)), 'homeworkData': homeworkData},
   ];
 
   static List<Notice> noticesData = [

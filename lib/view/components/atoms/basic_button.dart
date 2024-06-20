@@ -9,6 +9,7 @@ class BasicButton extends StatelessWidget {
     this.widthPercent = 0.475,
     required this.text,
     this.icon,
+    this.width = 0.475,
     required this.isColor, // trueでみどり falseで赤
     this.onPressed,
     this.radius,
@@ -18,14 +19,15 @@ class BasicButton extends StatelessWidget {
   final String text;
   final IconData? icon;
   final bool isColor;
+  final double width;
   final void Function()? onPressed;
   final double? radius;
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-        width: width * widthPercent,
+        width: screenWidth * width,
         margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(

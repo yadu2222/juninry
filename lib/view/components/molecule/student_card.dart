@@ -44,7 +44,7 @@ class StudentCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   studentData.num.toString(),
-                  style: Fonts.h3,
+                  style: Fonts.p,
                 ),
               ),
             ),
@@ -55,7 +55,7 @@ class StudentCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   studentData.name,
-                  style: Fonts.h3,
+                  style: Fonts.h4,
                 ),
               ),
             ),

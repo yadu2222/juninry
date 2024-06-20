@@ -16,6 +16,7 @@ class HomeworkList extends StatelessWidget {
         itemDatas: homeworkData,
         listItem: (homework) => InkWell(
               onTap: () {
+                // TODO:これユーザーによって挙動変わるべきでは？のきもち
                 // 画面遷移
                 context.push('/homework/submittion',
                     extra: {'homeworkId': homework.homeworkUuid});
