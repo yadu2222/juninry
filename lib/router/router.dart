@@ -15,29 +15,49 @@ import '../models/user_model.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-Future<GoRouter> createRouter() async {
+
+// enumで宣言
+enum BranchType {
+  junior,
+  patron,
+  teacher,
+}
+// ひもづけ
+extension BranchTypeExt on BranchType {
+  List<StatefulShellBranch> get branch {
+    switch (this) {
+      case BranchType.junior:
+        return JuniorBranch.juniorBranchs;
+      case BranchType.patron:
+        return PatronBranch.patronBranchs;
+      case BranchType.teacher:
+        return TeacherBranch.teacherBranchs;
+    }
+  }
+}
+
+
+Future<List<StatefulShellBranch>> getBranches() async {
   // final userService = UserService();
   // final userRole = await userService.getUserRole();
 
   // ユーザータイプに合わせたbranchesを返す
-  // 各ユーザーをsampleDataに用意しているので、使いたい人を入れてね
-  // final userRole = SampleData.teacherUser.userTypeId;
   // dbから取得
-  final userRole = await User.getUser().then((value) => value.userTypeId);
-  List<StatefulShellBranch> getRouter() {
-    if (userRole == 0) {
-      return JuniorBranch.juniorBranchs;
-    } else if (userRole == 1) {
-      return PatronBranch.patronBranchs;
-    } else if (userRole == 2) {
-      return TeacherBranch.teacherBranchs;
-    // } else if (userRole == 3) {
-    //   return DebugBranch.debugBranchs;
-    } else {
-      return [];
-    }
+  final int userRole = await User.getUser().then((value) => value.userTypeId);
+  switch (userRole) {
+    case 0:
+      return BranchType.junior.branch;
+    case 1:
+      return BranchType.patron.branch;
+    case 2:
+      return BranchType.teacher.branch;
+    default:
+      return BranchType.junior.branch;
   }
+}
 
+// ルーターの作成
+Future<GoRouter> createRouter() async {
   return GoRouter(
     debugLogDiagnostics: true,
     initialLocation: '/home',
@@ -50,7 +70,7 @@ Future<GoRouter> createRouter() async {
           builder: (context, state, navigationShell) {
             return BasicScreenView(navigationShell: navigationShell);
           },
-          branches: [...getRouter()])
+          branches: [...await getBranches()])
     ],
   );
 }

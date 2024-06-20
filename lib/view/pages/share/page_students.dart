@@ -4,8 +4,8 @@ import '../../components/template/basic_template.dart';
 import '../../components/organism/student_List.dart';
 import '../../../constant/sample_data.dart'; // sampleData
 
-class PageStudentsJunior extends StatelessWidget {
-  const PageStudentsJunior({super.key});
+class PageStudents extends StatelessWidget {
+  const PageStudents({super.key});
 
   final String title = '生徒一覧';
   @override
