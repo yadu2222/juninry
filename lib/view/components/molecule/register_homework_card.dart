@@ -9,22 +9,26 @@ class RegisterHomeworkCard extends StatelessWidget {
   const RegisterHomeworkCard({super.key, required this.registerHomeworkData});
 
   final RegisterHomework registerHomeworkData;
+
   @override
   Widget build(BuildContext context) {
     return ListItem(
+        padding: const EdgeInsets.only(left: 5, right: 30),
         widget: Row(
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.remove_circle,
-            color: AppColors.buttonCheck,
-          ),
-          onPressed: () {},
-        ),
-        // 教材の表示
-        TeachingTag(itemData: registerHomeworkData.teachingItem),
-        Expanded(child: CountForm())
-      ],
-    ));
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.remove_circle,
+                color: AppColors.buttonCheck,
+              ),
+              onPressed: () {
+                // TODO:配列から削除
+              },
+            ),
+            // 教材の表示
+            TeachingTag(itemData: registerHomeworkData.teachingItem),
+            Expanded(child: CountForm())
+          ],
+        ));
   }
 }

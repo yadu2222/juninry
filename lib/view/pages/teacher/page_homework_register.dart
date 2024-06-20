@@ -7,6 +7,7 @@ import '../../components/organism/homework_register_tab.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/register_homework_list.dart';
 import '../../../models/teaching_item_model.dart';
+import '../../components/atoms/basic_button.dart';
 
 import '../../../models/register_homework_model.dart';
 
@@ -60,7 +61,33 @@ class PageHomeworkRegisterTeacher extends HookWidget {
           Expanded(
               child: RegisterHomeworkList(
             registerHomeworkData: registerHomeworkData.value,
-          ))
+          )),
+
+          // ボタン
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center, // 真ん中寄せ
+              children: [
+                BasicButton(
+                  width: 0.37,
+                  text: '下書きに保存',
+                  onPressed: () {
+                     // TODO:APIに登録処理
+                  },
+                  isColor: true,
+                ),
+                const SizedBox(width: 60),
+                BasicButton(
+                  icon: Icons.check,
+                  text: '登録',
+                  width: 0.37,
+                  onPressed: () {
+
+                    // TODO:APIに登録処理
+
+                  },
+                  isColor: false,
+                ),
+              ])
         ]);
   }
 }

@@ -11,21 +11,27 @@ class BasicButton extends StatelessWidget {
     this.width = 0.475,
     required this.isColor, // trueでみどり falseで赤
     this.onPressed,
+    this.height = 35.0,
   });
 
   final String text;
   final IconData? icon;
   final bool isColor;
   final double width;
+  final double height;
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
         width: screenWidth * width,
+        height: height,
         margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10) //こちらを適用
+                    )),
             onPressed: onPressed,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               icon != null ? Icon(icon, color: AppColors.iconLight, size: 30) : const SizedBox.shrink(),
@@ -34,7 +40,7 @@ class BasicButton extends StatelessWidget {
                       alignment: Alignment.center, // 残りのスペースの中央に配置
                       child: Text(
                         text,
-                        style: Fonts.h4w,
+                        style: Fonts.h5w,
                       )))
             ])));
   }

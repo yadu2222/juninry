@@ -60,6 +60,22 @@ class DatabaseHelper {
       password text
     )
   ''');
+
+  // 宿題の下書きを保存するためのテーブル
+  await db.execute('''
+    CREATE TABLE homeworks (
+      homework_id integer PRIMARY KEY autoincrement,
+      homework_limit text not null,
+      start_page integer not null,
+      page_count integer not null,
+      homework_poster_uuid text not null,
+      homework_note text,
+      class_uuid text not null,
+      teaching_material_uuid text not null,
+      teaching_material_name text not null,
+      subject_id integer not null
+    )
+  ''');
   }
 
   // 登録処理
@@ -76,6 +92,16 @@ class DatabaseHelper {
     Database? db = await instance.database;
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
+  }
+   // テーブル名、検索条件、検索ワード、ソート
+  static Future<List<Map<String, dynamic>>> queryBuilder(String tableName, List<String> where, List<String> whereArgs, String orderBy) async {
+    Database? db = await instance.database;
+    return await db!.query(
+      tableName,
+      where: where.join(" = ? "),
+      whereArgs: whereArgs,
+      orderBy: orderBy,
+    );
   }
 
   static Future<bool> firstdb() async {

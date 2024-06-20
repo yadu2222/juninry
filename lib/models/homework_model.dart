@@ -1,48 +1,98 @@
 import './teaching_item_model.dart';
+import './dbcon.dart';
 
 class Homework {
-  String homeworkUuid;
+  String? homeworkUuid;
   String homeworkLimit; // TODO:dateにすべきでは？
   int startPage;
   int pageCount;
   String homeworkPosterUuid;
   String homeworkNote;
-  String imageUuid;
+  String? imageUuid;
   String classUuid;
-  int submitFlg;
+  int? submitFlg;
 
   // String teachingMaterialUuid;
   // String teachingMaterialName;
   // int subjectId;
   TeachingItem teachingItem;
-  // 課題ID	task_uuid
-  // 期限	task_limit
-  // 教材ID	teaching_material_uuid
-  // 開始ページ	start_page
-  // ページ枚数	page_count
-  // 投稿者ID	task_poster_uuid
-  // 説明	task_note
-  // 教材ID	teaching_material_uuid
-  // 教材名	teaching_material_name
-  // 教科ID	subject_id
-  // 画像ID	image_uuid
-  // クラスID	class_uuid
-  // 提出済みかどうか	submit_flg
 
   Homework({
-    required this.homeworkUuid,
+    this.homeworkUuid,
     required this.homeworkLimit,
     required this.startPage,
     required this.pageCount,
     required this.homeworkPosterUuid,
     required this.homeworkNote,
-    required this.imageUuid,
+    this.imageUuid,
     required this.classUuid,
-    required this.submitFlg,
+    this.submitFlg,
     required this.teachingItem,
-
-    // required this.teachingMaterialUuid,
-    // required this.teachingMaterialName,
-    // required this.subjectId,
   });
+
+  // mapをHomeworkに変換
+  static Homework toHomework(Map loadData) {
+    try {
+      return Homework(
+        homeworkUuid: loadData['homework_id'].toString(),
+        homeworkLimit: loadData['homework_limit'],
+        startPage: loadData['start_page'],
+        pageCount: loadData['page_count'],
+        homeworkPosterUuid: loadData['homework_poster_uuid'],
+        homeworkNote: loadData['homework_note'],
+        classUuid: loadData['class_uuid'],
+        teachingItem: TeachingItem(
+          teachingMaterialUuid: loadData['teaching_material_uuid'],
+          teachingMaterialName: loadData['teaching_material_name'],
+          subjectId: loadData['subject_id'],
+        ),
+      );
+    } catch (e) {
+      print('Error converting map to Homework: $e');
+      return Homework(
+        homeworkUuid: '',
+        homeworkLimit: '',
+        startPage: 0,
+        pageCount: 0,
+        homeworkPosterUuid: '',
+        homeworkNote: '',
+        imageUuid: '',
+        classUuid: '',
+        submitFlg: 0,
+        teachingItem: TeachingItem(
+          teachingMaterialUuid: '',
+          teachingMaterialName: '',
+          subjectId: 0,
+        ),
+      );
+    }
+  }
+
+
+  // 下書きを保存
+  static Future<void> registerHomeworkDtafts(Homework homework) async{
+    Map<String, dynamic> item = {
+      'homework_limit': homework.homeworkLimit,
+      'start_page': homework.startPage,
+      'page_count': homework.pageCount,
+      'homework_poster_uuid': homework.homeworkPosterUuid,
+      'homework_note': homework.homeworkNote,
+      'class_uuid': homework.classUuid,
+      'teaching_material_uuid': homework.teachingItem.teachingMaterialUuid,
+      'teaching_material_name': homework.teachingItem.teachingMaterialName,
+      'subject_id': homework.teachingItem.subjectId,
+    };
+    await DatabaseHelper.insert('homeworks', item);
+  }
+
+
+  // クラスでソートし下書きを取得
+  static Future<List<Homework>> getHomeworkDrafts(String classUUID) async {
+    final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks',['class_uuid'],[classUUID],'homework_limit');
+    List<Homework> homeworks = [];
+    for (int i = 0; i < maps.length; i++) {
+      homeworks.add(toHomework(maps[i]));
+    }
+    return homeworks;
+  }
 }
