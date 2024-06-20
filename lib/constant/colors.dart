@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // メインカラー
   static const Color main = Color(0xFFF8CE64);
+  static const Color gakiiro = Color(0xFFFFF8F1);
 
   // アイコンカラー
   static const Color iconLight = Color(0xFFFFFFFF);
