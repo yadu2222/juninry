@@ -3,7 +3,7 @@ import './dbcon.dart';
 
 class Homework {
   String? homeworkUuid;
-  String homeworkLimit; // TODO:dateにすべきでは？
+  DateTime homeworkLimit; // TODO:dateにすべきでは？
   int startPage;
   int pageCount;
   String homeworkPosterUuid;
@@ -31,11 +31,11 @@ class Homework {
   });
 
   // mapをHomeworkに変換
-  static Homework toHomework(Map loadData) {
+  static Homework dBtoHomework(Map loadData) {
     try {
       return Homework(
         homeworkUuid: loadData['homework_id'].toString(),
-        homeworkLimit: loadData['homework_limit'],
+        homeworkLimit: DateTime.parse(loadData['homework_limit']),
         startPage: loadData['start_page'],
         pageCount: loadData['page_count'],
         homeworkPosterUuid: loadData['homework_poster_uuid'],
@@ -51,7 +51,7 @@ class Homework {
       print('Error converting map to Homework: $e');
       return Homework(
         homeworkUuid: '',
-        homeworkLimit: '',
+        homeworkLimit: DateTime.now(),
         startPage: 0,
         pageCount: 0,
         homeworkPosterUuid: '',
@@ -68,11 +68,10 @@ class Homework {
     }
   }
 
-
   // 下書きを保存
-  static Future<void> registerHomeworkDtafts(Homework homework) async{
+  static Future<void> registerHomeworkDrafts(Homework homework) async {
     Map<String, dynamic> item = {
-      'homework_limit': homework.homeworkLimit,
+      'homework_limit': homework.homeworkLimit.toString(),
       'start_page': homework.startPage,
       'page_count': homework.pageCount,
       'homework_poster_uuid': homework.homeworkPosterUuid,
@@ -83,16 +82,76 @@ class Homework {
       'subject_id': homework.teachingItem.subjectId,
     };
     await DatabaseHelper.insert('homeworks', item);
+
+    // かくにん
+    List<Map<String, dynamic>> test = await DatabaseHelper.queryAllRows('homeworks'); // こっちはいけてる
+    // List<Homework> test = await getHomeworkDrafts(homework.classUuid);
+    // final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks', ['class_uuid'], ['aaaaa'], 'homework_limit');  // 動作不良
+
+    // print(maps);
+    print(homework.classUuid);
+    print(test);
+    // print(test);
   }
 
-
   // クラスでソートし下書きを取得
-  static Future<List<Homework>> getHomeworkDrafts(String classUUID) async {
-    final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks',['class_uuid'],[classUUID],'homework_limit');
+  // なおす
+  // static Future<List<Homework>> getHomeworkDrafts(String classUUID) async {
+  //   final List<Map<String, dynamic>> data = await DatabaseHelper.queryBuilder('homeworks', ['class_uuid'], [classUUID], 'homework_limit');
+  //   List<Homework> homeworks = [];
+  //   for (int i = 0; i < data.length; i++) {
+  //     homeworks.add(dBtoHomework(data[i]));
+  //   }
+  //   return homeworks;
+  // }
+  // static Future<List<List<Homework>>> getHomeworkDrafts() async {
+  //   final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
+  //   List<Homework> homeworks = [];
+  //   for (int i = 0; i < data.length; i++) {
+  //     homeworks.add(dBtoHomework(data[i]));
+  //   }
+  //   List<List<Homework>> homeworkdrafts = []; // 日付ごとにわけて格納
+  //   int draftCount = 0; // 日付ごとのカウント
+  //   for (int i = 0; i < homeworks.length; i++) {
+  //     if (i != 0) { // 1つめは無条件で追加
+  //       if (homeworks[i].homeworkLimit != homeworks[i - 1]) {
+  //         draftCount++;
+  //       }
+  //     }
+  //     // リストに追加
+  //     homeworkdrafts[draftCount].add(homeworks[i]);
+  //   }
+  //   return homeworkdrafts;
+  // }
+  static Future<List<List<Homework>>> getHomeworkDrafts() async {
+    final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
     List<Homework> homeworks = [];
-    for (int i = 0; i < maps.length; i++) {
-      homeworks.add(toHomework(maps[i]));
+
+    // データベースから取得したデータをHomeworkオブジェクトに変換
+    for (int i = 0; i < data.length; i++) {
+      homeworks.add(dBtoHomework(data[i]));
     }
-    return homeworks;
+
+    // 日付ごとに宿題をグループ化するためのリスト
+    List<List<Homework>> homeworkdrafts = [];
+
+    if (homeworks.isEmpty) {
+      return homeworkdrafts;
+    }
+
+    // 初期化：最初の宿題を追加
+    List<Homework> currentList = [homeworks[0]];
+    homeworkdrafts.add(currentList);
+
+    for (int i = 1; i < homeworks.length; i++) {
+      if (homeworks[i].homeworkLimit.day != homeworks[i - 1].homeworkLimit.day) {
+        // 新しい日付の場合、新しいリストを作成して追加
+        currentList = [];
+        homeworkdrafts.add(currentList);
+      }
+      currentList.add(homeworks[i]);
+    }
+
+    return homeworkdrafts;
   }
 }

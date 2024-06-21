@@ -67,7 +67,7 @@ class SampleData {
   static List<Homework> homeworkData = [
     Homework(
       homeworkUuid: 'aaaaa',
-      homeworkLimit: '2022/12/12',
+      homeworkLimit: DateTime.now().add(const Duration(days: 2)),
       startPage: 1,
       pageCount: 1,
       homeworkPosterUuid: 'aaaaa',
@@ -92,7 +92,7 @@ class SampleData {
       'homeworkData': [
         Homework(
           homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/12',
+          homeworkLimit: DateTime.now().add(const Duration(days: 1)),
           startPage: 1,
           pageCount: 1,
           homeworkPosterUuid: 'aaaaa',
@@ -109,7 +109,7 @@ class SampleData {
       'homeworkData': [
         Homework(
             homeworkUuid: 'aaaaa',
-            homeworkLimit: '2022/12/12',
+            homeworkLimit: DateTime.now().add(const Duration(days: 1)),
             startPage: 1,
             pageCount: 1,
             homeworkPosterUuid: 'aaaaa',

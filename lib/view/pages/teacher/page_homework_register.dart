@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/sample_data.dart';
+import 'package:juninry/models/homework_model.dart';
 import '../../components/template/basic_template.dart';
-// import '../../components/organism/homework_register_form.dart';
+
 import '../../components/organism/homework_register_tab.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/register_homework_list.dart';
@@ -44,7 +46,11 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     return BasicTemplate(
         title: title,
         // 下書き一覧に遷移
-        featureIconButton: IconButton(onPressed: () {}, icon: featureIconButton),
+        featureIconButton: IconButton(onPressed: () {
+
+          GoRouter.of(context).go('/homework/register/drafts');
+
+        }, icon: featureIconButton),
         children: [
           // ここに課題登録フォームを追加
           HomeworkRegisterTab(
@@ -70,8 +76,11 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                 BasicButton(
                   width: 0.37,
                   text: '下書きに保存',
-                  onPressed: () {
-                     // TODO:APIに登録処理
+                  onPressed: () async {
+                    // TODO:dbに保存処理
+                    // いったん保存できてるか確認するためにサンプルを格納
+                    await Homework.registerHomeworkDrafts(SampleData.homeworkData[0]);
+                    context.push('/homework');  // 課題一覧に遷移
                   },
                   isColor: true,
                 ),
@@ -81,9 +90,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                   text: '登録',
                   width: 0.37,
                   onPressed: () {
-
                     // TODO:APIに登録処理
-
                   },
                   isColor: false,
                 ),
