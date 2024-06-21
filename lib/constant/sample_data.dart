@@ -2,6 +2,7 @@ import 'package:juninry/models/class_model.dart';
 
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
+import '../models/notice_register_model.dart';
 import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
@@ -144,8 +145,14 @@ class SampleData {
   ];
 
   static List<Map> dueHomeworkData = [
-    {'dueDate': DateTime.now().add(const Duration(days: 1)), 'homeworkData': homeworkData},
-    {'dueDate': DateTime.now().add(const Duration(days: 2)), 'homeworkData': homeworkData},
+    {
+      'dueDate': DateTime.now().add(const Duration(days: 1)),
+      'homeworkData': homeworkData
+    },
+    {
+      'dueDate': DateTime.now().add(const Duration(days: 2)),
+      'homeworkData': homeworkData
+    },
   ];
 
   static List<Notice> noticesData = [
@@ -187,5 +194,41 @@ class SampleData {
       classUuid: 'aaaaa',
       className: 'つよつよガンギマリ塾 1-A',
     ),
+  ];
+
+  static List<DraftedNotice> draftedNoticesData = [
+    DraftedNotice(
+      noticeTitle: '下書きをしたお知らせ',
+      noticeExplanatory: '下書きのお知らせ本文',
+      classData: Class(
+        classUuid: 'aaaaa',
+        className: '絶対に選ばれない学級',
+      ),
+      quotedNotice: QuotedNotice(
+        quotedClassData: Class(
+          classUuid: 'aaaaa',
+          className: '3-2 ふたば学級',
+        ),
+        quotedNoticeTitle: '引用のタイトルだよ〜',
+        quotedNoticeUuid: 'これは引用ID',
+      ),
+    ),
+    DraftedNotice(
+      noticeTitle: '引用なしドラゴン',
+      noticeExplanatory: 'ド級の引用ド引用',
+      classData: Class(
+        classUuid: 'aaaaa',
+        className: 'ばか',
+      ),
+    ),
+    DraftedNotice(
+        quotedNotice: QuotedNotice(
+      quotedClassData: Class(
+        classUuid: 'aaaaa',
+        className: 'いんよ',
+      ),
+      quotedNoticeTitle: '引用だけのお知らせ',
+      quotedNoticeUuid: 'これは引用ID',
+    ))
   ];
 }

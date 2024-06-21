@@ -60,7 +60,7 @@ Future<List<StatefulShellBranch>> getBranches() async {
 Future<GoRouter> createRouter() async {
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/home',
+    initialLocation: '/notice/register',
     routes: [
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く

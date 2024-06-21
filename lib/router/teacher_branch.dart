@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/models/notice_register_model.dart';
+import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 
 // 遷移先
 // teacher
@@ -9,6 +13,7 @@ import '../view/pages/teacher/page_notice_register_teacher.dart';
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/share/page_students.dart';
+
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
@@ -64,13 +69,54 @@ class TeacherBranch {
             ),
             GoRoute(
               path: 'register',
-              pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const PageNoticeRegisterTeacher(
-
-                  )),
+              pageBuilder: (context, state) {
+                if (state.extra != null) {
+                  // Map型でデータを送るためそれを取得
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
+                  // 取り出す
+                  final DraftedNotice draftedNoticeData =
+                      extraData['draftedNoticeData'];
+                  print(inspect(draftedNoticeData));
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeRegisterTeacher(
+                      draftedNoticeData: draftedNoticeData,
+                    ),
+                  );
+                } else {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeRegisterTeacher(),
+                  );
+                }
+              },
             ),
-            GoRoute(path: "draft", pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNoticeRegisterTeacher())),
+            GoRoute(
+              path: "draft",
+              pageBuilder: (context, state) {
+                if (state.extra != null) {
+                  // Map型でデータを送るためそれを取得
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
+                  // 取り出す
+                  final DraftedNotice draftedNoticeData =
+                      extraData['draftedNoticeData'];
+                  print(inspect(draftedNoticeData));
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeDraftTeacher(
+                      draftedNoticeData: draftedNoticeData,
+                    ),
+                  );
+                } else {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeDraftTeacher(),
+                  );
+                }
+              },
+            ),
           ],
 
           pageBuilder: (context, state) => NoTransitionPage(
@@ -94,7 +140,8 @@ class TeacherBranch {
               name: 'register',
               path: 'register',
               pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey, child: const PageHomeworkRegisterTeacher()),
+                  key: state.pageKey,
+                  child: const PageHomeworkRegisterTeacher()),
             ),
           ],
 
