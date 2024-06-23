@@ -2,7 +2,7 @@ import 'package:juninry/models/class_model.dart';
 
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
-import '../models/notice_register_model.dart';
+import '../models/drafted_notice_model.dart';
 import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
@@ -179,54 +179,45 @@ class SampleData {
 
   static List<Class> classesData = [
     Class(
-      classUuid: 'aaaaa',
+      classUuid: 'class0',
       className: '3-2 ふたば学級',
     ),
     Class(
-      classUuid: 'aaaaa',
+      classUuid: 'class1',
       className: '3-5 みつば学級',
     ),
     Class(
-      classUuid: 'aaaaa',
+      classUuid: 'class2',
       className: '4-2',
     ),
     Class(
-      classUuid: 'aaaaa',
+      classUuid: 'class3',
       className: 'つよつよガンギマリ塾 1-A',
     ),
   ];
 
   static List<DraftedNotice> draftedNoticesData = [
     DraftedNotice(
+      // 下書きと引用がどっちもある場合
       noticeTitle: '下書きをしたお知らせ',
       noticeExplanatory: '下書きのお知らせ本文',
-      classData: Class(
-        classUuid: 'aaaaa',
-        className: '絶対に選ばれない学級',
-      ),
+      selectedClass: classesData[0],
       quotedNotice: QuotedNotice(
-        quotedClassData: Class(
-          classUuid: 'aaaaa',
-          className: '3-2 ふたば学級',
-        ),
+        quotedClass: classesData[1],
         quotedNoticeTitle: '引用のタイトルだよ〜',
         quotedNoticeUuid: 'これは引用ID',
       ),
     ),
+    // 下書きのみの場合
     DraftedNotice(
       noticeTitle: '引用なしドラゴン',
       noticeExplanatory: 'ド級の引用ド引用',
-      classData: Class(
-        classUuid: 'aaaaa',
-        className: 'ばか',
-      ),
+      selectedClass: classesData[2],
     ),
+    // 引用のみの場合
     DraftedNotice(
         quotedNotice: QuotedNotice(
-      quotedClassData: Class(
-        classUuid: 'aaaaa',
-        className: 'いんよ',
-      ),
+      quotedClass: classesData[3],
       quotedNoticeTitle: '引用だけのお知らせ',
       quotedNoticeUuid: 'これは引用ID',
     ))

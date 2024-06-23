@@ -4,7 +4,7 @@ import 'package:juninry/models/class_model.dart';
 
 class ClassDropdown extends StatefulWidget {
   final List<Class> items;
-  final void Function(Class? value) onChanged;
+  final void Function(Class value) onChanged;
   final Class selectedClass;
 
   const ClassDropdown({
@@ -19,16 +19,12 @@ class ClassDropdown extends StatefulWidget {
 }
 
 class _ClassDropdownState extends State<ClassDropdown> {
-  late List<Class> items;
-  late Class selectedClass;
-  late Function(Class? value) onChanged;
+  late Function(Class value) onChanged;
 
   @override
   void initState() {
     super.initState();
-    items = widget.items;
     onChanged = widget.onChanged;
-    selectedClass = widget.selectedClass;
   }
 
   @override
@@ -37,7 +33,10 @@ class _ClassDropdownState extends State<ClassDropdown> {
       children: [
         GestureDetector(
           onTap: () {
-            _showPopupMenu();
+            // 引用、所属クラスが1など、選択肢が存在しない場合、せんたくしをひらかない
+            if (widget.items.length != 1) {
+              _showPopupMenu();
+            }
           },
           child: Container(
             height: 30,
@@ -59,7 +58,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                         child: Text(
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            selectedClass.className,
+                            widget.selectedClass.className,
                             style:
                                 const TextStyle(color: AppColors.fontDark)))),
               ],
@@ -131,17 +130,19 @@ class _ClassDropdownState extends State<ClassDropdown> {
         ),
 
         //続く中身
-        ...items.map((item) {
+        ...widget.items.map((item) {
           return PopupMenuItem<Class>(
               value: item,
               height: 30,
               child: Row(children: [
                 SizedBox(
+                  //選択しているクラスは目印
                   width: 30,
-                  child: Icon(item == selectedClass ? Icons.check : null,
+                  child: Icon(item.classUuid == widget.selectedClass.classUuid ? Icons.check : null,
                       color: AppColors.subjectSocial, size: 15),
                 ),
                 Container(
+                  //クラス名
                   width: 100,
                   alignment: Alignment.center,
                   child: Text(
@@ -156,9 +157,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
     );
 
     // 選択されたらクラス更新するよ
-    if (tapedClass != null && tapedClass != selectedClass) {
-      // 二行必要な理由わからない、、、
-      selectedClass = tapedClass;
+    if (tapedClass != null && tapedClass != widget.selectedClass) {
       onChanged(tapedClass);
     }
   }

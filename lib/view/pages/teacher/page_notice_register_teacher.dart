@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/class_model.dart';
 import 'package:juninry/models/notice_model.dart';
-import 'package:juninry/models/notice_register_model.dart';
+import 'package:juninry/models/drafted_notice_model.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
 import 'package:juninry/view/components/organism/create_notice_form.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
+import '../../../models/user_model.dart';
 
 //クラスの表示に必要なデータ型
 
@@ -25,13 +26,12 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(draftedNoticeData?.noticeTitle);
     // クラス一覧取得
     // 引用されたお知らせがある場合クラスの選択肢は引用されたクラスになる
     final List<Class> classesList = (draftedNoticeData?.quotedNotice != null)
         // あるとき〜！
         ? [
-            draftedNoticeData!.quotedNotice!.quotedClassData,
+            draftedNoticeData!.quotedNotice!.quotedClass,
           ]
         // ないとき；；
         //TODO: どうにかしてクラスリストを取ってくる 多分fetchで所属クラス一覧を取ってくるメソッド
@@ -39,46 +39,31 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     //名前を取得
     //TODO: どうにかして名前を取ってくる
-    final String name = SampleData.teacherUser.userName;
+    final String name;
 
-    // 監視ブロック
     // クラス監視　優先度 引用と同じクラス > 下書きクラス > 初期値
-    // TODO: 初期値はお知らせ作成ページに飛んだ時なんかあれば、、、
-    // TODO: 値の反映ができない
-    var selectedClass = useState<Class>(
-        draftedNoticeData?.quotedNotice?.quotedClassData ??
-            draftedNoticeData?.classData ??
-            classesList[0]);
-    //　タイトル監視　優先度 下書きタイトル > 初期値
-    var noticeTitle = useState<String>(draftedNoticeData?.noticeTitle ?? "");
-    // 　本文監視　優先度 下書き本文 > 初期値
-    var noticeText =
-        useState<String>(draftedNoticeData?.noticeExplanatory ?? "");
+    // useStateの初期化は一生に一度しか発生しないのでここでいろいろしても意味ない
+    var selectedClass = useState<Class>(classesList[0]);
+
+    // ページに戻ってきた時に送られてきたデータを元にクラスを選択する
+    useEffect(() {
+      selectedClass.value = draftedNoticeData?.quotedNotice?.quotedClass ??
+          draftedNoticeData?.selectedClass ??
+          classesList[0];
+    }, [draftedNoticeData]);
+
+    // タイトルの値を管理するコントローラー
+    TextEditingController titleController =
+        TextEditingController(text: draftedNoticeData?.noticeTitle ?? "");
+
+    // 本文の値を管理するコントローラー
+    TextEditingController textController =
+        TextEditingController(text: draftedNoticeData?.noticeExplanatory ?? "");
 
     //クラス選択時の処理
-    void onClassChanged(Class? value) {
-      selectedClass.value = value!;
+    void onClassChanged(Class value) {
+      selectedClass.value = value;
     }
-
-    //タイトル入力時の処理
-    void onTitleChanged(String value) {
-      noticeTitle.value = value;
-    }
-
-    //テキスト入力時の処理
-    void onTextChanged(String value) {
-      noticeText.value = value;
-      print(noticeText.value);
-    }
-
-    // TODO: 値の反映ができない
-    // 変数には入っているので描画が更新できていない気がする
-    useEffect(() {
-      selectedClass.value = draftedNoticeData?.quotedNotice?.quotedClassData ??
-          SampleData.classesData[0];
-      noticeTitle.value = draftedNoticeData?.noticeTitle ?? "";
-      noticeText.value = draftedNoticeData?.noticeExplanatory ?? "";
-    }, [draftedNoticeData]);
 
     // 1ページに必要な要素を並べる
     return BasicTemplate(
@@ -89,7 +74,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
             Icons.note_add_outlined,
             size: 32,
           ),
-          // TODO: 下書きに飛ぶ
+          // TODO: Routing 下書き画面へ
           onPressed: () {
             context.push("/notice/draft");
           },
@@ -102,16 +87,13 @@ class PageNoticeRegisterTeacher extends HookWidget {
               onClassChanged: onClassChanged, //クラス選択時の処理
               selectedClass: selectedClass.value, //現在選択されているクラス
               name: name, //名前
-              onTitleChanged: onTitleChanged, //タイトル入力時の処理
+              titleController: titleController, //タイトルを管理するコントローラー
+              textController: textController, //本文を管理するコントローラー
               quoteNoticeTitle:
                   draftedNoticeData?.quotedNotice?.quotedNoticeTitle, //引用元のタイトル
-              onTextChanged: onTextChanged, //入力された内容
             ),
           ),
 
-          // お知らせ作成フォーム
-          Text(draftedNoticeData?.noticeTitle ?? ""),
-          Text(noticeTitle.value),
           //ボタン
           Align(
             heightFactor: 1.3,
@@ -124,16 +106,20 @@ class PageNoticeRegisterTeacher extends HookWidget {
                   text: "下書きに保存",
                   //
                   onPressed: () {
-                    // XXX: データの送信、
-                    context.push("/notice/draft", extra: {
-                      'draftedNoticeData': DraftedNotice(
-                        classData: selectedClass.value,
-                        noticeTitle: noticeTitle.value,
-                        noticeExplanatory: noticeText.value,
-                        quotedNotice: draftedNoticeData?.quotedNotice,
-                      )
-                    });
-                  }, //TODO: 下書き保存処理
+                    //TODO: 下書き保存処理
+                    // IDがあれば更新、なければ新規作成
+                    print(DraftedNotice.saveDraftedNotice(
+                      DraftedNotice(
+                        noticeId: draftedNoticeData
+                            ?.noticeId, // 送られたきたデータにnotice_idがあれば送る
+                        selectedClass: selectedClass.value,
+                        noticeTitle: titleController.text,
+                        noticeExplanatory: textController.value.text,
+                        quotedNotice: draftedNoticeData
+                            ?.quotedNotice, // 送られたきたデータに引用元があれば送る
+                      ),
+                    ));
+                  },
                   isColor: true,
                   radius: 5,
                 ),

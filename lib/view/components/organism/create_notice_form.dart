@@ -12,14 +12,14 @@ import 'package:intl/intl.dart';
 import 'package:juninry/models/class_model.dart';
 
 class CreateNoticeForm extends StatefulWidget {
-  final List<Class> classesList;                    // クラス一覧
-  final Class selectedClass;                        // 選択されているクラス
-  final String name;                                // 名前
-  final String? quoteNoticeTitle;                    // 引用されているお知らせタイトル
+  final List<Class> classesList; // クラス一覧
+  final Class selectedClass; // 選択されているクラス
+  final String name; // 名前
+  final String? quoteNoticeTitle; // 引用されているお知らせタイトル
 
-  final void Function(Class? value) onClassChanged; // クラス選択時の処理
-  final void Function(String value) onTitleChanged; // タイトル入力時の処理
-  final void Function(String value) onTextChanged;  // テキスト入力時の処理
+  final void Function(Class value) onClassChanged; // クラス選択時の処理
+  final TextEditingController titleController; // タイトル
+  final TextEditingController textController; // 本文
 
   const CreateNoticeForm({
     super.key,
@@ -28,8 +28,8 @@ class CreateNoticeForm extends StatefulWidget {
     required this.name,
     required this.quoteNoticeTitle,
     required this.onClassChanged,
-    required this.onTitleChanged,
-    required this.onTextChanged,
+    required this.titleController,
+    required this.textController,
   });
 
   @override
@@ -37,22 +37,13 @@ class CreateNoticeForm extends StatefulWidget {
 }
 
 class _CreateNoticeFormState extends State<CreateNoticeForm> {
-  //クラスの選択項目
-  late List<Class> classesList;
-
   //名前
   late String name;
-
-  //選択されているクラス
-  late Class selectedClass;
-
 
   //初期化
   @override
   void initState() {
     super.initState();
-    classesList = widget.classesList;
-    selectedClass = widget.selectedClass;
     name = widget.name;
   }
 
@@ -69,8 +60,8 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
             //日付とクラスのセレクトボックス
             Text(date, style: Fonts.h4),
             ClassDropdown(
-              selectedClass: selectedClass,
-              items: classesList,
+              selectedClass: widget.selectedClass,
+              items: widget.classesList,
               onChanged: widget.onClassChanged,
             )
           ]),
@@ -91,7 +82,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
               contentPadding: EdgeInsets.zero,
             ),
             style: Fonts.h3,
-            onChanged: widget.onTitleChanged,
+            controller: widget.titleController,
           ),
 
           //引用ブロック
@@ -102,7 +93,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
 
           // 入力ブロック
           Expanded(
-            child: LongTextField(onTextChanged: widget.onTextChanged),
+            child: LongTextField(textController: widget.textController),
           ),
         ]));
   }

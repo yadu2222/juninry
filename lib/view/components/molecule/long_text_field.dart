@@ -4,8 +4,8 @@ import '../../../constant/fonts.dart';
 
 // 長文テキスト入力
 class LongTextField extends StatelessWidget {
-  final void Function(String value) onTextChanged;
-  const LongTextField({super.key, required this.onTextChanged});
+  final TextEditingController textController;
+  const LongTextField({super.key, required this.textController});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class LongTextField extends StatelessWidget {
       style: Fonts.p,
       keyboardType: TextInputType.multiline,
       maxLines: null,
-      onChanged: onTextChanged,
+      controller: textController,
     );
   }
 }

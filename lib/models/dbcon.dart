@@ -60,6 +60,22 @@ class DatabaseHelper {
       password text
     )
   ''');
+
+    // お知らせの下書きを管理するためのテーブル
+    // このテーブル構造に関して、私は真に驚くべききもさを見つけたが、この余白はそれを書くには狭すぎる。
+    await db.execute('''
+    CREATE TABLE drafted_notices (
+      notice_id integer PRIMARY KEY AUTOINCREMENT,
+      notice_title text,
+      notice_explanatory text,
+      class_uuid text,
+      class_name text,
+      quoted_notice_uuid text,
+      quoted_notice_title text,
+      quoted_class_uuid text,
+      quoted_class_name text
+      )
+    ''');
   }
 
   // 登録処理
@@ -72,7 +88,8 @@ class DatabaseHelper {
 
   // 照会処理
   // 引数：table名
-  static Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
+  static Future<List<Map<String, dynamic>>> queryAllRows(
+      String tableName) async {
     Database? db = await instance.database;
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
@@ -87,10 +104,12 @@ class DatabaseHelper {
 
   // 更新処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> update(String tableName, String colum, Map<String, dynamic> row, String key) async {
+  static Future<int> update(String tableName, String colum,
+      Map<String, dynamic> row, String key) async {
     Database? db = await instance.database;
     print(await db!.rawQuery("select * from $tableName"));
-    return await db.update(tableName, row, where: '$colum = ?', whereArgs: ['$key']);
+    return await db
+        .update(tableName, row, where: '$colum = ?', whereArgs: ['$key']);
   }
 
   // 削除処理

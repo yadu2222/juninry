@@ -17,7 +17,7 @@ class QuoteFromNotice extends StatelessWidget {
       elevation: 0, //ボタンの影を消す
       highlightElevation: 0, //ボタンの影を消す
       splashColor: Colors.transparent,
-      // TODO: 引用するお知らせ選択画面への遷移
+      // TODO: Routing 引用選択画面への遷移
       onPressed: () {},
       child: Column(
         children: [

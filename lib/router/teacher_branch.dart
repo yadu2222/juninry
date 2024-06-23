@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/models/notice_register_model.dart';
+import 'package:juninry/constant/sample_data.dart';
+import 'package:juninry/models/drafted_notice_model.dart';
 import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 
 // 遷移先
@@ -68,8 +69,10 @@ class TeacherBranch {
               ),
             ),
             GoRoute(
-              path: 'register',
+              path:
+                  'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
               pageBuilder: (context, state) {
+                // データが送られてきたとき
                 if (state.extra != null) {
                   // Map型でデータを送るためそれを取得
                   final Map<String, dynamic> extraData =
@@ -77,7 +80,6 @@ class TeacherBranch {
                   // 取り出す
                   final DraftedNotice draftedNoticeData =
                       extraData['draftedNoticeData'];
-                  print(inspect(draftedNoticeData));
                   return NoTransitionPage(
                     key: state.pageKey,
                     child: PageNoticeRegisterTeacher(
@@ -85,6 +87,7 @@ class TeacherBranch {
                     ),
                   );
                 } else {
+                  // データが送られてきなかったとき
                   return NoTransitionPage(
                     key: state.pageKey,
                     child: PageNoticeRegisterTeacher(),
@@ -102,7 +105,6 @@ class TeacherBranch {
                   // 取り出す
                   final DraftedNotice draftedNoticeData =
                       extraData['draftedNoticeData'];
-                  print(inspect(draftedNoticeData));
                   return NoTransitionPage(
                     key: state.pageKey,
                     child: PageNoticeDraftTeacher(
