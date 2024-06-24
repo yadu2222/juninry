@@ -25,6 +25,7 @@ class PageHomeworkDraftsTeacher extends HookWidget {
 
     // useEffect内で非同期処理を実行するための方法
     useEffect(() {
+      
       Future<void> fetchData() async {
         final data = await Homework.getHomeworkDrafts();  // dbから下書きデータを取得
         draftData.value = data;

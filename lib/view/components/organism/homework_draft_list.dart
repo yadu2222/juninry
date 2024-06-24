@@ -18,9 +18,9 @@ class HomeworkDraftList extends StatelessWidget {
         listItem: (homework) => InkWell(
               onTap: () {
                 // // 画面遷移
-                // context.push('/homework/drafts/edit',
-                //     extra: {'homeworkId': homework.homeworkUuid});
-                // TODO:この値をもって入力画面に遷移
+                context.push('/homework/register/',
+                // 下書き一覧に選択した日付を渡す
+                extra: {'selectDate': homework.first.homeworkLimit.toString()});
               },
               child: DraftHomeworkCard(homeworkData: homework),
             ));

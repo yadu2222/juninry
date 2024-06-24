@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/sample_data.dart';
-import 'package:juninry/models/homework_model.dart';
 import '../../components/template/basic_template.dart';
 
 import '../../components/organism/homework_register_tab.dart';
@@ -21,39 +20,50 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     Icons.drive_file_rename_outline_rounded,
     size: 30,
   );
-  const PageHomeworkRegisterTeacher({super.key});
+  const PageHomeworkRegisterTeacher({super.key, this.selectDate});
+  final String? selectDate;
 
-  // タグを選択で課題追加リストがでるようにしたい
   @override
   Widget build(BuildContext context) {
     // 教材リスト
     final teachingMaterialData = useState<List<TeachingItem>>([]);
-    // 初回のみ実行
-    // ここでapiから教材リストを取得
-    useEffect(() {
-      teachingMaterialData.value = SampleData.teachingItemData;
-      return () {};
-    }, []);
-
+    final selectDateHook = useState<String?>(selectDate);
     // 選択中の教材データ
     final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化
     // indexを受け取って配列に追加
     void register(int index) {
-
       // TODO:日付
       // TODO:クラスUUID
-      final newHomework = RegisterHomework(homeworkLimit: DateTime.now(),classUUID: "aaa", teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
+      final newHomework = RegisterHomework(homeworkLimit: DateTime.now(), classUUID: "aaa", teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
       registerHomeworkData.value = List.from(registerHomeworkData.value)..add(newHomework); // 追加
     }
+
+    // 初回のみ実行
+    // ここでapiから教材リストを取得
+    useEffect(() {
+      Future<void> fetchData() async {
+        if (selectDate != null) {
+          print('aaaa');
+          RegisterHomework.getHomeworkDrafts(DateTime.parse(selectDateHook.value!)).then((value) {
+            print(value);
+            registerHomeworkData.value = value;
+          });
+        }
+      }
+
+      fetchData();
+      teachingMaterialData.value = SampleData.teachingItemData;
+      return () {};
+    }, [selectDateHook]);
 
     return BasicTemplate(
         title: title,
         // 下書き一覧に遷移
-        featureIconButton: IconButton(onPressed: () {
-
-          GoRouter.of(context).go('/homework/register/drafts');
-
-        }, icon: featureIconButton),
+        featureIconButton: IconButton(
+            onPressed: () {
+              GoRouter.of(context).go('/homework/register/drafts');
+            },
+            icon: featureIconButton),
         children: [
           // ここに課題登録フォームを追加
           HomeworkRegisterTab(
@@ -81,9 +91,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                   text: '下書きに保存',
                   onPressed: () async {
                     // TODO:dbに保存処理
-                   
+
                     await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
-                    context.push('/homework');  // 課題一覧に遷移
+                    context.push('/homework'); // 課題一覧に遷移
                   },
                   isColor: true,
                 ),
