@@ -9,10 +9,13 @@ import '../../../constant/fonts.dart';
 class CountForm extends HookWidget {
   CountForm({
     super.key,
+    required this.startController,
+    required this.countController,
   });
 
-  // TODO:contoroller受取
-  final TextEditingController testcontroller = TextEditingController();
+  final TextEditingController startController;
+  final TextEditingController countController;
+
   @override
   Widget build(BuildContext context) {
     // 入力タイプ切り替え
@@ -24,14 +27,12 @@ class CountForm extends HookWidget {
     Widget editForm(TextEditingController controller) {
       return Expanded(
           child: TextFormField(
+              controller: controller,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(3),
+                LengthLimitingTextInputFormatter(3), // 高さ
               ],
-              onChanged: (value) {
-                // onPressed();
-              },
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -40,7 +41,7 @@ class CountForm extends HookWidget {
 
     // 枚数入力
     List<Widget> widget1 = [
-      editForm(testcontroller),
+      editForm(startController),
       const Text(
         '枚',
         style: Fonts.h4,
@@ -49,12 +50,12 @@ class CountForm extends HookWidget {
 
     // ページ数入力
     List<Widget> widget2 = [
-      editForm(testcontroller),
+      editForm(startController),
       const Text(
         'P 〜',
         style: Fonts.h4,
       ),
-      editForm(testcontroller),
+      editForm(countController),
       const Text(
         'P',
         style: Fonts.h4,

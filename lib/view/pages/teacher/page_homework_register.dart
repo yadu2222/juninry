@@ -39,7 +39,10 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化
     // indexを受け取って配列に追加
     void register(int index) {
-      final newHomework = RegisterHomework(teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
+
+      // TODO:日付
+      // TODO:クラスUUID
+      final newHomework = RegisterHomework(homeworkLimit: DateTime.now(),classUUID: "aaa", teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
       registerHomeworkData.value = List.from(registerHomeworkData.value)..add(newHomework); // 追加
     }
 
@@ -78,8 +81,8 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                   text: '下書きに保存',
                   onPressed: () async {
                     // TODO:dbに保存処理
-                    // いったん保存できてるか確認するためにサンプルを格納
-                    await Homework.registerHomeworkDrafts(SampleData.homeworkData[0]);
+                   
+                    await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
                     context.push('/homework');  // 課題一覧に遷移
                   },
                   isColor: true,
@@ -90,7 +93,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                   text: '登録',
                   width: 0.37,
                   onPressed: () {
-                    // TODO:APIに登録処理
+                    // TODO:APIに登録処理を投げる
                   },
                   isColor: false,
                 ),

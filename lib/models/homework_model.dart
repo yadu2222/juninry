@@ -68,32 +68,6 @@ class Homework {
     }
   }
 
-  // 下書きを保存
-  static Future<void> registerHomeworkDrafts(Homework homework) async {
-    Map<String, dynamic> item = {
-      'homework_limit': homework.homeworkLimit.toString(),
-      'start_page': homework.startPage,
-      'page_count': homework.pageCount,
-      'homework_poster_uuid': homework.homeworkPosterUuid,
-      'homework_note': homework.homeworkNote,
-      'class_uuid': homework.classUuid,
-      'teaching_material_uuid': homework.teachingItem.teachingMaterialUuid,
-      'teaching_material_name': homework.teachingItem.teachingMaterialName,
-      'subject_id': homework.teachingItem.subjectId,
-    };
-    await DatabaseHelper.insert('homeworks', item);
-
-    // かくにん
-    List<Map<String, dynamic>> test = await DatabaseHelper.queryAllRows('homeworks'); // こっちはいけてる
-    // List<Homework> test = await getHomeworkDrafts(homework.classUuid);
-    // final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks', ['class_uuid'], ['aaaaa'], 'homework_limit');  // 動作不良
-
-    // print(maps);
-    print(homework.classUuid);
-    print(test);
-    // print(test);
-  }
-
   // クラスでソートし下書きを取得
   // なおす
   // static Future<List<Homework>> getHomeworkDrafts(String classUUID) async {
@@ -127,6 +101,7 @@ class Homework {
     final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
     List<Homework> homeworks = [];
 
+    print(data);
     // データベースから取得したデータをHomeworkオブジェクトに変換
     for (int i = 0; i < data.length; i++) {
       homeworks.add(dBtoHomework(data[i]));

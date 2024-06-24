@@ -27,7 +27,7 @@ class RegisterHomeworkCard extends StatelessWidget {
             ),
             // 教材の表示
             TeachingTag(itemData: registerHomeworkData.teachingItem),
-            Expanded(child: CountForm())
+            Expanded(child: CountForm(startController: registerHomeworkData.startPageController,countController: registerHomeworkData.pageCountController,))
           ],
         ));
   }

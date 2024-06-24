@@ -122,11 +122,11 @@ class SampleData {
     }
   ];
 
-  static List<RegisterHomework> registerHomeworkData = [
-    RegisterHomework(teachingItem: teachingItem1),
-    RegisterHomework(teachingItem: teachingItem2),
-    RegisterHomework(teachingItem: teachingItem3),
-  ];
+  // static List<RegisterHomework> registerHomeworkData = [
+  //   RegisterHomework(teachingItem: teachingItem1),
+  //   RegisterHomework(teachingItem: teachingItem2),
+  //   RegisterHomework(teachingItem: teachingItem3),
+  // ];
 
   static List<Student> studentData = [
     Student(
