@@ -125,4 +125,23 @@ class DatabaseHelper {
     Database? db = await instance.database;
     return await db!.delete(tableName, where: '$colum = ?', whereArgs: [key]);
   }
+
+
+  // TODO:クエリビルダーがうごくまでのしょち
+  // くやしいね
+  static Future<List<Map<String, dynamic>>> getHomeworksForSpecificDate(String date) async {
+    Database? db = await instance.database;
+
+    // クエリの実行
+    List<Map<String, dynamic>> result = await db!.rawQuery(
+      '''
+    SELECT * FROM homeworks 
+    WHERE DATE(homework_limit) = DATE(?)
+    ''',
+      [date],
+    );
+
+    return result;
+  }
+
 }

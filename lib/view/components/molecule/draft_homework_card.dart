@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:juninry/constant/fonts.dart';
 import 'package:juninry/view/components/atoms/teaching_tag.dart';
-import '../../components/molecule/divider.dart';
+import '../../../models/register_homework_model.dart';
 
-import '../../../models/homework_model.dart';
 import '../atoms/listitem.dart';
 import '../../../constant/colors.dart';
 
 class DraftHomeworkCard extends StatelessWidget {
   const DraftHomeworkCard({super.key, required this.homeworkData,required this.onTap});
 
-  final List<Homework> homeworkData;
-  final void Function(List<Homework>) onTap;
+  final List<RegisterHomework> homeworkData;
+  final void Function(List<RegisterHomework>) onTap;
 
   @override
   Widget build(BuildContext context) {

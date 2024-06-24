@@ -23,17 +23,53 @@ class RegisterHomework {
     TextEditingController? noteController,
     TextEditingController? startPageController,
     TextEditingController? pageCountController,
-  })  : noteController = noteController ?? TextEditingController(),
+  })  
+  // null かを判別し、初期値を設定
+  : noteController = noteController ?? TextEditingController(),
         startPageController = startPageController ?? TextEditingController(),
         pageCountController = pageCountController ?? TextEditingController();
+
+  // mapをHomeworkに変換
+  static RegisterHomework dBtoRegisterHomework(Map loadData) {
+    try {
+      return RegisterHomework(
+        homeworkId: loadData['homework_id'],
+        homeworkLimit: DateTime.parse(loadData['homework_limit']),
+        classUUID: loadData['class_uuid'],
+        noteController: TextEditingController(text: loadData['homework_note']),
+        startPageController: TextEditingController(text: loadData['start_page'].toString()),
+        pageCountController: TextEditingController(text: loadData['page_count'].toString()),
+        teachingItem: TeachingItem(
+          teachingMaterialUuid: loadData['teaching_material_uuid'],
+          teachingMaterialName: loadData['teaching_material_name'],
+          subjectId: loadData['subject_id'],
+        ),
+      );
+    } catch (e) {
+      print('Error converting map to Homework: $e');
+      return RegisterHomework(
+        homeworkId: 0,
+        homeworkLimit: DateTime.now(),
+        classUUID: '',
+        noteController: TextEditingController(),
+        startPageController: TextEditingController(),
+        pageCountController: TextEditingController(),
+        teachingItem: TeachingItem(
+          teachingMaterialUuid: '',
+          teachingMaterialName: '',
+          subjectId: 0,
+        ),
+      );
+    }
+  }
+
   // 下書きを保存
   static Future<void> registerHomeworkDrafts(List<RegisterHomework> homeworks) async {
     // user情報を取得 idを取得するため
     User user = await User.getUser();
 
     for (RegisterHomework homework in homeworks) {
-
-      if(homework.homeworkId != null) {
+      if (homework.homeworkId != null) {
         // すでに登録されているものは削除して再登録
         deleteHomeworkDrafts(homework);
       }
@@ -50,20 +86,16 @@ class RegisterHomework {
       };
       try {
         await DatabaseHelper.insert('homeworks', item);
-        print('Homework inserted');
+        debugPrint('Homework inserted');
       } catch (e) {
-        print('Error inserting homework: $e');
+        debugPrint('Error inserting homework: $e');
       }
     }
     // かくにん
     List<Map<String, dynamic>> test = await DatabaseHelper.queryAllRows('homeworks'); // こっちはいけてる
     // List<Homework> test = await getHomeworkDrafts(homework.classUuid);
     // final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks', ['class_uuid'], ['aaaaa'], 'homework_limit');  // 動作不良
-
-    // print(maps);
-    // print(homework.classUuid);
-    print(test);
-   
+    debugPrint(test.toString());
   }
 
   // idで削除
@@ -71,26 +103,49 @@ class RegisterHomework {
     await DatabaseHelper.delete('homeworks', 'homework_id', homework.homeworkId.toString());
   }
 
-  static Future<List<RegisterHomework>> getHomeworkDrafts(DateTime selectDate) async {
-  //  final List<Map<String, dynamic>> data = await DatabaseHelper.queryBuilder('homeworks', ['homework_limit'], ["${selectDate.year.toString()}-${selectDate.month.toString()}-${selectDate.day.toString}"], 'homework_id');
-  final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
+  // 下書きを取得
+  // TODO:日付絞って取得　クラスも絞りなさい！！！！！！！！
+  static Future<List<RegisterHomework>> getHomeworkDraftsForDate(DateTime selectDate) async {
+   final List<Map<String, dynamic>> data = await DatabaseHelper.getHomeworksForSpecificDate(selectDate.toString());
+    // final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
 
     List<RegisterHomework> homeworks = [];
     for (Map<String, dynamic> item in data) {
-      homeworks.add(RegisterHomework(
-        homeworkId: item['homework_id'],
-        classUUID: item['class_uuid'],
-        homeworkLimit: DateTime.parse(item['homework_limit']),
-        noteController: TextEditingController(text: item['homework_note']),
-        startPageController: TextEditingController(text: item['start_page'].toString()),
-        pageCountController: TextEditingController(text: item['page_count'].toString()),
-        teachingItem: TeachingItem(
-          teachingMaterialUuid: item['teaching_material_uuid'],
-          teachingMaterialName: item['teaching_material_name'],
-          subjectId: item['subject_id'],
-        ),
-      ));
+      // 整形
+      homeworks.add(dBtoRegisterHomework(item));
     }
     return homeworks;
+  }
+
+  // TODO:クラスでソートして取得
+  // 日付ごとに２次配列化する
+  static Future<List<List<RegisterHomework>>> getHomeworkDraftsList() async {
+    final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
+    List<RegisterHomework> homeworks = [];
+
+    print(data);
+    // データベースから取得したデータをHomeworkオブジェクトに変換
+    for (int i = 0; i < data.length; i++) {
+      homeworks.add(dBtoRegisterHomework(data[i]));
+    }
+    // 日付ごとに宿題をグループ化するためのリスト
+    List<List<RegisterHomework>> homeworkdrafts = [];
+
+    if (homeworks.isEmpty) {
+      return homeworkdrafts;
+    }
+    // 初期化：最初の宿題を追加
+    List<RegisterHomework> currentList = [homeworks[0]];
+    homeworkdrafts.add(currentList);
+    for (int i = 1; i < homeworks.length; i++) {
+      if (homeworks[i].homeworkLimit.day != homeworks[i - 1].homeworkLimit.day) {
+        // 新しい日付の場合、新しいリストを作成して追加
+        currentList = [];
+        homeworkdrafts.add(currentList);
+      }
+      currentList.add(homeworks[i]);
+    }
+
+    return homeworkdrafts;
   }
 }

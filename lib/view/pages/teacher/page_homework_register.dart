@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -32,6 +30,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     final selectDateHook = useState<String?>(selectDate);
     // 選択中の教材データ
     final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化
+
     // indexを受け取って配列に追加
     void register(int index) {
       // TODO:日付
@@ -51,8 +50,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     useEffect(() {
       Future<void> fetchData() async {
         if (selectDate != null) {
-          // TODO:日付で取得
-          final data = await RegisterHomework.getHomeworkDrafts(DateTime.parse(selectDateHook.value!));
+          debugPrint('しゅとくしゅとくしゅとく');
+          final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateHook.value!));
+          debugPrint(data.toString());
           registerHomeworkData.value = data;
         }
       }
