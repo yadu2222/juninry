@@ -129,4 +129,8 @@ class Homework {
 
     return homeworkdrafts;
   }
+
+   static void deleteHomeworkDrafts(Homework homework) async {
+    await DatabaseHelper.delete('homeworks', 'homework_id', homework.homeworkUuid.toString());
+  }
 }

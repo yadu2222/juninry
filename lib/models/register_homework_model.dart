@@ -55,7 +55,6 @@ class RegisterHomework {
         print('Error inserting homework: $e');
       }
     }
-
     // かくにん
     List<Map<String, dynamic>> test = await DatabaseHelper.queryAllRows('homeworks'); // こっちはいけてる
     // List<Homework> test = await getHomeworkDrafts(homework.classUuid);
@@ -67,9 +66,11 @@ class RegisterHomework {
     // print(test);
   }
 
+ 
+
   static Future<List<RegisterHomework>> getHomeworkDrafts(DateTime selectDate) async {
-    // final List<Map<String, dynamic>> data = await DatabaseHelper.queryBuilder('homeworks', ['homework_limit'], ["${selectDate.year.toString()}-${selectDate.month.toString()}-${selectDate.day.toString}"], 'homework_id');
-    final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
+  //  final List<Map<String, dynamic>> data = await DatabaseHelper.queryBuilder('homeworks', ['homework_limit'], ["${selectDate.year.toString()}-${selectDate.month.toString()}-${selectDate.day.toString}"], 'homework_id');
+  final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
 
     List<RegisterHomework> homeworks = [];
     for (Map<String, dynamic> item in data) {

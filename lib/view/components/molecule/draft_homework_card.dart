@@ -10,9 +10,10 @@ import '../atoms/listitem.dart';
 import '../../../constant/colors.dart';
 
 class DraftHomeworkCard extends StatelessWidget {
-  const DraftHomeworkCard({super.key, required this.homeworkData});
+  const DraftHomeworkCard({super.key, required this.homeworkData,required this.onTap});
 
   final List<Homework> homeworkData;
+  final void Function(List<Homework>) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,7 @@ class DraftHomeworkCard extends StatelessWidget {
             ),
             onPressed: () {
               // TODO:配列から削除
+              onTap(homeworkData);
             },
           ),
 
