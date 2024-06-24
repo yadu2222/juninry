@@ -3,7 +3,7 @@ import '../models/notice_model.dart';
 import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
-import '../models/register_homework_model.dart';
+// import '../models/register_homework_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
