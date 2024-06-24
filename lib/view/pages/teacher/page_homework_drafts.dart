@@ -15,31 +15,27 @@ class PageHomeworkDraftsTeacher extends HookWidget {
   );
   const PageHomeworkDraftsTeacher({super.key});
 
- 
-
   // 下書きリスト
   // dbから取得
   @override
   Widget build(BuildContext context) {
     final draftData = useState<List<List<Homework>>>([]);
-
-    Future<void> fetchData() async {
-      final data = await Homework.getHomeworkDrafts(); // dbから下書きデータを取得
+    // dbから下書きデータを取得
+    Future<void> getDrafts() async {
+      final data = await Homework.getHomeworkDrafts(); 
       draftData.value = data;
     }
-
     // 下書き削除
     void delete(List<Homework> homeworks) async {
       for (var homework in homeworks) {
         Homework.deleteHomeworkDrafts(homework);
       }
-      await fetchData();
+      await getDrafts();
     }
-
     // useEffect内で非同期処理を実行するための方法
     useEffect(() {
       // 直接非同期関数を書くことはできない
-      fetchData(); // 非同期関数を呼び出し
+      getDrafts(); // 非同期関数を呼び出し
       return () {};
     }, []); // 空の依存配列を渡して、初回のみ実行(変更を察知しない)
 

@@ -6,9 +6,16 @@ import '../atoms/count_form.dart';
 import '../../../constant/colors.dart';
 
 class RegisterHomeworkCard extends StatelessWidget {
-  const RegisterHomeworkCard({super.key, required this.registerHomeworkData});
+  const RegisterHomeworkCard({
+    super.key,
+    required this.registerHomeworkData,
+    required this.onTap,
+    required this.index,
+  });
 
   final RegisterHomework registerHomeworkData;
+  final void Function(int index) onTap;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +29,17 @@ class RegisterHomeworkCard extends StatelessWidget {
                 color: AppColors.buttonCheck,
               ),
               onPressed: () {
+                onTap(index);
                 // TODO:配列から削除
               },
             ),
             // 教材の表示
             TeachingTag(itemData: registerHomeworkData.teachingItem),
-            Expanded(child: CountForm(startController: registerHomeworkData.startPageController,countController: registerHomeworkData.pageCountController,))
+            Expanded(
+                child: CountForm(
+              startController: registerHomeworkData.startPageController,
+              countController: registerHomeworkData.pageCountController,
+            ))
           ],
         ));
   }

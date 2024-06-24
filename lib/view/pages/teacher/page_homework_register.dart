@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,7 +23,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     size: 30,
   );
   const PageHomeworkRegisterTeacher({super.key, this.selectDate});
-  final String? selectDate;
+  final String? selectDate; // routeがエラーを吐くのでStringで受け取る
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +40,20 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       registerHomeworkData.value = List.from(registerHomeworkData.value)..add(newHomework); // 追加
     }
 
+    // indexを受け取って配列から削除
+    void deleteRgisterHomework(int index) {
+      RegisterHomework.deleteHomeworkDrafts(registerHomeworkData.value[index]); // dbから削除
+      registerHomeworkData.value = List.from(registerHomeworkData.value)..removeAt(index); // 削除
+    }
+
     // 初回のみ実行
     // ここでapiから教材リストを取得
     useEffect(() {
       Future<void> fetchData() async {
         if (selectDate != null) {
-          print('aaaa');
-          RegisterHomework.getHomeworkDrafts(DateTime.parse(selectDateHook.value!)).then((value) {
-            print(value);
-            registerHomeworkData.value = value;
-          });
+          // TODO:日付で取得
+          final data = await RegisterHomework.getHomeworkDrafts(DateTime.parse(selectDateHook.value!));
+          registerHomeworkData.value = data;
         }
       }
 
@@ -79,6 +85,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
           // 登録中の課題リスト
           Expanded(
               child: RegisterHomeworkList(
+            onTap: deleteRgisterHomework,
             registerHomeworkData: registerHomeworkData.value,
           )),
 
@@ -90,8 +97,6 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                   width: 0.37,
                   text: '下書きに保存',
                   onPressed: () async {
-                    // TODO:dbに保存処理
-
                     await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
                     context.push('/homework'); // 課題一覧に遷移
                   },

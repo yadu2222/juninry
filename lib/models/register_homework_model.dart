@@ -35,7 +35,7 @@ class RegisterHomework {
 
       if(homework.homeworkId != null) {
         // すでに登録されているものは削除して再登録
-        await DatabaseHelper.delete('homeworks', 'homework_id', homework.homeworkId.toString());
+        deleteHomeworkDrafts(homework);
       }
       Map<String, dynamic> item = {
         'homework_limit': homework.homeworkLimit.toString(),
@@ -63,10 +63,13 @@ class RegisterHomework {
     // print(maps);
     // print(homework.classUuid);
     print(test);
-    // print(test);
+   
   }
 
- 
+  // idで削除
+  static void deleteHomeworkDrafts(RegisterHomework homework) async {
+    await DatabaseHelper.delete('homeworks', 'homework_id', homework.homeworkId.toString());
+  }
 
   static Future<List<RegisterHomework>> getHomeworkDrafts(DateTime selectDate) async {
   //  final List<Map<String, dynamic>> data = await DatabaseHelper.queryBuilder('homeworks', ['homework_limit'], ["${selectDate.year.toString()}-${selectDate.month.toString()}-${selectDate.day.toString}"], 'homework_id');
