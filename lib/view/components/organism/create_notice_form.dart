@@ -14,7 +14,7 @@ import 'package:juninry/models/class_model.dart';
 class CreateNoticeForm extends StatefulWidget {
   final List<Class> classesList; // クラス一覧
   final Class selectedClass; // 選択されているクラス
-  final String name; // 名前
+  final String userName; // 名前
   final String? quoteNoticeTitle; // 引用されているお知らせタイトル
 
   final void Function(Class value) onClassChanged; // クラス選択時の処理
@@ -25,7 +25,7 @@ class CreateNoticeForm extends StatefulWidget {
     super.key,
     required this.classesList,
     required this.selectedClass,
-    required this.name,
+    required this.userName,
     required this.quoteNoticeTitle,
     required this.onClassChanged,
     required this.titleController,
@@ -38,13 +38,11 @@ class CreateNoticeForm extends StatefulWidget {
 
 class _CreateNoticeFormState extends State<CreateNoticeForm> {
   //名前
-  late String name;
 
   //初期化
   @override
   void initState() {
     super.initState();
-    name = widget.name;
   }
 
   @override
@@ -70,7 +68,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
           Container(
             margin: const EdgeInsets.only(top: 20),
             alignment: Alignment.centerLeft,
-            child: Text(name, style: Fonts.p),
+            child: Text(widget.userName ?? "", style: Fonts.p),
           ),
 
           //タイトルブロック

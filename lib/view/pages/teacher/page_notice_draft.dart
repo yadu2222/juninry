@@ -11,14 +11,17 @@ import '../../components/atoms/add_button.dart';
 
 import '../../../constant/sample_data.dart'; // sampleData
 import '../../../constant/fonts.dart';
+import '../../../models/quoted_notice_model.dart';
 
 // 教員_課題一覧ページ
 class PageNoticeDraftTeacher extends StatelessWidget {
   final DraftedNotice? draftedNoticeData;
+  final QuotedNotice? quotedNoticeData;
 
   PageNoticeDraftTeacher({
     super.key,
     this.draftedNoticeData,
+    this.quotedNoticeData,
   });
 
   @override
@@ -26,45 +29,41 @@ class PageNoticeDraftTeacher extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasicTemplate(title: "下書き", children: [
       Text("タイトルとか", style: Fonts.h3),
-      Text(draftedNoticeData?.noticeTitle ?? ""),
-      Text(draftedNoticeData?.noticeExplanatory ?? ""),
+      Text(draftedNoticeData?.draftedNoticeTitle ?? ""),
+      Text(draftedNoticeData?.draftedNoticeExplanatory ?? ""),
       Text("クラス名とか", style: Fonts.h3),
       Text(draftedNoticeData?.selectedClass?.className ?? ""),
-      Text("引用しているお知らせとか", style: Fonts.h3),
-      Text(draftedNoticeData?.quotedNotice?.quotedNoticeTitle ?? ""),
-      Text(draftedNoticeData?.quotedNotice?.quotedClass.className ?? ""),
       BasicButton(
-          text: "全部載せ",
+          text: "下書き1 引用なし",
           isColor: false,
           onPressed: () {
             context.go('/notice/register', extra: {
-              'draftedNoticeData': SampleData.draftedNoticesData[0],
+              'draftedNoticeId': 1,
             });
           }),
       BasicButton(
-          text: "下書きのみでクラス選択可",
+          text: "下書き2 引用あり",
           isColor: false,
           onPressed: () {
             context.go('/notice/register', extra: {
-              'draftedNoticeData': SampleData.draftedNoticesData[1],
+              'draftedNoticeId': 2,
             });
           }),
       BasicButton(
-          text: "引用のみ、クラス固定",
+          text: "引用IDのみ",
           isColor: false,
           onPressed: () {
             context.go('/notice/register', extra: {
-              'draftedNoticeData': SampleData.draftedNoticesData[2],
+              'quotedNoticeUuid': 'quotedNotice1',
             });
           }),
       BasicButton(
-          text: "今のやつ",
-          isColor: false,
-          onPressed: () {
-            context.go('/notice/register', extra: {
-              'draftedNoticeData': draftedNoticeData,
-            });
-          }),
+        text: "戻る",
+        isColor: false,
+        onPressed: () {
+          context.go('/notice/register');
+        },
+      )
     ]);
   }
 }

@@ -63,19 +63,18 @@ class DatabaseHelper {
 
     // お知らせの下書きを管理するためのテーブル
     // このテーブル構造に関して、私は真に驚くべききもさを見つけたが、この余白はそれを書くには狭すぎる。
+
     await db.execute('''
     CREATE TABLE drafted_notices (
-      notice_id integer PRIMARY KEY AUTOINCREMENT,
+      notice_id integer PRIMARY KEY,
       notice_title text,
       notice_explanatory text,
       class_uuid text,
       class_name text,
       quoted_notice_uuid text,
-      quoted_notice_title text,
-      quoted_class_uuid text,
-      quoted_class_name text
-      )
-    ''');
+      FOREIGN KEY (quoted_notice_uuid) REFERENCES quoted_notices(quoted_notice_uuid)
+    )
+  ''');
   }
 
   // 登録処理
@@ -107,8 +106,7 @@ class DatabaseHelper {
   static Future<int> update(String tableName, String colum,
       Map<String, dynamic> row, String key) async {
     Database? db = await instance.database;
-    print(await db!.rawQuery("select * from $tableName"));
-    return await db
+    return await db!
         .update(tableName, row, where: '$colum = ?', whereArgs: ['$key']);
   }
 
@@ -117,5 +115,26 @@ class DatabaseHelper {
   static Future<int> delete(String tableName, String colum, String key) async {
     Database? db = await instance.database;
     return await db!.delete(tableName, where: '$colum = ?', whereArgs: [key]);
+  }
+
+  // レコードに存在するか確認
+  // 引数：table名、検索キー
+  static Future<bool> queryExists(
+      String tableName, String colum, String key) async {
+    Database? db = await instance.database;
+    List<Map<String, dynamic>> result =
+        await db!.query(tableName, where: '$colum = ?', whereArgs: [key]);
+    // 取得した結果が空でないかを確認し、存在する場合はtrueを、存在しない場合はfalseを返す
+    return result.isNotEmpty;
+  }
+
+  // レコードから一行取得
+  // 引数：table名、属性名、検索キー
+  static Future<Map<String, dynamic>> queryRow(
+      String tableName, String colum, String key) async {
+    Database? db = await instance.database;
+    List<Map<String, dynamic>> result =
+        await db!.query(tableName, where: '$colum = ?', whereArgs: [key]);
+    return result[0];
   }
 }

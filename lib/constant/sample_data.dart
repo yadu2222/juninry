@@ -7,6 +7,7 @@ import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
 import '../models/register_homework_model.dart';
+import '../models/quoted_notice_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
@@ -198,28 +199,30 @@ class SampleData {
 
   static List<DraftedNotice> draftedNoticesData = [
     DraftedNotice(
-      // 下書きと引用がどっちもある場合
-      noticeTitle: '下書きをしたお知らせ',
-      noticeExplanatory: '下書きのお知らせ本文',
+      // 引用あり
+      draftedNoticeTitle: '下書きをしたお知らせ',
+      draftedNoticeExplanatory: '下書きのお知らせ本文',
       selectedClass: classesData[0],
-      quotedNotice: QuotedNotice(
-        quotedClass: classesData[1],
-        quotedNoticeTitle: '引用のタイトルだよ〜',
-        quotedNoticeUuid: 'これは引用ID',
-      ),
+      quotedNoticeUuid: 'quotedNotice0',
     ),
     // 下書きのみの場合
     DraftedNotice(
-      noticeTitle: '引用なしドラゴン',
-      noticeExplanatory: 'ド級の引用ド引用',
+      draftedNoticeTitle: '引用なしドラゴン',
+      draftedNoticeExplanatory: 'ド級の引用ド引用',
       selectedClass: classesData[2],
     ),
-    // 引用のみの場合
-    DraftedNotice(
-        quotedNotice: QuotedNotice(
-      quotedClass: classesData[3],
-      quotedNoticeTitle: '引用だけのお知らせ',
-      quotedNoticeUuid: 'これは引用ID',
-    ))
+  ];
+
+  static List<QuotedNotice> quotedNoticesData = [
+    QuotedNotice(
+      quotedNoticeUuid: 'quotedNotice0',
+      quotedNoticeTitle: '引用したお知らせ',
+      quotedClass: classesData[0],
+    ),
+    QuotedNotice(
+      quotedNoticeUuid: 'quotedNotice1',
+      quotedNoticeTitle: '引用したお知らせ2',
+      quotedClass: classesData[1],
+    ),
   ];
 }

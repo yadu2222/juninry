@@ -1,64 +1,71 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/constant/messages.dart';
 import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/class_model.dart';
+import 'package:juninry/models/dbcon.dart';
 import 'package:juninry/models/notice_model.dart';
 import 'package:juninry/models/drafted_notice_model.dart';
+import 'package:juninry/view/components/atoms/alert_dialog_view.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
 import 'package:juninry/view/components/organism/create_notice_form.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
 import '../../../models/user_model.dart';
+import '../../../models/quoted_notice_model.dart';
 
 //クラスの表示に必要なデータ型
 
 class PageNoticeRegisterTeacher extends HookWidget {
-  // 引用だとか、下書きだとか、いろいろ管理するやつだ！
-  // なかったらつくろうね〜
-  final DraftedNotice? draftedNoticeData;
+  // お知らせの下書きを管理する
+  final int? draftedNoticeId;
+  final String? quotedNoticeUuid;
 
   PageNoticeRegisterTeacher({
     super.key,
-    this.draftedNoticeData,
+    this.draftedNoticeId,
+    this.quotedNoticeUuid,
   });
 
   final String title = 'お知らせ作成';
 
   @override
   Widget build(BuildContext context) {
-    // クラス一覧取得
-    // 引用されたお知らせがある場合クラスの選択肢は引用されたクラスになる
-    final List<Class> classesList = (draftedNoticeData?.quotedNotice != null)
-        // あるとき〜！
-        ? [
-            draftedNoticeData!.quotedNotice!.quotedClass,
-          ]
-        // ないとき；；
-        //TODO: どうにかしてクラスリストを取ってくる 多分fetchで所属クラス一覧を取ってくるメソッド
-        : SampleData.classesData;
+    // TODO: 下書きがある状態で引用だけ設定したい時に、下書きが消される対策が必要
+    final future =
+        useMemoized(() => _loadData(), [draftedNoticeId, quotedNoticeUuid]);
+    // 非同期通信が必要なデータ群
+    final snapshot = useFuture(future);
 
-    //名前を取得
-    //TODO: どうにかして名前を取ってくる
-    final String name;
+    // ロード中の表示
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const BasicTemplate(title: "お知らせ作成", children: [
+        Center(child: CircularProgressIndicator()),
+      ]);
+    }
+    // エラーが発生した場合の表示
+    if (snapshot.hasError) {
+      return BasicTemplate(title: "お知らせ作成", children: [
+        Center(child: Text('エラーが発生しました: ${snapshot.error}')),
+      ]);
+    }
 
-    // クラス監視　優先度 引用と同じクラス > 下書きクラス > 初期値
-    // useStateの初期化は一生に一度しか発生しないのでここでいろいろしても意味ない
-    var selectedClass = useState<Class>(classesList[0]);
+    // データが null の場合の処理
+    if (!snapshot.hasData) {
+      return const BasicTemplate(title: "お知らせ作成", children: [
+        Center(child: Text('データが見つかりません')),
+      ]);
+    }
 
-    // ページに戻ってきた時に送られてきたデータを元にクラスを選択する
-    useEffect(() {
-      selectedClass.value = draftedNoticeData?.quotedNotice?.quotedClass ??
-          draftedNoticeData?.selectedClass ??
-          classesList[0];
-    }, [draftedNoticeData]);
-
-    // タイトルの値を管理するコントローラー
-    TextEditingController titleController =
-        TextEditingController(text: draftedNoticeData?.noticeTitle ?? "");
-
-    // 本文の値を管理するコントローラー
-    TextEditingController textController =
-        TextEditingController(text: draftedNoticeData?.noticeExplanatory ?? "");
+    // 値を格納する
+    final data = snapshot.data!;
+    final classesList = data.classesList;
+    final selectedClass = useState<Class>(data.selectedClass);
+    final draftedNoticeData = data.draftedNoticeData;
+    final quotedNoticeData = data.quotedNoticeData;
+    final titleController = data.titleController;
+    final textController = data.textController;
 
     //クラス選択時の処理
     void onClassChanged(Class value) {
@@ -86,11 +93,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
               classesList: classesList, //クラスリスト
               onClassChanged: onClassChanged, //クラス選択時の処理
               selectedClass: selectedClass.value, //現在選択されているクラス
-              name: name, //名前
+              userName: data.userName, //名前
               titleController: titleController, //タイトルを管理するコントローラー
               textController: textController, //本文を管理するコントローラー
-              quoteNoticeTitle:
-                  draftedNoticeData?.quotedNotice?.quotedNoticeTitle, //引用元のタイトル
+              quoteNoticeTitle: quotedNoticeData?.quotedNoticeTitle, //引用元のタイトル
             ),
           ),
 
@@ -104,21 +110,59 @@ class PageNoticeRegisterTeacher extends HookWidget {
                 BasicButton(
                   widthPercent: 0.4,
                   text: "下書きに保存",
-                  //
-                  onPressed: () {
-                    //TODO: 下書き保存処理
-                    // IDがあれば更新、なければ新規作成
-                    print(DraftedNotice.saveDraftedNotice(
-                      DraftedNotice(
-                        noticeId: draftedNoticeData
-                            ?.noticeId, // 送られたきたデータにnotice_idがあれば送る
-                        selectedClass: selectedClass.value,
-                        noticeTitle: titleController.text,
-                        noticeExplanatory: textController.value.text,
-                        quotedNotice: draftedNoticeData
-                            ?.quotedNotice, // 送られたきたデータに引用元があれば送る
-                      ),
-                    ));
+                  //TODO: 下書き保存処理
+                  onPressed: () async {
+                    draftedNoticeData.selectedClass = selectedClass.value;
+                    draftedNoticeData.draftedNoticeTitle = titleController.text;
+                    draftedNoticeData.draftedNoticeExplanatory =
+                        textController.text;
+                    // これいらんかも
+                    draftedNoticeData.quotedNoticeUuid =
+                        quotedNoticeData?.quotedNoticeUuid;
+                    // 下書き保存処理
+                    bool success = false;
+                    // タイトルと本文が入力されていない場合は保存しない
+                    if (draftedNoticeData.draftedNoticeTitle != "" ||
+                        draftedNoticeData.draftedNoticeExplanatory != "") {
+                      success = await DraftedNotice.saveDraftedNotice(
+                          draftedNoticeData);
+                      if (success) {
+                        showDialog(
+                            // 保存成功
+                            context: context,
+                            builder: (context) {
+                              return AlertDialogView(
+                                  title: Messages.draft,
+                                  text: Messages.draftMsg,
+                                  actions: {
+                                    "OK": () {
+                                      context.go('/notice/draft');
+                                    }
+                                  });
+                            });
+                      } else {
+                        showDialog(
+                            // 保存失敗ダイアログ
+                            context: context,
+                            builder: (context) {
+                              return AlertDialogView(
+                                  title: Messages.databaseError,
+                                  text: Messages.databaseErrorMsg,
+                                  actions: {"いいよ〜": () {}});
+                            });
+                      }
+                    } else {
+                      showDialog(
+                          // 保存不可ダイアログ
+                          context: context,
+                          builder: (context) {
+                            return AlertDialogView(
+                                title: Messages.inputError,
+                                text: Messages.inputErrorMsg,
+                                actions: {"戻る": () {}});
+                          });
+                    }
+                    // ダイアログを出す
                   },
                   isColor: true,
                   radius: 5,
@@ -136,4 +180,91 @@ class PageNoticeRegisterTeacher extends HookWidget {
           )
         ]);
   }
+
+  Future<_PageData> _loadData() async {
+    // 下書きデータ
+    DraftedNotice draftedNoticeData;
+    // 引用データ
+    QuotedNotice? quotedNoticeData;
+    // クラス選択肢
+    List<Class> classesList;
+    // 選択したクラス
+    Class selectedClass;
+
+    // 下書きIDが送られてきた時、下書きデータを取得
+    if (draftedNoticeId != null) {
+      debugPrint("下書きIDチェック: $draftedNoticeId");
+      draftedNoticeData =
+          await DraftedNotice.getDraftedNotice(draftedNoticeId!);
+      debugPrint(draftedNoticeData.draftedNoticeTitle);
+    } else {
+      draftedNoticeData = DraftedNotice();
+    }
+
+    // 引用IDが送られてきた時、下書きに引用IDを設定
+    if (quotedNoticeUuid != null) {
+      draftedNoticeData.quotedNoticeUuid = quotedNoticeUuid;
+    }
+
+    // 引用データを取得
+    // TODO: API呼び出し
+    if (draftedNoticeData.quotedNoticeUuid != null) {
+      quotedNoticeData = SampleData.quotedNoticesData.first;
+    }
+
+    // 取得したタイトルをコントローラーに設定
+    final titleController =
+        TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
+
+    // 取得した本文をコントローラーに設定
+    final textController = TextEditingController(
+        text: draftedNoticeData.draftedNoticeExplanatory ?? '');
+
+    // クラスリストを作成
+    // 引用されている場合は引用元のクラスのみを選択肢に設定、引用されていない場合は全クラスを選択肢に設定
+    // TODO: API呼び出し
+    classesList = (quotedNoticeData != null)
+        ? [quotedNoticeData.quotedClass]
+        : SampleData.classesData;
+
+    // 選択されているクラスを設定
+    // 優先度 引用と同じクラス > 下書きクラス > 初期値
+    selectedClass = quotedNoticeData?.quotedClass ??
+        draftedNoticeData.selectedClass ??
+        classesList.first;
+
+    // ユーザー名を取得
+    final user = await User.getUser();
+
+    // データをまとめる
+    return _PageData(
+      classesList: classesList,
+      selectedClass: selectedClass,
+      draftedNoticeData: draftedNoticeData,
+      quotedNoticeData: quotedNoticeData,
+      titleController: titleController,
+      textController: textController,
+      userName: user.userName,
+    );
+  }
+}
+
+class _PageData {
+  final List<Class> classesList;
+  final Class selectedClass;
+  final DraftedNotice draftedNoticeData;
+  final QuotedNotice? quotedNoticeData;
+  final TextEditingController titleController;
+  final TextEditingController textController;
+  final String userName;
+
+  _PageData({
+    required this.classesList,
+    required this.selectedClass,
+    required this.draftedNoticeData,
+    required this.quotedNoticeData,
+    required this.titleController,
+    required this.textController,
+    required this.userName,
+  });
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/drafted_notice_model.dart';
+import 'package:juninry/models/quoted_notice_model.dart';
 import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 
 // 遷移先
@@ -77,13 +78,15 @@ class TeacherBranch {
                   // Map型でデータを送るためそれを取得
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
-                  // 取り出す
-                  final DraftedNotice draftedNoticeData =
-                      extraData['draftedNoticeData'];
+                  // データを取り出してみる
+                  final int? draftedNoticeId = extraData['draftedNoticeId'];
+                  final String? quotedNoticeUuid =
+                      extraData['quotedNoticeUuid'];
                   return NoTransitionPage(
                     key: state.pageKey,
                     child: PageNoticeRegisterTeacher(
-                      draftedNoticeData: draftedNoticeData,
+                      draftedNoticeId: draftedNoticeId,
+                      quotedNoticeUuid: quotedNoticeUuid,
                     ),
                   );
                 } else {
@@ -98,17 +101,20 @@ class TeacherBranch {
             GoRoute(
               path: "draft",
               pageBuilder: (context, state) {
+                // データが送られてきたとき
                 if (state.extra != null) {
                   // Map型でデータを送るためそれを取得
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
-                  // 取り出す
-                  final DraftedNotice draftedNoticeData =
-                      extraData['draftedNoticeData'];
+                  // データを取り出してみる
+                  final int? draftedNoticeId = extraData['draftedNoticeId'];
+                  final String? quotedNoticeUuid =
+                      extraData['quotedNoticeUuid'];
                   return NoTransitionPage(
                     key: state.pageKey,
-                    child: PageNoticeDraftTeacher(
-                      draftedNoticeData: draftedNoticeData,
+                    child: PageNoticeRegisterTeacher(
+                      draftedNoticeId: draftedNoticeId,
+                      quotedNoticeUuid: quotedNoticeUuid,
                     ),
                   );
                 } else {
@@ -120,7 +126,6 @@ class TeacherBranch {
               },
             ),
           ],
-
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: const PageNoticeJunior(),
