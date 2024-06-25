@@ -49,8 +49,13 @@ class _ClassDropdownState extends State<ClassDropdown> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(Icons.keyboard_arrow_down,
-                    color: AppColors.glay, size: 25),
+                Icon(
+                    // ドロップダウンでない場合はチェックマーク
+                    (widget.items.length == 1)
+                        ? Icons.done
+                        : Icons.keyboard_arrow_down,
+                    color: AppColors.glay,
+                    size: 25),
                 Expanded(
                     //アイコン除いたところの中央に表示するやつ
                     child: Container(
@@ -138,8 +143,12 @@ class _ClassDropdownState extends State<ClassDropdown> {
                 SizedBox(
                   //選択しているクラスは目印
                   width: 30,
-                  child: Icon(item.classUuid == widget.selectedClass.classUuid ? Icons.check : null,
-                      color: AppColors.subjectSocial, size: 15),
+                  child: Icon(
+                      item.classUuid == widget.selectedClass.classUuid
+                          ? Icons.check
+                          : null,
+                      color: AppColors.subjectSocial,
+                      size: 15),
                 ),
                 Container(
                   //クラス名
