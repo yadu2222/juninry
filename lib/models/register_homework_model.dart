@@ -85,14 +85,14 @@ class RegisterHomework {
         'subject_id': homework.teachingItem.subjectId,
       };
       try {
-        await DatabaseHelper.insert('homeworks', item);
+        await DatabaseHelper.insert('homeworkDrafts', item);
         debugPrint('Homework inserted');
       } catch (e) {
         debugPrint('Error inserting homework: $e');
       }
     }
     // かくにん
-    List<Map<String, dynamic>> test = await DatabaseHelper.queryAllRows('homeworks'); // こっちはいけてる
+    List<Map<String, dynamic>> test = await DatabaseHelper.queryAllRows('homeworkDrafts'); // こっちはいけてる
     // List<Homework> test = await getHomeworkDrafts(homework.classUuid);
     // final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks', ['class_uuid'], ['aaaaa'], 'homework_limit');  // 動作不良
     debugPrint(test.toString());
@@ -100,7 +100,7 @@ class RegisterHomework {
 
   // idで削除
   static void deleteHomeworkDrafts(RegisterHomework homework) async {
-    await DatabaseHelper.delete('homeworks', 'homework_id', homework.homeworkId.toString());
+    await DatabaseHelper.delete('homeworkDrafts', 'homework_id', homework.homeworkId.toString());
   }
 
   // 下書きを取得

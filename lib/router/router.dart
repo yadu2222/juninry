@@ -15,27 +15,28 @@ import '../models/user_model.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-
 // enumで宣言
 enum BranchType {
   junior,
   patron,
   teacher,
 }
+
 // ひもづけ
 extension BranchTypeExt on BranchType {
   List<StatefulShellBranch> get branch {
     switch (this) {
-      case BranchType.junior:
-        return JuniorBranch.juniorBranchs;
-      case BranchType.patron:
-        return PatronBranch.patronBranchs;
       case BranchType.teacher:
         return TeacherBranch.teacherBranchs;
+
+      case BranchType.junior:
+        return JuniorBranch.juniorBranchs;
+
+      case BranchType.patron:
+        return PatronBranch.patronBranchs;
     }
   }
 }
-
 
 Future<List<StatefulShellBranch>> getBranches() async {
   // final userService = UserService();
@@ -45,12 +46,12 @@ Future<List<StatefulShellBranch>> getBranches() async {
   // dbから取得
   final int userRole = await User.getUser().then((value) => value.userTypeId);
   switch (userRole) {
-    case 0:
-      return BranchType.junior.branch;
     case 1:
-      return BranchType.patron.branch;
-    case 2:
       return BranchType.teacher.branch;
+    case 2:
+      return BranchType.junior.branch;
+    case 3:
+      return BranchType.patron.branch;
     default:
       return BranchType.junior.branch;
   }
