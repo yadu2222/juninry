@@ -12,7 +12,8 @@ class BasicButton extends StatelessWidget {
     this.width = 0.475,
     required this.isColor, // trueでみどり falseで赤
     this.onPressed,
-    this.radius,
+    this.height = 35.0,
+    this.radius = 10,
   });
 
   final double widthPercent;
@@ -20,25 +21,22 @@ class BasicButton extends StatelessWidget {
   final IconData? icon;
   final bool isColor;
   final double width;
+  final double height;
   final void Function()? onPressed;
-  final double? radius;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
         width: screenWidth * width,
+        height: height,
         margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: isColor
-                  ? AppColors.subjectScience
-                  : AppColors.subjectJapanese,
-              shape: radius != null
-                  ? RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(radius!))
-                  : null,
-            ),
+                backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius) //こちらを適用
+                    )),
             onPressed: onPressed,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               icon != null
@@ -49,7 +47,7 @@ class BasicButton extends StatelessWidget {
                       alignment: Alignment.center, // 残りのスペースの中央に配置
                       child: Text(
                         text,
-                        style: Fonts.h4w,
+                        style: Fonts.h5w,
                       )))
             ])));
   }

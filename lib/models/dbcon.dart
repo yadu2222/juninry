@@ -57,7 +57,25 @@ class DatabaseHelper {
       user_uuid TEXT PRIMARY KEY,
       user_type_id integer,
       mail_address  text,
-      password text
+      password text,
+      jti_uuid text,
+      jwt_key text
+    )
+  ''');
+
+  // 宿題の下書きを保存するためのテーブル
+  await db.execute('''
+    CREATE TABLE homeworkDrafts (
+      homework_id integer PRIMARY KEY autoincrement,
+      homework_limit text not null,
+      start_page integer not null,
+      page_count integer not null,
+      homework_poster_uuid text not null,
+      homework_note text,
+      class_uuid text not null,
+      teaching_material_uuid text not null,
+      teaching_material_name text not null,
+      subject_id integer not null
     )
   ''');
 
@@ -93,6 +111,16 @@ class DatabaseHelper {
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
+  // テーブル名、検索条件、検索ワード、ソート
+  static Future<List<Map<String, dynamic>>> queryBuilder(String tableName, List<String> where, List<String> whereArgs, String orderBy) async {
+    Database? db = await instance.database;
+    return await db!.query(
+      tableName,
+      where: where.join(' = ? AND ') + ' = ?',
+      whereArgs: whereArgs,
+      orderBy: orderBy,
+    );
+  }
 
   static Future<bool> firstdb() async {
     Database? db = await instance.database;
@@ -116,6 +144,25 @@ class DatabaseHelper {
     Database? db = await instance.database;
     return await db!.delete(tableName, where: '$colum = ?', whereArgs: [key]);
   }
+
+
+  // TODO:クエリビルダーがうごくまでのしょち
+  // くやしいね
+  static Future<List<Map<String, dynamic>>> getHomeworksForSpecificDate(String date) async {
+    Database? db = await instance.database;
+
+    // クエリの実行
+    List<Map<String, dynamic>> result = await db!.rawQuery(
+      '''
+    SELECT * FROM homeworks
+    WHERE DATE(homework_limit) = DATE(?)
+    ''',
+      [date],
+    );
+
+    return result;
+  }
+
 
   // レコードに存在するか確認
   // 引数：table名、検索キー

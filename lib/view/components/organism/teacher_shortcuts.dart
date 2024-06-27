@@ -13,7 +13,7 @@ class TeacherShortcuts extends StatelessWidget {
 
   // 遷移先のパス
   final List<String> movePages = [
-    '/home',
+    '/homework/register',
     '/notice',
     '/home/students',
     '/homework',

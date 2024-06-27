@@ -3,7 +3,7 @@ import 'colors.dart';
 
 class Fonts {
   // タイトル用フォント
-  static const TextStyle titleFont = TextStyle(fontSize: 26, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
+  static const TextStyle titleFont = TextStyle(fontSize: 22, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
 
   // 文章
   static const TextStyle h1 = TextStyle(fontSize: 28, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.normal);
@@ -17,6 +17,7 @@ class Fonts {
   static const TextStyle h2w = TextStyle(fontSize: 24, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   static const TextStyle h3w = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   static const TextStyle h4w = TextStyle(fontSize: 18, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
+  static const TextStyle h5w = TextStyle(fontSize: 16, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   static const TextStyle pw = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   // static const TextStyle bw = TextStyle(fontSize: 13, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
 

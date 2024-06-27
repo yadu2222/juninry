@@ -14,6 +14,7 @@ import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register_teacher.dart';
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
+import '../view/pages/teacher/page_homework_drafts.dart';
 import '../view/pages/share/page_students.dart';
 
 // 暫定的ホームたちにjuniorを使用
@@ -146,9 +147,40 @@ class TeacherBranch {
             GoRoute(
               name: 'register',
               path: 'register',
-              pageBuilder: (context, state) => NoTransitionPage(
+              routes: [
+                GoRoute(
+                  name: 'drafts',
+                  path: 'drafts',
+                  pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageHomeworkRegisterTeacher()),
+                  child: const PageHomeworkDraftsTeacher()),
+                )
+              ],
+              pageBuilder: (context, state) {
+                // 遷移時のデータの受け渡し
+                // extraがnullである場合trycatchでエラーを回避
+                // 下書きを選択している場合
+                if (state.extra != null) {
+                  debugPrint("きちゃ");
+
+                  // 遷移時に定義されたデータをrouterで再定義
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                  final String selectDate = extraData['selectDate'];
+                  print(selectDate);
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    // 先ほど再定義したデータをここで渡す
+                    child: PageHomeworkRegisterTeacher(selectDate: selectDate),
+                  );
+
+                  // 下書きを選択していない場合
+                } else {
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: const PageHomeworkRegisterTeacher(),
+                  );
+                }
+              },
             ),
           ],
 
