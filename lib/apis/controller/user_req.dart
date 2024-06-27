@@ -9,8 +9,6 @@ class UserReq {
     
   }
 
-
-
   static Future<void> getUser() async {
     final reqData = Request(url: urls.user, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     await HttpReq.httpReq(reqData);
