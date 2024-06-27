@@ -22,17 +22,14 @@ class HttpReq {
         response = await http.post(Uri.parse(reqData.url), headers: reqData.headers, body: jsonEncode(reqData.body));
         break;
     }
-
     // レスポンスの処理
-    // ここ引数でほしいね
     debugPrint(response.body.toString());
+    // 成功
     if (response.statusCode < 300) {
-      // debugPrint(jsonDecode(response.body));
       return jsonDecode(response.body) as Map<String, dynamic>;
+    // 失敗時の処理
     } else {
-      // エラーハンドリング
-      debugPrint('Error response: ${response.body}');
-      return {};
+      return reqData.errorHandling(response);
     }
   }
 }
