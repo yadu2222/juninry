@@ -17,11 +17,11 @@ class HttpReq {
       case 'GET':
         response = await http.get(
           Uri.parse(baseUrl + reqData.url),
-          headers: reqData.headers ?? <String, String>{},
+          headers: reqData.headers,
         );
         break;
       case 'POST':
-        response = await http.post(Uri.parse(reqData.url), headers: reqData.headers ?? <String, String>{}, body: jsonEncode(reqData.body));
+        response = await http.post(Uri.parse(reqData.url), headers: reqData.headers, body: jsonEncode(reqData.body));
         break;
     }
 
