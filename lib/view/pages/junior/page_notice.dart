@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/constant/colors.dart';
 import 'package:juninry/view/components/molecule/notice_card.dart';
 import 'package:juninry/view/components/organism/notice_list.dart';
-import '././../../../constant/fonts.dart';
-
+import '../../../constant/fonts.dart';
+import '../../../constant/sample_data.dart';
 import '../../components/template/basic_template.dart';
+import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.dartをインポート
 
 class PageNoticeJunior extends StatelessWidget {
-  const PageNoticeJunior({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final String title = 'おしらせ';
+  PageNoticeJunior({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return BasicTemplate(title: title, children:[ 
-            Text('おしらせがたくさん', style: Fonts.h3),
-          ])
-        ;
+    return Scaffold(
+      key: _scaffoldKey, // 追加: Scaffold keyの設定
+      endDrawer: FilterDrawer(), // 追加: FilterDrawerの設定
+      backgroundColor: AppColors.main,//HACK:背景色パワープレイ！！
+      body: BasicTemplate(
+        title: 'おしらせ',
+        popIcon: true,
+        featureIconButton: IconButton(
+          icon: Icon(Icons.sort, size: 35),
+          onPressed: () {
+            _scaffoldKey.currentState?.openEndDrawer(); // Drawerを開く
+          },
+        ),
+        children: [
+          Expanded(child: NoticeList(noticeDatas: SampleData.noticesData)),
+        ],
+      ),
+    );
   }
 }

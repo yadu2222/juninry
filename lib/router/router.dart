@@ -24,7 +24,7 @@ final userDataNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'userData');
 
 final router = GoRouter(
   debugLogDiagnostics: true,
-  initialLocation: '/detail',
+  initialLocation: '/home',
   routes: [
     // ボトムバーが必要な画面のルーティング
     // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
@@ -54,8 +54,8 @@ final router = GoRouter(
                 ],
                 pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  // child: PageHomeJunior(),
-                  child: PageHomePatron(),
+                  child: PageHomeJunior(),
+                  // child: PageHomePatron(),
                 ),
               ),
             ],
@@ -65,14 +65,14 @@ final router = GoRouter(
           StatefulShellBranch(
             navigatorKey: noticeNavigatorKey,
             routes: [
-              // GoRoute(
-              //   name: 'notice',
-              //   path: '/notice', // notice
-              //   pageBuilder: (context, state) => NoTransitionPage(
-              //     key: state.pageKey,
-              //     child: const PageNoticeJunior(),
-              //   ),
-              // ),
+              GoRoute(
+                name: 'notice',
+                path: '/notice', // notice
+                pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child:  PageNoticeJunior(),
+                ),
+              ),
               GoRoute(
                 path: '/detail',
                 pageBuilder: (context, state) => NoTransitionPage(

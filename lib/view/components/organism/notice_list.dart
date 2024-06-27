@@ -27,7 +27,7 @@ class _NoticeListState extends State<NoticeList> {
     return InkWell(
           onTap: () {
           // 画面遷移
-          context.push('/sample');
+          // context.push('/sample');
         },
         child: ListItemBox<Notice>(
           itemDatas: widget.noticeDatas,
