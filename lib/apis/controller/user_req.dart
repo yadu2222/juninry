@@ -10,7 +10,10 @@ class UserReq {
   }
 
   static Future<void> getUser() async {
-    final reqData = Request(url: urls.user, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+
+    // リクエストのオブジェクトを生成
+    final reqData = Request(url: Urls.getUser, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
     await HttpReq.httpReq(reqData);
   }
 }
