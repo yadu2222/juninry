@@ -57,13 +57,15 @@ class DatabaseHelper {
       user_uuid TEXT PRIMARY KEY,
       user_type_id integer,
       mail_address  text,
-      password text
+      password text,
+      jti_uuid text,
+      jwt_key text
     )
   ''');
 
   // 宿題の下書きを保存するためのテーブル
   await db.execute('''
-    CREATE TABLE homeworks (
+    CREATE TABLE homeworkDrafts (
       homework_id integer PRIMARY KEY autoincrement,
       homework_limit text not null,
       start_page integer not null,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../components/template/basic_template.dart';
-import 'package:go_router/go_router.dart';
+
 
 import '../../components/organism/homework_draft_list.dart';
 import '../../../models/register_homework_model.dart';
@@ -47,21 +47,12 @@ class PageHomeworkDraftsTeacher extends HookWidget {
       return () {};
     }, []);
 
-    // popで戻ってきたときの再取得は確定したよ
-    void onTap(List<RegisterHomework> homework) {
-      // // 画面遷移
-      context.push('/homework/register/',
-      // 下書き一覧に選択した日付を渡す
-      // datetimeを渡すとrouterがエラーを吐くので、文字列に変換して渡す
-      extra: {'selectDate': homework.first.homeworkLimit.toString()}).then((value) => getDrafts());
-    }
-
     return BasicTemplate(title: title, children: [
       // 下書き一覧
       HomeworkDraftList(
         homeworkData: draftData.value,
         delete: delete,
-        onTap: onTap,
+        get: getDrafts
       ),
     ]);
   }
