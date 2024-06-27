@@ -20,7 +20,7 @@ class User {
       return User(
           userUUID: loadData['user_uuid'],
           userName: 'hoge',
-          userTypeId: loadData['user_type_id'],
+          userTypeId: loadData['user_type_id'] ?? 0,
           mailAddress: loadData['mail_address'],
           password: loadData['password'],
           jtiUUID: loadData['jti_uuid'],
@@ -28,6 +28,22 @@ class User {
     } catch (e) {
       debugPrint('Error converting map to User: $e');
       return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
+    }
+  }
+
+    static User resToUser(Map loadData) {
+    try {
+      return User(
+          userUUID: loadData['userUUID'],
+          userName: loadData['userName'],
+          userTypeId: int.tryParse(loadData['userTypeId']) ?? 0,
+          mailAddress: loadData['mailAddress'],
+          password: loadData['password'],
+          jtiUUID: loadData['jwtUUID'], // まちがっているのでは？
+          jwtKey: loadData['jwtUUID']);
+    } catch (e) {
+      debugPrint('Error converting map to User: $e');
+      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '', jwtKey: '');
     }
   }
 
@@ -41,11 +57,24 @@ class User {
     if (await DatabaseHelper.firstdb()) {
       var user = await DatabaseHelper.queryAllRows('users');
       debugPrint(user.toString());
-      return toUser(user[0]);
+      return toUser(user[4]);
     } else {
       debugPrint('できてない？');
       return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
     }
+  }
+
+  // ユーザー登録
+  static Future<void> insertUser(User user){
+    debugPrint('registerUser');
+    DatabaseHelper.insert('users', toMap(user));
+    return Future.value();
+  }
+
+  // authの更新
+  static Future<void> updateUser(User user) async {
+    debugPrint('updateUser');
+    await DatabaseHelper.update('users','mail_address', toMap(user), user.mailAddress);
   }
 
   // 既にdbが存在しているかを判定し、なければsampleuserを追加
