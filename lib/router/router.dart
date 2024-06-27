@@ -47,12 +47,16 @@ Future<List<StatefulShellBranch>> getBranches() async {
   final int userRole = await User.getUser().then((value) => value.userTypeId);
   switch (userRole) {
     case 1:
+      debugPrint('teacher');
       return BranchType.teacher.branch;
     case 2:
+    debugPrint('junior');
       return BranchType.junior.branch;
     case 3:
+    debugPrint('patron');
       return BranchType.patron.branch;
     default:
+    debugPrint('error');
       return BranchType.junior.branch;
   }
 }

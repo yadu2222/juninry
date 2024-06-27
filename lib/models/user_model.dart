@@ -10,8 +10,9 @@ class User {
   String mailAddress;
   String password;
   String jtiUUID;
+  String jwtKey;
 
-  User({required this.userUUID, required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID});
+  User({required this.userUUID, required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID,required this.jwtKey});
 
   // mapをUserに変換
   static User toUser(Map loadData) {
@@ -22,22 +23,17 @@ class User {
           userTypeId: loadData['user_type_id'],
           mailAddress: loadData['mail_address'],
           password: loadData['password'],
-          jtiUUID: loadData['jti_uuid']);
+          jtiUUID: loadData['jti_uuid'],
+          jwtKey: loadData['jwt_key']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
-      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '');
+      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
     }
   }
 
   // Userをmapに変換
   static Map<String, dynamic> toMap(User user) {
-    return {
-      'user_uuid': user.userUUID,
-      'user_type_id': user.userTypeId,
-      'mail_address': user.mailAddress,
-      'password': user.password,
-      'jti_uuid': user.jtiUUID
-    };
+    return {'user_uuid': user.userUUID, 'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jti_uuid': user.jtiUUID,'jwt_key': user.jwtKey};
   }
 
   // dbからuser情報を取得
@@ -48,7 +44,7 @@ class User {
       return toUser(user[0]);
     } else {
       debugPrint('できてない？');
-      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '');
+      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
     }
   }
 
@@ -65,7 +61,7 @@ class User {
   static _createSampleUser() async {
     debugPrint('_createSampleUser');
     await DatabaseHelper.insert('users', toMap(SampleData.teacherUser));
-    await DatabaseHelper.insert('users', toMap(SampleData.juniorUser) );
+    await DatabaseHelper.insert('users', toMap(SampleData.juniorUser));
     await DatabaseHelper.insert('users', toMap(SampleData.patronUser));
   }
 }

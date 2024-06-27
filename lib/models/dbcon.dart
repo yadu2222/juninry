@@ -58,7 +58,8 @@ class DatabaseHelper {
       user_type_id integer,
       mail_address  text,
       password text,
-      jti_uuid text
+      jti_uuid text,
+      jwt_key text
     )
   ''');
 
