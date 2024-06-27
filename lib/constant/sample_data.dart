@@ -1,53 +1,89 @@
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
 import '../models/student_model.dart';
+import '../models/user_model.dart';
+import '../models/teaching_item_model.dart';
+// import '../models/register_homework_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
 // 最終的に消えるよ
 class SampleData {
+  static User juniorUser = User(
+    userUUID: 'ほげおか',
+    userName: 'junior',
+    userTypeId: 0,
+    mailAddress: '',
+    password: 'password',
+  );
+
+  static User patronUser = User(
+    userUUID: '',
+    userName: 'patron',
+    userTypeId: 1,
+    mailAddress: '',
+    password: 'password',
+  );
+
+  static User teacherUser = User(
+    userUUID: '',
+    userName: 'teacher',
+    userTypeId: 2,
+    mailAddress: '',
+    password: 'password',
+  );
+
+  static User debugUser = User(
+    userUUID: '',
+    userName: 'debugUser',
+    userTypeId: 3,
+    mailAddress: '',
+    password: 'password',
+  );
+
+  static TeachingItem teachingItem1 = TeachingItem(
+    teachingMaterialName: '漢字ドリル',
+    subjectId: 0,
+    teachingMaterialUuid: 'aaaaa',
+  );
+
+  static TeachingItem teachingItem2 = TeachingItem(
+    teachingMaterialName: '計算ドリル',
+    subjectId: 1,
+    teachingMaterialUuid: 'aaaaa',
+  );
+
+  static TeachingItem teachingItem3 = TeachingItem(
+    teachingMaterialName: '理科ワーク',
+    subjectId: 2,
+    teachingMaterialUuid: 'aaaaa',
+  );
+
+  static TeachingItem teachingItem4 = TeachingItem(
+    teachingMaterialName: '社会に貢献しよう',
+    subjectId: 3,
+    teachingMaterialUuid: 'iiii',
+  );
+
   static List<Homework> homeworkData = [
     Homework(
       homeworkUuid: 'aaaaa',
-      homeworkLimit: '2022/12/12',
-      teachingMaterialUuid: 'aaaaa',
+      homeworkLimit: DateTime.now().add(const Duration(days: 2)),
       startPage: 1,
       pageCount: 1,
       homeworkPosterUuid: 'aaaaa',
       homeworkNote: 'aaaaa',
-      teachingMaterialName: '漢字ドリル',
-      subjectId: 0,
       imageUuid: 'aaaaa',
       classUuid: 'aaaaa',
       submitFlg: 0,
+      teachingItem: teachingItem1,
     ),
-    Homework(
-      homeworkUuid: 'aaaaa',
-      homeworkLimit: '2022/12/22',
-      teachingMaterialUuid: 'aaaaa',
-      startPage: 1,
-      pageCount: 5,
-      homeworkPosterUuid: 'aaaaa',
-      homeworkNote: 'aaaaa',
-      teachingMaterialName: '計算ドリル',
-      subjectId: 1,
-      imageUuid: 'aaaaa',
-      classUuid: 'aaaaa',
-      submitFlg: 1,
-    ),
-    Homework(
-      homeworkUuid: 'aaaaa',
-      homeworkLimit: '2022/12/22',
-      teachingMaterialUuid: 'aaaaa',
-      startPage: 1,
-      pageCount: 5,
-      homeworkPosterUuid: 'aaaaa',
-      homeworkNote: 'aaaaa',
-      teachingMaterialName: '理科ワーク',
-      subjectId: 2,
-      imageUuid: 'aaaaa',
-      classUuid: 'aaaaa',
-      submitFlg: 1,
-    ),
+  ];
+
+  // sampledata
+  static List<TeachingItem> teachingItemData = [
+    SampleData.teachingItem1,
+    SampleData.teachingItem2,
+    SampleData.teachingItem3,
   ];
 
   static List<Map> patronHomeworkData2 = [
@@ -56,96 +92,41 @@ class SampleData {
       'homeworkData': [
         Homework(
           homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/12',
-          teachingMaterialUuid: 'aaaaa',
+          homeworkLimit: DateTime.now().add(const Duration(days: 1)),
           startPage: 1,
           pageCount: 1,
           homeworkPosterUuid: 'aaaaa',
           homeworkNote: 'aaaaa',
-          teachingMaterialName: '漢字ドリル',
-          subjectId: 0,
           imageUuid: 'aaaaa',
           classUuid: 'aaaaa',
           submitFlg: 0,
+          teachingItem: teachingItem1,
         ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '計算ドリル',
-          subjectId: 1,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '理科ワーク',
-          subjectId: 2,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        )
       ]
     },
     {
       'juniorName': 'ほげみ',
       'homeworkData': [
         Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/12',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 1,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '漢字ドリル',
-          subjectId: 0,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 0,
-        ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '計算ドリル',
-          subjectId: 1,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        ),
-        Homework(
-          homeworkUuid: 'aaaaa',
-          homeworkLimit: '2022/12/22',
-          teachingMaterialUuid: 'aaaaa',
-          startPage: 1,
-          pageCount: 5,
-          homeworkPosterUuid: 'aaaaa',
-          homeworkNote: 'aaaaa',
-          teachingMaterialName: '理科ワーク',
-          subjectId: 2,
-          imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
-          submitFlg: 1,
-        )
+            homeworkUuid: 'aaaaa',
+            homeworkLimit: DateTime.now().add(const Duration(days: 1)),
+            startPage: 1,
+            pageCount: 1,
+            homeworkPosterUuid: 'aaaaa',
+            homeworkNote: 'aaaaa',
+            imageUuid: 'aaaaa',
+            classUuid: 'aaaaa',
+            submitFlg: 0,
+            teachingItem: teachingItem2),
       ]
     }
   ];
+
+  // static List<RegisterHomework> registerHomeworkData = [
+  //   RegisterHomework(teachingItem: teachingItem1),
+  //   RegisterHomework(teachingItem: teachingItem2),
+  //   RegisterHomework(teachingItem: teachingItem3),
+  // ];
 
   static List<Student> studentData = [
     Student(
@@ -160,16 +141,20 @@ class SampleData {
     )
   ];
 
+  static List<Map> dueHomeworkData = [
+    {'dueDate': DateTime.now().add(const Duration(days: 1)), 'homeworkData': homeworkData},
+    {'dueDate': DateTime.now().add(const Duration(days: 2)), 'homeworkData': homeworkData},
+  ];
+
   static List<Notice> noticesData = [
-    Notice(noticeDate: '6.1', className: '2-B', noticeTitle: '保護者会のお知らせ', noticeExplanatory: '来週の月曜日に行います。', noticeRead: '1'),
-  Notice(noticeDate: '6.4', className: '1-C', noticeTitle: '避難訓練の実施', noticeExplanatory: '6月10日に行います。', noticeRead: '0'),
-  Notice(noticeDate: '6.5', className: '4-2', noticeTitle: '給食費について', noticeExplanatory: '今月の給食費の支払いをお願いします。', noticeRead: '1'),
-  Notice(noticeDate: '6.7', className: '3-B', noticeTitle: '図書室の利用', noticeExplanatory: '図書室の利用時間が変更されました。', noticeRead: '0'),
-  Notice(noticeDate: '6.8', className: '2-A', noticeTitle: '部活動の休止', noticeExplanatory: '今週の部活動は休止します。', noticeRead: '1'),
-  Notice(noticeDate: '6.9', className: '1-A', noticeTitle: '遠足のお知らせ', noticeExplanatory: '6月15日に遠足があります。', noticeRead: '0'),
-  Notice(noticeDate: '6.10', className: '4-3', noticeTitle: '学級会のお知らせ', noticeExplanatory: '学級会は明日行います。', noticeRead: '1'),
-  Notice(noticeDate: '6.11', className: '3-C', noticeTitle: 'テスト週間のお知らせ', noticeExplanatory: '来週からテスト週間が始まります。', noticeRead: '0'),
-  Notice(noticeDate: '6.12', className: '2-C', noticeTitle: '修学旅行の費用について', noticeExplanatory: '修学旅行の費用を確認してください。', noticeRead: '1'),
-  Notice(noticeDate: '6.13', className: '1-B', noticeTitle: 'PTAからのお知らせ', noticeExplanatory: 'PTAの会合が来週あります。', noticeRead: '0')
+    Notice(
+        noticeDate: '2024-6-3',
+        className: '4-5',
+        noticeTitle: 'お知らせがたくさん',
+        noticeExplanatory:
+            '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
+        noticeRead: '0'),
+    Notice(noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;', noticeExplanatory: '少子化じゃなかったころ', noticeRead: '1'),
+    Notice(noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', noticeExplanatory: '最終日まで残さないように。\n二行目だよ。', noticeRead: '0')
   ];
 }

@@ -13,13 +13,13 @@ import 'dart:io';
 class SubmittionList extends StatefulWidget {
   final Homework homeworkData;
   final void Function() onTakeCamera; // 撮影時の処理
-  SubmittionList({super.key, required this.homeworkData, required this.onTakeCamera});
+  const SubmittionList({super.key, required this.homeworkData, required this.onTakeCamera});
 
   @override
-  _SubmittionListState createState() => _SubmittionListState();
+  SubmittionListState createState() => SubmittionListState();
 }
 
-class _SubmittionListState extends State<SubmittionList> {
+class SubmittionListState extends State<SubmittionList> {
   late List<File?> _images; // 画像用配列
   final picker = ImagePicker(); // カメラ処理
 

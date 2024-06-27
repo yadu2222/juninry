@@ -17,7 +17,7 @@ class PageNextDayTaskJunior extends StatelessWidget {
     return Center(
       child: Column(children: [
         AppBarView(titleText: title),
-        NextDayTask(),
+        const NextDayTask(),
         const DividerView(
           icon: Icons.menu_book_outlined,
           title: 'test',

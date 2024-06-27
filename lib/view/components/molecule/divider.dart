@@ -18,7 +18,7 @@ class DividerView extends StatelessWidget {
     return Column(children: [
       Row(children: [
         Container(
-          margin: const EdgeInsets.only(left: 25),
+          margin: EdgeInsets.only(left: indent),
           child: icon != null
               ? Icon(
                   icon!,
@@ -27,7 +27,7 @@ class DividerView extends StatelessWidget {
                 )
               : const SizedBox.shrink(),
         ),
-        Container(margin: const EdgeInsets.only(left: 10), child: title != null ? Text(title!, style: Fonts.h2w) : const SizedBox.shrink())
+        Container(margin: const EdgeInsets.only(left: 10), child: title != null ? Text(title!, style: Fonts.h3w) : const SizedBox.shrink())
       ]),
       Divider(thickness: dividWeight, indent: indent, endIndent: endIndent, color: dividColor)
     ]);

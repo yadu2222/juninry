@@ -1,44 +1,69 @@
+import './teaching_item_model.dart';
+
 class Homework {
-  String homeworkUuid;
-  String homeworkLimit;           // TODO:dateにすべきでは？
-  String teachingMaterialUuid;
+  String? homeworkUuid;
+  DateTime homeworkLimit; // TODO:dateにすべきでは？
   int startPage;
   int pageCount;
   String homeworkPosterUuid;
   String homeworkNote;
-  String teachingMaterialName;
-  int subjectId;
-  String imageUuid;
+  String? imageUuid;
   String classUuid;
-  int submitFlg;
+  int? submitFlg;
 
-  // 課題ID	task_uuid
-  // 期限	task_limit
-  // 教材ID	teaching_material_uuid
-  // 開始ページ	start_page
-  // ページ枚数	page_count
-  // 投稿者ID	task_poster_uuid
-  // 説明	task_note
-  // 教材ID	teaching_material_uuid
-  // 教材名	teaching_material_name
-  // 教科ID	subject_id
-  // 画像ID	image_uuid
-  // クラスID	class_uuid
-  // 提出済みかどうか	submit_flg
+  // String teachingMaterialUuid;
+  // String teachingMaterialName;
+  // int subjectId;
+  TeachingItem teachingItem;
 
   Homework({
-    required this.homeworkUuid,
+    this.homeworkUuid,
     required this.homeworkLimit,
-    required this.teachingMaterialUuid,
     required this.startPage,
     required this.pageCount,
     required this.homeworkPosterUuid,
     required this.homeworkNote,
-    required this.teachingMaterialName,
-    required this.subjectId,
-    required this.imageUuid,
+    this.imageUuid,
     required this.classUuid,
-    required this.submitFlg,
+    this.submitFlg,
+    required this.teachingItem,
   });
 
+  // mapをHomeworkに変換
+  static Homework dBtoHomework(Map loadData) {
+    try {
+      return Homework(
+        homeworkUuid: loadData['homework_id'].toString(),
+        homeworkLimit: DateTime.parse(loadData['homework_limit']),
+        startPage: loadData['start_page'],
+        pageCount: loadData['page_count'],
+        homeworkPosterUuid: loadData['homework_poster_uuid'],
+        homeworkNote: loadData['homework_note'],
+        classUuid: loadData['class_uuid'],
+        teachingItem: TeachingItem(
+          teachingMaterialUuid: loadData['teaching_material_uuid'],
+          teachingMaterialName: loadData['teaching_material_name'],
+          subjectId: loadData['subject_id'],
+        ),
+      );
+    } catch (e) {
+      print('Error converting map to Homework: $e');
+      return Homework(
+        homeworkUuid: '',
+        homeworkLimit: DateTime.now(),
+        startPage: 0,
+        pageCount: 0,
+        homeworkPosterUuid: '',
+        homeworkNote: '',
+        imageUuid: '',
+        classUuid: '',
+        submitFlg: 0,
+        teachingItem: TeachingItem(
+          teachingMaterialUuid: '',
+          teachingMaterialName: '',
+          subjectId: 0,
+        ),
+      );
+    }
+  }
 }

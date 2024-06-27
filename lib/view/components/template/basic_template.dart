@@ -8,7 +8,8 @@ class BasicTemplate extends StatelessWidget {
   final List<Widget> children;
   final IconButton? featureIconButton;
 
-  BasicTemplate({
+  const BasicTemplate({
+    super.key,
     required this.title,
     this.popIcon = false,
     required this.children,

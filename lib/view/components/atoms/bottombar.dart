@@ -13,6 +13,7 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemTapped;
 
+  // TODO:ここもユーザーのタイプに合わせて表示すべきですよね、、という話
   @override
   Widget build(BuildContext context) => Container(
       decoration: const BoxDecoration(
@@ -45,7 +46,7 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
         ],
         currentIndex: selectedIndex,
         backgroundColor: AppColors.main,
-        selectedItemColor: AppColors.iconLight, // 選択中のアイコンの色 かわってくれないのでこまっているよ
+        selectedItemColor: AppColors.iconLight,
         // unselectedItemColor: AppColors.fontLight,
         onTap: onItemTapped, // タップ時の処理
         type: BottomNavigationBarType.fixed,
