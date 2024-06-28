@@ -16,10 +16,7 @@ import '../view/pages/share/page_user_register.dart';
 // import '../constant/sample_data.dart';
 import '../models/user_model.dart';
 
-
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-
-
 
 // enumで宣言
 enum BranchType {
@@ -69,11 +66,6 @@ Future<List<StatefulShellBranch>> getBranches() async {
 
 // ルーターの作成
 Future<GoRouter> createRouter() async {
-
-
-
-
-
   // jwtkeyが端末内に保存されているかを判別
   Future<bool> isLoginCheck() async {
     User user = await User.getUser();
@@ -82,6 +74,7 @@ Future<GoRouter> createRouter() async {
     }
     return true;
   }
+
   bool isLogin = await isLoginCheck();
 
   return GoRouter(
@@ -91,8 +84,6 @@ Future<GoRouter> createRouter() async {
     routes: [
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
-    
-
       GoRoute(
         path: '/login',
         pageBuilder: (context, state) => NoTransitionPage(
@@ -100,8 +91,7 @@ Future<GoRouter> createRouter() async {
           child: PageLogin(),
         ),
       ),
-
-        GoRoute(
+      GoRoute(
         path: '/register',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './dbcon.dart';
-import '../constant/sample_data.dart';
+// import '../constant/sample_data.dart';
 
 class User {
   String userUUID;
@@ -12,7 +12,11 @@ class User {
   String jtiUUID;
   String jwtKey;
 
-  User({required this.userUUID, required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID,required this.jwtKey});
+  User({this.userUUID = 'userUUID',  required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID, required this.jwtKey});
+
+  static User errorUser() {
+    return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '', jwtKey: '');
+  }
 
   // mapをUserに変換
   static User toUser(Map loadData) {
@@ -27,11 +31,11 @@ class User {
           jwtKey: loadData['jwt_key']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
-      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
+      return errorUser();
     }
   }
 
-    static User resToUser(Map loadData) {
+  static User resToUser(Map loadData) {
     try {
       return User(
           userUUID: loadData['userUUID'],
@@ -43,13 +47,13 @@ class User {
           jwtKey: loadData['jwtUUID']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
-      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '', jwtKey: '');
+      return errorUser();
     }
   }
 
   // Userをmapに変換
   static Map<String, dynamic> toMap(User user) {
-    return {'user_uuid': user.userUUID, 'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jti_uuid': user.jtiUUID,'jwt_key': user.jwtKey};
+    return {'user_uuid':user.userUUID, 'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jti_uuid': user.jtiUUID, 'jwt_key': user.jwtKey};
   }
 
   // dbからuser情報を取得
@@ -60,12 +64,12 @@ class User {
       return toUser(user[0]);
     } else {
       debugPrint('できてない？');
-      return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
+      return errorUser();
     }
   }
 
   // ユーザー登録
-  static Future<void> insertUser(User user){
+  static Future<void> insertUser(User user) {
     debugPrint('registerUser');
     DatabaseHelper.insert('users', toMap(user));
     return Future.value();
@@ -74,7 +78,7 @@ class User {
   // authの更新
   static Future<void> updateUser(User user) async {
     debugPrint('updateUser');
-    await DatabaseHelper.update('users','mail_address', toMap(user), user.mailAddress);
+    await DatabaseHelper.update('users', 'mail_address', toMap(user), user.mailAddress);
   }
 
   // 既にdbが存在しているかを判定し、なければsampleuserを追加

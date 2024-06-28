@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../../models/user_model.dart';
+
+import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/info_form.dart';
 import '../../components/atoms/basic_button.dart';
-import '../../../apis/controller/user_req.dart';
-import '../../../models/user_model.dart';
+import '../../../apis/controller/user_req.dart'; // リクエスト
+
+// 定数
 import '../../../constant/colors.dart';
 import '../../../constant/Fonts.dart';
-import 'package:go_router/go_router.dart';
+import '../../../constant/messages.dart';
 
 class PageLogin extends StatelessWidget {
   PageLogin({super.key});
@@ -18,6 +23,15 @@ class PageLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserReq userReq = UserReq(context: context);
+
+    // ログイン処理
+    void login() async {
+      if (mailController.text.isNotEmpty && passController.text.isNotEmpty) {
+        await userReq.login(User(userUUID: "", userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text, jtiUUID: "", jwtKey: ""));
+      } else {
+        ToastUtil.show(message: Messages.inputError);
+      }
+    }
 
     return Scaffold(
         backgroundColor: AppColors.main, // 背景色設定
@@ -31,8 +45,8 @@ class PageLogin extends StatelessWidget {
             width: 0.4,
             text: 'ログイン',
             isColor: true,
-            onPressed: () async => {
-              await userReq.login(User(userUUID: "", userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text, jtiUUID: "", jwtKey: "")),
+            onPressed: () {
+              login();
             },
             circular: 50,
           ),
