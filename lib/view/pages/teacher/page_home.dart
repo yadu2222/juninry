@@ -16,8 +16,6 @@ class PageHomeTeacher extends StatelessWidget {
   // TODO:教員の所属する教室情報を取得？
   final String title = 'ホーム';
 
-  //
-
   @override
   Widget build(BuildContext context) {
     return ScrollTemplate(title: title, children: [

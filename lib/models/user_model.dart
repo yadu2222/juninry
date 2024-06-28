@@ -36,10 +36,10 @@ class User {
       return User(
           userUUID: loadData['userUUID'],
           userName: loadData['userName'],
-          userTypeId: int.tryParse(loadData['userTypeId']) ?? 0,
+          userTypeId: loadData['userTypeId'],
           mailAddress: loadData['mailAddress'],
           password: loadData['password'],
-          jtiUUID: loadData['jwtUUID'], // まちがっているのでは？
+          jtiUUID: loadData['jwtUUID'], // いらないのでは？
           jwtKey: loadData['jwtUUID']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');

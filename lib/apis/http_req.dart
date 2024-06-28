@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../models/req_model.dart';
-import '../../models/user_model.dart';
-import '../../constant/urls.dart';
+import '../models/req_model.dart';
+import '../models/user_model.dart';
+import '../constant/urls.dart';
 
 class HttpReq {
   static Future<Map> httpReq(Request reqData) async {
