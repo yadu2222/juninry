@@ -16,7 +16,7 @@ class UserService {
 
     // dbに保存するためのオブジェクトを生成
     User user = User(
-        userUUID: "aiueaoo",
+        userUUID: "ertyui",
         userName: reqBody['userName'],
         userTypeId: reqBody['userTypeId'],
         mailAddress: reqBody['mailAddress'],

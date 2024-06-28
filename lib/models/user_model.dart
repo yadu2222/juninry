@@ -57,7 +57,7 @@ class User {
     if (await DatabaseHelper.firstdb()) {
       var user = await DatabaseHelper.queryAllRows('users');
       debugPrint(user.toString());
-      return toUser(user[4]);
+      return toUser(user[0]);
     } else {
       debugPrint('できてない？');
       return User(userUUID: '', userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '',jwtKey: '');
@@ -89,8 +89,8 @@ class User {
   // type_idは本来apiからもらうものだが、テストに使いたいため個々に記載
   static _createSampleUser() async {
     debugPrint('_createSampleUser');
-    await DatabaseHelper.insert('users', toMap(SampleData.teacherUser));
-    await DatabaseHelper.insert('users', toMap(SampleData.juniorUser));
-    await DatabaseHelper.insert('users', toMap(SampleData.patronUser));
+    // await DatabaseHelper.insert('users', toMap(SampleData.teacherUser));
+    // await DatabaseHelper.insert('users', toMap(SampleData.juniorUser));
+    // await DatabaseHelper.insert('users', toMap(SampleData.patronUser));
   }
 }

@@ -7,9 +7,6 @@ import '../../components/organism/homework_tab.dart';
 
 import '../../../constant/sample_data.dart'; // sampleData
 
-import '../../components/atoms/basic_button.dart';
-import '../../../apis/controller/user_req.dart';
-
 class PageHomeTeacher extends StatelessWidget {
   const PageHomeTeacher({super.key});
 
@@ -22,10 +19,6 @@ class PageHomeTeacher extends StatelessWidget {
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
       HomeworkTab(homeworkData: SampleData.homeworkData), // 明日提出の課題タブ
       TeacherShortcuts(), // ショートカットセット
-
-      BasicButton(text: 'とうろく', isColor: true, onPressed: () async => {UserReq.registerUser({})}),
-      BasicButton(text: 'ろぐいん', isColor: true, onPressed: () async => {UserReq.login(null)}),
-      BasicButton(text: 'げっと', isColor: true, onPressed: () async => {UserReq.getUser()}),
     ]);
   }
 }

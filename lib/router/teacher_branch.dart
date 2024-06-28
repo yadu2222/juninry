@@ -13,7 +13,7 @@ import '../view/pages/share/page_students.dart';
 import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_user.dart';
 
-import '../view/pages/share/page_login.dart';
+
 
 // 教員ブランチ
 class TeacherBranch {
@@ -39,7 +39,7 @@ class TeacherBranch {
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             // child: const PageHomeTeacher(),
-            child: PageLogin(),
+            child: const PageHomeTeacher(),
             // child: PageHomePatron(),
           ),
         ),
