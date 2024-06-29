@@ -167,7 +167,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                     // ダイアログを出す
                   },
                   isColor: true,
-                  radius: 5,
+                  circular: 5,
                 ),
                 BasicButton(
                   widthPercent: 0.4,
@@ -175,7 +175,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                   isColor: false,
                   onPressed: () {}, //TODO: 投稿処理
                   icon: Icons.check,
-                  radius: 5,
+                  circular: 5,
                 )
               ],
             ),

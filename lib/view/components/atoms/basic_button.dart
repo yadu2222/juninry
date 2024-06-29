@@ -24,7 +24,6 @@ class BasicButton extends StatelessWidget {
   final double height;
   final double circular;
   final void Function()? onPressed;
-  final double radius;
 
   @override
   Widget build(BuildContext context) {
