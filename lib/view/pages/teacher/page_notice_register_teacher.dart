@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/apis/controller/http_req.dart';
+import 'package:juninry/apis/controller/notice_req.dart';
 import 'package:juninry/constant/messages.dart';
 import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/class_model.dart';
-import 'package:juninry/models/dbcon.dart';
-import 'package:juninry/models/notice_model.dart';
 import 'package:juninry/models/drafted_notice_model.dart';
 import 'package:juninry/view/components/atoms/alert_dialog_view.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
@@ -14,6 +14,8 @@ import 'package:juninry/view/components/organism/create_notice_form.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
 import '../../../models/user_model.dart';
 import '../../../models/quoted_notice_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../models/req_model.dart';
 
 //クラスの表示に必要なデータ型
 
@@ -182,61 +184,70 @@ class PageNoticeRegisterTeacher extends HookWidget {
   }
 
   Future<_PageData> _loadData() async {
-    // 下書きデータ
+    // 前回の値を取得しているやつっぽいけどわからん、、、
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? storedDraftedNoticeId = prefs.getInt('draftedNoticeId');
+
     DraftedNotice draftedNoticeData;
-    // 引用データ
     QuotedNotice? quotedNoticeData;
-    // クラス選択肢
-    List<Class> classesList;
-    // 選択したクラス
-    Class selectedClass;
 
-    // 下書きIDが送られてきた時、下書きデータを取得
-    if (draftedNoticeId != null) {
-      debugPrint("下書きIDチェック: $draftedNoticeId");
-      draftedNoticeData =
-          await DraftedNotice.getDraftedNotice(draftedNoticeId!);
-      debugPrint(draftedNoticeData.draftedNoticeTitle);
-    } else {
+    // draftedNoticeIdとquotedNoticeUuidの両方がnullの場合、新しい下書きを作成
+    if (draftedNoticeId == null && quotedNoticeUuid == null) {
       draftedNoticeData = DraftedNotice();
+      // 保存されていたIDをクリア
+      await prefs.remove('draftedNoticeId');
+    } else {
+      // 適用する下書きIDを決定
+      // 優先度 引用された下書き > 保存されていた下書き
+      int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
+
+      if (currentDraftedNoticeId != null) {
+        // 既存の下書きを取得
+        draftedNoticeData =
+            await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
+        debugPrint("下書きIDチェック: $currentDraftedNoticeId");
+        debugPrint(draftedNoticeData.draftedNoticeTitle);
+      } else {
+        // 新しい下書きを作成
+        draftedNoticeData = DraftedNotice();
+      }
+
+      // 新しい引用が提供された場合、下書きに引用IDを設定
+      if (quotedNoticeUuid != null) {
+        draftedNoticeData.quotedNoticeUuid = quotedNoticeUuid;
+      }
+
+      // 現在の下書きIDを保存
+      await prefs.setInt(
+          'draftedNoticeId', draftedNoticeData.draftedNoticeId ?? -1);
     }
 
-    // 引用IDが送られてきた時、下書きに引用IDを設定
-    if (quotedNoticeUuid != null) {
-      draftedNoticeData.quotedNoticeUuid = quotedNoticeUuid;
-    }
-
-    // 引用データを取得
+    // 引用データを取得
     // TODO: API呼び出し
     if (draftedNoticeData.quotedNoticeUuid != null) {
-      quotedNoticeData = SampleData.quotedNoticesData.first;
+      debugPrint("引用IDチェック: ${draftedNoticeData.quotedNoticeUuid}");
+      await NoticeReq.fetchNoticeDetail(draftedNoticeData.quotedNoticeUuid!);
     }
 
-    // 取得したタイトルをコントローラーに設定
+    // コントローラーの設定
     final titleController =
         TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
-
-    // 取得した本文をコントローラーに設定
     final textController = TextEditingController(
         text: draftedNoticeData.draftedNoticeExplanatory ?? '');
 
     // クラスリストを作成
-    // 引用されている場合は引用元のクラスのみを選択肢に設定、引用されていない場合は全クラスを選択肢に設定
-    // TODO: API呼び出し
-    classesList = (quotedNoticeData != null)
+    List<Class> classesList = (quotedNoticeData != null)
         ? [quotedNoticeData.quotedClass]
         : SampleData.classesData;
 
     // 選択されているクラスを設定
-    // 優先度 引用と同じクラス > 下書きクラス > 初期値
-    selectedClass = quotedNoticeData?.quotedClass ??
+    Class selectedClass = quotedNoticeData?.quotedClass ??
         draftedNoticeData.selectedClass ??
         classesList.first;
 
     // ユーザー名を取得
     final user = await User.getUser();
 
-    // データをまとめる
     return _PageData(
       classesList: classesList,
       selectedClass: selectedClass,

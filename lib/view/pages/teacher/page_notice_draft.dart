@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
-import '../../../models/homework_model.dart';
 import '../../../models/drafted_notice_model.dart';
 import '../../components/template/basic_template.dart';
-import '../../components/organism/due_homework_list.dart';
 
-import '../../components/atoms/add_button.dart';
 
-import '../../../constant/sample_data.dart'; // sampleData
 import '../../../constant/fonts.dart';
 import '../../../models/quoted_notice_model.dart';
 
@@ -18,7 +14,7 @@ class PageNoticeDraftTeacher extends StatelessWidget {
   final DraftedNotice? draftedNoticeData;
   final QuotedNotice? quotedNoticeData;
 
-  PageNoticeDraftTeacher({
+  const PageNoticeDraftTeacher({
     super.key,
     this.draftedNoticeData,
     this.quotedNoticeData,
@@ -27,6 +23,10 @@ class PageNoticeDraftTeacher extends StatelessWidget {
   @override
   // TODO カスページ
   Widget build(BuildContext context) {
+
+
+
+
     return BasicTemplate(title: "下書き", children: [
       Text("タイトルとか", style: Fonts.h3),
       Text(draftedNoticeData?.draftedNoticeTitle ?? ""),
@@ -54,7 +54,7 @@ class PageNoticeDraftTeacher extends StatelessWidget {
           isColor: false,
           onPressed: () {
             context.go('/notice/register', extra: {
-              'quotedNoticeUuid': 'quotedNotice1',
+              'quotedNoticeUuid': '2097a7bb-5140-460d-807e-7173a51672bd',
             });
           }),
       BasicButton(
