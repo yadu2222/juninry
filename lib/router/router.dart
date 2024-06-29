@@ -79,11 +79,9 @@ Future<GoRouter> createRouter() async {
 
   return GoRouter(
     debugLogDiagnostics: true,
-    // initialLocation: isLogin ? '/home' : '/login',  // ログイン状態によって初期画面を変更
-    initialLocation: '/login', // ログイン状態によって初期画面を変更
+    initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更
+    // initialLocation: '/login',
     routes: [
-      // ボトムバーが必要な画面のルーティング
-      // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
       GoRoute(
         path: '/login',
         pageBuilder: (context, state) => NoTransitionPage(
@@ -98,6 +96,8 @@ Future<GoRouter> createRouter() async {
           child: PageUserRegister(),
         ),
       ),
+      // ボトムバーが必要な画面のルーティング
+      // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
       StatefulShellRoute.indexedStack(
           // parentNavigatorKey: rootNavigatorKey,    // これがあると初期画面で/homeにたどり着けない 原因究明中
           // ここで常時表示させたいクラスをビルドしている
