@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/apis/controller/http_req.dart';
 import 'package:juninry/apis/controller/notice_req.dart';
 import 'package:juninry/constant/messages.dart';
 import 'package:juninry/constant/sample_data.dart';
@@ -15,16 +14,14 @@ import 'package:juninry/view/components/template/basic_template.dart';
 import '../../../models/user_model.dart';
 import '../../../models/quoted_notice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../models/req_model.dart';
 
-//クラスの表示に必要なデータ型
 
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
   final int? draftedNoticeId;
   final String? quotedNoticeUuid;
 
-  PageNoticeRegisterTeacher({
+  const PageNoticeRegisterTeacher({
     super.key,
     this.draftedNoticeId,
     this.quotedNoticeUuid,
@@ -112,7 +109,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
                 BasicButton(
                   widthPercent: 0.4,
                   text: "下書きに保存",
-                  //TODO: 下書き保存処理
                   onPressed: () async {
                     draftedNoticeData.selectedClass = selectedClass.value;
                     draftedNoticeData.draftedNoticeTitle = titleController.text;
@@ -201,12 +197,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
       // 優先度 引用された下書き > 保存されていた下書き
       int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
 
+
       if (currentDraftedNoticeId != null) {
         // 既存の下書きを取得
         draftedNoticeData =
             await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
-        debugPrint("下書きIDチェック: $currentDraftedNoticeId");
-        debugPrint(draftedNoticeData.draftedNoticeTitle);
       } else {
         // 新しい下書きを作成
         draftedNoticeData = DraftedNotice();
@@ -218,15 +213,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
       }
 
       // 現在の下書きIDを保存
-      await prefs.setInt(
-          'draftedNoticeId', draftedNoticeData.draftedNoticeId ?? -1);
+      await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId);
     }
 
     // 引用データを取得
-    // TODO: API呼び出し
     if (draftedNoticeData.quotedNoticeUuid != null) {
       debugPrint("引用IDチェック: ${draftedNoticeData.quotedNoticeUuid}");
-      await NoticeReq.fetchNoticeDetail(draftedNoticeData.quotedNoticeUuid!);
+      quotedNoticeData = await NoticeReq.fetchQuotedNotice(
+          draftedNoticeData.quotedNoticeUuid!);
     }
 
     // コントローラーの設定
@@ -236,6 +230,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
         text: draftedNoticeData.draftedNoticeExplanatory ?? '');
 
     // クラスリストを作成
+    // TODO: クラス一覧取得API
     List<Class> classesList = (quotedNoticeData != null)
         ? [quotedNoticeData.quotedClass]
         : SampleData.classesData;
