@@ -11,22 +11,21 @@ class SampleData {
   static String jwtKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTkxMTgsImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiY2ExYmY2MGItMzlmNS00NTI5LWE5YzEtYzJlNjQzYzEyNDBiIn0.x-3FXjbiOVRbkg05-sPvIShSC86jvvsBWudDrsJjO-I';
   static User teacherUser = User(
-      userUUID: '9efeb117-1a34-4012-b57c-7f1a4033adb9',
-      userName: 'teacher',
+     userName: 'teacher',
       userTypeId: 1,
       mailAddress: 'test-teacher@gmail.com',
       password: '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
       jtiUUID: '42c28ac4-0ba4-4f81-8813-814dc92e2f40',
       jwtKey: jwtKey);
   static User juniorUser = User(
-      userUUID: '5574bc10-c1f4-46e7-bbac-8503e03bab',
+      
       userName: 'junior',
       userTypeId: 2,
       mailAddress: 'test-pupil@gmail.com',
       password: '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW',
       jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948',
       jwtKey: jwtKey);
-  static User patronUser = User(userUUID: '', userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948', jwtKey: jwtKey);
+  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948', jwtKey: jwtKey);
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',

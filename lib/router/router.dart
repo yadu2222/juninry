@@ -9,6 +9,9 @@ import 'patron_branch.dart';
 import 'teacher_branch.dart';
 // import 'debug_branch.dart'; // デバッグ用 すきにさわっていいよ gitから外してね
 
+import '../view/pages/share/page_login.dart';
+import '../view/pages/share/page_user_register.dart';
+
 // sample
 // import '../constant/sample_data.dart';
 import '../models/user_model.dart';
@@ -50,23 +53,49 @@ Future<List<StatefulShellBranch>> getBranches() async {
       debugPrint('teacher');
       return BranchType.teacher.branch;
     case 2:
-    debugPrint('junior');
+      debugPrint('junior');
       return BranchType.junior.branch;
     case 3:
-    debugPrint('patron');
+      debugPrint('patron');
       return BranchType.patron.branch;
     default:
-    debugPrint('error');
+      debugPrint('error');
       return BranchType.junior.branch;
   }
 }
 
 // ルーターの作成
 Future<GoRouter> createRouter() async {
+  // jwtkeyが端末内に保存されているかを判別
+  Future<bool> isLoginCheck() async {
+    User user = await User.getUser();
+    if (user.jwtKey == "") {
+      return false;
+    }
+    return true;
+  }
+
+  bool isLogin = await isLoginCheck();
+
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/home',
+    initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更
+    // initialLocation: '/login',
     routes: [
+      GoRoute(
+        path: '/login',
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: PageLogin(),
+        ),
+      ),
+      GoRoute(
+        path: '/register',
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: PageUserRegister(),
+        ),
+      ),
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
       StatefulShellRoute.indexedStack(

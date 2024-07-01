@@ -12,6 +12,7 @@ class BasicButton extends StatelessWidget {
     required this.isColor, // trueでみどり falseで赤
     this.onPressed,
     this.height = 35.0,
+    this.circular = 10,
   });
 
   final String text;
@@ -19,6 +20,7 @@ class BasicButton extends StatelessWidget {
   final bool isColor;
   final double width;
   final double height;
+  final double circular;
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class BasicButton extends StatelessWidget {
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10) //こちらを適用
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(circular) //こちらを適用
                     )),
             onPressed: onPressed,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
