@@ -37,6 +37,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   hooks_riverpod: ^2.4.10
   sqflite: ^2.2.0+3
+  fluttertoast: ^8.0.8
   
 
 
