@@ -23,7 +23,7 @@ class UserService {
         password: reqBody['password'],
         jtiUUID: "aiaueo",
         jwtKey: resData['srvResData']['authenticationToken']);
-    User.insertUser(user);  // dbへの保存 getUserでjwtKeyがdbから読み込まれるため
+    User.insertUser(user); // dbへの保存 getUserでjwtKeyがdbから読み込まれるため
 
     // ユーザー情報の取得と更新
     user = await getUser();
@@ -38,7 +38,19 @@ class UserService {
     Map resData = await HttpReq.httpReq(reqData); // 投げる
 
     user.jwtKey = resData['srvResData']['authenticationToken']; // jwtKeyを最新のものに書き換え
-    User.updateUser(user); // update
+
+    // TODO:user情報がすでに存在しているかを判別して場合分け
+    User check = await User.getUser();
+    // user情報が存在していない場合
+    if (check.userName == '') {
+      User.insertUser(user); // 一時的に追加
+      User updUser = await getUser();
+      updUser.jwtKey = user.jwtKey;
+      User.updateUser(updUser); // update
+      
+    } else {
+      User.updateUser(user);
+    }
   }
 
   // ユーザー情報取得

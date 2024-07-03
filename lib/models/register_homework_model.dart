@@ -40,7 +40,7 @@ class RegisterHomework {
         startPageController: TextEditingController(text: loadData['start_page'].toString()),
         pageCountController: TextEditingController(text: loadData['page_count'].toString()),
         teachingItem: TeachingItem(
-          teachingMaterialUuid: loadData['teaching_material_uuid'],
+          teachingMaterialImageUUID: loadData['teaching_material_uuid'],
           teachingMaterialName: loadData['teaching_material_name'],
           subjectId: loadData['subject_id'],
         ),
@@ -55,7 +55,7 @@ class RegisterHomework {
         startPageController: TextEditingController(),
         pageCountController: TextEditingController(),
         teachingItem: TeachingItem(
-          teachingMaterialUuid: '',
+          teachingMaterialImageUUID: '',
           teachingMaterialName: '',
           subjectId: 0,
         ),
@@ -80,7 +80,7 @@ class RegisterHomework {
         'homework_poster_uuid': user.userUUID,
         'homework_note': homework.noteController.text,
         'class_uuid': homework.classUUID,
-        'teaching_material_uuid': homework.teachingItem.teachingMaterialUuid,
+        'teaching_material_uuid': homework.teachingItem.teachingMaterialImageUUID,
         'teaching_material_name': homework.teachingItem.teachingMaterialName,
         'subject_id': homework.teachingItem.subjectId,
       };

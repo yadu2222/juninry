@@ -1,7 +1,7 @@
 class TeachingItem {
-  String teachingMaterialUuid;
+  String teachingMaterialImageUUID;
   String teachingMaterialName;
   int subjectId;
 
-  TeachingItem({required this.teachingMaterialUuid,required this.teachingMaterialName, required this.subjectId, });
+  TeachingItem({required this.teachingMaterialImageUUID,required this.teachingMaterialName, required this.subjectId, });
 }

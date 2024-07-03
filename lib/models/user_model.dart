@@ -10,9 +10,9 @@ class User {
   String mailAddress;
   String password;
   String jtiUUID;
-  String jwtKey;
+  String? jwtKey;
 
-  User({this.userUUID = 'userUUID',  required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID, required this.jwtKey});
+  User({this.userUUID = 'userUUID',  required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID,  this.jwtKey});
 
   static User errorUser() {
     return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '', jwtKey: '');
@@ -44,7 +44,7 @@ class User {
           mailAddress: loadData['mailAddress'],
           password: loadData['password'],
           jtiUUID: loadData['jwtUUID'], // いらないのでは？
-          jwtKey: loadData['jwtUUID']);
+          );
     } catch (e) {
       debugPrint('Error converting map to User: $e');
       return errorUser();
@@ -78,7 +78,7 @@ class User {
   // authの更新
   static Future<void> updateUser(User user) async {
     debugPrint('updateUser');
-    await DatabaseHelper.update('users', 'mail_address', toMap(user), user.mailAddress);
+    await DatabaseHelper.update('users', 'user_id', toMap(user), '1');
   }
 
   // 既にdbが存在しているかを判定し、なければsampleuserを追加

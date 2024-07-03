@@ -15,6 +15,7 @@ class Urls {
   // notice
 
   // homework
+  static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
 
   // class
 

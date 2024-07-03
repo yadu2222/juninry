@@ -29,26 +29,26 @@ class SampleData {
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
-    subjectId: 0,
-    teachingMaterialUuid: 'aaaaa',
+    subjectId: 1,
+    teachingMaterialImageUUID: 'aaaaa',
   );
 
   static TeachingItem teachingItem2 = TeachingItem(
     teachingMaterialName: '計算ドリル',
-    subjectId: 1,
-    teachingMaterialUuid: 'aaaaa',
+    subjectId: 2,
+    teachingMaterialImageUUID: 'aaaaa',
   );
 
   static TeachingItem teachingItem3 = TeachingItem(
     teachingMaterialName: '理科ワーク',
-    subjectId: 2,
-    teachingMaterialUuid: 'aaaaa',
+    subjectId: 3,
+    teachingMaterialImageUUID: 'aaaaa',
   );
 
   static TeachingItem teachingItem4 = TeachingItem(
     teachingMaterialName: '社会に貢献しよう',
-    subjectId: 3,
-    teachingMaterialUuid: 'iiii',
+    subjectId: 4,
+    teachingMaterialImageUUID: 'iiii',
   );
 
   static List<Homework> homeworkData = [
@@ -60,7 +60,7 @@ class SampleData {
       homeworkPosterUuid: 'aaaaa',
       homeworkNote: 'aaaaa',
       imageUuid: 'aaaaa',
-      classUuid: 'aaaaa',
+      className: 'aaaaa',
       submitFlg: 0,
       teachingItem: teachingItem1,
     ),
@@ -85,7 +85,7 @@ class SampleData {
           homeworkPosterUuid: 'aaaaa',
           homeworkNote: 'aaaaa',
           imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
+          className: 'aaaaa',
           submitFlg: 0,
           teachingItem: teachingItem1,
         ),
@@ -102,7 +102,7 @@ class SampleData {
             homeworkPosterUuid: 'aaaaa',
             homeworkNote: 'aaaaa',
             imageUuid: 'aaaaa',
-            classUuid: 'aaaaa',
+            className: 'aaaaa',
             submitFlg: 0,
             teachingItem: teachingItem2),
       ]

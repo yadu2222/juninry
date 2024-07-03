@@ -14,7 +14,7 @@ class HomeworkCard extends StatelessWidget {
   });
   final Homework homeworkData;
 
-  // TODO:user情報に合わせて判別すべきでは？
+  // TODO:user情報に合わせて判別すべきでは？ そのとおりだ
 
   final Icon checkIcon = const Icon(
     Icons.check,

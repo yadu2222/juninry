@@ -9,7 +9,7 @@ class HttpReq {
   static Future<Map> httpReq(Request reqData) async {
     User user = await User.getUser(); // user情報をdbから取得
     String url = Urls.baseUrl + reqData.url;  // リクエスト先のURL
-    reqData.headers['Authorization'] = user.jwtKey; // ヘッダーに認証トークンを追加
+    reqData.headers['Authorization'] = user.jwtKey!; // ヘッダーに認証トークンを追加
     http.Response response = http.Response('{}', 500); // 初期値を設定（例: 空のレスポンス）;
     // リクエストの種類によって処理を分岐
     switch (reqData.reqType) {
