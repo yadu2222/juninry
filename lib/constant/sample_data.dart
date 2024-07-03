@@ -11,14 +11,13 @@ class SampleData {
   static String jwtKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTQ0MTksImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiOGIzYTdjZGYtY2E1Ni00Y2EwLTlkODMtMDNjYjVkZWFhYmE4In0.fC63q6Igd6_yUDgi4RGiuQqpt02_hBC-PIeYRh5BgMM';
   static User teacherUser = User(
-     userName: 'teacher',
+      userName: 'teacher',
       userTypeId: 1,
       mailAddress: 'test-teacher@gmail.com',
       password: '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
       jtiUUID: '42c28ac4-0ba4-4f81-8813-814dc92e2f40',
       jwtKey: jwtKey);
   static User juniorUser = User(
-      
       userName: 'junior',
       userTypeId: 2,
       mailAddress: 'test-pupil@gmail.com',
@@ -64,6 +63,38 @@ class SampleData {
       submitFlg: 0,
       teachingItem: teachingItem1,
     ),
+  ];
+
+  static List<dynamic> apiHomeworkData = [
+    {
+      'className': 'あおば学級',
+      'homeworkData': [
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: DateTime.now().add(const Duration(days: 2)),
+          startPage: 1,
+          pageCount: 1,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          imageUuid: 'aaaaa',
+          className: 'aaaaa',
+          submitFlg: 0,
+          teachingItem: teachingItem1,
+        ),
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: DateTime.now().add(const Duration(days: 2)),
+          startPage: 1,
+          pageCount: 1,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          imageUuid: 'aaaaa',
+          className: 'aaaaa',
+          submitFlg: 0,
+          teachingItem: teachingItem2,
+        ),
+      ]
+    }
   ];
 
   // sampledata

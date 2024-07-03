@@ -46,6 +46,8 @@ class SubmittionListState extends State<SubmittionList> {
     _images = List.filled(count, null); // ページ数で初期化
   }
 
+
+  // TODO:SingleChildScrollView対応
   @override
   Widget build(BuildContext context) {
     return SizedBox(
