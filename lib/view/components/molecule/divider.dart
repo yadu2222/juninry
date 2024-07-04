@@ -7,7 +7,7 @@ class DividerView extends StatelessWidget {
 
   // null許容
   final IconData? icon; // 表示したいアイコン
-  final IconButton? endIcon; // 表示したいアイコン
+  final InkWell? endIcon; // 表示したいアイコン iconbuttonってなんであんなマージとるんですかね
   final String? title; // タイトル
   final Color dividColor; // 線の色
   final double indent; // 線の左の空白
