@@ -5,6 +5,33 @@ import '../../../constant/colors.dart';
 import '../../../models/student_model.dart';
 import '../atoms/listitem.dart';
 
+// ここにあるのきもいね
+enum JenderType { maile, female, others }
+extension JenderTypeExt on JenderType {
+  Icon get icon {
+    switch (this) {
+      case JenderType.maile:
+        return const Icon(
+          Icons.face_5,
+          color: AppColors.subjectMath,
+          size: 30,
+        );
+      case JenderType.female:
+        return const Icon(
+          Icons.face_5,
+          color: AppColors.subjectJapanese,
+          size: 30,
+        );
+      case JenderType.others:
+        return const Icon(
+          Icons.tag_faces_sharp,
+          color: AppColors.main,
+          size: 30,
+        );
+    }
+  }
+}
+
 // 生徒カード
 class StudentCard extends StatelessWidget {
   StudentCard({
@@ -12,20 +39,6 @@ class StudentCard extends StatelessWidget {
     required this.studentData,
   });
   final Student studentData;
-
-  // 男性アイコン
-  final Icon maleIcon = const Icon(
-    Icons.face_5,
-    color: AppColors.subjectMath,
-    size: 30,
-  );
-
-  // 女性アイコン
-  final Icon femaleIcon = const Icon(
-    Icons.face_5,
-    color: AppColors.subjectJapanese,
-    size: 30,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +80,7 @@ class StudentCard extends StatelessWidget {
               child: Center(
                   child:
                       // 性別を判別
-                      // TODO:条件文分かり次第変更
-                      studentData.gender == '男' ? maleIcon : femaleIcon),
+                      studentData.gender == 1 ? JenderType.maile.icon : studentData.gender == 2 ? JenderType.female.icon : JenderType.others.icon),
             ),
           ],
         ));

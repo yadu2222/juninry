@@ -10,10 +10,6 @@ class Homework {
   String? imageUuid;
   String className;
   int? submitFlg;
-
-  // String teachingMaterialUuid;
-  // String teachingMaterialName;
-  // int subjectId;
   TeachingItem teachingItem;
 
   Homework({
@@ -29,6 +25,25 @@ class Homework {
     required this.teachingItem,
   });
 
+  static Homework errHomework = Homework(
+    homeworkUuid: '',
+    homeworkLimit: DateTime.now(),
+    startPage: 0,
+    pageCount: 0,
+    homeworkPosterUuid: '',
+    homeworkNote: '',
+    imageUuid: '',
+    className: '',
+    submitFlg: 0,
+    teachingItem: TeachingItem(
+      teachingMaterialImageUUID: '',
+      teachingMaterialName: '',
+      subjectId: 0,
+    ),
+  );
+
+  // 失敗したらサービスでエラーを返す
+  // のでここでは特に対応しない
   static List<Map<String, dynamic>> resToHomeworks(List resData) {
     List<Map<String, dynamic>> homeworks = [];
     // リストをmapに変換
@@ -63,56 +78,6 @@ class Homework {
     return homeworks;
   }
 
-  // static List<Map<String, dynamic>> resToHomeworks(List<dynamic> resData) {
-  //   List<Map<String, dynamic>> homeworks = [];
-
-  //   for (var loadItem in resData) {
-  //     // 型チェックを行う
-  //     if (loadItem is! Map<String, dynamic>) {
-  //       continue; // 型が異なる場合はスキップ
-  //     }
-
-  //     Map<String, dynamic> addHomeworks = {
-  //       'homeworkLimit': loadItem['homeworkLimit'], // キー名の確認と修正
-  //       'homeworkData': [] // 空リストを初期化
-  //     };
-
-  //     // homework_dataがリストであることを確認
-  //     if (loadItem['homeworkData'] is! List) {
-  //       continue; // 型が異なる場合はスキップ
-  //     }
-
-  //     for (var loadHomework in loadItem['homeworkData']) {
-  //       // 型チェックを行う
-  //       if (loadHomework is! Map<String, dynamic>) {
-  //         continue; // 型が異なる場合はスキップ
-  //       }
-
-  //       // Homeworkインスタンスを作成
-  //       Homework homework = Homework(
-  //         homeworkUuid: loadHomework['homeworkUUID'],
-  //         startPage: loadHomework['StartPage'],
-  //         pageCount: loadHomework['PageCount'],
-  //         homeworkNote: loadHomework['HomeworkNote'],
-  //         className: loadHomework['ClassName'],
-  //         submitFlg: loadHomework['SubmitFlag'],
-  //         teachingItem: TeachingItem(
-  //           teachingMaterialUuid: loadHomework['TeachingMaterialUUID'],
-  //           teachingMaterialName: loadHomework['TeachingMaterialName'],
-  //           subjectId: loadHomework['SubjectId'],
-  //         ),
-  //       );
-
-  //       // リストに追加
-  //       (addHomeworks['homeworkData'] as List).add(homework);
-  //     }
-
-  //     homeworks.add(addHomeworks);
-  //   }
-
-  //   return homeworks;
-  // }
-
   // mapをHomeworkに変換
   static Homework dBtoHomework(Map loadData) {
     try {
@@ -132,22 +97,7 @@ class Homework {
       );
     } catch (e) {
       print('Error converting map to Homework: $e');
-      return Homework(
-        homeworkUuid: '',
-        homeworkLimit: DateTime.now(),
-        startPage: 0,
-        pageCount: 0,
-        homeworkPosterUuid: '',
-        homeworkNote: '',
-        imageUuid: '',
-        className: '',
-        submitFlg: 0,
-        teachingItem: TeachingItem(
-          teachingMaterialImageUUID: '',
-          teachingMaterialName: '',
-          subjectId: 0,
-        ),
-      );
+      return errHomework;
     }
   }
 }
