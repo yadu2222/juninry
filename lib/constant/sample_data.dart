@@ -9,7 +9,7 @@ import '../models/teaching_item_model.dart';
 // 最終的に消えるよ
 class SampleData {
   static String jwtKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTQ0MTksImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiOGIzYTdjZGYtY2E1Ni00Y2EwLTlkODMtMDNjYjVkZWFhYmE4In0.fC63q6Igd6_yUDgi4RGiuQqpt02_hBC-PIeYRh5BgMM';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTkxMTgsImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiY2ExYmY2MGItMzlmNS00NTI5LWE5YzEtYzJlNjQzYzEyNDBiIn0.x-3FXjbiOVRbkg05-sPvIShSC86jvvsBWudDrsJjO-I';
   static User teacherUser = User(
       userName: 'teacher',
       userTypeId: 1,
