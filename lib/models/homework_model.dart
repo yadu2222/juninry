@@ -50,11 +50,9 @@ class Homework {
     for (Map loadItem in resData) {
       Map<String, dynamic> addHomeworks = {}; // 追加用のmapを作成 型指定でエラー回避
       addHomeworks['homeworkLimit'] = DateTime.parse(loadItem['homeworkLimit']); // mapに期限を追加
-      // print('ちなみにまわっている?1');
       addHomeworks['homeworkData'] = []; // mapに空リストを追加
       // データをHomeworkに変換してリストに追加
       for (Map loadHomework in loadItem['homeworkData']) {
-        // print('ちなみにまわっている?2');
         Homework homework = Homework(
           homeworkUuid: loadHomework['homeworkUUID'],
           startPage: loadHomework['StartPage'],
@@ -71,7 +69,6 @@ class Homework {
         // 先ほど追加した空リストに宿題を追加
         addHomeworks['homeworkData'].add(homework);
         // print(homework.toString());
-        // print('ちなみにまわっている?2');
       }
       homeworks.add(addHomeworks);
     }

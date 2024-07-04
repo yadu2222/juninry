@@ -56,7 +56,8 @@ class StudentCard extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  studentData.num.toString(),
+                  // studentData.num.toString(),
+                  'n',
                   style: Fonts.p,
                 ),
               ),

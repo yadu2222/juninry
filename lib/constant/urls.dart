@@ -18,6 +18,7 @@ class Urls {
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
 
   // class
+  static const String getClassmates = '$version/auth/users/classes/users'; // GETクラスメイト取得
 
 
 }
