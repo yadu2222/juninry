@@ -22,7 +22,7 @@ class HomeworkService {
     }
     debugPrint(resData.toString());
     // 返す
-    return Homework.resToHomeworks(resData['srvResData'], 'homeworkLimit');
+    return Homework.resToHomeworks(resData['srvResData'], 'homeworkLimit',true);
   }
 
   // 次の日の宿題を取得

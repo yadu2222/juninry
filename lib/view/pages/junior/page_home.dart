@@ -32,7 +32,8 @@ class PageHomeJunior extends HookWidget {
         // 空でない場合のみデータをセット
         // えらーがでるからね、、
         if (data.isNotEmpty) {
-          homeworkData.value = data as List<Homework>;
+          List<Homework> homeworkList = data.cast<Homework>();  // キャスト
+          homeworkData.value = homeworkList;
         }
       }
 

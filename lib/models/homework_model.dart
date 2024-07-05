@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import './teaching_item_model.dart';
 
 class Homework {
@@ -45,6 +47,7 @@ class Homework {
   // 失敗したらサービスでエラーを返す
   // のでここでは特に対応しない
   // keyで指定した値をmapの頭に配置(つたわれ)
+  // datetime変換が必要なものをkeyのvalueにしたければtimeをtrueに指定
   // このかたちになる
   // [
   //   {
@@ -53,7 +56,7 @@ class Homework {
   //   },
   //]
   // 型が安全じゃなさすぎるだろという怒り
-  static List<dynamic> resToHomeworks(List resData, String? key) {
+  static List<dynamic> resToHomeworks(List resData, String? key, [bool time = false]) {
     List<dynamic> homeworks = [];
     // リストをmapに変換
     try {
@@ -61,7 +64,11 @@ class Homework {
         for (Map loadItem in resData) {
           Map<String, dynamic> addHomeworks = {}; // 追加用のmapを作成 型指定でエラー回避
           // nullチェック
-          addHomeworks[key] = DateTime.parse(loadItem[key]); // mapにkeyを追加
+          if (time) {
+            addHomeworks[key] = DateTime.parse(loadItem[key]); // mapにkeyを追加
+          }else{
+            addHomeworks[key] = loadItem[key]; // mapにkeyを追加
+          }
           addHomeworks['homeworkData'] = []; // mapに空リストを追加
           // データをHomeworkに変換してリストに追加
           for (Map loadHomework in loadItem['homeworkData']) {
@@ -86,21 +93,19 @@ class Homework {
         }
       } else {
         // 一つのリストにまとめる
-        
         for (Map loadItem in resData) {
           for (Map loadHomework in loadItem['homeworkData']) {
             Homework homework = Homework(
-              homeworkUuid: loadHomework['homework_id'],
-              homeworkLimit: DateTime.parse(loadHomework['homework_limit']),
-              startPage: loadHomework['start_page'],
-              pageCount: loadHomework['page_count'],
-              homeworkPosterUuid: loadHomework['homework_poster_uuid'],
-              homeworkNote: loadHomework['homework_note'],
-              className: loadHomework['class_uuid'],
+              homeworkUuid: loadHomework['homeworkUUID'],
+              startPage: loadHomework['StartPage'],
+              pageCount: loadHomework['PageCount'],
+              homeworkNote: loadHomework['HomeworkNote'],
+              submitFlg: loadHomework['SubmitFlag'],
+              className: loadHomework['ClassName'],
               teachingItem: TeachingItem(
-                teachingMaterialImageUUID: loadHomework['teaching_material_uuid'],
-                teachingMaterialName: loadHomework['teaching_material_name'],
-                subjectId: loadHomework['subject_id'],
+                teachingMaterialImageUUID: loadHomework['TeachingMaterialImageUUID'],
+                teachingMaterialName: loadHomework['TeachingMaterialName'],
+                subjectId: loadHomework['SubjectId'],
               ),
             );
             homeworks.add(homework);
@@ -109,6 +114,7 @@ class Homework {
       }
       return homeworks;
     } catch (e) {
+      debugPrint('Error converting resData to Homeworks: $e');
       return [];
     }
   }
