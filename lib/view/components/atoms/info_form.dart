@@ -11,6 +11,8 @@ class InfoForm extends StatelessWidget {
   final String label;
   final TextEditingController controller;
 
+
+  // TODO:バリデーション
   @override
   Widget build(BuildContext context) {
     return Container(

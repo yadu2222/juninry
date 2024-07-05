@@ -68,7 +68,7 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
             ),
             // 提出
             GoRoute(

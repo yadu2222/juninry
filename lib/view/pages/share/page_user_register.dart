@@ -41,7 +41,7 @@ class PageUserRegister extends HookWidget {
           "mailAddress": mailController.text,
           "password": passController.text,
         };
-        await userReq.registerUser(userData); // なげる
+        await userReq.registerUserHandler(userData); // なげる
       } else {
         ToastUtil.show(message: Messages.inputError);
       }

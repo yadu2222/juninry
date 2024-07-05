@@ -13,7 +13,7 @@ class ClassReq {
 
   // 宿題取得
   // 型こわすぎ
-  Future<List<Map<String, dynamic>>> getClassmates() async {
+  Future<List<Map<String, dynamic>>> getClassmatesHandler() async {
     try {
       return await ClassService.getClassmates(); // 課題取得を待ち返却
     } catch (error) {

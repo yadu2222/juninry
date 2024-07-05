@@ -23,7 +23,7 @@ class PageNextDayHomeworkPatron extends StatelessWidget {
           icon: Icons.menu_book_outlined,
           title: 'test',
         ),
-        Expanded(child: HomeworkList(homeworkData: SampleData.homeworkData)),
+        Expanded(child: HomeworkList.limit(homeworkData: SampleData.homeworkData)),
       ]),
     );
   }

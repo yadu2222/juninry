@@ -23,7 +23,7 @@ class PageStudents extends HookWidget {
       // 非同期処理を実行するための関数
       Future<void> fetchData() async {
         debugPrint('クラスメイトを取得するよ');
-        final data = await classReq.getClassmates();
+        final data = await classReq.getClassmatesHandler();
         debugPrint(data.toString());
         classmates.value = data;
         showClass.value = List.filled(data.length, false); // クラス表示を初期化

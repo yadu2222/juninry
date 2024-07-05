@@ -13,7 +13,7 @@ class UserReq {
   UserReq({required this.context});
 
   // ユーザー登録
-  Future<void> registerUser(Map<String, dynamic> registerUser) async {
+  Future<void> registerUserHandler(Map<String, dynamic> registerUser) async {
     try {
       await UserService.registerUser(registerUser); // ログイン処理を待つ
       // ログイン完了後の処理
@@ -25,7 +25,7 @@ class UserReq {
   }
 
   // ログイン
-  Future<void> login(User? user) async {
+  Future<void> loginHandler(User? user) async {
     user = user ?? await User.getUser(); // 引数がnullであればuser情報をdbから取得
     try {
       await UserService.login(user); // ログイン処理を待つ
@@ -38,7 +38,7 @@ class UserReq {
   }
 
   // ユーザー情報取得
-  Future<User> getUser() async {
+  Future<User> getUserHandler() async {
     try{
       return UserService.getUser();
     }catch(error){
