@@ -13,7 +13,7 @@ class Urls {
   static const String getUser = '$version/auth/users/user'; // GETuser情報取得
 
   // notice
-
+  static const String getNotices = '$version/auth/users/notice/notices'; // GETお知らせ取得
   // homework
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
 
