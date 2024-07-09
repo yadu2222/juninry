@@ -19,7 +19,7 @@ class PageNoticeDetailPatron extends HookWidget {
   Widget build(BuildContext context) {
     // useStateでステート管理したい変数を定義する
     // TODO:初期値を取得したお知らせデータから取得する
-    final isRead = useState<bool>(SampleData.noticesData[0].noticeRead == '1');
+    final isRead = useState<bool>(SampleData.noticesData[0].readStatus == '1');
     void isReadChange() {
       // TODO:お知らせ確認済をサーバーに送信する処理
       isRead.value = true; // trueに変更

@@ -88,7 +88,7 @@ class NoticeCard extends StatelessWidget {
                   child:
                       // 未確認かを判別
                       // TODO:条件文分かり次第変更
-                      noticeData.noticeRead == '1' ? checkIcon : unknowIcon),
+                      noticeData.readStatus == '1' ? checkIcon : unknowIcon),
             ),
         ],
       ),
