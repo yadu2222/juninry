@@ -64,8 +64,8 @@ class DatabaseHelper {
     )
   ''');
 
-  // 宿題の下書きを保存するためのテーブル
-  await db.execute('''
+    // 宿題の下書きを保存するためのテーブル
+    await db.execute('''
     CREATE TABLE homeworkDrafts (
       homework_id integer PRIMARY KEY autoincrement,
       homework_limit text not null,
@@ -85,7 +85,7 @@ class DatabaseHelper {
 
     await db.execute('''
     CREATE TABLE drafted_notices (
-      notice_id integer PRIMARY KEY,
+      notice_id integer PRIMARY KEY autoincrement,
       notice_title text,
       notice_explanatory text,
       class_uuid text,
@@ -112,8 +112,10 @@ class DatabaseHelper {
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
+
   // テーブル名、検索条件、検索ワード、ソート
-  static Future<List<Map<String, dynamic>>> queryBuilder(String tableName, List<String> where, List<String> whereArgs, String orderBy) async {
+  static Future<List<Map<String, dynamic>>> queryBuilder(String tableName,
+      List<String> where, List<String> whereArgs, String orderBy) async {
     Database? db = await instance.database;
     return await db!.query(
       tableName,
@@ -146,10 +148,10 @@ class DatabaseHelper {
     return await db!.delete(tableName, where: '$colum = ?', whereArgs: [key]);
   }
 
-
   // TODO:クエリビルダーがうごくまでのしょち
   // くやしいね
-  static Future<List<Map<String, dynamic>>> getHomeworksForSpecificDate(String date) async {
+  static Future<List<Map<String, dynamic>>> getHomeworksForSpecificDate(
+      String date) async {
     Database? db = await instance.database;
 
     // クエリの実行
@@ -163,7 +165,6 @@ class DatabaseHelper {
 
     return result;
   }
-
 
   // レコードに存在するか確認
   // 引数：table名、検索キー

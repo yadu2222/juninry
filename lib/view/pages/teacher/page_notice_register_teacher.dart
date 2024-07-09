@@ -15,7 +15,6 @@ import '../../../models/user_model.dart';
 import '../../../models/quoted_notice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
   final int? draftedNoticeId;
@@ -118,13 +117,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
                     draftedNoticeData.quotedNoticeUuid =
                         quotedNoticeData?.quotedNoticeUuid;
                     // 下書き保存処理
-                    bool success = false;
+                    int saveId;
                     // タイトルと本文が入力されていない場合は保存しない
                     if (draftedNoticeData.draftedNoticeTitle != "" ||
                         draftedNoticeData.draftedNoticeExplanatory != "") {
-                      success = await DraftedNotice.saveDraftedNotice(
+                      saveId = await DraftedNotice.saveDraftedNotice(
                           draftedNoticeData);
-                      if (success) {
+                      if (saveId > 0) {
+                        draftedNoticeData.draftedNoticeId = saveId;
                         showDialog(
                             // 保存成功
                             context: context,
@@ -169,7 +169,9 @@ class PageNoticeRegisterTeacher extends HookWidget {
                   widthPercent: 0.4,
                   text: "投稿",
                   isColor: false,
-                  onPressed: () {}, //TODO: 投稿処理
+                  onPressed: () {
+                    context.push('/notice/register');
+                  }, //TODO: 投稿処理
                   icon: Icons.check,
                   circular: 5,
                 )
@@ -196,8 +198,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
       // 適用する下書きIDを決定
       // 優先度 引用された下書き > 保存されていた下書き
       int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
-
-
+      debugPrint("適用する下書きID: $currentDraftedNoticeId");
       if (currentDraftedNoticeId != null) {
         // 既存の下書きを取得
         draftedNoticeData =
@@ -212,8 +213,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
         draftedNoticeData.quotedNoticeUuid = quotedNoticeUuid;
       }
 
-      // 現在の下書きIDを保存
-      await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId);
+      // // 現在の下書きIDを保存
+      if (draftedNoticeData.draftedNoticeId != null) {
+        await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId!);
+      }
     }
 
     // 引用データを取得

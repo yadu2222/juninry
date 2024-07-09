@@ -1,69 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:juninry/view/components/atoms/basic_button.dart';
+import 'package:juninry/view/components/atoms/listItem_box.dart';
+import 'package:juninry/view/components/atoms/listitem.dart';
 import '../../../models/drafted_notice_model.dart';
 import '../../components/template/basic_template.dart';
 
 
-import '../../../constant/fonts.dart';
-import '../../../models/quoted_notice_model.dart';
-
 // 教員_課題一覧ページ
-class PageNoticeDraftTeacher extends StatelessWidget {
-  final DraftedNotice? draftedNoticeData;
-  final QuotedNotice? quotedNoticeData;
-
+class PageNoticeDraftTeacher extends HookWidget {
   const PageNoticeDraftTeacher({
     super.key,
-    this.draftedNoticeData,
-    this.quotedNoticeData,
   });
 
   @override
-  // TODO カスページ
   Widget build(BuildContext context) {
+    final draftData = useState<List<DraftedNotice>>([]);
 
+    // dbから下書きデータを取得
+    Future<void> getDrafts() async {
+      final data = await DraftedNotice.getAllDraftedNotices();
+      draftData.value = data;
+    }
 
-
+    // useEffect内で非同期処理を実行するための方法
+    useEffect(() {
+      // 直接非同期関数を書くことはできない
+      getDrafts(); // 非同期関数を呼び出し
+      return () {};
+    }, []);
 
     return BasicTemplate(title: "下書き", children: [
-      Text("タイトルとか", style: Fonts.h3),
-      Text(draftedNoticeData?.draftedNoticeTitle ?? ""),
-      Text(draftedNoticeData?.draftedNoticeExplanatory ?? ""),
-      Text("クラス名とか", style: Fonts.h3),
-      Text(draftedNoticeData?.selectedClass?.className ?? ""),
-      BasicButton(
-          text: "下書き1 引用なし",
-          isColor: false,
-          onPressed: () {
-            context.go('/notice/register', extra: {
-              'draftedNoticeId': 1,
-            });
-          }),
-      BasicButton(
-          text: "下書き2 引用あり",
-          isColor: false,
-          onPressed: () {
-            context.go('/notice/register', extra: {
-              'draftedNoticeId': 2,
-            });
-          }),
-      BasicButton(
-          text: "引用IDのみ",
-          isColor: false,
-          onPressed: () {
-            context.go('/notice/register', extra: {
-              'quotedNoticeUuid': '2097a7bb-5140-460d-807e-7173a51672bd',
-            });
-          }),
-      BasicButton(
-        text: "戻る",
-        isColor: false,
-        onPressed: () {
-          context.go('/notice/register');
-        },
-      )
+      ListItemBox(
+        itemDatas: draftData.value,
+        listItem: (draftedNoticeData) => ListItem(
+          widget: InkWell(
+              onTap: () {
+                debugPrint(draftedNoticeData.draftedNoticeId.toString());
+                // TODO: 値がNULL
+                context.push('/notice/register', extra: {
+                  'draftedNoticeId': draftedNoticeData.draftedNoticeId
+                });
+              },
+              child: Text(draftedNoticeData.draftedNoticeTitle.toString())),
+        ),
+      ),
     ]);
   }
 }

@@ -9,21 +9,19 @@ import 'dbcon.dart';
 // 下書きされたお知らせの情報をまとめる
 // 新たなお知らせであればお知らせIDを発行する
 class DraftedNotice {
-  static int _serialNumber = 0;
-
-  int draftedNoticeId; //下書きのID
+  int? draftedNoticeId; //下書きのID
   String? draftedNoticeTitle;
   String? draftedNoticeExplanatory;
   Class? selectedClass; // 下書きクラス
   String? quotedNoticeUuid; // 引用しているお知らせ
 
   DraftedNotice({
-    int? draftedNoticeId, // お知らせIDがあれば送れる
+    this.draftedNoticeId, // お知らせIDがあれば送れる
     this.draftedNoticeTitle,
     this.draftedNoticeExplanatory,
     this.selectedClass,
     this.quotedNoticeUuid,
-  }) : draftedNoticeId = draftedNoticeId ?? ++_serialNumber; // お知らせIDがなければ自動生成
+  }); 
 
   // MapからDraftedNoticeに変換
   static Future<DraftedNotice> toDraftedNotice(Map loadedData) async {
@@ -55,13 +53,12 @@ class DraftedNotice {
   }
 
   // 送られてきたデータが既存データか確認し、上書きか新規登録を行う
-  static Future<bool> saveDraftedNotice(DraftedNotice draftedNoticeData) async {
+  static Future<int> saveDraftedNotice(DraftedNotice draftedNoticeData) async {
     Map<String, dynamic> row = _toMap(draftedNoticeData);
-    // IDはDBで生成されるため存在によって分岐できる
-    await DatabaseHelper.queryExists(
-        "drafted_notices", "notice_id", row['notice_id'].toString());
-    if (await DatabaseHelper.queryExists(
-        "drafted_notices", "notice_id", row['notice_id'].toString())) {
+
+    if (draftedNoticeData.draftedNoticeId != null &&
+        await DatabaseHelper.queryExists(
+            "drafted_notices", "notice_id", row['notice_id'])) {
       return await updateDraftedNotice(row);
     } else {
       return await insertDraftedNotice(row);
@@ -69,16 +66,18 @@ class DraftedNotice {
   }
 
   // SQLiteに新規保存 保存できたらtrue
-  static Future<bool> insertDraftedNotice(Map<String, dynamic> row) async {
+  static Future<int> insertDraftedNotice(Map<String, dynamic> row) async {
     var result = await DatabaseHelper.insert("drafted_notices", row);
-    return result > 0;
+    debugPrint(result.toString());
+    return result;
   }
 
   // SQLiteに上書き 保存できたらtrue
-  static Future<bool> updateDraftedNotice(Map<String, dynamic> row) async {
+  static Future<int> updateDraftedNotice(Map<String, dynamic> row) async {
     var result = await DatabaseHelper.update(
         "drafted_notices", "notice_id", row, row['notice_id'].toString());
-    return result > 0;
+    debugPrint(result.toString());
+    return result;
   }
 
   // SQLiteから削除 保存できたらtrue
@@ -95,14 +94,6 @@ class DraftedNotice {
         await DatabaseHelper.queryAllRows("drafted_notices");
     var draftedNotices = <DraftedNotice>[]; // DraftedNotices
     for (int i = 0; i < result.length; i++) {
-      debugPrint("いい感じ");
-      debugPrint(result[i]['notice_id'].toString());
-      debugPrint(result[i]['notice_title'].toString());
-      debugPrint(result[i]['notice_explanatory'].toString());
-      debugPrint(result[i]['class_uuid'].toString());
-      debugPrint(result[i]['class_name'].toString());
-      debugPrint(result[i]['quoted_notice_uuid'].toString());
-
       draftedNotices.add(await DraftedNotice.toDraftedNotice(result[i]));
     }
     return draftedNotices;

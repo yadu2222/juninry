@@ -52,7 +52,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                 Icon(
                     // ドロップダウンでない場合はチェックマーク
                     (widget.items.length == 1)
-                        ? Icons.done
+                        ? Icons.lock_outlined
                         : Icons.keyboard_arrow_down,
                     color: AppColors.glay,
                     size: 25),
