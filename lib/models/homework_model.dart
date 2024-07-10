@@ -47,7 +47,7 @@ class Homework {
   // 失敗したらサービスでエラーを返す
   // のでここでは特に対応しない
   // keyで指定した値をmapの頭に配置(つたわれ)
-  // datetime変換が必要なものをkeyのvalueにしたければtimeをtrueに指定
+  // datetime変換が必要なものをkeyのvalueにしたければtimeをtrueに指定 きたないね
   // このかたちになる
   // [
   //   {
@@ -63,7 +63,7 @@ class Homework {
       if (key != null) {
         for (Map loadItem in resData) {
           Map<String, dynamic> addHomeworks = {}; // 追加用のmapを作成 型指定でエラー回避
-          // nullチェック
+          // 変換してほしいのかチェック
           if (time) {
             addHomeworks[key] = DateTime.parse(loadItem[key]); // mapにkeyを追加
           }else{

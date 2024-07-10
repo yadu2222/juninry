@@ -10,6 +10,7 @@ import '../view/pages/junior/page_user.dart';
 import '../view/pages/junior/page_nextday_task.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/junior/page_submission.dart';
+import '../view/pages/junior/page_ouchi.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -50,7 +51,7 @@ class JuniorBranch {
           path: '/notice', // notice
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child:  PageNoticeJunior(),
+            child: PageNoticeJunior(),
           ),
         ),
       ],
@@ -68,7 +69,7 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageNextDayTaskJunior()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
             ),
             // 提出
             GoRoute(
@@ -99,6 +100,18 @@ class JuniorBranch {
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
         ),
+      ],
+    ),
+
+    // ouchi
+    StatefulShellBranch(
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'ouchi'),
+      routes: [
+        GoRoute(
+          name: 'ouchi',
+          path: '/ouchi',
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiJunior()),
+        )
       ],
     ),
 

@@ -7,6 +7,7 @@ import '../view/pages/patron/page_home.dart';
 import '../view/pages/patron/page_notice_detail.dart';
 import '../view/pages/patron/page_nextday_task.dart';
 import '../view/pages/patron/page_submittion.dart';
+import '../view/pages/patron/page_ouchi.dart';
 
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_homework.dart';
@@ -106,6 +107,17 @@ class PatronBranch {
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
         ),
+      ],
+    ),
+        // ouchi
+    StatefulShellBranch(
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'ouchi'),
+      routes: [
+        GoRoute(
+          name: 'outhi',
+          path: '/ouchi',
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiPatron()),
+        )
       ],
     ),
 
