@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 // view
 import '../../components/template/scroll_template.dart';
-import '../../components/molecule/reward_point.dart';
 import '../../components/organism/reward_list.dart';
 import '../../components/atoms/toast.dart';
 // model
@@ -12,10 +11,12 @@ import '../../../models/reward_model.dart';
 import '../../../constant/messages.dart';
 import '../../../constant/sample_data.dart';
 
-class PageRewardJunior extends HookWidget {
-  const PageRewardJunior({super.key});
 
-  final String title = 'ごほうび';
+// ぺーじこぴぺしただけ
+class PageScroungeJunior extends HookWidget {
+  const PageScroungeJunior({super.key});
+
+  final String title = 'おねだり';
   @override
   Widget build(BuildContext context) {
     final rewardPoint = useState<int>(10); // データを格納するための変数
@@ -30,13 +31,9 @@ class PageRewardJunior extends HookWidget {
       }
     }
 
-    void reward() {}
-
     return ScrollTemplate(title: title, children: [
-      // ここにおうちのコンテンツを追加
-      // たまっているポイント
-      ReweadPoint(rewards: rewardPoint.value, onTap: reward),
-      // ごほうびリスト
+      // 現在おねだり中のごほうびリスト
+      // TODO:日付・
       RewardList(
         rewards: rewardData.value,
         buy: buy,

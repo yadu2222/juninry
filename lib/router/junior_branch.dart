@@ -117,7 +117,7 @@ class JuniorBranch {
           path: '/ouchi',
           routes: [
             GoRoute(
-              name: 'reward',
+              name: 'GOHOUBI',
               path: 'reward', // notice
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,

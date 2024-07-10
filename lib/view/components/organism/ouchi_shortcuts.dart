@@ -14,8 +14,8 @@ class OuchiShortCuts extends StatelessWidget {
       width: double.infinity,
       alignment: Alignment.center,
       child: const Row(children: [
-        ShortcutButton(title: 'GOHOUBI', icon: Icons.auto_awesome, movePage: '/home'),
-        ShortcutButton(title: 'ONEGAI', icon: Icons.auto_awesome, movePage: '/home'),
+        ShortcutButton(title: 'GOHOUBI', icon: Icons.auto_awesome, movePage: '/ouchi/reward'),
+        ShortcutButton(title: 'ONEDARI', icon: Icons.auto_awesome, movePage: '/home'),
       ]),
     );
   }

@@ -4,22 +4,24 @@ import 'package:juninry/constant/colors.dart';
 import '../atoms/listitem.dart';
 import '../atoms/basic_button.dart';
 // model
-import '../../../models/help_model.dart';
+import '../../../models/reward_model.dart';
 // constant
 import 'package:juninry/constant/fonts.dart';
 import '../../../constant/help_icon.dart';
 import '../atoms/dialog.dart';
 import './divider.dart';
 
-class HelpCard extends StatelessWidget {
-  const HelpCard({
+class RewardCard extends StatelessWidget {
+  const RewardCard({
     super.key,
-    required this.helpData,
+    required this.rewardData,
+    required this.isRewardPoint,
     required this.onTap,
   });
 
-  final Help helpData;
-  final void Function(Help) onTap;
+  final Reward rewardData;
+  final bool isRewardPoint;
+  final void Function(Reward) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +42,9 @@ class HelpCard extends StatelessWidget {
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
-                    HelpIcon.getIcon(helpData.iconId),
+                    HelpIcon.getIcon(rewardData.iconId),
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
-                    Text(helpData.helpTitle, style: Fonts.h4),
+                    Text(rewardData.rewardName, style: Fonts.h4),
                   ]),
                   const DividerView(
                     dividColor: AppColors.main,
@@ -50,7 +52,7 @@ class HelpCard extends StatelessWidget {
                     endIndent: 0,
                   ),
                   Text(
-                    helpData.helpContent,
+                    rewardData.note,
                     style: Fonts.p,
                   ) // 中身
                 ]),
@@ -65,30 +67,28 @@ class HelpCard extends StatelessWidget {
                     children: [
                   // icon
                   Row(children: [
-                    HelpIcon.getIcon(helpData.iconId),
+                    HelpIcon.getIcon(rewardData.iconId),
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
                     // おてつだいのタイトル
                     Text(
-                      helpData.helpTitle,
+                      rewardData.rewardName,
                       style: Fonts.p,
                     ),
                   ]),
-                  // できたよボタン
+                  // 交換ボタン
                   // juniorでのみ表示
                   BasicButton(
+                      iconSize: 20,
                       margin: const EdgeInsets.only(
                         top: 7,
                         bottom: 7,
                       ),
                       width: 0.3,
-                      icon: helpData.isReword! ? Icons.military_tech : Icons.check,
-                      text: '${helpData.rewardPoint.toString()}P',
-                      isColor: helpData.isReword!,
+                      icon: isRewardPoint ? Icons.local_offer : Icons.sentiment_dissatisfied_rounded,
+                      text: '${rewardData.rewardPoint.toString()}P',
+                      isColor: isRewardPoint,
                       onPressed: () {
-                        // 未達成であれば
-                        if (!helpData.isReword!) {
-                          onTap(helpData);
-                        }
+                        onTap(rewardData);
                       })
                 ]))));
   }

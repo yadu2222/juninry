@@ -4,6 +4,7 @@ import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
 import '../models/help_model.dart';
+import '../models/reward_model.dart';
 // import '../models/register_homework_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
@@ -144,6 +145,11 @@ class SampleData {
   static List<Help> helpData = [
     Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
     Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+  ];
+
+  static List<Reward> rewardData = [
+    Reward(rewardName: 'アイス', note: '150円まで', rewardPoint: 50,iconId : 1),
+    Reward(rewardName: '晩ごはん指名権', note: '予算1000円', rewardPoint: 10, iconId: 3,stock: 5),
   ];
 
   // static List<RegisterHomework> registerHomeworkData = [
