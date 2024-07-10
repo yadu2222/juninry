@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:juninry/models/class_model.dart';
 
 class CreateNoticeForm extends StatefulWidget {
+  final DateTime? dateTime;
   final List<Class> classesList; // クラス一覧
   final Class selectedClass; // 選択されているクラス
   final String userName; // 名前
@@ -23,6 +24,7 @@ class CreateNoticeForm extends StatefulWidget {
 
   const CreateNoticeForm({
     super.key,
+    this.dateTime,
     required this.classesList,
     required this.selectedClass,
     required this.userName,
@@ -37,8 +39,6 @@ class CreateNoticeForm extends StatefulWidget {
 }
 
 class _CreateNoticeFormState extends State<CreateNoticeForm> {
-  //名前
-
   //初期化
   @override
   void initState() {
@@ -48,7 +48,8 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
   @override
   Widget build(BuildContext context) {
     //日付を取得
-    final String date = DateFormat('yyyy.MM.dd').format(DateTime.now());
+    final String date =
+        DateFormat('yyyy.MM.dd').format(widget.dateTime ?? DateTime.now());
 
     //白い枠
     return ListItem(

@@ -81,15 +81,14 @@ class DatabaseHelper {
   ''');
 
     // お知らせの下書きを管理するためのテーブル
-    // このテーブル構造に関して、私は真に驚くべききもさを見つけたが、この余白はそれを書くには狭すぎる。
-
     await db.execute('''
     CREATE TABLE drafted_notices (
       notice_id integer PRIMARY KEY autoincrement,
-      notice_title text,
+      notice_date text not null,
+      notice_title text not null,
       notice_explanatory text,
-      class_uuid text,
-      class_name text,
+      class_uuid text not null,
+      class_name text not null,
       quoted_notice_uuid text,
       FOREIGN KEY (quoted_notice_uuid) REFERENCES quoted_notices(quoted_notice_uuid)
     )

@@ -88,6 +88,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
           // お知らせ作成フォーム
           Expanded(
             child: CreateNoticeForm(
+              dateTime: draftedNoticeData.draftedNoticeDate,
               classesList: classesList, //クラスリスト
               onClassChanged: onClassChanged, //クラス選択時の処理
               selectedClass: selectedClass.value, //現在選択されているクラス

@@ -10,6 +10,7 @@ import 'dbcon.dart';
 // 新たなお知らせであればお知らせIDを発行する
 class DraftedNotice {
   int? draftedNoticeId; //下書きのID
+  DateTime? draftedNoticeDate;
   String? draftedNoticeTitle;
   String? draftedNoticeExplanatory;
   Class? selectedClass; // 下書きクラス
@@ -17,17 +18,19 @@ class DraftedNotice {
 
   DraftedNotice({
     this.draftedNoticeId, // お知らせIDがあれば送れる
+    this.draftedNoticeDate,
     this.draftedNoticeTitle,
     this.draftedNoticeExplanatory,
     this.selectedClass,
     this.quotedNoticeUuid,
-  }); 
+  });
 
   // MapからDraftedNoticeに変換
   static Future<DraftedNotice> toDraftedNotice(Map loadedData) async {
     try {
       return DraftedNotice(
           draftedNoticeId: loadedData['notice_id'],
+          draftedNoticeDate: loadedData['notice_date'],
           draftedNoticeTitle: loadedData['notice_title'],
           draftedNoticeExplanatory: loadedData['notice_explanatory'],
           selectedClass: Class(
@@ -44,6 +47,7 @@ class DraftedNotice {
   static Map<String, dynamic> _toMap(DraftedNotice data) {
     return {
       'notice_id': data.draftedNoticeId,
+      'notice_date': data.draftedNoticeDate.toString(),
       'notice_title': data.draftedNoticeTitle,
       'notice_explanatory': data.draftedNoticeExplanatory,
       'class_uuid': data.selectedClass?.classUuid,
