@@ -1,37 +1,24 @@
 import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-
 import '../atoms/listItem_box.dart';
 import '../../../models/help_model.dart';
 import '../molecule/help_card.dart';
-import '../molecule/divider.dart';
 
 // おてつだいリスト
 class Helplist extends StatelessWidget {
-  final List<Help> helps;
-  final void Function(Help) onTap;
-  final void Function(Help)? showDetail;
+  final List<Help> helps; // お手伝いリスト
+  final void Function(Help) reward; // お手伝い消化処理
 
   const Helplist({
     super.key,
     required this.helps,
-    required this.onTap,
-    this.showDetail,
-
+    required this.reward,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const DividerView(
-        icon: Icons.flag,
-        title: 'おてつだい',
-      ),
-       // TODO:タップで詳細の表示
-      ListItemBox<Help>(
-        itemDatas: helps,
-        listItem: (helpData) => HelpCard(helpData: helpData, onTap: onTap),
-      )
-    ]);
+    return ListItemBox<Help>(
+      itemDatas: helps,
+      listItem: (helpData) => HelpCard(helpData: helpData, onTap: reward),
+    );
   }
 }

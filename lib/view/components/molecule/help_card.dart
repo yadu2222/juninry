@@ -86,7 +86,7 @@ class HelpCard extends StatelessWidget {
                       isColor: helpData.isReword!,
                       onPressed: () {
                         // 未達成であれば
-                        if (!helpData.isReword!) {
+                        if (helpData.isReword!) {
                           onTap(helpData);
                         }
                       })

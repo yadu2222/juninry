@@ -3,9 +3,6 @@ import 'router/router.dart';
 import 'package:go_router/go_router.dart';
 import './constant/colors.dart';
 
-
-import './models/user_model.dart';
-
 void main() {
   runApp(const MyApp());
 }
