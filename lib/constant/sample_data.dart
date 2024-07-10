@@ -3,6 +3,7 @@ import '../models/notice_model.dart';
 import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
+import '../models/help_model.dart';
 // import '../models/register_homework_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
@@ -140,6 +141,11 @@ class SampleData {
     }
   ];
 
+  static List<Help> helpData = [
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+  ];
+
   // static List<RegisterHomework> registerHomeworkData = [
   //   RegisterHomework(teachingItem: teachingItem1),
   //   RegisterHomework(teachingItem: teachingItem2),
@@ -155,7 +161,7 @@ class SampleData {
     Student(
       name: '山田花子',
       num: 35,
-      gender:2,
+      gender: 2,
     )
   ];
 

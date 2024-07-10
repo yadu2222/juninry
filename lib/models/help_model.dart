@@ -4,8 +4,9 @@ class Help {
   final String helpContent; // 内容
   final String helpCategory; // カテゴリ
   final String helpTag; // タグ
-  final int iconId;           // アイコンID
+  final int iconId; // アイコンID
   final int rewardPoint; // 必要ポイント
+  bool? isReword;
 
   Help({
     this.helpUuid,
@@ -15,5 +16,6 @@ class Help {
     required this.helpTag,
     required this.iconId,
     required this.rewardPoint,
+    this.isReword,
   });
 }

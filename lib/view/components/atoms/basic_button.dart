@@ -13,6 +13,7 @@ class BasicButton extends StatelessWidget {
     this.onPressed,
     this.height = 35.0,
     this.circular = 10,
+    this.margin = const EdgeInsets.only(top: 5, bottom: 15)
   });
 
   final String text;
@@ -21,6 +22,7 @@ class BasicButton extends StatelessWidget {
   final double width;
   final double height;
   final double circular;
+  final EdgeInsets margin;
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class BasicButton extends StatelessWidget {
     return Container(
         width: screenWidth * width,
         height: height,
-        margin: const EdgeInsets.only(top: 5, bottom: 15),
+        margin: margin,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese,
