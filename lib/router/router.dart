@@ -64,6 +64,12 @@ Future<List<StatefulShellBranch>> getBranches() async {
   }
 }
 
+// 特定のブランチかをチェックして返す
+Future<bool> isBranch(BranchType branchType) async {
+  final branches = await getBranches();
+  return branches == branchType.branch;
+}
+
 // ルーターの作成
 Future<GoRouter> createRouter() async {
   // jwtkeyが端末内に保存されているかを判別

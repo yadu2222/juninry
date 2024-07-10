@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
+import '../../../router/router.dart';
 // view
 import '../../components/template/scroll_template.dart';
 import '../../components/molecule/reward_point.dart';
@@ -18,6 +18,7 @@ class PageRewardJunior extends HookWidget {
   final String title = 'ごほうび';
   @override
   Widget build(BuildContext context) {
+    final isJunior = useState<bool>(false); // 児童かどうか
     final rewardPoint = useState<int>(10); // データを格納するための変数
     final rewardData = useState<List<Reward>>(SampleData.rewardData); // データを格納するための変数
     void buy(Reward reward) {
@@ -30,6 +31,13 @@ class PageRewardJunior extends HookWidget {
       }
     }
 
+    useEffect(() {
+      // 児童かを判別
+      isBranch(BranchType.junior).then((value) => isJunior.value = value);
+      return () {};
+    }, []);
+
+    // ポイントの取引履歴に遷移？
     void reward() {}
 
     return ScrollTemplate(title: title, children: [
@@ -38,6 +46,7 @@ class PageRewardJunior extends HookWidget {
       ReweadPoint(rewards: rewardPoint.value, onTap: reward),
       // ごほうびリスト
       RewardList(
+        isJunior: isJunior.value,
         rewards: rewardData.value,
         buy: buy,
         rewardPoint: rewardPoint.value,

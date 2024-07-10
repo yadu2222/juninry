@@ -23,6 +23,8 @@ class RewardCard extends StatelessWidget {
   final bool isRewardPoint;
   final void Function(Reward) onTap;
 
+
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

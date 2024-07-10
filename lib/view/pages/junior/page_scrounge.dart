@@ -12,7 +12,7 @@ import '../../../constant/messages.dart';
 import '../../../constant/sample_data.dart';
 
 
-// ぺーじこぴぺしただけ
+// 現在おねだり中のリスト
 class PageScroungeJunior extends HookWidget {
   const PageScroungeJunior({super.key});
 
@@ -33,8 +33,10 @@ class PageScroungeJunior extends HookWidget {
 
     return ScrollTemplate(title: title, children: [
       // 現在おねだり中のごほうびリスト
-      // TODO:日付・
+      // TODO:日付・タイトル
+      // これちゃうよ
       RewardList(
+        isJunior: true,
         rewards: rewardData.value,
         buy: buy,
         rewardPoint: rewardPoint.value,

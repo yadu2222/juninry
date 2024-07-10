@@ -9,12 +9,14 @@ import '../molecule/divider.dart';
 // おてつだいリスト
 class RewardList extends StatelessWidget {
   final int rewardPoint;
+  final bool isJunior;
   final List<Reward> rewards;
 
   final void Function(Reward) buy;
 
   const RewardList({
     super.key,
+    required this.isJunior,
     required this.rewardPoint,
     required this.rewards,
     required this.buy,

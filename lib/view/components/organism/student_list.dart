@@ -20,7 +20,8 @@ class StudentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void isTeacher() async {
-      if (await getBranches() == BranchType.teacher.branch) {
+      // 教員であれば
+      if (await isBranch(BranchType.teacher)) {
         // context.push('/homework/submittion', extra: {'homeworkId': student.homeworkUuid});
         // なんか遷移する
         // 遷移先がまだ
