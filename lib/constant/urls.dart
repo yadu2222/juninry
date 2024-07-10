@@ -16,6 +16,7 @@ class Urls {
   static String noticeDetail = '$version/auth/users/notices/';  // GETお知らせ詳細
 
   // homework
+  static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
 
   // class
 

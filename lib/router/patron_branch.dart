@@ -56,7 +56,7 @@ class PatronBranch {
 
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const PageNoticeJunior(),
+            child:  PageNoticeJunior(),
           ),
         ),
       ],

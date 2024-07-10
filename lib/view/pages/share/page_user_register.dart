@@ -55,6 +55,7 @@ class PageUserRegister extends HookWidget {
           InfoForm(label: 'メールアドレス', controller: mailController),
           InfoForm(label: 'パスワード', controller: passController),
           // TODO:ここでユーザーの種類を選択するようにする
+          // TODO:性別選択
           const SizedBox(height: 40),
           BasicButton(
             width: 0.4,

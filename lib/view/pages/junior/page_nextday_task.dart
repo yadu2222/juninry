@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import '../../components/atoms/appbar.dart';
 import '../../components/organism/homework_list.dart';
 import '../../components/molecule/next_day_task.dart';
-import '../../components/molecule/divider.dart';
 
 // import '../../../models/homework_model.dart';
 import '../../../constant/sample_data.dart'; // sampleData
 
+
+// TODO:api処理
 class PageNextDayTaskJunior extends StatelessWidget {
   const PageNextDayTaskJunior({super.key});
 
@@ -18,11 +19,7 @@ class PageNextDayTaskJunior extends StatelessWidget {
       child: Column(children: [
         AppBarView(titleText: title),
         const NextDayTask(),
-        const DividerView(
-          icon: Icons.menu_book_outlined,
-          title: 'test',
-        ),
-        Expanded(child: HomeworkList(homeworkData: SampleData.homeworkData)),
+        Expanded(child: HomeworkList.classes(homeworkData: SampleData.apiHomeworkData)),
       ]),
     );
   }

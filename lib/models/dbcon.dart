@@ -105,8 +105,7 @@ class DatabaseHelper {
 
   // 照会処理
   // 引数：table名
-  static Future<List<Map<String, dynamic>>> queryAllRows(
-      String tableName) async {
+  static Future<List<Map<String, dynamic>>>queryAllRows(String tableName) async {
     Database? db = await instance.database;
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");

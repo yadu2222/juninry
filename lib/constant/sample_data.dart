@@ -13,9 +13,8 @@ import '../models/quoted_notice_model.dart';
 // 最終的に消えるよ
 class SampleData {
   static String jwtKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTQ0MTksImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiOGIzYTdjZGYtY2E1Ni00Y2EwLTlkODMtMDNjYjVkZWFhYmE4In0.fC63q6Igd6_yUDgi4RGiuQqpt02_hBC-PIeYRh5BgMM';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTkxMTgsImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiY2ExYmY2MGItMzlmNS00NTI5LWE5YzEtYzJlNjQzYzEyNDBiIn0.x-3FXjbiOVRbkg05-sPvIShSC86jvvsBWudDrsJjO-I';
   static User teacherUser = User(
-      userUUID: '9efeb117-1a34-4012-b57c-7f1a4033adb9',
       userName: 'teacher',
       userTypeId: 1,
       mailAddress: 'test-teacher@gmail.com',
@@ -24,7 +23,7 @@ class SampleData {
       jtiUUID: '42c28ac4-0ba4-4f81-8813-814dc92e2f40',
       jwtKey: jwtKey);
   static User juniorUser = User(
-      userUUID: '5574bc10-c1f4-46e7-bbac-8503e03bab',
+
       userName: 'junior',
       userTypeId: 2,
       mailAddress: 'test-pupil@gmail.com',
@@ -43,26 +42,26 @@ class SampleData {
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
-    subjectId: 0,
-    teachingMaterialUuid: 'aaaaa',
+    subjectId: 1,
+    teachingMaterialImageUUID: 'aaaaa',
   );
 
   static TeachingItem teachingItem2 = TeachingItem(
     teachingMaterialName: '計算ドリル',
-    subjectId: 1,
-    teachingMaterialUuid: 'aaaaa',
+    subjectId: 2,
+    teachingMaterialImageUUID: 'aaaaa',
   );
 
   static TeachingItem teachingItem3 = TeachingItem(
     teachingMaterialName: '理科ワーク',
-    subjectId: 2,
-    teachingMaterialUuid: 'aaaaa',
+    subjectId: 3,
+    teachingMaterialImageUUID: 'aaaaa',
   );
 
   static TeachingItem teachingItem4 = TeachingItem(
     teachingMaterialName: '社会に貢献しよう',
-    subjectId: 3,
-    teachingMaterialUuid: 'iiii',
+    subjectId: 4,
+    teachingMaterialImageUUID: 'iiii',
   );
 
   static List<Homework> homeworkData = [
@@ -74,10 +73,42 @@ class SampleData {
       homeworkPosterUuid: 'aaaaa',
       homeworkNote: 'aaaaa',
       imageUuid: 'aaaaa',
-      classUuid: 'aaaaa',
+      className: 'aaaaa',
       submitFlg: 0,
       teachingItem: teachingItem1,
     ),
+  ];
+
+  static List<dynamic> apiHomeworkData = [
+    {
+      'className': 'あおば学級',
+      'homeworkData': [
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: DateTime.now().add(const Duration(days: 2)),
+          startPage: 1,
+          pageCount: 1,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          imageUuid: 'aaaaa',
+          className: 'aaaaa',
+          submitFlg: 0,
+          teachingItem: teachingItem1,
+        ),
+        Homework(
+          homeworkUuid: 'aaaaa',
+          homeworkLimit: DateTime.now().add(const Duration(days: 2)),
+          startPage: 1,
+          pageCount: 1,
+          homeworkPosterUuid: 'aaaaa',
+          homeworkNote: 'aaaaa',
+          imageUuid: 'aaaaa',
+          className: 'aaaaa',
+          submitFlg: 0,
+          teachingItem: teachingItem2,
+        ),
+      ]
+    }
   ];
 
   // sampledata
@@ -99,7 +130,7 @@ class SampleData {
           homeworkPosterUuid: 'aaaaa',
           homeworkNote: 'aaaaa',
           imageUuid: 'aaaaa',
-          classUuid: 'aaaaa',
+          className: 'aaaaa',
           submitFlg: 0,
           teachingItem: teachingItem1,
         ),
@@ -116,7 +147,7 @@ class SampleData {
             homeworkPosterUuid: 'aaaaa',
             homeworkNote: 'aaaaa',
             imageUuid: 'aaaaa',
-            classUuid: 'aaaaa',
+            className: 'aaaaa',
             submitFlg: 0,
             teachingItem: teachingItem2),
       ]
@@ -133,12 +164,12 @@ class SampleData {
     Student(
       name: '山田太郎',
       num: 34,
-      gender: '男',
+      gender: 1,
     ),
     Student(
       name: '山田花子',
       num: 35,
-      gender: '女',
+      gender:2,
     )
   ];
 

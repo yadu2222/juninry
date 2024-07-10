@@ -2,32 +2,81 @@ import './teaching_item_model.dart';
 
 class Homework {
   String? homeworkUuid;
-  DateTime homeworkLimit; // TODO:dateにすべきでは？
+  DateTime? homeworkLimit; // TODO:dateにすべきでは？
   int startPage;
   int pageCount;
-  String homeworkPosterUuid;
+  String? homeworkPosterUuid;
   String homeworkNote;
   String? imageUuid;
-  String classUuid;
+  String className;
   int? submitFlg;
-
-  // String teachingMaterialUuid;
-  // String teachingMaterialName;
-  // int subjectId;
   TeachingItem teachingItem;
 
   Homework({
     this.homeworkUuid,
-    required this.homeworkLimit,
+    this.homeworkLimit,
     required this.startPage,
     required this.pageCount,
-    required this.homeworkPosterUuid,
+    this.homeworkPosterUuid,
     required this.homeworkNote,
     this.imageUuid,
-    required this.classUuid,
+    required this.className,
     this.submitFlg,
     required this.teachingItem,
   });
+
+  static Homework errHomework = Homework(
+    homeworkUuid: '',
+    homeworkLimit: DateTime.now(),
+    startPage: 0,
+    pageCount: 0,
+    homeworkPosterUuid: '',
+    homeworkNote: '',
+    imageUuid: '',
+    className: '',
+    submitFlg: 0,
+    teachingItem: TeachingItem(
+      teachingMaterialImageUUID: '',
+      teachingMaterialName: '',
+      subjectId: 0,
+    ),
+  );
+
+  // 失敗したらサービスでエラーを返す
+  // のでここでは特に対応しない
+  static List<Map<String, dynamic>> resToHomeworks(List resData) {
+    List<Map<String, dynamic>> homeworks = [];
+    // リストをmapに変換
+    for (Map loadItem in resData) {
+      Map<String, dynamic> addHomeworks = {}; // 追加用のmapを作成 型指定でエラー回避
+      addHomeworks['homeworkLimit'] = DateTime.parse(loadItem['homeworkLimit']); // mapに期限を追加
+      // print('ちなみにまわっている?1');
+      addHomeworks['homeworkData'] = []; // mapに空リストを追加
+      // データをHomeworkに変換してリストに追加
+      for (Map loadHomework in loadItem['homeworkData']) {
+        // print('ちなみにまわっている?2');
+        Homework homework = Homework(
+          homeworkUuid: loadHomework['homeworkUUID'],
+          startPage: loadHomework['StartPage'],
+          pageCount: loadHomework['PageCount'],
+          homeworkNote: loadHomework['HomeworkNote'],
+          className: loadHomework['ClassName'],
+          submitFlg: loadHomework['SubmitFlag'],
+          teachingItem: TeachingItem(
+            teachingMaterialImageUUID: loadHomework['TeachingMaterialImageUUID'], // 教材そのもののUUIDはこないらしいぞ！(そうなの！！？)
+            teachingMaterialName: loadHomework['TeachingMaterialName'],
+            subjectId: loadHomework['SubjectId'],
+          ),
+        );
+        // 先ほど追加した空リストに宿題を追加
+        addHomeworks['homeworkData'].add(homework);
+        // print(homework.toString());
+        // print('ちなみにまわっている?2');
+      }
+      homeworks.add(addHomeworks);
+    }
+    return homeworks;
+  }
 
   // mapをHomeworkに変換
   static Homework dBtoHomework(Map loadData) {
@@ -39,31 +88,16 @@ class Homework {
         pageCount: loadData['page_count'],
         homeworkPosterUuid: loadData['homework_poster_uuid'],
         homeworkNote: loadData['homework_note'],
-        classUuid: loadData['class_uuid'],
+        className: loadData['class_uuid'],
         teachingItem: TeachingItem(
-          teachingMaterialUuid: loadData['teaching_material_uuid'],
+          teachingMaterialImageUUID: loadData['teaching_material_uuid'],
           teachingMaterialName: loadData['teaching_material_name'],
           subjectId: loadData['subject_id'],
         ),
       );
     } catch (e) {
       print('Error converting map to Homework: $e');
-      return Homework(
-        homeworkUuid: '',
-        homeworkLimit: DateTime.now(),
-        startPage: 0,
-        pageCount: 0,
-        homeworkPosterUuid: '',
-        homeworkNote: '',
-        imageUuid: '',
-        classUuid: '',
-        submitFlg: 0,
-        teachingItem: TeachingItem(
-          teachingMaterialUuid: '',
-          teachingMaterialName: '',
-          subjectId: 0,
-        ),
-      );
+      return errHomework;
     }
   }
 }
