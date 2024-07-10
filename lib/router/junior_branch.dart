@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// 遷移先
-// junior
+// junior遷移先
+// home
 import '../view/pages/junior/page_home.dart';
-import '../view/pages/junior/page_homework.dart';
-import '../view/pages/junior/page_notice.dart';
-import '../view/pages/junior/page_user.dart';
-import '../view/pages/junior/page_nextday_task.dart';
 import '../view/pages/share/page_students.dart';
+// homework
+import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
+import '../view/pages/junior/page_nextday_task.dart';
+// notice
+import '../view/pages/junior/page_notice.dart';
+// ouchi
 import '../view/pages/junior/page_ouchi.dart';
+import '../view/pages/junior/page_reward.dart';
+// user
+import '../view/pages/junior/page_user.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -110,6 +115,16 @@ class JuniorBranch {
         GoRoute(
           name: 'ouchi',
           path: '/ouchi',
+          routes: [
+            GoRoute(
+              name: 'reward',
+              path: 'reward', // notice
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageRewardJunior(),
+              ),
+            ),
+          ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiJunior()),
         )
       ],

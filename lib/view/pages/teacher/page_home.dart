@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:juninry/view/components/template/basic_template.dart';
 import '../../components/template/scroll_template.dart';
 import '../../components/organism/latest_notice_tab.dart';
-import '../../components/organism/teacher_shortcuts.dart';
+import '../../components/organism/shortcuts.dart' as setList;
 import '../../components/organism/homework_tab.dart';
 
 import '../../../constant/sample_data.dart'; // sampleData
@@ -18,7 +18,7 @@ class PageHomeTeacher extends StatelessWidget {
     return ScrollTemplate(title: title, children: [
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
       HomeworkTab(homeworkData: SampleData.homeworkData), // 明日提出の課題タブ
-      TeacherShortcuts(), // ショートカットセット
+       setList.Shortcuts.teacher(), // ショートカットセット
     ]);
   }
 }

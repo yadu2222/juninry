@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // view
 import '../../components/template/scroll_template.dart';
 import '../../components/organism/latest_notice_tab.dart';
-import '../../components/organism/junior_shortcuts.dart';
+import '../../components/organism/shortcuts.dart' as setList;
 import '../../components/organism/homework_tab.dart';
 // api
 import '../../../apis/controller/homework_req.dart';
@@ -44,7 +44,7 @@ class PageHomeJunior extends HookWidget {
     return ScrollTemplate(title: title, children: [
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
       HomeworkTab(homeworkData: homeworkData.value), // 明日提出の課題タブ
-      JuniorShortcuts(), // ショートカットボタン
+      setList.Shortcuts.junior(), // ショートカットセット
     ]);
   }
 }

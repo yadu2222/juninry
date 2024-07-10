@@ -6,6 +6,7 @@ import '../../../models/help_model.dart';
 import '../molecule/help_card.dart';
 import '../molecule/divider.dart';
 
+// おてつだいリスト
 class Helplist extends StatelessWidget {
   final List<Help> helps;
   final void Function(Help) onTap;
