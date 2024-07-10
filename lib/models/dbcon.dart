@@ -96,6 +96,7 @@ class DatabaseHelper {
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
+  
   // テーブル名、検索条件、検索ワード、ソート
   static Future<List<Map<String, dynamic>>> queryBuilder(String tableName, List<String> where, List<String> whereArgs, String orderBy) async {
     Database? db = await instance.database;

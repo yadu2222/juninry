@@ -83,12 +83,12 @@ class User {
 
   // 既にdbが存在しているかを判定し、なければsampleuserを追加
   // のちのちはユーザー追加がなくなるはず
-  static dbSampleUserAdd() async {
-    debugPrint('dbSampleUserAdd');
-    if (!await DatabaseHelper.firstdb()) {
-      _createSampleUser();
-    }
-  }
+  // static dbSampleUserAdd() async {
+  //   debugPrint('dbSampleUserAdd');
+  //   if (!await DatabaseHelper.firstdb()) {
+  //     _createSampleUser();
+  //   }
+  // }
 
   // type_idは本来apiからもらうものだが、テストに使いたいため個々に記載
   static _createSampleUser() async {

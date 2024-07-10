@@ -29,7 +29,7 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    User.dbSampleUserAdd();
+    // User.dbSampleUserAdd();
     _initializeRouter();
   }
 

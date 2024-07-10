@@ -10,11 +10,14 @@ import '../molecule/divider.dart';
 class Helplist extends StatelessWidget {
   final List<Help> helps;
   final void Function(Help) onTap;
+  final void Function(Help)? showDetail;
 
   const Helplist({
     super.key,
     required this.helps,
     required this.onTap,
+    this.showDetail,
+
   });
 
   @override
@@ -24,6 +27,7 @@ class Helplist extends StatelessWidget {
         icon: Icons.flag,
         title: 'おてつだい',
       ),
+       // TODO:タップで詳細の表示
       ListItemBox<Help>(
         itemDatas: helps,
         listItem: (helpData) => HelpCard(helpData: helpData, onTap: onTap),
