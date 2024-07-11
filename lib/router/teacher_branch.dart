@@ -6,8 +6,7 @@ import 'package:go_router/go_router.dart';
 // home
 import '../view/pages/teacher/page_home.dart';
 import '../view/pages/share/page_students.dart';
-import '../view/pages/share/page_join_class.dart';
-import '../view/pages/teacher/page_create_class.dart';
+import '../view/pages/share/page_class.dart';
 // notice
 import '../view/pages/teacher/page_notice_detail.dart';
 // homework
@@ -40,31 +39,15 @@ class TeacherBranch {
             ),
             // クラスに参加
             GoRoute(
-              name: 'join',
-              path: 'join',
+              name: 'class',
+              path: 'class',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: PageJoinClass.teacher(),
+                child: PageClass(),
               ),
             ),
             // クラス作成
-            GoRoute(
-              name: 'create',
-              path: 'create',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: PageCreateClass(),
-              ),
-            ),
-            // クラス作成
-            GoRoute(
-              name: 'invite',
-              path: 'invite',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: PageCreateClass(),
-              ),
-            ),
+           
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,

@@ -18,16 +18,14 @@ class SampleData {
       userTypeId: 1,
       mailAddress: 'test-teacher@gmail.com',
       password: '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
-      jtiUUID: '42c28ac4-0ba4-4f81-8813-814dc92e2f40',
       jwtKey: jwtKey);
   static User juniorUser = User(
       userName: 'junior',
       userTypeId: 2,
       mailAddress: 'test-pupil@gmail.com',
       password: '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW',
-      jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948',
       jwtKey: jwtKey);
-  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948', jwtKey: jwtKey);
+  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jwtKey: jwtKey);
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
@@ -207,11 +205,11 @@ class SampleData {
 
   static List<Class> classList = [
     Class(
-      classUUID: '456789',
-      className: 'sample',
+      classUUID: '09eba495-fe09-4f54-a856-9bea9536b661',
+      className: '3-2 ふたば学級',
     ),
     Class(
-      classUUID: '456789',
+      classUUID: '817f600e-3109-47d7-ad8c-18b9d7dbdf8b',
       className: 'sample2',
     ),
     Class(

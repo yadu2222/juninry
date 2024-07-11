@@ -27,6 +27,7 @@ class ClassReq {
         }
       }
 
+      print(inviteCode);
       String joinClass = await ClassService.joinClass(inviteCode, errorHandling); // クラス参加処理を待つ
       ToastUtil.show(message: '$joinClass${Messages.joinClassSuccess}'); // 参加成功メッセージ
     } catch (error) {
@@ -39,7 +40,7 @@ class ClassReq {
   Future<Map<String, dynamic>> createClassHandler(String className) async {
     try {
       Class inviteClass = await ClassService.createClass(className); // クラス作成処理を待つ
-      Map<String, dynamic> result = {'isCreate': true, 'class': inviteClass};
+      Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
       return result;
     } catch (error) {
       debugPrint(error.toString());
@@ -51,7 +52,7 @@ class ClassReq {
   // クラス招待コード再発行
   Future<Map<String, dynamic>> inviteClassHandler(String classUUID) async {
     try {
-      Class inviteClass = await ClassService.inviteClass(classUUID); // クラス作成処理を待つ
+      Class inviteClass = await ClassService.inviteClass(classUUID); // 招待コード発行処理を待つ
       Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
       return result;
     } catch (error) {

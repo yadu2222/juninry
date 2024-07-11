@@ -6,13 +6,15 @@ class InfoForm extends StatelessWidget {
     super.key,
     required this.label,
     required this.controller,
-    this.isSearch = false,
-    this.search,
+    this.isIcon = false,
+    this.onTap,
+    this.icon = Icons.send,
   });
 
   final String label;
-  final bool isSearch;
-  final void Function()? search;
+  final IconData icon;
+  final bool isIcon;
+  final void Function()? onTap;
   final TextEditingController controller;
 
   // TODO:バリデーション
@@ -31,14 +33,14 @@ class InfoForm extends StatelessWidget {
           fillColor: AppColors.iconLight, // 背景色
           filled: true, // 背景色を表示
           // 右側のアイコン
-          suffixIcon: isSearch
+          suffixIcon: isIcon 
               ? SizedBox(
                   width: 50, // IconButton の幅を固定
                   child: IconButton(
-                    icon: const Icon(Icons.send),
+                    icon: Icon(icon),
                     onPressed: () async {
                       FocusScope.of(context).unfocus(); // キーボードを閉じる
-                      search!();
+                      onTap!();
                     },
                   ),
                 )

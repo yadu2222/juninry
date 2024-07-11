@@ -4,30 +4,26 @@ import './dbcon.dart';
 // import '../constant/sample_data.dart';
 
 class User {
-  String userUUID;
   String userName;
   int userTypeId;
   String mailAddress;
   String password;
-  String jtiUUID;
   String? jwtKey;
 
-  User({this.userUUID = 'userUUID',  required this.userName, required this.userTypeId, required this.mailAddress, required this.password, required this.jtiUUID,  this.jwtKey});
+  User({required this.userName, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey});
 
   static User errorUser() {
-    return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jtiUUID: '', jwtKey: '');
+    return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jwtKey: '');
   }
 
   // mapをUserに変換
   static User toUser(Map loadData) {
     try {
       return User(
-          userUUID: loadData['user_uuid'],
           userName: 'hoge',
           userTypeId: loadData['user_type_id'] ?? 0,
           mailAddress: loadData['mail_address'],
           password: loadData['password'],
-          jtiUUID: loadData['jti_uuid'],
           jwtKey: loadData['jwt_key']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
@@ -38,12 +34,10 @@ class User {
   static User resToUser(Map loadData) {
     try {
       return User(
-          userUUID: loadData['userUUID'],
           userName: loadData['userName'],
           userTypeId: loadData['userTypeId'],
           mailAddress: loadData['mailAddress'],
           password: loadData['password'],
-          jtiUUID: loadData['jwtUUID'], // いらないのでは？
           );
     } catch (e) {
       debugPrint('Error converting map to User: $e');
@@ -53,7 +47,7 @@ class User {
 
   // Userをmapに変換
   static Map<String, dynamic> toMap(User user) {
-    return {'user_uuid':user.userUUID, 'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jti_uuid': user.jtiUUID, 'jwt_key': user.jwtKey};
+    return {'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jwt_key': user.jwtKey};
   }
 
   // dbからuser情報を取得

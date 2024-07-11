@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import './teaching_item_model.dart';
 import './dbcon.dart';
-import './user_model.dart';
 
 // こんなんつくっていいんかなというきもちがある
 // きえるかも
@@ -65,9 +64,6 @@ class RegisterHomework {
 
   // 下書きを保存
   static Future<void> registerHomeworkDrafts(List<RegisterHomework> homeworks) async {
-    // user情報を取得 idを取得するため
-    User user = await User.getUser();
-
     for (RegisterHomework homework in homeworks) {
       if (homework.homeworkId != null) {
         // すでに登録されているものは削除して再登録
@@ -77,7 +73,6 @@ class RegisterHomework {
         'homework_limit': homework.homeworkLimit.toString(),
         'start_page': int.tryParse(homework.startPageController.text) ?? 0,
         'page_count': int.tryParse(homework.pageCountController.text) ?? 0,
-        'homework_poster_uuid': user.userUUID,
         'homework_note': homework.noteController.text,
         'class_uuid': homework.classUUID,
         'teaching_material_uuid': homework.teachingItem.teachingMaterialImageUUID,

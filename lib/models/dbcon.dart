@@ -55,11 +55,9 @@ class DatabaseHelper {
     await db.execute('''
     CREATE TABLE users (
       user_id integer PRIMARY KEY autoincrement,
-      user_uuid text,
       user_type_id integer,
       mail_address  text,
       password text,
-      jti_uuid text,
       jwt_key text
     )
   ''');

@@ -15,18 +15,16 @@ class UserService {
     final resData = await HttpReq.httpReq(reqData,false);
     // dbに保存するためのオブジェクトを生成
     User user = User(
-        userUUID: "tigauyo",
         userName: reqBody['userName'],
         userTypeId: reqBody['userTypeId'],
         mailAddress: reqBody['mailAddress'],
         password: reqBody['password'],
-        jtiUUID: "aiaueo",
         jwtKey: resData['srvResData']['authenticationToken']);
     User.insertUser(user); // dbへの保存 getUserでjwtKeyがdbから読み込まれるため
 
     // ユーザー情報の取得と更新
     user = await getUser();
-    User.updateUser(user);
+    // User.updateUser(user);
   }
 
   // ログイン

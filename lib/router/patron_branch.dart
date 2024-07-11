@@ -8,6 +8,7 @@ import '../view/pages/patron/page_notice_detail.dart';
 import '../view/pages/patron/page_nextday_task.dart';
 import '../view/pages/patron/page_submittion.dart';
 import '../view/pages/patron/page_ouchi.dart';
+import '../view/pages/share/page_students.dart';
 
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_homework.dart';
@@ -24,6 +25,27 @@ class PatronBranch {
         GoRoute(
           name: 'home',
           path: '/home',
+          routes: [
+            // 生徒一覧
+            GoRoute(
+              name: 'students',
+              path: 'students',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageStudents(),
+              ),
+            ),
+            // // クラスに参加
+            // 保護者はクラスに参加できない、、！！！！
+            // GoRoute(
+            //   name: 'class',
+            //   path: 'class',
+            //   pageBuilder: (context, state) => NoTransitionPage(
+            //     key: state.pageKey,
+            //     child: PageClass(),
+            //   ),
+            // ),
+          ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: const PageHomePatron(),

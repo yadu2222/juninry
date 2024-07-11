@@ -78,6 +78,6 @@ class Shortcuts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShortcutSet(shortcutList: shortcutList[userType]['title'], icons: shortcutList[userType]['icons'], movePages: shortcutList[userType]['pass']);
+    return ShortcutSet(shortcutList: shortcutList[userType - 1]['title'], icons: shortcutList[userType - 1]['icons'], movePages: shortcutList[userType - 1]['pass']);
   }
 }

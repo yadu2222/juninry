@@ -7,14 +7,20 @@ import '../molecule/join_class_card.dart';
 
 // 参加中のクラスリスト
 class JoinList extends StatelessWidget {
+  
+  final bool isTeacher;
   final List<Class> joinClasses;
   final void Function(Class) invite;
 
   const JoinList({
     super.key,
+    required this.isTeacher,
     required this.joinClasses,
     required this.invite,
   });
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,7 @@ class JoinList extends StatelessWidget {
       listItem: (item) => JoinClassCard(
         classData: item,
         onTap: invite,
+        isTeacher: isTeacher,
       ),
     );
   }

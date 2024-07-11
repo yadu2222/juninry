@@ -10,10 +10,12 @@ import 'package:juninry/constant/fonts.dart';
 class JoinClassCard extends StatelessWidget {
   const JoinClassCard({
     super.key,
+    required this.isTeacher,
     required this.classData,
     required this.onTap,
   });
 
+  final bool isTeacher;
   final Class classData;
   final void Function(Class) onTap;
 
@@ -35,16 +37,18 @@ class JoinClassCard extends StatelessWidget {
           ]),
           // 招待コード再発行ボタン
           // TODO:先生にだけ表示
-          BasicButton(
-              iconSize: 20,
-              margin: const EdgeInsets.only(),
-              width: 0.3,
-              icon: Icons.key,
-              text: '招待',
-              isColor: true,
-              onPressed: () {
-                onTap(classData);
-              }),
+          isTeacher
+              ? BasicButton(
+                  iconSize: 20,
+                  margin: const EdgeInsets.only(),
+                  width: 0.3,
+                  icon: Icons.key,
+                  text: '招待',
+                  isColor: true,
+                  onPressed: () {
+                    onTap(classData);
+                  })
+              : const SizedBox.shrink()
         ])));
   }
 }

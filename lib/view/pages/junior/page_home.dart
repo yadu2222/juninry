@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 // view
 import '../../components/template/scroll_template.dart';
 import '../../components/organism/latest_notice_tab.dart';
@@ -41,7 +42,18 @@ class PageHomeJunior extends HookWidget {
       return () {};
     }, []);
 
-    return ScrollTemplate(title: title, children: [
+    return ScrollTemplate(title: title, 
+    
+    // クラス追加+登録のページに遷移
+        featureIconButton: IconButton(
+          onPressed: () {
+            context.go('/home/class');
+          },
+          iconSize: 35,
+          icon: const Icon(Icons.supervisor_account),
+        ),
+    children: [
+
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
       HomeworkTab(homeworkData: homeworkData.value), // 明日提出の課題タブ
       setList.Shortcuts.junior(), // ショートカットセット

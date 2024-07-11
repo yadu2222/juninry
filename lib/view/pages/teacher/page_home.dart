@@ -20,7 +20,7 @@ class PageHomeTeacher extends StatelessWidget {
         // クラス追加+登録のページに遷移
         featureIconButton: IconButton(
           onPressed: () {
-            context.go('/home/join');
+            context.go('/home/class');
           },
           iconSize: 35,
           icon: const Icon(Icons.supervisor_account),
