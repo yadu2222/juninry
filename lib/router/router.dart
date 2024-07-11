@@ -47,6 +47,15 @@ Future<List<StatefulShellBranch>> getBranches() async {
 
   // ユーザータイプに合わせたbranchesを返す
   // dbから取得
+  User? user;
+
+  while (true) {
+    user = await User.getUser();
+    if (user.userUUID == '') {
+      continue;
+    }
+    break;
+  }
   final int userRole = await User.getUser().then((value) => value.userTypeId);
   switch (userRole) {
     case 1:
@@ -71,15 +80,18 @@ Future<bool> isBranch(BranchType branchType) async {
 }
 
 // ルーターの作成
-Future<GoRouter> createRouter() async {
+Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
   // jwtkeyが端末内に保存されているかを判別
   Future<bool> isLoginCheck() async {
     User user = await User.getUser();
     if (user.jwtKey == "") {
       return false;
     }
+
     return true;
   }
+
+  
 
   bool isLogin = await isLoginCheck();
 
@@ -92,25 +104,27 @@ Future<GoRouter> createRouter() async {
         path: '/login',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: PageLogin(),
+          child: PageLogin(updRouter: updateRouter,),
         ),
       ),
       GoRoute(
         path: '/register',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: PageUserRegister(),
+          child: PageUserRegister(updRouter: updateRouter,),
         ),
       ),
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
+      
       StatefulShellRoute.indexedStack(
           // parentNavigatorKey: rootNavigatorKey,    // これがあると初期画面で/homeにたどり着けない 原因究明中
           // ここで常時表示させたいクラスをビルドしている
           builder: (context, state, navigationShell) {
             return BasicScreenView(navigationShell: navigationShell);
           },
-          branches: [...await getBranches()])
+          branches:  [...await getBranches()]) 
+          
     ],
   );
 }

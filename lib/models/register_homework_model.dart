@@ -120,7 +120,7 @@ class RegisterHomework {
   // TODO:クラスでソートして取得
   // 日付ごとに２次配列化する
   static Future<List<List<RegisterHomework>>> getHomeworkDraftsList() async {
-    final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
+    final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworkDrafts');
     List<RegisterHomework> homeworks = [];
 
     print(data);

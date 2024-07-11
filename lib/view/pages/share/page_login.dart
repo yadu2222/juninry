@@ -14,8 +14,9 @@ import '../../../constant/Fonts.dart';
 import '../../../constant/messages.dart';
 
 class PageLogin extends StatelessWidget {
-  PageLogin({super.key});
+  PageLogin({super.key, required this.updRouter});
 
+  final void Function() updRouter;
   final String title = 'ログイン';
   final TextEditingController mailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
@@ -27,7 +28,7 @@ class PageLogin extends StatelessWidget {
     // ログイン処理
     void login() async {
       if (mailController.text.isNotEmpty && passController.text.isNotEmpty) {
-        await userReq.loginHandler(User(userUUID: "", userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text, jtiUUID: "", jwtKey: ""));
+        await userReq.loginHandler(User(userUUID: "", userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text, jtiUUID: "", jwtKey: ""), updRouter);
       } else {
         ToastUtil.show(message: Messages.inputError);
       }

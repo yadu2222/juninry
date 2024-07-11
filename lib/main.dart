@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
 import 'router/router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import './constant/colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-  @override
-  MyAppState createState() => MyAppState();
-}
-
-class MyAppState extends State<MyApp> {
-  GoRouter? _router; // GoRouterのインスタンス// null許容
-  // ルーターの初期化を非同期で行う
-  Future<void> _initializeRouter() async {
-    final router = await createRouter(); // 非同期でルーターを取得
-    setState(() {
-      _router = router; // 取得したルーターを状態にセット
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // User.dbSampleUserAdd();
-    _initializeRouter();
-  }
-
+class MyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    if (_router == null) {
+    final router = useState<GoRouter?>(null); // GoRouterのインスタンス// null許容
+    // ルーター再取得
+    Future<void> updateRouter() async {
+      final newRouter = await createRouter(updateRouter: updateRouter); // 非同期でルーターを取得
+      router.value = newRouter; // 取得したルーターを状態にセット
+    }
+    // ルーターの初期化を非同期で行う
+    Future<void> initializeRouter() async {
+      final getRouter = await createRouter(updateRouter: updateRouter); // 非同期でルーターを取得
+      router.value = getRouter; // 取得したルーターを状態にセット
+    }
+    useEffect(() {
+      // 直接非同期関数を書くことはできない
+      initializeRouter();
+      return () {};
+    }, []);
+
+    if (router.value == null) {
       // ルーターが初期化されていない場合、ローディングインジケーターを表示
       return const CircularProgressIndicator();
     }
@@ -45,7 +41,7 @@ class MyAppState extends State<MyApp> {
         appBarTheme: const AppBarTheme(backgroundColor: AppColors.main, iconTheme: IconThemeData(color: AppColors.iconLight)),
       ),
       // ルーティングの設定
-      routerConfig: _router!,
+      routerConfig: router.value,
     );
   }
 }

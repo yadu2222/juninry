@@ -69,20 +69,42 @@ class Homework {
           }else{
             addHomeworks[key] = loadItem[key]; // mapにkeyを追加
           }
+
+
+    //       "srvResMsg": "OK",
+    // "srvResData": [
+    //   {
+    //     "homeworkLimit": "0001-01-01T00:00:00Z",
+    //     "homeworkData": [
+    //       {
+    //         "homeworkUUID": "a3579e71-3be5-4b4d-a0df-1f05859a7104",
+    //         "startPage": 24,
+    //         "pageCount": 2,
+    //         "homeworkNote": "がんばってくださ～い＾＾",
+    //         "teachingMaterialName": "漢字ドリル3",
+    //         "subjectId": 1,
+    //         "subjectName": "国語",
+    //         "teachingMaterialImageUUID": "a575f18c-d639-4b6d-ad57-a9d7a7f84575",
+    //         "className": "3-2 ふたば学級",
+    //         "submitFlag": 1  // 提出フラグ 1 提出 0 未提出
+    //       },,,
+    //     ]
+    //   },,,
+    // ]
           addHomeworks['homeworkData'] = []; // mapに空リストを追加
           // データをHomeworkに変換してリストに追加
           for (Map loadHomework in loadItem['homeworkData']) {
             Homework homework = Homework(
               homeworkUuid: loadHomework['homeworkUUID'],
-              startPage: loadHomework['StartPage'],
-              pageCount: loadHomework['PageCount'],
-              homeworkNote: loadHomework['HomeworkNote'],
-              className: loadHomework['ClassName'],
-              submitFlg: loadHomework['SubmitFlag'],
+              startPage: loadHomework['startPage'],
+              pageCount: loadHomework['pageCount'],
+              homeworkNote: loadHomework['homeworkNote'],
+              className: loadHomework['className'],
+              submitFlg: loadHomework['submitFlag'],
               teachingItem: TeachingItem(
-                teachingMaterialImageUUID: loadHomework['TeachingMaterialImageUUID'], // 教材そのもののUUIDはこないらしいぞ！(そうなの！！？)
-                teachingMaterialName: loadHomework['TeachingMaterialName'],
-                subjectId: loadHomework['SubjectId'],
+                teachingMaterialImageUUID: loadHomework['teachingMaterialImageUUID'], // 教材そのもののUUIDはこないらしいぞ！(そうなの！！？)
+                teachingMaterialName: loadHomework['teachingMaterialName'],
+                subjectId: loadHomework['subjectId'],
               ),
             );
             // 先ほど追加した空リストに宿題を追加
@@ -97,15 +119,15 @@ class Homework {
           for (Map loadHomework in loadItem['homeworkData']) {
             Homework homework = Homework(
               homeworkUuid: loadHomework['homeworkUUID'],
-              startPage: loadHomework['StartPage'],
-              pageCount: loadHomework['PageCount'],
-              homeworkNote: loadHomework['HomeworkNote'],
-              submitFlg: loadHomework['SubmitFlag'],
-              className: loadHomework['ClassName'],
+              startPage: loadHomework['startPage'],
+              pageCount: loadHomework['pageCount'],
+              homeworkNote: loadHomework['homeworkNote'],
+              submitFlg: loadHomework['submitFlag'],
+              className: loadHomework['className'],
               teachingItem: TeachingItem(
-                teachingMaterialImageUUID: loadHomework['TeachingMaterialImageUUID'],
-                teachingMaterialName: loadHomework['TeachingMaterialName'],
-                subjectId: loadHomework['SubjectId'],
+                teachingMaterialImageUUID: loadHomework['teachingMaterialImageUUID'],
+                teachingMaterialName: loadHomework['teachingMaterialName'],
+                subjectId: loadHomework['subjectId'],
               ),
             );
             homeworks.add(homework);
