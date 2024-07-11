@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 // home
 import '../view/pages/junior/page_home.dart';
 import '../view/pages/share/page_students.dart';
+import '../view/pages/share/page_join_class.dart';
 // homework
 import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
@@ -35,6 +36,24 @@ class JuniorBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageStudents(),
+              ),
+            ),
+            // クラスに参加
+            GoRoute(
+              name: 'join',
+              path: 'join',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageJoinClass(),
+              ),
+            ),
+            // クラス作成
+            GoRoute(
+              name: 'create',
+              path: 'create',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageJoinClass(),
               ),
             ),
           ],

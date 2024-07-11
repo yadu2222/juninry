@@ -31,10 +31,8 @@ extension BranchTypeExt on BranchType {
     switch (this) {
       case BranchType.teacher:
         return TeacherBranch.teacherBranchs;
-
       case BranchType.junior:
         return JuniorBranch.juniorBranchs;
-
       case BranchType.patron:
         return PatronBranch.patronBranchs;
     }
@@ -42,20 +40,8 @@ extension BranchTypeExt on BranchType {
 }
 
 Future<List<StatefulShellBranch>> getBranches() async {
-  // final userService = UserService();
-  // final userRole = await userService.getUserRole();
-
   // ユーザータイプに合わせたbranchesを返す
   // dbから取得
-  User? user;
-
-  while (true) {
-    user = await User.getUser();
-    if (user.userUUID == '') {
-      continue;
-    }
-    break;
-  }
   final int userRole = await User.getUser().then((value) => value.userTypeId);
   switch (userRole) {
     case 1:
@@ -87,14 +73,9 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
     if (user.jwtKey == "") {
       return false;
     }
-
     return true;
   }
-
-  
-
   bool isLogin = await isLoginCheck();
-
   return GoRouter(
     debugLogDiagnostics: true,
     initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更
@@ -104,27 +85,29 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
         path: '/login',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: PageLogin(updRouter: updateRouter,),
+          child: PageLogin(
+            updRouter: updateRouter,
+          ),
         ),
       ),
       GoRoute(
         path: '/register',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: PageUserRegister(updRouter: updateRouter,),
+          child: PageUserRegister(
+            updRouter: updateRouter,
+          ),
         ),
       ),
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
-      
       StatefulShellRoute.indexedStack(
           // parentNavigatorKey: rootNavigatorKey,    // これがあると初期画面で/homeにたどり着けない 原因究明中
           // ここで常時表示させたいクラスをビルドしている
           builder: (context, state, navigationShell) {
             return BasicScreenView(navigationShell: navigationShell);
           },
-          branches:  [...await getBranches()]) 
-          
+          branches: [...await getBranches()])
     ],
   );
 }

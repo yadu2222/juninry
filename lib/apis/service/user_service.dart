@@ -5,7 +5,6 @@ import '../../models/req_model.dart';
 
 class UserService {
   static Future<void> registerUser(Map<String, dynamic> reqBody) async {
-    print('kitya');
     // リクエストを生成
     final reqData = Request(
       url: Urls.registerUser,
@@ -14,8 +13,6 @@ class UserService {
       headers: {'Content-Type': 'application/json'},
     );
     final resData = await HttpReq.httpReq(reqData,false);
-    print('kitya2');
-
     // dbに保存するためのオブジェクトを生成
     User user = User(
         userUUID: "tigauyo",

@@ -20,6 +20,6 @@ class Urls {
 
   // class
   static const String getClassmates = '$version/auth/users/classes/users'; // GETクラスメイト取得
-
-
+  static const String joinClass = '$version/auth/users/classes/join';  // POSTクラス参加
+  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
 }

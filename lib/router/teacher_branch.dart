@@ -3,17 +3,20 @@ import 'package:go_router/go_router.dart';
 
 // 遷移先
 // teacher
+// home
 import '../view/pages/teacher/page_home.dart';
+import '../view/pages/share/page_students.dart';
+import '../view/pages/share/page_join_class.dart';
+import '../view/pages/teacher/page_create_class.dart';
+// notice
 import '../view/pages/teacher/page_notice_detail.dart';
+// homework
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
-import '../view/pages/share/page_students.dart';
-// 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_notice.dart';
+// user
 import '../view/pages/junior/page_user.dart';
-
-
 
 // 教員ブランチ
 class TeacherBranch {
@@ -33,6 +36,24 @@ class TeacherBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageStudents(),
+              ),
+            ),
+            // クラスに参加
+            GoRoute(
+              name: 'join',
+              path: 'join',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageJoinClass(),
+              ),
+            ),
+            // クラス作成
+            GoRoute(
+              name: 'create',
+              path: 'create',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageCreateClass(),
               ),
             ),
           ],
@@ -69,7 +90,7 @@ class TeacherBranch {
 
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child:  PageNoticeJunior(),
+            child: PageNoticeJunior(),
           ),
         ),
       ],
@@ -99,7 +120,7 @@ class TeacherBranch {
                 // extraがnullである場合trycatchでエラーを回避
                 // 下書きを選択している場合
                 if (state.extra != null) {
-                  debugPrint("きちゃ");
+                  // debugPrint("きちゃ");
 
                   // 遷移時に定義されたデータをrouterで再定義
                   final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
