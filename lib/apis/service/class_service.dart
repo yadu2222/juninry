@@ -36,7 +36,7 @@ class ClassService {
   }
 
   // クラス作成
-  static Future<String> createClass(String className) async {
+  static Future<Class> createClass(String className) async {
     // リクエストを生成
     final reqData = Request(
       url: Urls.createClass,
@@ -45,6 +45,19 @@ class ClassService {
       headers: {'Content-Type': 'application/json'},
     );
     final resData = await HttpReq.httpReq(reqData);
-    return resData['srvResData']['inviteCode'];
+    return Class.resToClass(resData['srvResData']);
+  }
+
+  // クラス招待コード再発行
+  static Future<Class> inviteClass(String classUUID) async {
+    // リクエストを生成
+    final reqData = Request(
+      url: Urls.inviteClass,
+      reqType: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      parData: classUUID
+    );
+    final resData = await HttpReq.httpReq(reqData);
+    return Class.resToClass(resData['srvResData']);
   }
 }

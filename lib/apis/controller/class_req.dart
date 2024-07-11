@@ -5,7 +5,8 @@ import '../service/class_service.dart';
 import 'package:http/http.dart' as http;
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
-import '../../view/components/atoms/dialog.dart';
+import '../../models/class_model.dart';
+// import '../../view/components/atoms/dialog.dart';
 
 class ClassReq {
   final BuildContext context;
@@ -37,13 +38,26 @@ class ClassReq {
   // クラス作成
   Future<Map<String, dynamic>> createClassHandler(String className) async {
     try {
-      String inviteCode = await ClassService.createClass(className); // クラス作成処理を待つ
-      Map<String, dynamic> result = {'isCreate': true, 'inviteCode': inviteCode};
+      Class inviteClass = await ClassService.createClass(className); // クラス作成処理を待つ
+      Map<String, dynamic> result = {'isCreate': true, 'class': inviteClass};
       return result;
     } catch (error) {
       debugPrint(error.toString());
       ToastUtil.show(message: Messages.createClassError); // 参加失敗メッセージ
-      return {'isCreate': false};
+      return {'isCreate': false, 'class': null};
+    }
+  }
+
+  // クラス招待コード再発行
+  Future<Map<String, dynamic>> inviteClassHandler(String classUUID) async {
+    try {
+      Class inviteClass = await ClassService.inviteClass(classUUID); // クラス作成処理を待つ
+      Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
+      return result;
+    } catch (error) {
+      debugPrint(error.toString());
+      ToastUtil.show(message: Messages.createClassError); // 参加失敗メッセージ
+      return {'isCreate': false, 'class': null};
     }
   }
 

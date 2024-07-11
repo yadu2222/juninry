@@ -18,8 +18,8 @@ class Messages {
   static const String getClassmates = "クラスメイトの取得に失敗しました"; // 取得エラー
   static const String joinClassError = "クラス参加に失敗しました"; // 参加エラー
     static const String joinClassConflictError = "すでに参加しています！"; // 参加エラー1
-
-  static const String createClassError = 'クラス作成に失敗しました'; // 参加成功
+  static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー
+  static const String createClassError = 'クラス作成に失敗しました'; // 生成失敗
 
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足

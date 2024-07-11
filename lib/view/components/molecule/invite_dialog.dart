@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
 import '../atoms/dialog.dart';
+import '../../../models/class_model.dart' as inviteClass;
 
 // 招待コードの表示
 // TODO:デザイン
-inviteDialog(BuildContext context, Map<String, dynamic> resData) {
+inviteDialog(BuildContext context, inviteClass.Class resData) {
   DialogUtil.show(
       isBarrier: true,
       context: context,
@@ -23,12 +24,12 @@ inviteDialog(BuildContext context, Map<String, dynamic> resData) {
             style: Fonts.py,
           ),
           Text(
-            '${resData['inviteCode']}の招待コードは',
+            '${resData.className}の招待コードは',
             style: Fonts.h4,
           ),
 
           Text(
-            resData['inviteCode'],
+            resData.inviteCode!,
             style: Fonts.h1,
           ),
           const Text(

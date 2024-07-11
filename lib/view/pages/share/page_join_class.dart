@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
+
 // view
 import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/info_form.dart';
 import '../../components/atoms/basic_button.dart';
 import '../../../apis/controller/class_req.dart'; // リクエスト
+import '../../components/organism/class_con_tab.dart';
 // 定数
 import '../../../constant/messages.dart';
-import '../../../constant/fonts.dart';
 
 class PageJoinClass extends StatelessWidget {
-  PageJoinClass({super.key});
+  PageJoinClass({super.key, this.isTeacher = false});
+  PageJoinClass.teacher({super.key, this.isTeacher = true});
 
   final String title = 'クラスに参加';
+  final bool isTeacher;
   final TextEditingController inviteCodeController = TextEditingController();
 
   @override
@@ -31,7 +33,9 @@ class PageJoinClass extends StatelessWidget {
     }
 
     return BasicTemplate(title: title, children: [
-      const SizedBox(height: 50),
+      const SizedBox(height: 30),
+
+      isTeacher ? const ClassConTab() : const SizedBox.shrink(), // 操作タブ
       InfoForm(label: '招待コード', controller: inviteCodeController),
       const SizedBox(height: 20),
       BasicButton(
@@ -43,10 +47,7 @@ class PageJoinClass extends StatelessWidget {
         },
         circular: 50,
       ),
-      InkWell(
-        onTap: () => {context.go('/home/create')},
-        child: const Text('クラス作成はこちら', style: Fonts.pw),
-      )
+      
     ]);
   }
 }

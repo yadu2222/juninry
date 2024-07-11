@@ -22,7 +22,7 @@ class ShortcutButton extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
         child: ElevatedButton(
           onPressed: () {
-            context.go(movePage);
+            
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(

@@ -44,13 +44,22 @@ class TeacherBranch {
               path: 'join',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: PageJoinClass(),
+                child: PageJoinClass.teacher(),
               ),
             ),
             // クラス作成
             GoRoute(
               name: 'create',
               path: 'create',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageCreateClass(),
+              ),
+            ),
+            // クラス作成
+            GoRoute(
+              name: 'invite',
+              path: 'invite',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: PageCreateClass(),
