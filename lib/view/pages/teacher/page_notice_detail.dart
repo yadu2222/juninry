@@ -34,8 +34,11 @@ class PageNoticeDetailTeacher extends StatelessWidget {
             title: '確認状況',
           ),
            // お知らせを確認した学生諸君
+
+          
           Expanded(
               // リストビューは高さ制限を付けないと実行時エラーが出る
+              
               child: StudentList(studentData: SampleData.studentData // ここではサンプルのList<map>を渡している
                   ))
         ]);

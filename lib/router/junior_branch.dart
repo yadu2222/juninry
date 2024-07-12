@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// 遷移先
-// junior
+// junior遷移先
+// home
 import '../view/pages/junior/page_home.dart';
-import '../view/pages/junior/page_homework.dart';
-import '../view/pages/junior/page_notice.dart';
-import '../view/pages/junior/page_user.dart';
-import '../view/pages/junior/page_nextday_task.dart';
 import '../view/pages/share/page_students.dart';
+import '../view/pages/share/page_class.dart';
+// homework
+import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
+import '../view/pages/junior/page_nextday_task.dart';
+// notice
+import '../view/pages/junior/page_notice.dart';
+// ouchi
+import '../view/pages/junior/page_ouchi.dart';
+import '../view/pages/junior/page_reward.dart';
+// user
+import '../view/pages/junior/page_user.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -31,6 +38,16 @@ class JuniorBranch {
                 child: const PageStudents(),
               ),
             ),
+            // クラスに参加
+            GoRoute(
+              name: 'class',
+              path: 'class',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageClass(),
+              ),
+            ),
+            
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
@@ -50,7 +67,7 @@ class JuniorBranch {
           path: '/notice', // notice
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child:  PageNoticeJunior(),
+            child: PageNoticeJunior(),
           ),
         ),
       ],
@@ -68,7 +85,7 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNextDayTaskJunior()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
             ),
             // 提出
             GoRoute(
@@ -99,6 +116,28 @@ class JuniorBranch {
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
         ),
+      ],
+    ),
+
+    // ouchi
+    StatefulShellBranch(
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'ouchi'),
+      routes: [
+        GoRoute(
+          name: 'ouchi',
+          path: '/ouchi',
+          routes: [
+            GoRoute(
+              name: 'GOHOUBI',
+              path: 'reward', // notice
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageRewardJunior(),
+              ),
+            ),
+          ],
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiJunior()),
+        )
       ],
     ),
 

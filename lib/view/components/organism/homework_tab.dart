@@ -13,7 +13,6 @@ class HomeworkTab extends StatelessWidget {
     required this.homeworkData,
   });
 
-  // サンプルデータ
   final List<Homework> homeworkData;
   @override
   Widget build(BuildContext context) {
@@ -28,16 +27,18 @@ class HomeworkTab extends StatelessWidget {
               widget: SizedBox(
                   // height: 35 * homeworkData.length + 0.0, // 35px * データ数
                   // padding: const EdgeInsets.only(bottom: 10),
-                  child: Column(
-                      // 繰り返し表示
-                      // スクロールはさせない！！！！！！！！！！
-                      children: List.generate(homeworkData.length, (index) {
-                return Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: TeachingMaterial(itemData: homeworkData[index]),
-                );
-              })))),
-          const Positioned(bottom: 35, right: 30, child: Icon(Icons.launch, size: 25, color: AppColors.iconDark))
+                  child: homeworkData.isEmpty
+                      ? const Text('宿題はありません')
+                      : Column(
+                          // 繰り返し表示
+                          // スクロールはさせない！！！！！！！！！！
+                          children: List.generate(homeworkData.length, (index) {
+                          return Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            child: TeachingMaterial(itemData: homeworkData[index]),
+                          );
+                        })))),
+          const Positioned(bottom: 30, right: 30, child: Icon(Icons.launch, size: 25, color: AppColors.iconDark))
         ]));
   }
 }

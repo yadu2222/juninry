@@ -31,10 +31,8 @@ extension BranchTypeExt on BranchType {
     switch (this) {
       case BranchType.teacher:
         return TeacherBranch.teacherBranchs;
-
       case BranchType.junior:
         return JuniorBranch.juniorBranchs;
-
       case BranchType.patron:
         return PatronBranch.patronBranchs;
     }
@@ -42,9 +40,6 @@ extension BranchTypeExt on BranchType {
 }
 
 Future<List<StatefulShellBranch>> getBranches() async {
-  // final userService = UserService();
-  // final userRole = await userService.getUserRole();
-
   // ユーザータイプに合わせたbranchesを返す
   // dbから取得
   final int userRole = await User.getUser().then((value) => value.userTypeId);
@@ -64,8 +59,14 @@ Future<List<StatefulShellBranch>> getBranches() async {
   }
 }
 
+// 特定のブランチかをチェックして返す
+Future<bool> isBranch(BranchType branchType) async {
+  final branches = await getBranches();
+  return branches == branchType.branch;
+}
+
 // ルーターの作成
-Future<GoRouter> createRouter() async {
+Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
   // jwtkeyが端末内に保存されているかを判別
   Future<bool> isLoginCheck() async {
     User user = await User.getUser();
@@ -74,9 +75,7 @@ Future<GoRouter> createRouter() async {
     }
     return true;
   }
-
   bool isLogin = await isLoginCheck();
-
   return GoRouter(
     debugLogDiagnostics: true,
     initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更,
@@ -86,14 +85,18 @@ Future<GoRouter> createRouter() async {
         path: '/login',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: PageLogin(),
+          child: PageLogin(
+            updRouter: updateRouter,
+          ),
         ),
       ),
       GoRoute(
         path: '/register',
         pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
-          child: PageUserRegister(),
+          child: PageUserRegister(
+            updRouter: updateRouter,
+          ),
         ),
       ),
       // ボトムバーが必要な画面のルーティング
