@@ -7,7 +7,6 @@ import 'package:juninry/view/components/atoms/listitem.dart';
 import '../../../models/drafted_notice_model.dart';
 import '../../components/template/basic_template.dart';
 
-
 // 教員_課題一覧ページ
 class PageNoticeDraftTeacher extends HookWidget {
   const PageNoticeDraftTeacher({
@@ -28,22 +27,20 @@ class PageNoticeDraftTeacher extends HookWidget {
     useEffect(() {
       // 直接非同期関数を書くことはできない
       getDrafts(); // 非同期関数を呼び出し
-      return () {};
-    }, []);
+    });
 
     return BasicTemplate(title: "下書き", children: [
       ListItemBox(
         itemDatas: draftData.value,
-        listItem: (draftedNoticeData) => ListItem(
-          widget: InkWell(
-              onTap: () {
-                debugPrint(draftedNoticeData.draftedNoticeId.toString());
-                // TODO: 値がNULL
-                context.push('/notice/register', extra: {
-                  'draftedNoticeId': draftedNoticeData.draftedNoticeId
-                });
-              },
-              child: Text(draftedNoticeData.draftedNoticeTitle.toString())),
+        listItem: (draftedNoticeData) => InkWell(
+          onTap: () {
+            context.push('/notice/register',
+                extra: {'draftedNoticeId': draftedNoticeData.draftedNoticeId});
+            debugPrint(draftedNoticeData.draftedNoticeId.toString());
+          },
+          child: ListItem(
+            widget: Text(draftedNoticeData.draftedNoticeTitle.toString()),
+          ),
         ),
       ),
     ]);

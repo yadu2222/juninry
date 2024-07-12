@@ -15,6 +15,8 @@ import '../../../models/user_model.dart';
 import '../../../models/quoted_notice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:intl/intl.dart';
+
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
   final int? draftedNoticeId;
@@ -79,7 +81,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
             Icons.note_add_outlined,
             size: 32,
           ),
-          // TODO: Routing 下書き画面へ
           onPressed: () {
             context.push("/notice/draft");
           },
@@ -88,7 +89,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
           // お知らせ作成フォーム
           Expanded(
             child: CreateNoticeForm(
-              dateTime: draftedNoticeData.draftedNoticeDate,
               classesList: classesList, //クラスリスト
               onClassChanged: onClassChanged, //クラス選択時の処理
               selectedClass: selectedClass.value, //現在選択されているクラス
@@ -216,7 +216,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
       // // 現在の下書きIDを保存
       if (draftedNoticeData.draftedNoticeId != null) {
-        await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId!);
+        await prefs.setInt(
+            'draftedNoticeId', draftedNoticeData.draftedNoticeId!);
       }
     }
 
@@ -226,6 +227,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
       quotedNoticeData = await NoticeReq.fetchQuotedNotice(
           draftedNoticeData.quotedNoticeUuid!);
     }
+
+    // HACKE: 表示しないけどDBにいれるお知らせ作成日だよ
+    draftedNoticeData.draftedNoticeDate =
+        DateFormat('yyyy.MM.dd').format(DateTime.now());
 
     // コントローラーの設定
     final titleController =

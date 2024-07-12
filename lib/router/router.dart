@@ -79,7 +79,8 @@ Future<GoRouter> createRouter() async {
 
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: '/notice/register',
+    initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更,
+    // initialLocation: '/notice/register',
     routes: [
       GoRoute(
         path: '/login',

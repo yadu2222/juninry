@@ -10,7 +10,7 @@ import 'dbcon.dart';
 // 新たなお知らせであればお知らせIDを発行する
 class DraftedNotice {
   int? draftedNoticeId; //下書きのID
-  DateTime? draftedNoticeDate;
+  String? draftedNoticeDate;
   String? draftedNoticeTitle;
   String? draftedNoticeExplanatory;
   Class? selectedClass; // 下書きクラス
@@ -47,7 +47,7 @@ class DraftedNotice {
   static Map<String, dynamic> _toMap(DraftedNotice data) {
     return {
       'notice_id': data.draftedNoticeId,
-      'notice_date': data.draftedNoticeDate.toString(),
+      'notice_date': data.draftedNoticeDate,
       'notice_title': data.draftedNoticeTitle,
       'notice_explanatory': data.draftedNoticeExplanatory,
       'class_uuid': data.selectedClass?.classUuid,
@@ -62,7 +62,7 @@ class DraftedNotice {
 
     if (draftedNoticeData.draftedNoticeId != null &&
         await DatabaseHelper.queryExists(
-            "drafted_notices", "notice_id", row['notice_id'])) {
+            "drafted_notices", "notice_id", row['notice_id'].toString())) {
       return await updateDraftedNotice(row);
     } else {
       return await insertDraftedNotice(row);
