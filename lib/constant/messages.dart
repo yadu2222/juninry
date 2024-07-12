@@ -14,5 +14,6 @@ class Messages{
   static const String registerError = "登録に失敗しました";  // 登録エラー
   static const String getUserError = "ユーザー情報の取得に失敗しました"; // 登録エラー
   static const String getHomeworkError = "宿題の取得に失敗しました"; // 登録エラー
+  static const String getNoticeError = "お知らせの取得に失敗しました"; // 登録エラー
 
 }

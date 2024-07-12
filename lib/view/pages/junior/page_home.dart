@@ -18,7 +18,6 @@ class PageHomeJunior extends StatelessWidget {
       LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
       HomeworkTab(homeworkData: SampleData.homeworkData), // 明日提出の課題タブ
       JuniorShortcuts(), // ショートカットボタン
- 
     ]);
   }
 }
