@@ -6,11 +6,18 @@ class InfoForm extends StatelessWidget {
     super.key,
     required this.label,
     required this.controller,
+    this.isIcon = false,
+    this.onTap,
+    this.icon = Icons.send,
   });
 
   final String label;
+  final IconData icon;
+  final bool isIcon;
+  final void Function()? onTap;
   final TextEditingController controller;
 
+  // TODO:バリデーション
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,11 +27,24 @@ class InfoForm extends StatelessWidget {
       height: 50,
       child: TextFormField(
         controller: controller,
-        cursorColor: AppColors.main,    // カーソルの色
+        cursorColor: AppColors.main, // カーソルの色
         decoration: InputDecoration(
           labelText: label,
           fillColor: AppColors.iconLight, // 背景色
           filled: true, // 背景色を表示
+          // 右側のアイコン
+          suffixIcon: isIcon 
+              ? SizedBox(
+                  width: 50, // IconButton の幅を固定
+                  child: IconButton(
+                    icon: Icon(icon),
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus(); // キーボードを閉じる
+                      onTap!();
+                    },
+                  ),
+                )
+              : const SizedBox.shrink(),
           border: const OutlineInputBorder(
               borderSide: BorderSide.none, // ボーダーを非表示にする
               borderRadius: BorderRadius.all(Radius.circular(50)) // 角を丸くする

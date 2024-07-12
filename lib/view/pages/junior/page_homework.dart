@@ -24,7 +24,7 @@ class PageHomeworkJunior extends HookWidget {
       // 非同期処理を実行するための関数
       Future<void> fetchData() async {
         debugPrint('課題を取得するよ');
-        final data = await homeworkReq.getHomeworks();
+        final data = await homeworkReq.getHomeworksHandler();
         debugPrint(data.toString());
         homeworkData.value = data;
       }
@@ -35,7 +35,7 @@ class PageHomeworkJunior extends HookWidget {
 
     return BasicTemplate(title: title, children: [
       ProgressBar(progress: progress), // 進捗バー
-      Expanded(child: HomeworkList(homeworkData: homeworkData.value)), // 課題リスト
+      Expanded(child: HomeworkList.limit(homeworkData: homeworkData.value)), // 課題リスト
     ]);
   }
 }

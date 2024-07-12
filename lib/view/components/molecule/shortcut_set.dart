@@ -3,7 +3,7 @@ import '../../components/atoms/shortcut_bottun.dart';
 
 // ショートカットの4つセット
 class ShortcutSet extends StatelessWidget {
-  const ShortcutSet({Key? key, required this.shortcutList, required this.icons, required this.movePages}) : super(key: key);
+  const ShortcutSet({super.key, required this.shortcutList, required this.icons, required this.movePages});
 
   final List<String> shortcutList;
   final List<IconData> icons;

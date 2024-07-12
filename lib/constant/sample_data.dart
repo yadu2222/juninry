@@ -3,6 +3,9 @@ import '../models/notice_model.dart';
 import '../models/student_model.dart';
 import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
+import '../models/help_model.dart';
+import '../models/reward_model.dart';
+import '../models/class_model.dart';
 // import '../models/register_homework_model.dart';
 
 // テスト用のさんぷるでーたの数がだいぶ増えてきたので、ここに書いておきます
@@ -15,16 +18,14 @@ class SampleData {
       userTypeId: 1,
       mailAddress: 'test-teacher@gmail.com',
       password: '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
-      jtiUUID: '42c28ac4-0ba4-4f81-8813-814dc92e2f40',
       jwtKey: jwtKey);
   static User juniorUser = User(
       userName: 'junior',
       userTypeId: 2,
       mailAddress: 'test-pupil@gmail.com',
       password: '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW',
-      jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948',
       jwtKey: jwtKey);
-  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jtiUUID: '14dea318-8581-4cab-b233-995ce8e1a948', jwtKey: jwtKey);
+  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jwtKey: jwtKey);
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
@@ -140,6 +141,32 @@ class SampleData {
     }
   ];
 
+  static List<Help> helpData = [
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+  ];
+
+  static List<Reward> rewardData = [
+    Reward(rewardName: 'アイス', note: '150円まで', rewardPoint: 50, iconId: 1),
+    Reward(rewardName: '晩ごはん指名権', note: '予算1000円', rewardPoint: 10, iconId: 3, stock: 5),
+  ];
+
   // static List<RegisterHomework> registerHomeworkData = [
   //   RegisterHomework(teachingItem: teachingItem1),
   //   RegisterHomework(teachingItem: teachingItem2),
@@ -155,7 +182,7 @@ class SampleData {
     Student(
       name: '山田花子',
       num: 35,
-      gender:2,
+      gender: 2,
     )
   ];
 
@@ -173,5 +200,20 @@ class SampleData {
         readStatus: '0'),
     Notice( noticeUUID: 'aaaaa', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: '1'),
     Notice( noticeUUID: 'aaaaa',  noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', readStatus: '0')
+  ];
+
+  static List<Class> classList = [
+    Class(
+      classUUID: '09eba495-fe09-4f54-a856-9bea9536b661',
+      className: '3-2 ふたば学級',
+    ),
+    Class(
+      classUUID: '817f600e-3109-47d7-ad8c-18b9d7dbdf8b',
+      className: 'sample2',
+    ),
+    Class(
+      classUUID: '456789',
+      className: 'sample3',
+    ),
   ];
 }
