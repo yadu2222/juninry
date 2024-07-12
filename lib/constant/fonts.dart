@@ -21,6 +21,9 @@ class Fonts {
   static const TextStyle pw = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
   // static const TextStyle bw = TextStyle(fontSize: 13, fontFamily: 'Noto Sans JP', color: AppColors.iconLight, fontWeight: FontWeight.bold);
 
+  // 警告？
+  static const TextStyle h1r = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.buttonCheck, fontWeight: FontWeight.bold);
+
   // そんなに目立たない
   static const TextStyle h1y = TextStyle(fontSize: 28, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
   static const TextStyle h2y = TextStyle(fontSize: 24, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);

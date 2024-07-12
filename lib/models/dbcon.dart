@@ -55,11 +55,9 @@ class DatabaseHelper {
     await db.execute('''
     CREATE TABLE users (
       user_id integer PRIMARY KEY autoincrement,
-      user_uuid text,
       user_type_id integer,
       mail_address  text,
       password text,
-      jti_uuid text,
       jwt_key text
     )
   ''');
@@ -96,6 +94,7 @@ class DatabaseHelper {
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
+  
   // テーブル名、検索条件、検索ワード、ソート
   static Future<List<Map<String, dynamic>>> queryBuilder(String tableName, List<String> where, List<String> whereArgs, String orderBy) async {
     Database? db = await instance.database;
