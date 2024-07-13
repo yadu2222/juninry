@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/molecule/shortcut_set.dart';
 
-// 保護者用ショートカット
+// ショートカット
 class Shortcuts extends StatelessWidget {
   final int userType;
   Shortcuts.teacher({super.key, this.userType = 1});

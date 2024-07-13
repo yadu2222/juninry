@@ -61,6 +61,7 @@ class User {
 
   // dbからuser情報を取得
   static Future<User> getUser() async {
+    debugPrint('getuser');
     if (await DatabaseHelper.firstdb()) {
       var user = await DatabaseHelper.queryAllRows('users');
       debugPrint(user.toString());

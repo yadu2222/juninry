@@ -42,6 +42,7 @@ class UserService {
     if (check.userName == '') {
       User.insertUser(user); // 一時的に追加
       User updUser = await getUser();
+      updUser.userTypeId = user.userTypeId;
       updUser.jwtKey = user.jwtKey;
       User.updateUser(updUser); // update
     } else {
