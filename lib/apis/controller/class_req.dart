@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../service/class_service.dart';
 // import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../../models/class_model.dart';

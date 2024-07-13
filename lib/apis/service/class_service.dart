@@ -25,7 +25,7 @@ class ClassService {
   static Future<String> joinClass(String inviteCode,) async {
 
     // こうやってthrowしてcatchで拾うのはどうだろうか
-    Map<String, dynamic> errorHandling(http.Response response) {
+    errorHandling(http.Response response) {
       if (response.statusCode == 403) {
         throw const PermittionError(); // 親にはその権限がないよ
       } else if (response.statusCode == 409) {
