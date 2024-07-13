@@ -16,19 +16,9 @@ class ClassReq {
 
   // クラス参加
   Future<void> joinClassHandler(String inviteCode) async {
-    // こうやってthrowしてcatchで拾うのはどうだろうか
-    Map<String, dynamic> errorHandling(http.Response response) {
-      if (response.statusCode == 403) {
-        throw const PermittionError(); // 親にはその権限がないよ
-      } else if (response.statusCode == 409) {
-        throw const JoinClassConflictException(); // すでに参加している場合をthrow
-      } else {
-        throw Exception('クラス参加に失敗しました');
-      }
-    }
-
+    
     try {
-      await ClassService.joinClass(inviteCode, errorHandling); // クラス参加処理を待つ
+      await ClassService.joinClass(inviteCode); // クラス参加処理を待つ
     }on PermittionError {
       handleException(ExceptionType.permittonError);
     } on JoinClassConflictException {
