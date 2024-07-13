@@ -16,21 +16,25 @@ class ClassReq {
 
   // クラス参加
   Future<void> joinClassHandler(String inviteCode) async {
-    // TODO:errorハンドリング
-    // なんか拾えない；〜〜〜；
+    // こうやってthrowしてcatchで拾うのはどうだろうか
     Map<String, dynamic> errorHandling(http.Response response) {
-      if (response.statusCode == 409) {
-        throw const JoinClassConflictException();   // すでに参加している場合をthrow
+      if (response.statusCode == 403) {
+        throw const PermittionError(); // 親にはその権限がないよ
+      } else if (response.statusCode == 409) {
+        throw const JoinClassConflictException(); // すでに参加している場合をthrow
       } else {
         throw Exception('クラス参加に失敗しました');
       }
     }
 
     try {
-      print(inviteCode);
-      String joinClass = await ClassService.joinClass(inviteCode, errorHandling); // クラス参加処理を待つ
+      await ClassService.joinClass(inviteCode, errorHandling); // クラス参加処理を待つ
+    }on PermittionError {
+      handleException(ExceptionType.permittonError);
     } on JoinClassConflictException {
-      handleException(ExceptionType.joinClassConflict); // ひろう
+      handleException(ExceptionType.joinClassConflict);
+    } catch (e) {
+      ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
     }
   }
 

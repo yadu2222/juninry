@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../constant/fonts.dart';
 import '../../../view/components/atoms/basic_button.dart';
-
-import '../../../router/router.dart';
-
 import '../../../models/user_model.dart';
 import '../../components/template/basic_template.dart';
 
@@ -19,11 +14,10 @@ class PageUserData extends StatelessWidget {
   Widget build(BuildContext context) {
     void logout() async {
       // ログアウト処理
-      bool isLogout = await User.logout();
+      bool isLogout = await User.logout();  // dbからデータを削除
       if (isLogout) {
-        // ルーターの再取得
-        final newRouter = await createRouter();
-        context.go('');
+        // ログイン画面に遷移
+       context.go('/login');
       } else {}
     }
 

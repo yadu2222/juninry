@@ -65,23 +65,6 @@ Future<bool> isBranch(BranchType branchType) async {
   return branches == branchType.branch;
 }
 
-class GoRouterUtil {
-  late GoRouter router;
-
-  static final GoRouterUtil _instance = GoRouterUtil._internal();
-  GoRouterUtil._internal();
-
-  // ファクトリコンストラクタ
-  factory GoRouterUtil() {
-    // 初期値設定
-    _instance.router = await createRouter(updateRouter: updateRouter)
-    return _instance;
-  }
-
-  void update() {
-    
-  }
-}
 
 // ルーターの作成
 Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
