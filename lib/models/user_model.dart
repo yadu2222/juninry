@@ -82,7 +82,7 @@ class User {
   // authの更新
   static Future<void> updateUser(User user) async {
     debugPrint('updateUser');
-    await DatabaseHelper.update('users', 'user_id', toMap(user), '1');
+    await DatabaseHelper.update('users', toMap(user));
   }
 
   // 既にdbが存在しているかを判定し、なければsampleuserを追加

@@ -115,10 +115,10 @@ class DatabaseHelper {
 
   // 更新処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> update(String tableName, String colum, Map<String, dynamic> row, String key) async {
+  static Future<int> update(String tableName,  Map<String, dynamic> row, ) async {
     Database? db = await instance.database;
     print(await db!.rawQuery("select * from $tableName"));
-    return await db.update(tableName, row, where: '$colum = ?', whereArgs: ['$key']);
+    return await db.update(tableName, row);
   }
 
   // 削除処理
