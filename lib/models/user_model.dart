@@ -19,12 +19,7 @@ class User {
   // mapをUserに変換
   static User toUser(Map loadData) {
     try {
-      return User(
-          userName: 'hoge',
-          userTypeId: loadData['user_type_id'] ?? 0,
-          mailAddress: loadData['mail_address'],
-          password: loadData['password'],
-          jwtKey: loadData['jwt_key']);
+      return User(userName: 'hoge', userTypeId: loadData['user_type_id'] ?? 0, mailAddress: loadData['mail_address'], password: loadData['password'], jwtKey: loadData['jwt_key']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
       return errorUser();
@@ -34,14 +29,28 @@ class User {
   static User resToUser(Map loadData) {
     try {
       return User(
-          userName: loadData['userName'],
-          userTypeId: loadData['userTypeId'],
-          mailAddress: loadData['mailAddress'],
-          password: loadData['password'],
-          );
+        userName: loadData['userName'],
+        userTypeId: loadData['userTypeId'],
+        mailAddress: loadData['mailAddress'],
+        password: loadData['password'],
+      );
     } catch (e) {
       debugPrint('Error converting map to User: $e');
       return errorUser();
+    }
+  }
+
+  // ログアウト
+  // sqliteから削除
+  static Future<bool> logout() async {
+    bool isLogout = await DatabaseHelper.logout();
+    if (isLogout) {
+      // updRouter();
+      return true;
+    } else {
+      // TODO:拾う
+      debugPrint('logout error');
+      return false;
     }
   }
 
@@ -86,7 +95,7 @@ class User {
 
   // type_idは本来apiからもらうものだが、テストに使いたいため個々に記載
   static _createSampleUser() async {
-    debugPrint('_createSampleUser');
+    // debugPrint('_createSampleUser');
     // await DatabaseHelper.insert('users', toMap(SampleData.teacherUser));
     // await DatabaseHelper.insert('users', toMap(SampleData.juniorUser));
     // await DatabaseHelper.insert('users', toMap(SampleData.patronUser));

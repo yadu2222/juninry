@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 // junior遷移先
 // home
-import '../view/pages/junior/page_home.dart';
+import '../view/pages/share/page_home.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // homework
@@ -16,7 +16,7 @@ import '../view/pages/junior/page_notice.dart';
 import '../view/pages/junior/page_ouchi.dart';
 import '../view/pages/junior/page_reward.dart';
 // user
-import '../view/pages/junior/page_user.dart';
+import '../view/pages/share/page_user.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -47,11 +47,10 @@ class JuniorBranch {
                 child: PageClass(),
               ),
             ),
-            
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const PageHomeJunior(),
+            child: const PageHome.junior(),
             // child: PageHomePatron(),
           ),
         ),
@@ -148,7 +147,7 @@ class JuniorBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserDataJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

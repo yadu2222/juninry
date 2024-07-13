@@ -5,7 +5,6 @@ import '../../components/organism/homework_list.dart';
 import '../../components/molecule/next_day_task.dart';
 import '../../components/molecule/divider.dart';
 
-// import '../../../models/homework_model.dart';
 import '../../../constant/sample_data.dart'; // sampleData
 
 class PageNextDayHomeworkPatron extends StatelessWidget {
