@@ -12,8 +12,10 @@ import '../../../constant/sample_data.dart'; // sampleData
 // model
 import '../../../models/homework_model.dart';
 
-class PageHomeJunior extends HookWidget {
-  const PageHomeJunior({super.key});
+class PageHome extends HookWidget {
+  final bool isTeacher;
+  const PageHome.junior({super.key,this.isTeacher = false});
+  const PageHome.teacher({super.key,this.isTeacher = true});
 
   final String title = 'ホーム';
   @override
@@ -29,11 +31,10 @@ class PageHomeJunior extends HookWidget {
         debugPrint('課題を取得するよ');
         final data = await homeworkReq.getHomeScreenHomeworkHandler();
         debugPrint(data.toString());
-
         // 空でない場合のみデータをセット
         // えらーがでるからね、、
         if (data.isNotEmpty) {
-          List<Homework> homeworkList = data.cast<Homework>();  // キャスト
+          List<Homework> homeworkList = data.cast<Homework>(); // キャスト
           homeworkData.value = homeworkList;
         }
       }
@@ -42,9 +43,10 @@ class PageHomeJunior extends HookWidget {
       return () {};
     }, []);
 
-    return ScrollTemplate(title: title, 
-    
-    // クラス追加+登録のページに遷移
+    return ScrollTemplate(
+        title: title,
+
+        // クラス追加+登録のページに遷移
         featureIconButton: IconButton(
           onPressed: () {
             context.go('/home/class');
@@ -52,11 +54,10 @@ class PageHomeJunior extends HookWidget {
           iconSize: 35,
           icon: const Icon(Icons.supervisor_account),
         ),
-    children: [
-
-      LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
-      HomeworkTab(homeworkData: homeworkData.value), // 明日提出の課題タブ
-      setList.Shortcuts.junior(), // ショートカットセット
-    ]);
+        children: [
+          LatestNoticeTab(noticeData: SampleData.noticesData), // 最新のお知らせタブ
+          HomeworkTab(homeworkData: homeworkData.value), // 明日提出の課題タブ
+          isTeacher ? setList.Shortcuts.teacher() : setList.Shortcuts.junior(), // ショートカットセット
+        ]);
   }
 }

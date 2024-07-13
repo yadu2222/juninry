@@ -10,6 +10,7 @@ class Messages {
   static const String createClassSuccess = 'を作成しました！'; // 参加成功
   
   // APIエラー
+  static const String permittonError = "権限がありません"; // 権限エラー
   static const String inputError = "入力内容が不足しています"; // 入力エラー
   static const String loginError = "ログインに失敗しました"; // ログインエラー
   static const String registerError = "登録に失敗しました"; // 登録エラー
