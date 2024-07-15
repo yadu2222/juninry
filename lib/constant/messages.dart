@@ -20,6 +20,7 @@ class Messages {
   static const String getUserError = "ユーザー情報の取得に失敗しました"; // 取得エラー
   static const String getHomeworkError = "宿題の取得に失敗しました"; // 取得エラー
   static const String getClassmates = "クラスメイトの取得に失敗しました"; // 取得エラー
+  static const String getClasses = "クラス一覧の取得に失敗しました"; // 取得エラー
   static const String joinClassError = "クラス参加に失敗しました"; // 参加エラー
   static const String joinClassConflictError = "すでに参加しています！"; // 参加エラー1
   static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー

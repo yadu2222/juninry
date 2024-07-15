@@ -25,7 +25,6 @@ class BasicButton extends StatelessWidget {
   final double circular;
   final EdgeInsets margin;
   final void Function()? onPressed;
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -35,17 +34,12 @@ class BasicButton extends StatelessWidget {
         margin: margin,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: isColor
-                    ? AppColors.subjectScience
-                    : AppColors.subjectJapanese,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(circular) //こちらを適用
+                backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(circular) //こちらを適用
                     )),
             onPressed: onPressed,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
-              icon != null
-                  ? Icon(icon, color: AppColors.iconLight, size: iconSize)
-                  : const SizedBox.shrink(),
+              icon != null ? Icon(icon, color: AppColors.iconLight, size: iconSize) : const SizedBox.shrink(),
               Expanded(
                   child: Container(
                       alignment: Alignment.center, // 残りのスペースの中央に配置

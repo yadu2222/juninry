@@ -27,7 +27,7 @@ class PageNoticeDraftTeacher extends HookWidget {
     useEffect(() {
       // 直接非同期関数を書くことはできない
       getDrafts(); // 非同期関数を呼び出し
-    });
+    }, [draftData]);
 
     return BasicTemplate(title: "下書き", children: [
       ListItemBox(

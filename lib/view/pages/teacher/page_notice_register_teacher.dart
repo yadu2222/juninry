@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/apis/controller/notice_req.dart';
 import 'package:juninry/constant/messages.dart';
-import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/class_model.dart';
 import 'package:juninry/models/drafted_notice_model.dart';
 import 'package:juninry/view/components/atoms/alert_dialog_view.dart';
@@ -14,6 +13,8 @@ import 'package:juninry/view/components/template/basic_template.dart';
 import '../../../models/user_model.dart';
 import '../../../models/quoted_notice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../apis/controller/class_req.dart';
+import '../../../models/notice_model.dart';
 
 import 'package:intl/intl.dart';
 
@@ -32,9 +33,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: 下書きがある状態で引用だけ設定したい時に、下書きが消される対策が必要
-    final future =
-        useMemoized(() => _loadData(), [draftedNoticeId, quotedNoticeUuid]);
+    final future = useMemoized(
+        () => _loadData(context), [draftedNoticeId, quotedNoticeUuid]);
     // 非同期通信が必要なデータ群
     final snapshot = useFuture(future);
 
@@ -107,7 +107,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 BasicButton(
-                  widthPercent: 0.4,
+                  width: 0.4,
                   text: "下書きに保存",
                   onPressed: () async {
                     draftedNoticeData.selectedClass = selectedClass.value;
@@ -157,7 +157,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                           builder: (context) {
                             return AlertDialogView(
                                 title: Messages.inputError,
-                                text: Messages.inputErrorMsg,
+                                text: Messages.inputError,
                                 actions: {"戻る": () {}});
                           });
                     }
@@ -167,11 +167,22 @@ class PageNoticeRegisterTeacher extends HookWidget {
                   circular: 5,
                 ),
                 BasicButton(
-                  widthPercent: 0.4,
+                  width: 0.4,
                   text: "投稿",
                   isColor: false,
                   onPressed: () {
-                    context.push('/notice/register');
+                    // context.push('/notice/register');
+                    NoticeReq noticeReq =
+                        NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+
+                    noticeReq.postNotice(Notice(
+                      noticeTitle: titleController.text,
+                      noticeExplanatory: textController.text,
+                      quotedNoticeUUID: quotedNoticeData?.quotedNoticeUuid,
+                      classUUID: selectedClass.value.classUUID!,
+                    ));
+
+                    context.go('/notice');
                   }, //TODO: 投稿処理
                   icon: Icons.check,
                   circular: 5,
@@ -182,7 +193,12 @@ class PageNoticeRegisterTeacher extends HookWidget {
         ]);
   }
 
-  Future<_PageData> _loadData() async {
+  Future<_PageData> _loadData(context) async {
+    ClassReq classReq = ClassReq(context: context); // 通信用クラスのインスタンスを生成
+    NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+
+    debugPrint("quotedNoticeUuid: $quotedNoticeUuid");
+
     // 前回の値を取得しているやつっぽいけどわからん、、、
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? storedDraftedNoticeId = prefs.getInt('draftedNoticeId');
@@ -223,12 +239,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // 引用データを取得
     if (draftedNoticeData.quotedNoticeUuid != null) {
-      debugPrint("引用IDチェック: ${draftedNoticeData.quotedNoticeUuid}");
-      quotedNoticeData = await NoticeReq.fetchQuotedNotice(
-          draftedNoticeData.quotedNoticeUuid!);
+      quotedNoticeData = await noticeReq
+          .fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
     }
 
-    // HACKE: 表示しないけどDBにいれるお知らせ作成日だよ
+    // HACK: 表示しないけどDBにいれるお知らせ作成日だよ
     draftedNoticeData.draftedNoticeDate =
         DateFormat('yyyy.MM.dd').format(DateTime.now());
 
@@ -242,12 +257,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
     // TODO: クラス一覧取得API
     List<Class> classesList = (quotedNoticeData != null)
         ? [quotedNoticeData.quotedClass]
-        : SampleData.classesData;
+        : await classReq.getClassesHandler();
 
     // 選択されているクラスを設定
     Class selectedClass = quotedNoticeData?.quotedClass ??
         draftedNoticeData.selectedClass ??
         classesList.first;
+
+    debugPrint("選択されているクラス: ${selectedClass.classUUID}");
 
     // ユーザー名を取得
     final user = await User.getUser();

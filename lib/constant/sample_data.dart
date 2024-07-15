@@ -21,16 +21,22 @@ class SampleData {
       userName: 'teacher',
       userTypeId: 1,
       mailAddress: 'test-teacher@gmail.com',
-      password: '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
+      password:
+          '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
       jwtKey: jwtKey);
   static User juniorUser = User(
-
       userName: 'junior',
       userTypeId: 2,
       mailAddress: 'test-pupil@gmail.com',
-      password: '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW',
+      password:
+          '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW',
       jwtKey: jwtKey);
-  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jwtKey: jwtKey);
+  static User patronUser = User(
+      userName: 'patron',
+      userTypeId: 3,
+      mailAddress: '',
+      password: 'password',
+      jwtKey: jwtKey);
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
@@ -147,29 +153,160 @@ class SampleData {
   ];
 
   static List<Help> helpData = [
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: true),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: true),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: true),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
+    Help(
+        helpTitle: 'せんたくもの',
+        helpContent: 'たたむところまでおねがいね',
+        helpCategory: '',
+        helpTag: '定番',
+        iconId: 2,
+        rewardPoint: 30,
+        isReword: false),
   ];
 
   static List<Reward> rewardData = [
     Reward(rewardName: 'アイス', note: '150円まで', rewardPoint: 50, iconId: 1),
-    Reward(rewardName: '晩ごはん指名権', note: '予算1000円', rewardPoint: 10, iconId: 3, stock: 5),
+    Reward(
+        rewardName: '晩ごはん指名権',
+        note: '予算1000円',
+        rewardPoint: 10,
+        iconId: 3,
+        stock: 5),
   ];
 
   // static List<RegisterHomework> registerHomeworkData = [
@@ -206,25 +343,26 @@ class SampleData {
     Notice(
         noticeDate: '2024-6-3',
         className: '4-5',
+        classUUID: '12345',
         noticeTitle: 'お知らせがたくさん',
         noticeExplanatory:
             '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
-        noticeRead: '0'),
+        noticeRead: 0),
     Notice(
         noticeDate: '2024-6-2',
         noticeTitle: 'ほんのすこしのしんじつ',
+        classUUID: '12345',
         className: ';~~;',
         noticeExplanatory: '少子化じゃなかったころ',
-        noticeRead: '1'),
+        noticeRead: 1),
     Notice(
         noticeDate: '2025.6.6',
         className: '3-A',
+        classUUID: '12345',
         noticeTitle: '夏休みの宿題について',
         noticeExplanatory: '最終日まで残さないように。\n二行目だよ。',
-        noticeRead: '0')
+        noticeRead: 0)
   ];
-
-  
 
   static List<DraftedNotice> draftedNoticesData = [
     DraftedNotice(
@@ -232,7 +370,7 @@ class SampleData {
       draftedNoticeId: 2,
       draftedNoticeTitle: '下書きをしたお知らせ',
       draftedNoticeExplanatory: '下書きのお知らせ本文',
-      selectedClass: classesData[0],
+      selectedClass: classList[0],
       quotedNoticeUuid: '51e6807b-9528-4a4b-bbe2-d59e9118a70d',
     ),
     // 下書きのみの場合
@@ -240,7 +378,7 @@ class SampleData {
       draftedNoticeId: 1,
       draftedNoticeTitle: '引用なしドラゴン',
       draftedNoticeExplanatory: 'ド級の引用ド引用',
-      selectedClass: classesData[2],
+      selectedClass: classList[2],
     ),
   ];
 
@@ -248,27 +386,12 @@ class SampleData {
     QuotedNotice(
       quotedNoticeUuid: 'quotedNotice0',
       quotedNoticeTitle: '引用したお知らせ',
-      quotedClass: classesData[0],
+      quotedClass: classList[0],
     ),
     QuotedNotice(
       quotedNoticeUuid: 'quotedNotice1',
       quotedNoticeTitle: '引用したお知らせ2',
-      quotedClass: classesData[1],
-    ),
-  ];
-
-  static List<Class> classList = [
-    Class(
-      classUUID: '09eba495-fe09-4f54-a856-9bea9536b661',
-      className: '3-2 ふたば学級',
-    ),
-    Class(
-      classUUID: '817f600e-3109-47d7-ad8c-18b9d7dbdf8b',
-      className: 'sample2',
-    ),
-    Class(
-      classUUID: '456789',
-      className: 'sample3',
+      quotedClass: classList[1],
     ),
   ];
 

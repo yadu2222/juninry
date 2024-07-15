@@ -54,4 +54,22 @@ class ClassService {
     final resData = await HttpReq.httpReq(reqData);
     return Class.resToClass(resData['srvResData']);
   }
+
+  static Future<List<Class>> getClasses() async {
+    // リクエストを生成
+    final reqData = Request(
+        url: Urls.getClasses,
+        reqType: 'GET',
+        headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
+    final resData = await HttpReq.httpReq(reqData);
+    debugPrint(resData.toString());
+    List<Class> classList = [];
+    for (Map c in resData['srvResData']['classes']) {
+      debugPrint(c.toString());
+      classList.add(Class.resToClass(c));
+    }
+    // 返す
+    return classList;
+  }
 }

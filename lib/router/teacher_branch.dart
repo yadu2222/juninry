@@ -10,7 +10,6 @@ import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // notice
 import '../view/pages/teacher/page_notice_detail.dart';
-// homework
 import '../view/pages/teacher/page_notice_register_teacher.dart';
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
@@ -18,6 +17,7 @@ import '../view/pages/teacher/page_homework_drafts.dart';
 import '../view/pages/share/page_students.dart';
 
 // 暫定的ホームたちにjuniorを使用
+// homework
 import '../view/pages/junior/page_notice.dart';
 // user
 import '../view/pages/junior/page_user.dart';
@@ -52,7 +52,6 @@ class TeacherBranch {
               ),
             ),
             // クラス作成
-
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,

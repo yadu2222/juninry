@@ -2,9 +2,11 @@ import '../http_req.dart';
 import '../../models/req_model.dart';
 import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
+import '../../models/notice_model.dart';
+import 'package:flutter/material.dart';
 
 class NoticeService {
-  static Future<QuotedNotice> fetchQuotedNotice(String noticeUuid) async {
+  static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {
     // リクエストのオブジェクトを生成
     final reqData = Request(
         url: Urls.noticeDetail + noticeUuid,
@@ -13,5 +15,18 @@ class NoticeService {
 
     Map resData = await HttpReq.httpReq(reqData);
     return QuotedNotice.resToQuotedNotice(resData);
+  }
+
+  static Future<void> registerNotice(Notice notice) async {
+    final reqData = Request(url: Urls.noticeRegister, reqType: 'POST', body: {
+      "noticeTitle": notice.noticeTitle,
+      "noticeExplanatory": notice.noticeExplanatory,
+      "classUUID": notice.classUUID,
+      if (notice.quotedNoticeUUID != null)
+        "quotedNoticeUUID": notice.quotedNoticeUUID
+    }, headers: {
+      'Content-Type': 'application/json'
+    });
+    await HttpReq.httpReq(reqData);
   }
 }

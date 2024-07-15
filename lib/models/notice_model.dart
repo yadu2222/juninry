@@ -1,9 +1,13 @@
 class Notice {
-  final String noticeDate;
-  final String className;
+  final String? noticeUUID;
   final String noticeTitle;
-  final String noticeExplanatory;
-  final String noticeRead;
+  final String? noticeExplanatory;
+  final String? noticeDate;
+  final String? userName;
+  final String? className;
+  final String classUUID;
+  final String? quotedNoticeUUID;
+  final int? noticeRead;
 
 // TODO :適用
 // おしらせID	notice_uuid
@@ -17,10 +21,14 @@ class Notice {
 // 確認の有無 notice_reads
 
   Notice({
-    required this.noticeDate,
-    required this.className,
+    this.noticeUUID,
     required this.noticeTitle,
-    required this.noticeExplanatory,
-    required this.noticeRead,
+    this.noticeExplanatory,
+    this.noticeDate,
+    this.userName,
+    this.className,
+    required this.classUUID,
+    this.quotedNoticeUUID,
+    this.noticeRead,
   });
 }

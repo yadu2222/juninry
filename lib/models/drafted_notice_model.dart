@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:juninry/constant/sample_data.dart';
-
 import 'class_model.dart';
-import 'quoted_notice_model.dart';
 import 'dbcon.dart';
 
 // 下書きされたお知らせの情報をまとめる
@@ -34,7 +30,7 @@ class DraftedNotice {
           draftedNoticeTitle: loadedData['notice_title'],
           draftedNoticeExplanatory: loadedData['notice_explanatory'],
           selectedClass: Class(
-            classUuid: loadedData['class_uuid'],
+            classUUID: loadedData['class_uuid'],
             className: loadedData['class_name'],
           ),
           quotedNoticeUuid: loadedData['quoted_notice_uuid']);
@@ -50,7 +46,7 @@ class DraftedNotice {
       'notice_date': data.draftedNoticeDate,
       'notice_title': data.draftedNoticeTitle,
       'notice_explanatory': data.draftedNoticeExplanatory,
-      'class_uuid': data.selectedClass?.classUuid,
+      'class_uuid': data.selectedClass?.classUUID,
       'class_name': data.selectedClass?.className,
       'quoted_notice_uuid': data.quotedNoticeUuid,
     };

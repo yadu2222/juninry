@@ -18,16 +18,19 @@ class QuotedNotice {
     return QuotedNotice(
       quotedNoticeUuid: '',
       quotedNoticeTitle: '',
-      quotedClass: Class.errorClass(),
+      quotedClass: Class.resToClass({}),
     );
   }
 
   static QuotedNotice resToQuotedNotice(Map resData) {
     try {
       return QuotedNotice(
-        quotedNoticeUuid: resData['srvResData']['noticeUuid'],
+        quotedNoticeUuid: resData['srvResData']['noticeUUID'],
         quotedNoticeTitle: resData['srvResData']['noticeTitle'],
-        quotedClass: Class.resToClass(resData),
+        quotedClass: Class(
+          className: resData['srvResData']['className'],
+          classUUID: resData['srvResData']['classUUID'],
+        ),
       );
     } catch (e) {
       debugPrint('Error converting map to QuotedNotice: $e');

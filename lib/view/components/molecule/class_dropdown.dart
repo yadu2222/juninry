@@ -144,7 +144,7 @@ class _ClassDropdownState extends State<ClassDropdown> {
                   //選択しているクラスは目印
                   width: 30,
                   child: Icon(
-                      item.classUuid == widget.selectedClass.classUuid
+                      item.classUUID == widget.selectedClass.classUUID
                           ? Icons.check
                           : null,
                       color: AppColors.subjectSocial,
