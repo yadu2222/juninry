@@ -17,26 +17,10 @@ import '../models/quoted_notice_model.dart';
 class SampleData {
   static String jwtKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMzQ4MTkxMTgsImlkIjoiM2NhYzE2ODQtYzFlMC00N2FlLTkyZmQtNmQ3OTU5NzU5MjI0IiwianRpIjoiY2ExYmY2MGItMzlmNS00NTI5LWE5YzEtYzJlNjQzYzEyNDBiIn0.x-3FXjbiOVRbkg05-sPvIShSC86jvvsBWudDrsJjO-I';
-  static User teacherUser = User(
-      userName: 'teacher',
-      userTypeId: 1,
-      mailAddress: 'test-teacher@gmail.com',
-      password:
-          '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6',
-      jwtKey: jwtKey);
-  static User juniorUser = User(
-      userName: 'junior',
-      userTypeId: 2,
-      mailAddress: 'test-pupil@gmail.com',
-      password:
-          '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW',
-      jwtKey: jwtKey);
-  static User patronUser = User(
-      userName: 'patron',
-      userTypeId: 3,
-      mailAddress: '',
-      password: 'password',
-      jwtKey: jwtKey);
+  static User teacherUser =
+      User(userName: 'teacher', userTypeId: 1, mailAddress: 'test-teacher@gmail.com', password: '\$2a\$10\$Ig/s1wsrXBuZ7qvjudr4CeQFhqJTLQpoAAp1LrBNh5jX9VZZxa3R6', jwtKey: jwtKey);
+  static User juniorUser = User(userName: 'junior', userTypeId: 2, mailAddress: 'test-pupil@gmail.com', password: '\$2a\$10\$8hJGyU235UMV8NjkozB7aeHtgxh39wg/ocuRXW9jN2JDdO/MRz.fW', jwtKey: jwtKey);
+  static User patronUser = User(userName: 'patron', userTypeId: 3, mailAddress: '', password: 'password', jwtKey: jwtKey);
 
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
@@ -68,6 +52,18 @@ class SampleData {
       homeworkLimit: DateTime.now().add(const Duration(days: 2)),
       startPage: 1,
       pageCount: 1,
+      homeworkPosterUuid: 'aaaaa',
+      homeworkNote: 'aaaaa',
+      imageUuid: 'aaaaa',
+      className: 'aaaaa',
+      submitFlg: 0,
+      teachingItem: teachingItem1,
+    ),
+    Homework(
+      homeworkUuid: 'aaaaa',
+      homeworkLimit: DateTime.now().add(const Duration(days: 2)),
+      startPage: 3,
+      pageCount: 12,
       homeworkPosterUuid: 'aaaaa',
       homeworkNote: 'aaaaa',
       imageUuid: 'aaaaa',

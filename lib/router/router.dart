@@ -65,6 +65,7 @@ Future<bool> isBranch(BranchType branchType) async {
   return branches == branchType.branch;
 }
 
+
 // ルーターの作成
 Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
   // jwtkeyが端末内に保存されているかを判別
@@ -75,6 +76,7 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
     }
     return true;
   }
+
   bool isLogin = await isLoginCheck();
   return GoRouter(
     debugLogDiagnostics: true,

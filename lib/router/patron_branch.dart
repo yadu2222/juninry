@@ -13,7 +13,7 @@ import '../view/pages/share/page_students.dart';
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_notice.dart';
-import '../view/pages/junior/page_user.dart';
+import '../view/pages/share/page_user.dart';
 
 // 保護者ブランチ
 class PatronBranch {
@@ -35,16 +35,6 @@ class PatronBranch {
                 child: const PageStudents(),
               ),
             ),
-            // // クラスに参加
-            // 保護者はクラスに参加できない、、！！！！
-            // GoRoute(
-            //   name: 'class',
-            //   path: 'class',
-            //   pageBuilder: (context, state) => NoTransitionPage(
-            //     key: state.pageKey,
-            //     child: PageClass(),
-            //   ),
-            // ),
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
@@ -79,7 +69,7 @@ class PatronBranch {
 
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child:  PageNoticeJunior(),
+            child: PageNoticeJunior(),
           ),
         ),
       ],
@@ -104,10 +94,10 @@ class PatronBranch {
             ),
             // 課題提出
             GoRoute(
-              name: 'submittion',
-              path: 'submittion',
-              pageBuilder: (context, state) {
-                if (state.extra != null) {
+                name: 'submittion',
+                path: 'submittion',
+                pageBuilder: (context, state) {
+                  if (state.extra != null) {
                     // 遷移時に定義されたデータをrouterで再定義
                     final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                     final String homeworkId = extraData['homeworkId'];
@@ -124,14 +114,13 @@ class PatronBranch {
                       child: const PageHomeworkJunior(),
                     );
                   }
-              }
-            )
+                })
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
         ),
       ],
     ),
-        // ouchi
+    // ouchi
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'ouchi'),
       routes: [
@@ -150,7 +139,7 @@ class PatronBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserDataJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

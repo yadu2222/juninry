@@ -62,8 +62,8 @@ class DatabaseHelper {
     )
   ''');
 
-    // 宿題の下書きを保存するためのテーブル
-    await db.execute('''
+      // 宿題の下書きを保存するためのテーブル
+      await db.execute('''
     CREATE TABLE homeworkDrafts (
       homework_id integer PRIMARY KEY autoincrement,
       homework_limit text not null,
@@ -103,11 +103,12 @@ class DatabaseHelper {
 
   // 照会処理
   // 引数：table名
-  static Future<List<Map<String, dynamic>>>queryAllRows(String tableName) async {
+  static Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
     Database? db = await instance.database;
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
+
 
   // テーブル名、検索条件、検索ワード、ソート
   static Future<List<Map<String, dynamic>>> queryBuilder(String tableName,
@@ -130,18 +131,31 @@ class DatabaseHelper {
 
   // 更新処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> update(String tableName, String colum,
-      Map<String, dynamic> row, String key) async {
+  static Future<int> update(String tableName,  Map<String, dynamic> row, ) async {
     Database? db = await instance.database;
-    return await db!
-        .update(tableName, row, where: '$colum = ?', whereArgs: ['$key']);
+    print(await db!.rawQuery("select * from $tableName"));
+    return await db.update(tableName, row);
   }
 
   // 削除処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> delete(String tableName, String colum, String key) async {
+  static Future<int> delete(String tableName, String colum, dynamic key) async {
     Database? db = await instance.database;
     return await db!.delete(tableName, where: '$colum = ?', whereArgs: [key]);
+  }
+
+  // テーブル削除
+  static Future<bool> logout() async {
+    try {
+      Database? db = await instance.database;
+      await db!.delete('users');
+      await db.delete('homeworkDrafts');
+      // TODO:おしらせしたがきdb削除処理の追加
+    } catch (e) {
+      return false;
+    }
+
+    return true;
   }
 
   // TODO:クエリビルダーがうごくまでのしょち
@@ -162,24 +176,4 @@ class DatabaseHelper {
     return result;
   }
 
-  // レコードに存在するか確認
-  // 引数：table名、検索キー
-  static Future<bool> queryExists(
-      String tableName, String colum, String key) async {
-    Database? db = await instance.database;
-    List<Map<String, dynamic>> result =
-        await db!.query(tableName, where: '$colum = ?', whereArgs: [key]);
-    // 取得した結果が空でないかを確認し、存在する場合はtrueを、存在しない場合はfalseを返す
-    return result.isNotEmpty;
-  }
-
-  // レコードから一行取得
-  // 引数：table名、属性名、検索キー
-  static Future<Map<String, dynamic>> queryRow(
-      String tableName, String colum, String key) async {
-    Database? db = await instance.database;
-    List<Map<String, dynamic>> result =
-        await db!.query(tableName, where: '$colum = ?', whereArgs: [key]);
-    return result[0];
-  }
 }

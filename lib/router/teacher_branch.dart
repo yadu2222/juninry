@@ -5,7 +5,7 @@ import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 // 遷移先
 // teacher
 // home
-import '../view/pages/teacher/page_home.dart';
+import '../view/pages/share/page_home.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // notice
@@ -20,7 +20,7 @@ import '../view/pages/share/page_students.dart';
 // homework
 import '../view/pages/junior/page_notice.dart';
 // user
-import '../view/pages/junior/page_user.dart';
+import '../view/pages/share/page_user.dart';
 
 // 教員ブランチ
 class TeacherBranch {
@@ -56,7 +56,7 @@ class TeacherBranch {
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             // child: const PageHomeTeacher(),
-            child: const PageHomeTeacher(),
+            child: const PageHome.teacher(),
             // child: PageHomePatron(),
           ),
         ),
@@ -195,8 +195,7 @@ class TeacherBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
-          pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey, child: const PageUserDataJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../service/class_service.dart';
 // import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../../models/class_model.dart';
 // import '../../view/components/atoms/dialog.dart';
+import '../error.dart';
 
 class ClassReq {
   final BuildContext context;
@@ -15,23 +15,14 @@ class ClassReq {
 
   // クラス参加
   Future<void> joinClassHandler(String inviteCode) async {
+    
     try {
-      // TODO:errorハンドリング
-      // なんか拾えない；〜〜〜；
-      Map<String, dynamic> errorHandling(http.Response response) {
-        if (response.statusCode == 409) {
-          ToastUtil.show(message: Messages.joinClassConflictError); // 参加失敗メッセージ
-          return {'error': 'Request failed', 'status': response.statusCode, 'body': response.body};
-        } else {
-          throw Exception('クラス参加に失敗しました');
-        }
-      }
-
-      print(inviteCode);
-      String joinClass = await ClassService.joinClass(inviteCode, errorHandling); // クラス参加処理を待つ
-      ToastUtil.show(message: '$joinClass${Messages.joinClassSuccess}'); // 参加成功メッセージ
-    } catch (error) {
-      debugPrint(error.toString());
+      await ClassService.joinClass(inviteCode); // クラス参加処理を待つ
+    }on PermittionError {
+      handleException(ExceptionType.permittonError);
+    } on JoinClassConflictException {
+      handleException(ExceptionType.joinClassConflict);
+    } catch (e) {
       ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
     }
   }
