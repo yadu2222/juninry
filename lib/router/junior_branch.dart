@@ -100,7 +100,7 @@ class JuniorBranch {
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageSubmissionJunior(homeworkUUId: homeworkId),
+                    child: PageSubmissionJunior(homeworkUUID: homeworkId),
                   );
 
                   // TODO:errorpage よういしたい

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io'; 
 
 // デフォルトのエラーハンドリング関数
 Map<String, dynamic> defaultErrorHandling(http.Response response) {
@@ -18,12 +19,14 @@ class Request {
   Map<String, dynamic>? body; // ボディ
   Function(http.Response) errorHandling; // エラーハンドリング関数 失敗時の処理
   String? parData;
+  List<File>? files;
   Request({
     required this.reqType,
     required this.url,
     this.headers = const {},
     this.body,
     this.errorHandling = defaultErrorHandling,
-    this.parData
+    this.parData,
+    this.files
   });
 }

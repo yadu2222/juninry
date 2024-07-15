@@ -12,7 +12,9 @@ class UserService {
       body: reqBody,
       headers: {'Content-Type': 'application/json'},
     );
+    print('damedesu');
     final resData = await HttpReq.httpReq(reqData, false);
+    print('damedesu');
     // dbに保存するためのオブジェクトを生成
     User user = User(
         userName: reqBody['userName'], userTypeId: reqBody['userTypeId'], mailAddress: reqBody['mailAddress'], password: reqBody['password'], jwtKey: resData['srvResData']['authenticationToken']);
@@ -32,15 +34,12 @@ class UserService {
 
     user.jwtKey = resData['srvResData']['authenticationToken']; // jwtKeyを最新のものに書き換え
 
-    // TODO:user情報がすでに存在しているかを判別して場合分け
+    // user情報がすでに存在しているかを判別して場合分け
     User check = await User.getUser();
     // user情報が存在していない場合
     if (check.userName == '') {
-      print('insert');
       User.insertUser(user); // 一時的に追加
-      print(user.userTypeId);
       User updUser = await getUser();
-      print(updUser.userTypeId);
       updUser.jwtKey = user.jwtKey;
       User.updateUser(updUser); // update
     } else {

@@ -8,6 +8,7 @@ class Messages {
   static const String loginSuccess = "ログインに成功しました";
   static const String joinClassSuccess = 'に参加しました！'; // 参加成功
   static const String createClassSuccess = 'を作成しました！'; // 参加成功
+  static const String submittionHomeworkSuccess = '宿題を提出しました！'; // 提出成功
   
   // APIエラー
   static const String permittonError = "権限がありません"; // 権限エラー
@@ -21,6 +22,7 @@ class Messages {
     static const String joinClassConflictError = "すでに参加しています！"; // 参加エラー1
   static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー
   static const String createClassError = 'クラス作成に失敗しました'; // 生成失敗
+  static const String submittionHomeworkError = 'クラス作成に失敗しました'; // 生成失敗
 
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足
