@@ -46,6 +46,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
   Widget build(BuildContext context) {
     //白い枠
     return ListItem(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         height: 500,
         widget: Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

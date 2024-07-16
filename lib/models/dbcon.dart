@@ -62,8 +62,8 @@ class DatabaseHelper {
     )
   ''');
 
-      // 宿題の下書きを保存するためのテーブル
-      await db.execute('''
+    // 宿題の下書きを保存するためのテーブル
+    await db.execute('''
     CREATE TABLE homeworkDrafts (
       homework_id integer PRIMARY KEY autoincrement,
       homework_limit text not null,
@@ -103,12 +103,12 @@ class DatabaseHelper {
 
   // 照会処理
   // 引数：table名
-  static Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
+  static Future<List<Map<String, dynamic>>> queryAllRows(
+      String tableName) async {
     Database? db = await instance.database;
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
-
 
   // テーブル名、検索条件、検索ワード、ソート
   static Future<List<Map<String, dynamic>>> queryBuilder(String tableName,
@@ -131,7 +131,10 @@ class DatabaseHelper {
 
   // 更新処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> update(String tableName,  Map<String, dynamic> row, ) async {
+  static Future<int> update(
+    String tableName,
+    Map<String, dynamic> row,
+  ) async {
     Database? db = await instance.database;
     print(await db!.rawQuery("select * from $tableName"));
     return await db.update(tableName, row);
@@ -176,4 +179,21 @@ class DatabaseHelper {
     return result;
   }
 
+  //TODO: なんだこれ
+
+  static Future<int> updateNotice(
+    String tableName,
+    Map<String, dynamic> row,
+    String whereClause,
+    List<dynamic> whereArgs,
+  ) async {
+    Database? db = await instance.database;
+    return await db?.update(
+          tableName,
+          row,
+          where: whereClause,
+          whereArgs: whereArgs,
+        ) ??
+        0;
+  }
 }

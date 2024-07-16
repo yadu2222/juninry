@@ -13,8 +13,10 @@ class Messages {
   static const String joinClassSuccess = 'に参加しました！'; // 参加成功
   static const String createClassSuccess = 'を作成しました！'; // 参加成功
   static const String submittionHomeworkSuccess = '宿題を提出しました！'; // 提出成功
+  static const String postNoticeSuccess = 'お知らせを投稿しました！\n一覧画面に戻ります'; // 投稿成功
 
   // APIエラー
+  static const String defaultError = "通信に失敗しました"; // データベースエラー
   static const String permittonError = "権限がありません"; // 権限エラー
   static const String inputError = "入力内容が不足しています"; // 入力エラー
   static const String loginError = "ログインに失敗しました"; // ログインエラー
@@ -28,6 +30,7 @@ class Messages {
   static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー
   static const String createClassError = 'クラス作成に失敗しました'; // 生成失敗
   static const String submittionHomeworkError = '宿題の提出に失敗しました'; // 生成失敗
+  static const String postNoticeError = 'お知らせの投稿に失敗しました'; // 生成失敗
 
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足

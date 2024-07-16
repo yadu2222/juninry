@@ -8,6 +8,7 @@ import '../../models/class_model.dart';
 import '../../models/notice_model.dart';
 import '../service/notice_service.dart';
 
+import '../error.dart';
 import '../../models/quoted_notice_model.dart';
 
 class NoticeReq {
@@ -25,13 +26,23 @@ class NoticeReq {
     }
   }
 
-  Future<void> postNotice(Notice notice) async {
+  Future<bool> postNotice(Notice notice) async {
     try {
+      // 入力チェック
+      if (notice.noticeTitle == "" || notice.noticeExplanatory == "") {
+        ToastUtil.show(message: Messages.inputError);
+        return false;
+      }
+
+      // お知らせ登録
       await NoticeService.registerNotice(notice);
-      ToastUtil.show(message: Messages.joinClassSuccess); // 参加成功メッセージ
+
+      ToastUtil.show(message: Messages.postNoticeSuccess); // 参加成功メッセージ
+      return true;
     } catch (error) {
       debugPrint(error.toString());
-      ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
+      ToastUtil.show(message: Messages.postNoticeError); // 参加失敗メッセージ
+      return false;
     }
   }
 }

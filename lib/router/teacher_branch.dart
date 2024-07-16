@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/teacher/page_notice.dart';
 import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 
 // 遷移先
@@ -10,7 +11,7 @@ import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // notice
 import '../view/pages/teacher/page_notice_detail.dart';
-import '../view/pages/teacher/page_notice_register_teacher.dart';
+import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
@@ -123,7 +124,7 @@ class TeacherBranch {
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: const PageNoticeRegisterTeacher(),
+            child: PageNoticeTeacher(),
           ),
         ),
       ],

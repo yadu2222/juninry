@@ -3,7 +3,8 @@ import '../../models/req_model.dart';
 import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
-import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../error.dart';
 
 class NoticeService {
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {

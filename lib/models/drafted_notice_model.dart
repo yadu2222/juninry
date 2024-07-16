@@ -57,8 +57,9 @@ class DraftedNotice {
     Map<String, dynamic> row = _toMap(draftedNoticeData);
 
     if (draftedNoticeData.draftedNoticeId != null &&
-        await DatabaseHelper.queryExists(
-            "drafted_notices", "notice_id", row['notice_id'].toString())) {
+        await DatabaseHelper.queryBuilder("drafted_notices", ["notice_id"],
+                [draftedNoticeData.draftedNoticeId.toString()], "notice_id")
+            .then((value) => value.isNotEmpty)) {
       return await updateDraftedNotice(row);
     } else {
       return await insertDraftedNotice(row);
@@ -74,10 +75,21 @@ class DraftedNotice {
 
   // SQLiteに上書き 保存できたらtrue
   static Future<int> updateDraftedNotice(Map<String, dynamic> row) async {
-    var result = await DatabaseHelper.update(
-        "drafted_notices", "notice_id", row, row['notice_id'].toString());
-    debugPrint(result.toString());
-    return result;
+    if (!row.containsKey('notice_id')) {
+      debugPrint("Error: notice_id is required for update");
+      return 0;
+    }
+
+    int noticeId = row['notice_id'];
+    row.remove('notice_id');
+
+    try {
+      return await DatabaseHelper.updateNotice(
+          "drafted_notices", row, "notice_id = ?", [noticeId]);
+    } catch (e) {
+      debugPrint("Update error: $e");
+      return 0;
+    }
   }
 
   // SQLiteから削除 保存できたらtrue
@@ -101,9 +113,9 @@ class DraftedNotice {
 
   // 1件取得
   static Future<DraftedNotice> getDraftedNotice(int noticeId) async {
-    Map<String, dynamic> result = await DatabaseHelper.queryRow(
-        "drafted_notices", "notice_id", noticeId.toString());
+    List<Map<String, dynamic>> result = await DatabaseHelper.queryBuilder(
+        "drafted_notices", ["notice_id"], [noticeId.toString()], "notice_id");
     debugPrint(result.toString());
-    return await DraftedNotice.toDraftedNotice(result);
+    return await DraftedNotice.toDraftedNotice(result.first);
   }
 }

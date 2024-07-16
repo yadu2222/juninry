@@ -101,95 +101,112 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
           //ボタン
           Align(
-            heightFactor: 1.3,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                BasicButton(
-                  width: 0.4,
-                  text: "下書きに保存",
-                  onPressed: () async {
-                    draftedNoticeData.selectedClass = selectedClass.value;
-                    draftedNoticeData.draftedNoticeTitle = titleController.text;
-                    draftedNoticeData.draftedNoticeExplanatory =
-                        textController.text;
-                    // これいらんかも
-                    draftedNoticeData.quotedNoticeUuid =
-                        quotedNoticeData?.quotedNoticeUuid;
-                    // 下書き保存処理
-                    int saveId;
-                    // タイトルと本文が入力されていない場合は保存しない
-                    if (draftedNoticeData.draftedNoticeTitle != "" ||
-                        draftedNoticeData.draftedNoticeExplanatory != "") {
-                      saveId = await DraftedNotice.saveDraftedNotice(
-                          draftedNoticeData);
-                      if (saveId > 0) {
-                        draftedNoticeData.draftedNoticeId = saveId;
-                        showDialog(
-                            // 保存成功
-                            context: context,
-                            builder: (context) {
-                              return AlertDialogView(
-                                  title: Messages.draft,
-                                  text: Messages.draftMsg,
-                                  actions: {
-                                    "OK": () {
-                                      context.go('/notice/draft');
-                                    }
-                                  });
-                            });
-                      } else {
-                        showDialog(
-                            // 保存失敗ダイアログ
-                            context: context,
-                            builder: (context) {
-                              return AlertDialogView(
-                                  title: Messages.databaseError,
-                                  text: Messages.databaseErrorMsg,
-                                  actions: {"いいよ〜": () {}});
-                            });
-                      }
-                    } else {
-                      showDialog(
-                          // 保存不可ダイアログ
-                          context: context,
-                          builder: (context) {
-                            return AlertDialogView(
-                                title: Messages.inputError,
-                                text: Messages.inputError,
-                                actions: {"戻る": () {}});
-                          });
-                    }
-                    // ダイアログを出す
-                  },
-                  isColor: true,
-                  circular: 5,
+              heightFactor: 1.3,
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BasicButton(
+                      width: 0.4,
+                      text: "下書きに保存",
+                      onPressed: () async {
+                        draftedNoticeData.selectedClass = selectedClass.value;
+                        draftedNoticeData.draftedNoticeTitle =
+                            titleController.text;
+                        draftedNoticeData.draftedNoticeExplanatory =
+                            textController.text;
+                        // これいらんかも
+                        draftedNoticeData.quotedNoticeUuid =
+                            quotedNoticeData?.quotedNoticeUuid;
+                        // 下書き保存処理
+                        int saveId;
+                        // タイトルと本文が入力されていない場合は保存しない
+                        if (draftedNoticeData.draftedNoticeTitle != "" ||
+                            draftedNoticeData.draftedNoticeExplanatory != "") {
+                          saveId = await DraftedNotice.saveDraftedNotice(
+                              draftedNoticeData);
+                          if (saveId > 0) {
+                            draftedNoticeData.draftedNoticeId = saveId;
+                            showDialog(
+                                // 保存成功
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialogView(
+                                      title: Messages.draft,
+                                      text: Messages.draftMsg,
+                                      actions: {
+                                        "OK": () {
+                                          context.go('/notice/draft');
+                                        }
+                                      });
+                                });
+                          } else {
+                            showDialog(
+                                // 保存失敗ダイアログ
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialogView(
+                                      title: Messages.databaseError,
+                                      text: Messages.databaseErrorMsg,
+                                      actions: {"いいよ〜": () {}});
+                                });
+                          }
+                        } else {
+                          showDialog(
+                              // 保存不可ダイアログ
+                              context: context,
+                              builder: (context) {
+                                return AlertDialogView(
+                                    title: Messages.inputError,
+                                    text: Messages.inputError,
+                                    actions: {"戻る": () {}});
+                              });
+                        }
+                        // ダイアログを出す
+                      },
+                      isColor: true,
+                      circular: 5,
+                    ),
+                    BasicButton(
+                      width: 0.4,
+                      text: "投稿",
+                      isColor: false,
+                      onPressed: () async {
+                        // context.push('/notice/register');
+                        NoticeReq noticeReq =
+                            NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+
+                        bool result = await noticeReq.postNotice(Notice(
+                          noticeTitle: titleController.text,
+                          noticeExplanatory: textController.text,
+                          quotedNoticeUUID: quotedNoticeData?.quotedNoticeUuid,
+                          classUUID: selectedClass.value.classUUID!,
+                        ));
+
+                        if (result) {
+                          // 投稿成功
+                          showDialog(
+                              // 保存成功
+                              context: context,
+                              builder: (context) {
+                                return AlertDialogView(
+                                    text: Messages.postNoticeSuccess,
+                                    actions: {
+                                      "OK": () {
+                                        context.go('/notice');
+                                      }
+                                    });
+                              });
+                        }
+                      },
+                      icon: Icons.check,
+                      circular: 5,
+                    )
+                  ],
                 ),
-                BasicButton(
-                  width: 0.4,
-                  text: "投稿",
-                  isColor: false,
-                  onPressed: () {
-                    // context.push('/notice/register');
-                    NoticeReq noticeReq =
-                        NoticeReq(context: context); // 通信用クラスのインスタンスを生成
-
-                    noticeReq.postNotice(Notice(
-                      noticeTitle: titleController.text,
-                      noticeExplanatory: textController.text,
-                      quotedNoticeUUID: quotedNoticeData?.quotedNoticeUuid,
-                      classUUID: selectedClass.value.classUUID!,
-                    ));
-
-                    context.go('/notice');
-                  }, //TODO: 投稿処理
-                  icon: Icons.check,
-                  circular: 5,
-                )
-              ],
-            ),
-          )
+              ))
         ]);
   }
 
