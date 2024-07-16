@@ -1,7 +1,7 @@
 class Urls {
   // base URL
   static const String protocol = 'http://';
-  static const String host = '127.0.0.1';
+  static const String host = '10.200.1.77';
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
   static const String version = '/v1'; // version
@@ -17,6 +17,8 @@ class Urls {
   // homework
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
   static const String getNextdayHomeworks = '$version/auth/users/homeworks/nextday'; // GETつぎのひの宿題取得
+  static const String submittionHomework = '$version/auth/users/homeworks/submit'; // POST宿題提出
+
 
   // class
   static const String getClassmates = '$version/auth/users/classes/users'; // GETクラスメイト取得

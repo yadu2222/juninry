@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
+import 'dart:io';
 // import '../../models/homework_model.dart';
 import '../service/homework_service.dart';
 // import 'package:go_router/go_router.dart';
 
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
+
 
 class HomeworkReq {
   final BuildContext context;
@@ -32,6 +34,19 @@ class HomeworkReq {
       debugPrint(error.toString());
       ToastUtil.show(message: Messages.getHomeworkError);
       return [];
+    }
+  }
+
+  // 宿題提出
+  Future<void> submittionHomework(String homeworkUUID,List<File> files) async{
+    try {
+      await HomeworkService.submittionHomework(homeworkUUID,files); // 課題提出を待つ
+      ToastUtil.show(message: Messages.submittionHomeworkSuccess); 
+      GoRouter.of(context).go('/homework');   // 画面遷移
+
+    } catch (error) {
+      debugPrint(error.toString());
+      ToastUtil.show(message: Messages.submittionHomeworkError);
     }
   }
 

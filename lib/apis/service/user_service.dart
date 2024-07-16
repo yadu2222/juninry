@@ -12,14 +12,12 @@ class UserService {
       body: reqBody,
       headers: {'Content-Type': 'application/json'},
     );
-    final resData = await HttpReq.httpReq(reqData,false);
+    print('damedesu');
+    final resData = await HttpReq.httpReq(reqData, false);
+    print('damedesu');
     // dbに保存するためのオブジェクトを生成
     User user = User(
-        userName: reqBody['userName'],
-        userTypeId: reqBody['userTypeId'],
-        mailAddress: reqBody['mailAddress'],
-        password: reqBody['password'],
-        jwtKey: resData['srvResData']['authenticationToken']);
+        userName: reqBody['userName'], userTypeId: reqBody['userTypeId'], mailAddress: reqBody['mailAddress'], password: reqBody['password'], jwtKey: resData['srvResData']['authenticationToken']);
     User.insertUser(user); // dbへの保存 getUserでjwtKeyがdbから読み込まれるため
 
     // ユーザー情報の取得と更新
@@ -36,7 +34,7 @@ class UserService {
 
     user.jwtKey = resData['srvResData']['authenticationToken']; // jwtKeyを最新のものに書き換え
 
-    // TODO:user情報がすでに存在しているかを判別して場合分け
+    // user情報がすでに存在しているかを判別して場合分け
     User check = await User.getUser();
     // user情報が存在していない場合
     if (check.userName == '') {
