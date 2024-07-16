@@ -5,6 +5,7 @@ import '../../models/class_model.dart';
 import '../../constant/urls.dart';
 import '../../models/req_model.dart';
 import 'package:http/http.dart' as http;
+import '../error.dart';
 
 class ClassService {
   static Future<List<Map<String, dynamic>>> getClassmates() async {
@@ -21,7 +22,19 @@ class ClassService {
   }
 
   // クラスに参加
-  static Future<String> joinClass(String inviteCode, Map<String, dynamic> Function(http.Response) errorHandling) async {
+  static Future<String> joinClass(String inviteCode,) async {
+
+    // こうやってthrowしてcatchで拾うのはどうだろうか
+    errorHandling(http.Response response) {
+      if (response.statusCode == 403) {
+        throw const PermittionError(); // 親にはその権限がないよ
+      } else if (response.statusCode == 409) {
+        throw const JoinClassConflictException(); // すでに参加している場合をthrow
+      } else {
+        throw Exception('クラス参加に失敗しました');
+      }
+    }
+    
     // リクエストを生成
     final reqData = Request(
       url: Urls.joinClass,
