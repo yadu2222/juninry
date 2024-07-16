@@ -54,4 +54,7 @@ class ClassService {
     final resData = await HttpReq.httpReq(reqData);
     return Class.resToClass(resData['srvResData']);
   }
+
+
+  
 }

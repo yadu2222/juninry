@@ -14,12 +14,6 @@ class NoticeReq {
 
   // 複数のお知らせを取得
   Future<List<Notice>> getNotices() async {
-    try {
       return await NoticeService.getNotices();
-    } catch (error) {
-      debugPrint(error.toString());
-      ToastUtil.show(message: Messages.getUserError);
-      return [Notice.errorNotice()];
-    }
   }
 }
