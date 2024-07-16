@@ -197,9 +197,9 @@ class SampleData {
         noticeDate: '2024-6-3',
         className: '4-5',
         noticeTitle: 'お知らせがたくさん',
-        readStatus: '0'),
-    Notice( noticeUUID: 'aaaaa', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: '1'),
-    Notice( noticeUUID: 'aaaaa',  noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', readStatus: '0')
+        readStatus: 0),
+    Notice( noticeUUID: 'aaaaa', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: 1),
+    Notice( noticeUUID: 'aaaaa',  noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', readStatus: 0)
   ];
 
   static List<Class> classList = [

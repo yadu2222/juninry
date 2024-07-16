@@ -21,18 +21,9 @@ class Messages {
   static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー
   static const String createClassError = 'クラス作成に失敗しました'; // 生成失敗
 
-<<<<<<< HEAD
-  // エラー
-  static const String inputError = "入力内容が不足しています";  // 入力エラー
-  static const String loginError = "ログインに失敗しました";  // ログインエラー
-  static const String registerError = "登録に失敗しました";  // 登録エラー
-  static const String getUserError = "ユーザー情報の取得に失敗しました"; // 登録エラー
-  static const String getHomeworkError = "宿題の取得に失敗しました"; // 登録エラー
-  static const String getNoticeError = "お知らせの取得に失敗しました"; // 登録エラー
-=======
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足
->>>>>>> develop
+
 
   // 空だねというとき
   static const String homeworkIsEmpty = "宿題はありません"; // 取得エラー

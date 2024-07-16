@@ -15,14 +15,16 @@ class NoticeService {
       Map resData = await HttpReq.httpReq(reqData);
 
       // 通知が存在するか確認
-      if (resData['notices'] != null && resData['notices'].isNotEmpty) {
+      print('おこられちゃう」～～');
+      print(resData.toString());
+   
         // 通知リストを返す
-        return Notice.resToNotices(List<Map<String, dynamic>>.from(resData['notices']));
-      } else {
-        // 通知が存在しない場合にエラーメッセージを返す
-        return [Notice.errorNotice()];
-      }
+        return Notice.resToNotices(resData['srvResData']['notices']);
+     
     } catch (e) {
+
+      print("じつはよ、、例外がでてるんだ");
+      print(e.toString());
       // エラーメッセージを出力
       // エラーが発生した場合にエラーメッセージをリストで返す
       return [Notice.errorNotice()];

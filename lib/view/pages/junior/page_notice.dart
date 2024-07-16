@@ -24,6 +24,7 @@ class PageNoticeJunior extends HookWidget {
         try {
           List<Notice> fetchedNotices = await NoticeService.getNotices();
           notices.value = fetchedNotices;
+          print(fetchedNotices[0].className.toString());
         } catch (error) {
           debugPrint('Error fetching notices: $error');
         } finally {
@@ -41,7 +42,7 @@ class PageNoticeJunior extends HookWidget {
       backgroundColor: AppColors.main, // HACK:背景色パワープレイ！！
       body: BasicTemplate(
         title: 'おしらせ',
-        popIcon: true,
+        popIcon: false,
         featureIconButton: IconButton(
           icon: Icon(Icons.sort, size: 35),
           onPressed: () {

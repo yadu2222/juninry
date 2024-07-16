@@ -32,7 +32,7 @@ class LatestNoticeCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          int.parse(noticeData.readStatus) == 0
+          noticeData.readStatus == 0
               ? const Icon(
                   Icons.error_outline,
                   color: AppColors.buttonCheck,

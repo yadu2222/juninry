@@ -39,6 +39,7 @@ class HttpReq {
     debugPrint(response.body.toString());
     // 成功
     if (response.statusCode < 300) {
+      print('せいこうはしてるんだぜ');
       return jsonDecode(response.body) as Map<String, dynamic>;
       // 失敗時の処理
     } else {

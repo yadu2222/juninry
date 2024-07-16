@@ -5,34 +5,7 @@ class Notice {
   final String noticeTitle;
   final String noticeDate;
   final String className;
-  final String readStatus;
-
-  static Notice errorNotice() {
-    return Notice(
-      noticeUUID: '',
-      noticeTitle: '',
-      noticeDate: '',
-      className: '',
-      readStatus: '',
-    );
-  }
-
-  static List<Notice> resToNotices(List<Map<String, dynamic>> loadData) {
-    try {
-      return loadData.map((data) {
-        return Notice(
-          noticeUUID: data['noticeUUID'] ?? '',
-          noticeTitle: data['noticeTitle'] ?? '',
-          noticeDate: data['noticeDate'] ?? '',
-          className: data['className'] ?? '',
-          readStatus: data['readStatus'] ?? '',
-        );
-      }).toList();
-    } catch (e) {
-      debugPrint('Error converting map to Notices: $e');
-      return [errorNotice()];
-    }
-  }
+  final int readStatus;
 
   Notice({
     required this.noticeUUID,
@@ -41,4 +14,39 @@ class Notice {
     required this.noticeTitle,
     required this.readStatus,
   });
+
+  static Notice errorNotice() {
+    return Notice(
+      noticeUUID: '',
+      noticeTitle: '',
+      noticeDate: '',
+      className: '',
+      readStatus: 0,
+    );
+  }
+
+  // 日付を月、日だけに整形するメソッド
+  static String formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String month = dateTime.month.toString();
+    String day = dateTime.day.toString();
+    return '$month.$day';
+  }
+
+  static List<Notice> resToNotices(List loadData) {
+    try {
+      return loadData.map((data) {
+        return Notice(
+          noticeUUID: data['NoticeUuid'] ?? '',
+          noticeTitle: data['NoticeTitle'] ?? '',
+          noticeDate: formatDate(data['NoticeDate'] ?? ''),
+          className: data['ClassName'] ?? '',
+          readStatus: data['ReadStatus'] ?? 0,
+        );
+      }).toList();
+    } catch (e) {
+      debugPrint('Error converting map to Notices: $e');
+      return [errorNotice()];
+    }
+  }
 }

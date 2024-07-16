@@ -34,11 +34,14 @@ class NoticeCard extends StatelessWidget {
 
 
     return ListItem(
-      padding: EdgeInsets.only(top: 5,bottom: 10,left: 10,right: 10),
+      padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
+      margin:const  EdgeInsets.only(top: 18),
       // 表示する要素を配置
       widget: Row(
         
         mainAxisAlignment: MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
+        crossAxisAlignment: CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
+
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start, // 子ウィジェットを左揃えに設定
@@ -51,7 +54,7 @@ class NoticeCard extends StatelessWidget {
                   Container(
                     child: Text(
                       noticeData.noticeDate,
-                      style: Fonts.h2,
+                      style: Fonts.h3,
                     ),
                     margin: const EdgeInsets.only(left: 10),
                     
@@ -74,9 +77,9 @@ class NoticeCard extends StatelessWidget {
               Container(
                 child: Text(
                   noticeData.noticeTitle,
-                  style: Fonts.p,
+                  style: Fonts.h4,
                 ),
-                margin: const EdgeInsets.only(left: 10),
+                // margin: const EdgeInsets.only(left: 1),
               ),
             ],
           ),
@@ -92,6 +95,8 @@ class NoticeCard extends StatelessWidget {
             ),
         ],
       ),
+  
     );
   }
+  
 }
