@@ -18,14 +18,14 @@ class HomeworkDraftList extends StatelessWidget {
         itemDatas: homeworkData,
         listItem: (homework) => InkWell(
               onTap: () {
-                
-                  
+
+
                   // // 画面遷移
                   context.push('/homework/register/',
                   // 下書き一覧に選択した日付を渡す
                   // datetimeを渡すとrouterがエラーを吐くので、文字列に変換して渡す
                   extra: {'selectDate': homework.first.homeworkLimit.toString()}).then((value) => get);
-                
+
               },
               child: DraftHomeworkCard(homeworkData: homework,onTap: delete),
             ));

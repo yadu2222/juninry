@@ -41,4 +41,6 @@ class Messages {
 
   // 空だねというとき
   static const String homeworkIsEmpty = "宿題はありません"; // 取得エラー
+  static const String noticeTitleIsEmpty = "タイトルを入力してください"; 
+  static const String isEmpty = "データが見つかりません";
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import '../../../constant/fonts.dart';
 
 class AlertDialogView extends StatelessWidget {
   final String? title;
   final String text;
-  final Map<String, void Function()> actions;
+  final Map<Widget, void Function()> actions;
 
   const AlertDialogView({
     super.key,
@@ -15,8 +16,8 @@ class AlertDialogView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: title != null ? Text(title!) : null,
-      content: Text(text),
+      title: title != null ? Text(title!, style: Fonts.h3) : null,
+      content: Text(text, style: Fonts.p),
       actions: actions.entries.map((action) {
         return CupertinoDialogAction(
           isDestructiveAction: true,
@@ -24,7 +25,7 @@ class AlertDialogView extends StatelessWidget {
             action.value();
             Navigator.of(context).pop();
           },
-          child: Text(action.key),
+          child: action.key,
         );
       }).toList(),
     );

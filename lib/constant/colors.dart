@@ -28,6 +28,10 @@ class AppColors {
   static const Color buttonOk = Color(0xFF98CD00);
   static const Color buttonCheck = Color(0xFFFF4C00);
 
+  // ダイアログカラー
+  static const Color dialogReject = Color(0xFFFF3B30);
+  static const Color dialogAccept = Color(0xFF007AFF);
+
   // つかいやすい色
   static const Color glay = Color(0xFFE8EAED);
 }

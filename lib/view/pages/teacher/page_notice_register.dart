@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/apis/controller/notice_req.dart';
@@ -15,6 +15,8 @@ import '../../../models/quoted_notice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../apis/controller/class_req.dart';
 import '../../../models/notice_model.dart';
+import '../../components/atoms/toast.dart';
+import '../../../constant/fonts.dart';
 
 import 'package:intl/intl.dart';
 
@@ -40,21 +42,21 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // ロード中の表示
     if (snapshot.connectionState == ConnectionState.waiting) {
-      return const BasicTemplate(title: "お知らせ作成", children: [
+      return BasicTemplate(title: title, children: const [
         Center(child: CircularProgressIndicator()),
       ]);
     }
     // エラーが発生した場合の表示
     if (snapshot.hasError) {
-      return BasicTemplate(title: "お知らせ作成", children: [
-        Center(child: Text('エラーが発生しました: ${snapshot.error}')),
+      return BasicTemplate(title: title, children: const [
+        Center(child: Text(Messages.defaultError)),
       ]);
     }
 
     // データが null の場合の処理
     if (!snapshot.hasData) {
-      return const BasicTemplate(title: "お知らせ作成", children: [
-        Center(child: Text('データが見つかりません')),
+      return BasicTemplate(title: title, children: const [
+        Center(child: Text(Messages.isEmpty)),
       ]);
     }
 
@@ -67,14 +69,64 @@ class PageNoticeRegisterTeacher extends HookWidget {
     final titleController = data.titleController;
     final textController = data.textController;
 
+    // セーブ処理をする 返り血は成功したID
+    Future<int?> save() async {
+      draftedNoticeData.selectedClass = selectedClass.value;
+      draftedNoticeData.draftedNoticeTitle = titleController.text;
+      draftedNoticeData.draftedNoticeExplanatory = textController.text;
+      // これいらんかも おまもり
+      draftedNoticeData.quotedNoticeUuid = quotedNoticeData?.quotedNoticeUuid;
+      // 下書き保存処理
+      int saveId;
+      // タイトルが入力されていない場合は保存しない
+      if (draftedNoticeData.draftedNoticeTitle != "") {
+        saveId = await DraftedNotice.saveDraftedNotice(draftedNoticeData);
+        // 保存できた時はIDを返す
+        if (saveId > 0) {
+          return saveId;
+        } else {
+          // 保存失敗ダイアログ
+          ToastUtil.show(message: Messages.databaseErrorMsg);
+        }
+      } else {
+        // 保存不可ダイアログ
+        ToastUtil.show(message: Messages.noticeTitleIsEmpty);
+      }
+    }
+
     //クラス選択時の処理
     void onClassChanged(Class value) {
       selectedClass.value = value;
     }
 
+    // 引用ボタン押した時に保存を促す
+    void onQuoteClicked() {
+      // TODO: 警告を出すべきかの分岐
+      if (true) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialogView(
+                  text: Messages.confirmationMsg,
+                  actions: {
+                    const Text('無視する', style: Fonts.h1r): () {
+                      context.go('/notice');
+                    },
+                    const Text('保存する', style: Fonts.h1b): () async {
+                      int? saveId = await save();
+                      if (saveId != null) {
+                        draftedNoticeData.draftedNoticeId = saveId;
+                        // TODO: 遷移先
+                        context.go('/notice');
+                      }
+                    }
+                  },
+                ));
+      }
+    }
+
     // 1ページに必要な要素を並べる
     return BasicTemplate(
-        title: "お知らせ作成",
+        title: title,
         popIcon: true,
         featureIconButton: IconButton(
           icon: const Icon(
@@ -88,17 +140,17 @@ class PageNoticeRegisterTeacher extends HookWidget {
         children: [
           // お知らせ作成フォーム
           Expanded(
-            child: CreateNoticeForm(
-              classesList: classesList, //クラスリスト
-              onClassChanged: onClassChanged, //クラス選択時の処理
-              selectedClass: selectedClass.value, //現在選択されているクラス
-              userName: data.userName, //名前
-              titleController: titleController, //タイトルを管理するコントローラー
-              textController: textController, //本文を管理するコントローラー
-              quoteNoticeTitle: quotedNoticeData?.quotedNoticeTitle, //引用元のタイトル
-            ),
-          ),
-
+              child: CreateNoticeForm(
+                  classesList: classesList, //クラスリスト
+                  onClassChanged: onClassChanged, //クラス選択時の処理
+                  selectedClass: selectedClass.value, //現在選択されているクラス
+                  userName: data.userName, //名前
+                  titleController: titleController, //タイトルを管理するコントローラー
+                  textController: textController, //本文を管理するコントローラー
+                  quoteNoticeTitle:
+                      quotedNoticeData?.quotedNoticeTitle, //引用元のタイトル
+                  onQuoteClicked: onQuoteClicked // 引用ボタン押した時の処理
+                  )),
           //ボタン
           Align(
               heightFactor: 1.3,
@@ -112,59 +164,24 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       width: 0.4,
                       text: "下書きに保存",
                       onPressed: () async {
-                        draftedNoticeData.selectedClass = selectedClass.value;
-                        draftedNoticeData.draftedNoticeTitle =
-                            titleController.text;
-                        draftedNoticeData.draftedNoticeExplanatory =
-                            textController.text;
-                        // これいらんかも
-                        draftedNoticeData.quotedNoticeUuid =
-                            quotedNoticeData?.quotedNoticeUuid;
-                        // 下書き保存処理
-                        int saveId;
-                        // タイトルと本文が入力されていない場合は保存しない
-                        if (draftedNoticeData.draftedNoticeTitle != "" ||
-                            draftedNoticeData.draftedNoticeExplanatory != "") {
-                          saveId = await DraftedNotice.saveDraftedNotice(
-                              draftedNoticeData);
-                          if (saveId > 0) {
-                            draftedNoticeData.draftedNoticeId = saveId;
-                            showDialog(
-                                // 保存成功
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialogView(
-                                      title: Messages.draft,
-                                      text: Messages.draftMsg,
-                                      actions: {
-                                        "OK": () {
-                                          context.go('/notice/draft');
-                                        }
-                                      });
-                                });
-                          } else {
-                            showDialog(
-                                // 保存失敗ダイアログ
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialogView(
-                                      title: Messages.databaseError,
-                                      text: Messages.databaseErrorMsg,
-                                      actions: {"いいよ〜": () {}});
-                                });
-                          }
-                        } else {
+                        // ダイアログを出す
+                        // 保存できた時はIDを下書きデータに格納する　※上書き保存のため
+                        int? saveId = await save();
+                        if (saveId != null) {
+                          draftedNoticeData.draftedNoticeId = saveId;
                           showDialog(
-                              // 保存不可ダイアログ
+                              // 保存成功
                               context: context,
                               builder: (context) {
                                 return AlertDialogView(
-                                    title: Messages.inputError,
-                                    text: Messages.inputError,
-                                    actions: {"戻る": () {}});
+                                    text: Messages.draftMsg,
+                                    actions: {
+                                      const Text("OK", style: Fonts.h1b): () {
+                                        context.go('/notice/draft');
+                                      }
+                                    });
                               });
                         }
-                        // ダイアログを出す
                       },
                       isColor: true,
                       circular: 5,
@@ -174,9 +191,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       text: "投稿",
                       isColor: false,
                       onPressed: () async {
-                        // context.push('/notice/register');
-                        NoticeReq noticeReq =
-                            NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+                        NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
 
                         bool result = await noticeReq.postNotice(Notice(
                           noticeTitle: titleController.text,
@@ -194,7 +209,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                                 return AlertDialogView(
                                     text: Messages.postNoticeSuccess,
                                     actions: {
-                                      "OK": () {
+                                      const Text("OK", style: Fonts.h1b): () {
                                         context.go('/notice');
                                       }
                                     });
@@ -214,8 +229,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
     ClassReq classReq = ClassReq(context: context); // 通信用クラスのインスタンスを生成
     NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
 
-    debugPrint("quotedNoticeUuid: $quotedNoticeUuid");
-
     // 前回の値を取得しているやつっぽいけどわからん、、、
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? storedDraftedNoticeId = prefs.getInt('draftedNoticeId');
@@ -232,11 +245,9 @@ class PageNoticeRegisterTeacher extends HookWidget {
       // 適用する下書きIDを決定
       // 優先度 引用された下書き > 保存されていた下書き
       int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
-      debugPrint("適用する下書きID: $currentDraftedNoticeId");
       if (currentDraftedNoticeId != null) {
         // 既存の下書きを取得
-        draftedNoticeData =
-            await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
+        draftedNoticeData = await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
       } else {
         // 新しい下書きを作成
         draftedNoticeData = DraftedNotice();
@@ -249,15 +260,13 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
       // // 現在の下書きIDを保存
       if (draftedNoticeData.draftedNoticeId != null) {
-        await prefs.setInt(
-            'draftedNoticeId', draftedNoticeData.draftedNoticeId!);
+        await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId!);
       }
     }
 
     // 引用データを取得
     if (draftedNoticeData.quotedNoticeUuid != null) {
-      quotedNoticeData = await noticeReq
-          .fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
+      quotedNoticeData = await noticeReq.fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
     }
 
     // HACK: 表示しないけどDBにいれるお知らせ作成日だよ
@@ -265,13 +274,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
         DateFormat('yyyy.MM.dd').format(DateTime.now());
 
     // コントローラーの設定
-    final titleController =
-        TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
+    final titleController = TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
     final textController = TextEditingController(
         text: draftedNoticeData.draftedNoticeExplanatory ?? '');
 
     // クラスリストを作成
-    // TODO: クラス一覧取得API
     List<Class> classesList = (quotedNoticeData != null)
         ? [quotedNoticeData.quotedClass]
         : await classReq.getClassesHandler();
@@ -280,8 +287,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
     Class selectedClass = quotedNoticeData?.quotedClass ??
         draftedNoticeData.selectedClass ??
         classesList.first;
-
-    debugPrint("選択されているクラス: ${selectedClass.classUUID}");
 
     // ユーザー名を取得
     final user = await User.getUser();

@@ -4,7 +4,11 @@ import 'package:juninry/constant/fonts.dart';
 
 class QuoteFromNotice extends StatelessWidget {
   final String? quoteNoticeTitle;
-  const QuoteFromNotice({super.key, required this.quoteNoticeTitle});
+  final Function() onQuoteClicked;
+  const QuoteFromNotice(
+      {super.key,
+      required this.quoteNoticeTitle,
+      required this.onQuoteClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +21,7 @@ class QuoteFromNotice extends StatelessWidget {
       elevation: 0, //ボタンの影を消す
       highlightElevation: 0, //ボタンの影を消す
       splashColor: Colors.transparent,
-      // TODO: Routing 引用選択画面への遷移
-      onPressed: () {},
+      onPressed: onQuoteClicked,
       child: Column(
         children: [
           Padding(

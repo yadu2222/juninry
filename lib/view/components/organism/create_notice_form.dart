@@ -15,6 +15,7 @@ class CreateNoticeForm extends StatefulWidget {
   final Class selectedClass; // 選択されているクラス
   final String userName; // 名前
   final String? quoteNoticeTitle; // 引用されているお知らせタイトル
+  final void Function() onQuoteClicked; // 引用されているお知らせをクリックした時の処理
 
   final void Function(Class value) onClassChanged; // クラス選択時の処理
   final TextEditingController titleController; // タイトル
@@ -26,6 +27,7 @@ class CreateNoticeForm extends StatefulWidget {
     required this.selectedClass,
     required this.userName,
     required this.quoteNoticeTitle,
+    required this.onQuoteClicked,
     required this.onClassChanged,
     required this.titleController,
     required this.textController,
@@ -83,6 +85,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
           QuoteFromNotice(
             //引用するお知らせ
             quoteNoticeTitle: widget.quoteNoticeTitle,
+            onQuoteClicked: widget.onQuoteClicked,
           ),
 
           // 入力ブロック
