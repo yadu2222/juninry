@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import './constant/colors.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends HookWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     final router = useState<GoRouter?>(null); // GoRouterのインスタンス// null許容
@@ -17,11 +18,13 @@ class MyApp extends HookWidget {
       final newRouter = await createRouter(updateRouter: updateRouter); // 非同期でルーターを取得
       router.value = newRouter; // 取得したルーターを状態にセット
     }
+
     // ルーターの初期化を非同期で行う
     Future<void> initializeRouter() async {
       final getRouter = await createRouter(updateRouter: updateRouter); // 非同期でルーターを取得
       router.value = getRouter; // 取得したルーターを状態にセット
     }
+
     useEffect(() {
       // 直接非同期関数を書くことはできない
       initializeRouter();

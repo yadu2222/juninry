@@ -7,6 +7,8 @@ import '../view/components/atoms/toast.dart';
 enum ExceptionType {
   joinClassConflict,
   permittonError,
+  homeworkIsEmpty,
+  submittionHomeworkError,
 }
 
 // ひもづけ
@@ -17,6 +19,10 @@ extension ExceptionTypeExtension on ExceptionType {
         return Messages.joinClassConflictError ;
       case ExceptionType.permittonError:
         return Messages.permittonError;
+      case ExceptionType.homeworkIsEmpty:
+        return Messages.homeworkIsEmpty;
+      case ExceptionType.submittionHomeworkError:
+        return Messages.submittionHomeworkError;
     }
   }
 }
@@ -27,9 +33,14 @@ void handleException(ExceptionType exceptionType) {
   ToastUtil.show(message: exceptionType.message);
 }
 
-
 // ーーーー ここに足していってね ーーーー
 // enumとひもづけに足すことも忘れずに
+
+// 宿題が空のとき
+class HomeworkIsEmptyException implements Exception {
+  final String message;
+  const HomeworkIsEmptyException({this.message = Messages.homeworkIsEmpty});
+}
 
 // すでに参加している
 class JoinClassConflictException implements Exception {
@@ -41,4 +52,10 @@ class JoinClassConflictException implements Exception {
 class PermittionError implements Exception {
   final String message;
   const PermittionError({this.message = Messages.permittonError});
+}
+
+// 提出に失敗
+class SubmittionHomeworkError implements Exception {
+  final String message;
+  const SubmittionHomeworkError({this.message = Messages.submittionHomeworkError});
 }
