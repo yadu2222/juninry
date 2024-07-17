@@ -7,6 +7,7 @@ import '../view/components/atoms/toast.dart';
 enum ExceptionType {
   joinClassConflict,
   permittonError,
+  DefaultException
 }
 
 // ひもづけ
@@ -17,6 +18,8 @@ extension ExceptionTypeExtension on ExceptionType {
         return Messages.joinClassConflictError ;
       case ExceptionType.permittonError:
         return Messages.permittonError;
+      case ExceptionType.DefaultException:
+        return Messages.defaultError;
     }
   }
 }
@@ -41,4 +44,9 @@ class JoinClassConflictException implements Exception {
 class PermittionError implements Exception {
   final String message;
   const PermittionError({this.message = Messages.permittonError});
+}
+
+class DefaultException implements Exception {
+  final String message;
+  const DefaultException({this.message = Messages.defaultError});
 }

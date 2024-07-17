@@ -1,7 +1,7 @@
 class Urls {
   // base URL
   static const String protocol = 'http://';
-  static const String host = '10.200.1.77';
+  static const String host = 'localhost';
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
   static const String version = '/v1'; // version
@@ -13,6 +13,8 @@ class Urls {
   static const String getUser = '$version/auth/users/user'; // GETuser情報取得
 
   // notice
+  static const String noticeDetail = '$version/auth/users/notices/';  // GETお知らせ詳細
+  static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
 
   // homework
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
@@ -25,5 +27,6 @@ class Urls {
   static const String joinClass = '$version/auth/users/classes/join';  // POSTクラス参加
   static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
   static const String inviteClass = '$version/auth/users/classes/refresh'; // POST招待コード再発行
+  static const String getClasses = '$version/auth/users/classes/affiliations'; // GETクラス一覧取得
 
 }
