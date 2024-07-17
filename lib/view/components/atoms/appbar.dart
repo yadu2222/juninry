@@ -10,6 +10,7 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
     required this.titleText,
     this.popIconButton = false,
     this.featureIconButton,
+    this.popFunction,
   });
 
   // 必ず必要
@@ -17,6 +18,7 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
   // null許容
   final bool popIconButton; // 左側のアイコン
   final IconButton? featureIconButton; // 右側のアイコン　必要なときとそうでないときがあるため、nullを許容する
+  final void Function()? popFunction; // 右側のアイコン タップ時の処理
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,14 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
               onPressed: () {
                 // TODO: 戻る先がなくても出しゃばってきてエラー吐くので修正
-                context.pop(context);
+                // しょりものせれるようにしたよ
+                // TODO:ぶすなのでなおす
+                try {
+                  popFunction!();
+                  context.pop(context);
+                } catch (e) {
+                  context.pop(context);
+                }
               },
               icon: const Icon(
                 Icons.arrow_back_ios_new,

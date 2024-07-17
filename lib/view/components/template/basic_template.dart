@@ -7,6 +7,7 @@ class BasicTemplate extends StatelessWidget {
   final bool popIcon;
   final List<Widget> children;
   final IconButton? featureIconButton;
+   final void Function()? popFunction;
 
   const BasicTemplate({
     super.key,
@@ -14,6 +15,7 @@ class BasicTemplate extends StatelessWidget {
     this.popIcon = false,
     required this.children,
     this.featureIconButton,
+    this.popFunction
   });
 
   @override
@@ -24,6 +26,7 @@ class BasicTemplate extends StatelessWidget {
         titleText: title,
         popIconButton: popIcon,
         featureIconButton: featureIconButton,
+        popFunction: popFunction,
       ), // appbar
       ...children,
     ]));

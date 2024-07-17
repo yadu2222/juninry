@@ -10,7 +10,9 @@ import '../../components/organism/register_homework_list.dart';
 import '../../../models/teaching_item_model.dart';
 import '../../components/atoms/basic_button.dart';
 
+import '../../../constant/messages.dart';
 import '../../../models/register_homework_model.dart';
+import '../../components/atoms/toast.dart';
 
 class PageHomeworkRegisterTeacher extends HookWidget {
   // タイトル
@@ -55,8 +57,15 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       for (var homework in registerHomeworkDataOld.value) {
         RegisterHomework.deleteHomeworkDrafts(homework);
       }
-      await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
-      context.push('/homework'); // 課題一覧に遷移
+      bool isRegister = await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
+      if (isRegister) {
+        // 保存に成功したよ
+        ToastUtil.show(message: Messages.draftRegisterSuccess);
+        context.push('/homework'); // 課題一覧に遷移
+      } else {
+        // 失敗エラー
+        ToastUtil.show(message: Messages.databaseErrorMsg);
+      }
     }
 
     // 初回のみ実行

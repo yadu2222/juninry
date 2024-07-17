@@ -8,6 +8,7 @@ class Messages {
   static const String draftMsg = "下書きを保存しました\n一覧画面に戻ります";
 
   // 成功
+  static const String draftRegisterSuccess = "下書きの保存に成功しました！";
   static const String registerSuccess = "登録に成功しました";
   static const String loginSuccess = "ログインに成功しました";
   static const String joinClassSuccess = 'に参加しました！'; // 参加成功
