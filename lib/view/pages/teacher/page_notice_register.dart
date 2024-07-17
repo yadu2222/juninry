@@ -67,6 +67,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
     final titleController = data.titleController;
     final textController = data.textController;
 
+    // DBから拾ってきた文字列を置いといて保存必要かみてみる
+    final String titleString = draftedNoticeData.draftedNoticeTitle.toString();
+    final String textString = draftedNoticeData.draftedNoticeExplanatory.toString();
+
     // セーブ処理をする 返り血は成功したID
     Future<bool> save() async {
       draftedNoticeData.selectedClass = selectedClass.value;
@@ -102,8 +106,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // 引用ボタン押した時に保存を促す
     void onQuoteClicked() {
-      // TODO: 警告を出すべきかの分岐
-      if (true) {
+      debugPrint("titleString: $titleString");
+      debugPrint("textString: $textString");
+      // TODO: 遷移先
+      if (titleString != titleController.text || textString != textController.text) {
         AlertDialogUtil.show(
           context: context,
           content: Messages.confirmationMsg,
@@ -116,26 +122,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
             }
           }),
         );
-
-
-        // showDialog(
-        //     context: context,
-        //     builder: (context) => AlertDialogView(
-        //           text: Messages.confirmationMsg,
-        //           actions: {
-        //             const Text('無視する', style: Fonts.h1r): () {
-        //               context.go('/notice');
-        //             },
-        //             const Text('保存する', style: Fonts.h1b): () async {
-        //               int? saveId = await save();
-        //               if (saveId != null) {
-        //                 draftedNoticeData.draftedNoticeId = saveId;
-        //                 // TODO: 遷移先
-        //                 context.go('/notice');
-        //               }
-        //             }
-        //           },
-        //         ));
+      } else {
+        context.go('/notice');
       }
     }
 
@@ -188,17 +176,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                               context.go('/notice/draft');
                             })
                           );
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (context) {
-                          //       return AlertDialogView(
-                          //           text: Messages.draftMsg,
-                          //           actions: {
-                          //             const Text("OK", style: Fonts.h1b): () {
-                          //               context.go('/notice/draft');
-                          //             }
-                          //           });
-                          //     });
+
                         }
                       },
                       isColor: true,
@@ -227,18 +205,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
                               context.go('/notice');
                             })
                           );
-                          // showDialog(
-                          //     // 保存成功
-                          //     context: context,
-                          //     builder: (context) {
-                          //       return AlertDialogView(
-                          //           text: Messages.postNoticeSuccess,
-                          //           actions: {
-                          //             const Text("OK", style: Fonts.h1b): () {
-                          //               context.go('/notice');
-                          //             }
-                          //           });
-                          //     });
                         }
                       },
                       icon: Icons.check,
