@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../molecule/notice_card.dart';
 import '../atoms/listItem_box.dart';
@@ -19,7 +18,7 @@ class NoticeList extends StatefulWidget {
 
 // _NoticeListState は NoticeList の状態を管理するクラス
 class _NoticeListState extends State<NoticeList> {
-  
+
   // ビルドメソッドはウィジェットツリーを構築する
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,9 @@ class _NoticeListState extends State<NoticeList> {
         },
         child: ListItemBox<Notice>(
           itemDatas: widget.noticeDatas,
-          listItem: 
+          listItem:
           (notice) => NoticeCard(noticeData: notice),
         ));
-        
+
   }
 }

@@ -15,11 +15,9 @@ import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
-import '../view/pages/share/page_students.dart';
 
 // 暫定的ホームたちにjuniorを使用
 // homework
-import '../view/pages/junior/page_notice.dart';
 // user
 import '../view/pages/share/page_user.dart';
 

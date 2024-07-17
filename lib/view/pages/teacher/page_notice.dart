@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/constant/colors.dart';
-import 'package:juninry/view/components/molecule/notice_card.dart';
 import 'package:juninry/view/components/organism/notice_list.dart';
-import '../../../constant/fonts.dart';
 import '../../../constant/sample_data.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.dartをインポート

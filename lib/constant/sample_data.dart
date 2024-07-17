@@ -8,7 +8,6 @@ import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
 import '../models/help_model.dart';
 import '../models/reward_model.dart';
-import '../models/class_model.dart';
 // import '../models/register_homework_model.dart';
 import '../models/quoted_notice_model.dart';
 

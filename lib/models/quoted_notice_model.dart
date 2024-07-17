@@ -1,5 +1,4 @@
 import 'class_model.dart';
-import 'dbcon.dart';
 import 'package:flutter/material.dart';
 
 // 引用しているお知らせの情報をまとめる

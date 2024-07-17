@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:juninry/constant/fonts.dart';
-import 'package:juninry/view/components/atoms/teaching_tag.dart';
-import '../../../models/register_homework_model.dart';
 
 import '../atoms/listitem.dart';
 import '../../../constant/colors.dart';
