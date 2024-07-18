@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/apis/controller/notice_req.dart';
-import 'package:juninry/constant/messages.dart';
-import 'package:juninry/models/class_model.dart';
-import 'package:juninry/models/drafted_notice_model.dart';
-import 'package:juninry/view/components/atoms/alert_dialog_view.dart';
-import 'package:juninry/view/components/atoms/basic_button.dart';
-import 'package:juninry/view/components/organism/create_notice_form.dart';
-import 'package:juninry/view/components/template/basic_template.dart';
-import '../../../models/user_model.dart';
-import '../../../models/quoted_notice_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../apis/controller/class_req.dart';
-import '../../../models/notice_model.dart';
-import '../../components/atoms/toast.dart';
-import '../../../constant/fonts.dart';
-
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// API呼び出し
+import '../../../apis/controller/class_req.dart';
+import '../../../apis/controller/notice_req.dart';
+// 表示する文字たち
+import '../../../constant/messages.dart';
+// モデル
+import '../../../models/class_model.dart';
+import '../../../models/user_model.dart';
+import '../../../models/drafted_notice_model.dart';
+import '../../../models/quoted_notice_model.dart';
+import '../../../models/notice_model.dart';
+// コンポーネント
+import '../../components/atoms/basic_button.dart';
+import '../../components/organism/create_notice_form.dart';
+import '../../components/template/basic_template.dart';
+import '../../components/atoms/toast.dart';
+import '../../components/atoms/alert_dialog.dart';
 
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
@@ -69,8 +70,12 @@ class PageNoticeRegisterTeacher extends HookWidget {
     final titleController = data.titleController;
     final textController = data.textController;
 
+    // DBから拾ってきた文字列を置いといて保存必要かみてみる
+    final String titleString = draftedNoticeData.draftedNoticeTitle.toString();
+    final String textString = draftedNoticeData.draftedNoticeExplanatory.toString();
+
     // セーブ処理をする 返り血は成功したID
-    Future<int?> save() async {
+    Future<bool> save() async {
       draftedNoticeData.selectedClass = selectedClass.value;
       draftedNoticeData.draftedNoticeTitle = titleController.text;
       draftedNoticeData.draftedNoticeExplanatory = textController.text;
@@ -83,7 +88,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
         saveId = await DraftedNotice.saveDraftedNotice(draftedNoticeData);
         // 保存できた時はIDを返す
         if (saveId > 0) {
-          return saveId;
+          draftedNoticeData.draftedNoticeId = saveId;
+          return true;
         } else {
           // 保存失敗ダイアログ
           ToastUtil.show(message: Messages.databaseErrorMsg);
@@ -92,6 +98,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
         // 保存不可ダイアログ
         ToastUtil.show(message: Messages.noticeTitleIsEmpty);
       }
+
+      return false;
     }
 
     //クラス選択時の処理
@@ -101,26 +109,27 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // 引用ボタン押した時に保存を促す
     void onQuoteClicked() {
-      // TODO: 警告を出すべきかの分岐
-      if (true) {
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialogView(
-                  text: Messages.confirmationMsg,
-                  actions: {
-                    const Text('無視する', style: Fonts.h1r): () {
-                      context.go('/notice');
-                    },
-                    const Text('保存する', style: Fonts.h1b): () async {
-                      int? saveId = await save();
-                      if (saveId != null) {
-                        draftedNoticeData.draftedNoticeId = saveId;
-                        // TODO: 遷移先
-                        context.go('/notice');
-                      }
-                    }
-                  },
-                ));
+      debugPrint("titleString: $titleString");
+      debugPrint("textString: $textString");
+      // TODO: 遷移先
+      if (
+        (titleController.text  != titleString && titleController.text != "") ||
+        (textController.text != textString && textController.text != "")
+        ) {
+        AlertDialogUtil.show(
+          context: context,
+          content: Messages.confirmationMsg,
+          negativeAction: ( "無視する",  () {
+            context.go('/notice');
+          }),
+          positiveAction: ( "保存する",  () async {
+            if (await save()) {
+              context.go('/notice');
+            }
+          }),
+        );
+      } else {
+        context.go('/notice');
       }
     }
 
@@ -164,23 +173,16 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       width: 0.4,
                       text: "下書きに保存",
                       onPressed: () async {
-                        // ダイアログを出す
                         // 保存できた時はIDを下書きデータに格納する　※上書き保存のため
-                        int? saveId = await save();
-                        if (saveId != null) {
-                          draftedNoticeData.draftedNoticeId = saveId;
-                          showDialog(
-                              // 保存成功
-                              context: context,
-                              builder: (context) {
-                                return AlertDialogView(
-                                    text: Messages.draftMsg,
-                                    actions: {
-                                      const Text("OK", style: Fonts.h1b): () {
-                                        context.go('/notice/draft');
-                                      }
-                                    });
-                              });
+                        if (await save()) {
+                          AlertDialogUtil.show(
+                            context: context,
+                            content: Messages.draftMsg,
+                            neutralAction: ("OK", () {
+                              context.go('/notice/draft');
+                            })
+                          );
+
                         }
                       },
                       isColor: true,
@@ -202,18 +204,13 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
                         if (result) {
                           // 投稿成功
-                          showDialog(
-                              // 保存成功
-                              context: context,
-                              builder: (context) {
-                                return AlertDialogView(
-                                    text: Messages.postNoticeSuccess,
-                                    actions: {
-                                      const Text("OK", style: Fonts.h1b): () {
-                                        context.go('/notice');
-                                      }
-                                    });
-                              });
+                          AlertDialogUtil.show(
+                            context: context,
+                            content: Messages.postNoticeSuccess,
+                            neutralAction: ("OK", () {
+                              context.go('/notice');
+                            })
+                          );
                         }
                       },
                       icon: Icons.check,

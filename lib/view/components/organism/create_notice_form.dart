@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 //クラスのセレクトボックスに使うデータ型
 import 'package:juninry/models/class_model.dart';
 
-class CreateNoticeForm extends StatefulWidget {
+class CreateNoticeForm extends StatelessWidget {
   final List<Class> classesList; // クラス一覧
   final Class selectedClass; // 選択されているクラス
   final String userName; // 名前
@@ -33,16 +33,9 @@ class CreateNoticeForm extends StatefulWidget {
     required this.textController,
   });
 
-  @override
-  _CreateNoticeFormState createState() => _CreateNoticeFormState();
-}
 
-class _CreateNoticeFormState extends State<CreateNoticeForm> {
   //初期化
-  @override
-  void initState() {
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +49,9 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
             Text(DateFormat('yyyy.MM.dd').format(DateTime.now()),
                 style: Fonts.h4),
             ClassDropdown(
-              selectedClass: widget.selectedClass,
-              items: widget.classesList,
-              onChanged: widget.onClassChanged,
+              selectedClass: selectedClass,
+              items: classesList,
+              onChanged: onClassChanged,
             )
           ]),
 
@@ -66,7 +59,7 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
           Container(
             margin: const EdgeInsets.only(top: 20),
             alignment: Alignment.centerLeft,
-            child: Text(widget.userName ?? "", style: Fonts.p),
+            child: Text(userName, style: Fonts.p),
           ),
 
           //タイトルブロック
@@ -78,19 +71,19 @@ class _CreateNoticeFormState extends State<CreateNoticeForm> {
               contentPadding: EdgeInsets.zero,
             ),
             style: Fonts.h3,
-            controller: widget.titleController,
+            controller:  titleController,
           ),
 
           //引用ブロック
           QuoteFromNotice(
             //引用するお知らせ
-            quoteNoticeTitle: widget.quoteNoticeTitle,
-            onQuoteClicked: widget.onQuoteClicked,
+            quoteNoticeTitle: quoteNoticeTitle,
+            onQuoteClicked: onQuoteClicked,
           ),
 
           // 入力ブロック
           Expanded(
-            child: LongTextField(textController: widget.textController),
+            child: LongTextField(textController: textController),
           ),
         ]));
   }

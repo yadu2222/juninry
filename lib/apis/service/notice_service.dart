@@ -20,10 +20,10 @@ class NoticeService {
       // 通知が存在するか確認
       print('おこられちゃう」～～');
       print(resData.toString());
-   
+
         // 通知リストを返す
         return Notice.resToNotices(resData['srvResData']['notices']);
-     
+
     } catch (e) {
 
       print("じつはよ、、例外がでてるんだ");
@@ -33,7 +33,7 @@ class NoticeService {
       return [Notice.errorNotice()];
     }
   }
-  
+
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {
     // リクエストのオブジェクトを生成
     final reqData = Request(
