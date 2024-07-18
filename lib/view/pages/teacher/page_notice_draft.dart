@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:juninry/view/components/atoms/listItem_box.dart';
-import 'package:juninry/view/components/atoms/listitem.dart';
-import 'package:juninry/view/components/molecule/draft_card.dart';
 import '../../../models/drafted_notice_model.dart';
+import '../../components/atoms/listItem_box.dart';
+import '../../components/molecule/draft_card.dart';
 import '../../components/template/basic_template.dart';
 
 // 教員_課題一覧ページ

@@ -24,9 +24,14 @@ class Fonts {
 
   // 警告？
   static const TextStyle h1r = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.buttonCheck, fontWeight: FontWeight.bold);
+  static const TextStyle pr = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.dialogNegative, fontWeight: FontWeight.bold);
 
   // 青文字
-  static const TextStyle h1b = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.dialogAccept, fontWeight: FontWeight.bold);
+  static const TextStyle pb = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.dialogPositive, fontWeight: FontWeight.bold);
+
+  // グレー
+  static const TextStyle pg = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.dialogNeutral, fontWeight: FontWeight.bold);
+
   // そんなに目立たない
   static const TextStyle h1y = TextStyle(fontSize: 28, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
   static const TextStyle h2y = TextStyle(fontSize: 24, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
