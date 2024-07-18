@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/sample_data.dart';
+import 'package:juninry/view/components/atoms/dialog.dart';
 import '../../components/template/basic_template.dart';
 
 import '../../components/organism/homework_register_tab.dart';
@@ -68,6 +69,22 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       }
     }
 
+    bool oldCheck() {
+      if (registerHomeworkDataOld.value != registerHomeworkData.value) {
+        // 変更がある場合
+        // 保存を促す
+        DialogUtil.show(
+            context: context,
+            child: Row(
+              children: [Text('保存する？')],
+            ));
+        return true;
+      } else {
+        return false;
+      }
+    
+    }
+
     // 初回のみ実行
     // ここでapiから教材リストを取得
     useEffect(() {
@@ -88,6 +105,8 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     return BasicTemplate(
         title: title,
+        // 変更があれば保存を促す
+        popFunction: oldCheck,
         // 下書き一覧に遷移
         featureIconButton: IconButton(
             onPressed: () {

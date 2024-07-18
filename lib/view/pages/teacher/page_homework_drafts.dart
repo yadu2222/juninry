@@ -43,7 +43,9 @@ class PageHomeworkDraftsTeacher extends HookWidget {
       return () {};
     }, []);
 
-    return BasicTemplate(title: title, children: [
+
+    return BasicTemplate(title: title,
+     children: [
       // 下書き一覧
       HomeworkDraftList(
         homeworkData: draftData.value,

@@ -7,7 +7,7 @@ class BasicTemplate extends StatelessWidget {
   final bool popIcon;
   final List<Widget> children;
   final IconButton? featureIconButton;
-   final void Function()? popFunction;
+   final bool Function()? popFunction;
 
   const BasicTemplate({
     super.key,
