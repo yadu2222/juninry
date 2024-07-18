@@ -18,14 +18,13 @@ class NoticeCard extends StatelessWidget {
   final Icon unknowIcon = const Icon(
     Icons.error_outline,
     color: AppColors.buttonCheck,
-
-    size: 45,
+    size: 40,
   );
 
   final Icon checkIcon = const Icon(
     Icons.check_circle,
     color: AppColors.buttonOk,
-    size: 45,
+    size: 40,
   );
 
   @override
@@ -34,11 +33,14 @@ class NoticeCard extends StatelessWidget {
 
 
     return ListItem(
-      padding: EdgeInsets.only(top: 5,bottom: 10,left: 10,right: 10),
+      padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
+      margin:const  EdgeInsets.only(top: 18),
       // 表示する要素を配置
       widget: Row(
 
         mainAxisAlignment: MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
+        crossAxisAlignment: CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
+
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start, // 子ウィジェットを左揃えに設定
@@ -50,8 +52,10 @@ class NoticeCard extends StatelessWidget {
                   // 日付け
                   Container(
                     child: Text(
+
                       noticeData.noticeDate!,
-                      style: Fonts.h2,
+                      style: Fonts.h3,
+
                     ),
                     margin: const EdgeInsets.only(left: 10),
 
@@ -74,9 +78,9 @@ class NoticeCard extends StatelessWidget {
               Container(
                 child: Text(
                   noticeData.noticeTitle,
-                  style: Fonts.p,
+                  style: Fonts.h4,
                 ),
-                margin: const EdgeInsets.only(left: 10),
+                // margin: const EdgeInsets.only(left: 1),
               ),
             ],
           ),
@@ -88,10 +92,12 @@ class NoticeCard extends StatelessWidget {
                   child:
                       // 未確認かを判別
                       // TODO:条件文分かり次第変更
-                      noticeData.noticeRead == '1' ? checkIcon : unknowIcon),
+                      noticeData.readStatus == '1' ? checkIcon : unknowIcon),
             ),
         ],
       ),
+  
     );
   }
+  
 }

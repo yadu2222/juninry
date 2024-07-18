@@ -48,11 +48,13 @@ class NoticeDetailTab extends StatelessWidget {
               indent: 0,
               endIndent: 0,
             ),
+
             // 本文
             Text(
               tabData.noticeExplanatory!,
               style: Fonts.p,
             )
+
           ],
         ));
   }

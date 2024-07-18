@@ -65,6 +65,7 @@ class ClassReq {
     }
   }
 
+
   Future<List<Class>> getClassesHandler() async {
     try {
       return await ClassService.getClasses(); // クラス一覧を取得
@@ -73,5 +74,6 @@ class ClassReq {
       ToastUtil.show(message: Messages.getClasses);
       return [];
     }
+
   }
 }

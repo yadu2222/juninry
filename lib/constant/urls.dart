@@ -2,6 +2,10 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
   static const String host = '127.0.0.1';
+
+  // static const String host = '10.0.2.2';
+  // static const String host = 'localhost';
+
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
   static const String version = '/v1'; // version
@@ -13,7 +17,8 @@ class Urls {
   static const String getUser = '$version/auth/users/user'; // GETuser情報取得
 
   // notice
-  static const String noticeDetail = '$version/auth/users/notices/'; // GETお知らせ詳細
+  static const String getNotices = '$version/auth/users/notices/notices'; // GETお知らせ取得
+  static const String noticeDetail = '$version/auth/users/notices/';  // GETお知らせ詳細
   static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
 
   // homework
