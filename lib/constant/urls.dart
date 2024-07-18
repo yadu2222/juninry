@@ -2,7 +2,6 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
   static const String host = '127.0.0.1';
-
   // static const String host = '10.0.2.2';
   // static const String host = 'localhost';
 
