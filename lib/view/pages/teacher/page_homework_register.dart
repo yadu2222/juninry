@@ -14,6 +14,7 @@ import '../../components/atoms/basic_button.dart';
 import '../../../constant/messages.dart';
 import '../../../models/register_homework_model.dart';
 import '../../components/atoms/toast.dart';
+import '../../components/atoms/alert_dialog.dart';
 
 class PageHomeworkRegisterTeacher extends HookWidget {
   // タイトル
@@ -51,20 +52,22 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       registerHomeworkData.value = List.from(registerHomeworkData.value)..removeAt(index); // 削除
     }
 
-    // 登録処理
-    void register() async {
+    // db保存処理
+    Future<bool> save() async {
       // 元の配列と現在の配列を比較して変更があればDBに投げる
       // 古いものを全削除
       for (var homework in registerHomeworkDataOld.value) {
         RegisterHomework.deleteHomeworkDrafts(homework);
       }
       bool isRegister = await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
-      if (isRegister) {
-        // 保存に成功したよ
+      return isRegister;
+    }
+
+    Future<void> draftSave() async {
+      if (await save()) {
         ToastUtil.show(message: Messages.draftRegisterSuccess);
-        context.push('/homework'); // 課題一覧に遷移
+        context.go('/homework');
       } else {
-        // 失敗エラー
         ToastUtil.show(message: Messages.databaseErrorMsg);
       }
     }
@@ -73,16 +76,27 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       if (registerHomeworkDataOld.value != registerHomeworkData.value) {
         // 変更がある場合
         // 保存を促す
-        DialogUtil.show(
-            context: context,
-            child: Row(
-              children: [Text('保存する？')],
-            ));
-        return true;
+        AlertDialogUtil.show(
+          context: context,
+          content: Messages.confirmationMsg,
+          negativeAction: (
+            "無視する",
+            () {
+              context.go('/homework');
+            }
+          ),
+          positiveAction: (
+            "保存する",
+            () async {
+              draftSave();
+              context.go('/homework');
+            }
+          ),
+        );
+        return false;
       } else {
         return false;
       }
-    
     }
 
     // 初回のみ実行
@@ -105,6 +119,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     return BasicTemplate(
         title: title,
+        popIcon: true,
         // 変更があれば保存を促す
         popFunction: oldCheck,
         // 下書き一覧に遷移
@@ -139,7 +154,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                 BasicButton(
                   width: 0.37,
                   text: '下書きに保存',
-                  onPressed: register,
+                  onPressed: draftSave,
                   isColor: true,
                 ),
                 const SizedBox(width: 60),

@@ -82,19 +82,16 @@ class TeacherBranch {
               ),
             ),
             GoRoute(
-              path:
-                  'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
+              path: 'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
               pageBuilder: (context, state) {
                 // データが送られてきたとき
                 if (state.extra != null) {
                   // Map型でデータを送るためそれを取得
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   // データを取り出してみる
                   final int? draftedNoticeId = extraData['draftedNoticeId'];
                   debugPrint(draftedNoticeId.toString());
-                  final String? quotedNoticeUuid =
-                      extraData['quotedNoticeUuid'];
+                  final String? quotedNoticeUuid = extraData['quotedNoticeUuid'];
                   debugPrint(quotedNoticeUuid.toString());
                   return NoTransitionPage(
                     key: state.pageKey,
@@ -144,9 +141,7 @@ class TeacherBranch {
                 GoRoute(
                   name: 'drafts',
                   path: 'drafts',
-                  pageBuilder: (context, state) => NoTransitionPage(
-                      key: state.pageKey,
-                      child: const PageHomeworkDraftsTeacher()),
+                  pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkDraftsTeacher()),
                 )
               ],
               pageBuilder: (context, state) {
@@ -157,8 +152,7 @@ class TeacherBranch {
                   // debugPrint("きちゃ");
 
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   final String selectDate = extraData['selectDate'];
                   print(selectDate);
                   return NoTransitionPage(
