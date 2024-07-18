@@ -53,7 +53,7 @@ class NoticeCard extends StatelessWidget {
                   Container(
                     child: Text(
 
-                      noticeData.noticeDate,
+                      noticeData.noticeDate!,
                       style: Fonts.h3,
 
                     ),

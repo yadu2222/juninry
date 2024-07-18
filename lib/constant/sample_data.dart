@@ -344,26 +344,28 @@ class SampleData {
         noticeTitle: 'お知らせがたくさん',
 
         readStatus: 0),
-    Notice( noticeUUID: 'aaaaa', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: 1),
-    Notice( noticeUUID: 'aaaaa',  noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', readStatus: 0)
+    Notice( noticeUUID: 'aaaaa',classUUID: '', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: 1),
+    Notice( noticeUUID: 'aaaaa',classUUID: '',  noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', readStatus: 0,
 
         noticeExplanatory:
             '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
-        noticeRead: 0),
+        ),
     Notice(
         noticeDate: '2024-6-2',
         noticeTitle: 'ほんのすこしのしんじつ',
         classUUID: '12345',
         className: ';~~;',
         noticeExplanatory: '少子化じゃなかったころ',
-        noticeRead: 1),
+        readStatus: 0
+       ),
     Notice(
         noticeDate: '2025.6.6',
         className: '3-A',
         classUUID: '12345',
         noticeTitle: '夏休みの宿題について',
         noticeExplanatory: '最終日まで残さないように。\n二行目だよ。',
-        noticeRead: 0)
+        readStatus: 0
+        )
   ];
 
   static List<DraftedNotice> draftedNoticesData = [

@@ -4,6 +4,7 @@ import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
 import 'package:http/http.dart' as http;
 import '../error.dart';
+import '../http_req.dart';
 
 class NoticeService {
   static Future<List<Notice>> getNotices() async {
