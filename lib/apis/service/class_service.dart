@@ -68,6 +68,7 @@ class ClassService {
     return Class.resToClass(resData['srvResData']);
   }
 
+
   static Future<List<Class>> getClasses() async {
     // リクエストを生成
     final reqData = Request(
@@ -85,4 +86,5 @@ class ClassService {
     // 返す
     return classList;
   }
+
 }
