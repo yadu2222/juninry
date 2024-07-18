@@ -5,7 +5,8 @@ class Class {
   String className;
   String? inviteCode;
   List<Student>? students;
-  Class({this.classUUID, required this.className, this.students,this.inviteCode});
+
+  Class({this.classUUID, required this.className, this.students, this.inviteCode});
 
   // レスポンスデータをクラス情報に変換
   static List<Map<String, dynamic>> resToClassmates(List resData) {
@@ -22,11 +23,27 @@ class Class {
     return classmates;
   }
 
-  static Class resToClass(Map resData){
+  // 単一のクラス情報に変換
+  static Class resToClass(Map resData) {
     return Class(
       className: resData['className'],
       classUUID: resData['classUUID'],
       inviteCode: resData['inviteCode'],
     );
+  }
+
+  // 複数のクラス情報に変換
+  static List<Class> resToClasses(List loadData) {
+    try {
+        return loadData.map((data) {
+        return Class(
+          classUUID: data['classUuid'] ?? '',
+          className: data['className'] ?? '',
+        );
+      }).toList();
+    } catch (e) {
+      print("クラス情報を取得できませんでした: $e");
+      return [];
+    }
   }
 }

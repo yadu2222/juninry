@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 class Notice {
+
   final String? noticeUUID;
   final String noticeTitle;
   final String? noticeExplanatory;
@@ -7,7 +10,7 @@ class Notice {
   final String? className;
   final String classUUID;
   final String? quotedNoticeUUID;
-  final int? noticeRead;
+  final int? readStatus;
 
 // TODO :適用
 // おしらせID	notice_uuid
@@ -29,6 +32,42 @@ class Notice {
     this.className,
     required this.classUUID,
     this.quotedNoticeUUID,
-    this.noticeRead,
+    this.readStatus,
+
   });
+
+  static Notice errorNotice() {
+    return Notice(
+      noticeUUID: '',
+      noticeTitle: '',
+      noticeDate: '',
+      className: '',
+      readStatus: 0,
+    );
+  }
+
+  // 日付を月、日だけに整形するメソッド
+  static String formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    String month = dateTime.month.toString();
+    String day = dateTime.day.toString();
+    return '$month.$day';
+  }
+
+  static List<Notice> resToNotices(List loadData) {
+    try {
+      return loadData.map((data) {
+        return Notice(
+          noticeUUID: data['NoticeUuid'] ?? '',
+          noticeTitle: data['NoticeTitle'] ?? '',
+          noticeDate: formatDate(data['NoticeDate'] ?? ''),
+          className: data['ClassName'] ?? '',
+          readStatus: data['ReadStatus'] ?? 0,
+        );
+      }).toList();
+    } catch (e) {
+      debugPrint('Error converting map to Notices: $e');
+      return [errorNotice()];
+    }
+  }
 }

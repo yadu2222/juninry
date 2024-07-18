@@ -35,9 +35,11 @@ class Messages {
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足
 
+
   // 通信エラー
   static const String databaseError = "ごめんなさい";
   static const String databaseErrorMsg = "保存に失敗しました\n再度実行してください";
+
 
   // 空だねというとき
   static const String homeworkIsEmpty = "宿題はありません"; // 取得エラー
