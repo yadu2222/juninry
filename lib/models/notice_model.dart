@@ -39,6 +39,7 @@ class Notice {
   static Notice errorNotice() {
     return Notice(
       noticeUUID: '',
+      classUUID: '',
       noticeTitle: '',
       noticeDate: '',
       className: '',
@@ -59,6 +60,7 @@ class Notice {
       return loadData.map((data) {
         return Notice(
           noticeUUID: data['NoticeUuid'] ?? '',
+          classUUID: data['ClassUuid'] ?? '',
           noticeTitle: data['NoticeTitle'] ?? '',
           noticeDate: formatDate(data['NoticeDate'] ?? ''),
           className: data['ClassName'] ?? '',
