@@ -80,8 +80,8 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
   bool isLogin = await isLoginCheck();
   return GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更
-    // initialLocation: '/login',
+    initialLocation: isLogin ? '/home' : '/login', // ログイン状態によって初期画面を変更,
+    // initialLocation: '/notice/register',
     routes: [
       GoRoute(
         path: '/login',

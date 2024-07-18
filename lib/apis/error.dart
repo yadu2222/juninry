@@ -4,25 +4,22 @@ import '../view/components/atoms/toast.dart';
 // APIとの通信における例外集
 
 // enumおじさんになることで可読性が上がる？気がする
-enum ExceptionType {
-  joinClassConflict,
-  permittonError,
-  homeworkIsEmpty,
-  submittionHomeworkError,
-}
+enum ExceptionType { joinClassConflict, permittonError, homeworkIsEmpty, submittionHomeworkError, DefaultException }
 
 // ひもづけ
 extension ExceptionTypeExtension on ExceptionType {
   String get message {
     switch (this) {
       case ExceptionType.joinClassConflict:
-        return Messages.joinClassConflictError ;
+        return Messages.joinClassConflictError;
       case ExceptionType.permittonError:
         return Messages.permittonError;
       case ExceptionType.homeworkIsEmpty:
         return Messages.homeworkIsEmpty;
       case ExceptionType.submittionHomeworkError:
         return Messages.submittionHomeworkError;
+      case ExceptionType.DefaultException:
+        return Messages.defaultError;
     }
   }
 }
@@ -58,4 +55,9 @@ class PermittionError implements Exception {
 class SubmittionHomeworkError implements Exception {
   final String message;
   const SubmittionHomeworkError({this.message = Messages.submittionHomeworkError});
+}
+
+class DefaultException implements Exception {
+  final String message;
+  const DefaultException({this.message = Messages.defaultError});
 }

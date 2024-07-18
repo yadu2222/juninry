@@ -25,6 +25,7 @@ class Class {
   static Class resToClass(Map resData){
     return Class(
       className: resData['className'],
+      classUUID: resData['classUUID'],
       inviteCode: resData['inviteCode'],
     );
   }

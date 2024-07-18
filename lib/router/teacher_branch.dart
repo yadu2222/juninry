@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/teacher/page_notice.dart';
+import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 
 // 遷移先
 // teacher
@@ -9,10 +11,14 @@ import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // notice
 import '../view/pages/teacher/page_notice_detail.dart';
-// homework
+import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
+import '../view/pages/share/page_students.dart';
+
+// 暫定的ホームたちにjuniorを使用
+// homework
 import '../view/pages/junior/page_notice.dart';
 // user
 import '../view/pages/share/page_user.dart';
@@ -76,12 +82,49 @@ class TeacherBranch {
                     // noticeUUID: '123456',
                     ),
               ),
-            )
+            ),
+            GoRoute(
+              path:
+                  'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
+              pageBuilder: (context, state) {
+                // データが送られてきたとき
+                if (state.extra != null) {
+                  // Map型でデータを送るためそれを取得
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
+                  // データを取り出してみる
+                  final int? draftedNoticeId = extraData['draftedNoticeId'];
+                  debugPrint(draftedNoticeId.toString());
+                  final String? quotedNoticeUuid =
+                      extraData['quotedNoticeUuid'];
+                  debugPrint(quotedNoticeUuid.toString());
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeRegisterTeacher(
+                      draftedNoticeId: draftedNoticeId,
+                      quotedNoticeUuid: quotedNoticeUuid,
+                    ),
+                  );
+                } else {
+                  // データが送られてきなかったとき
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: const PageNoticeRegisterTeacher(),
+                  );
+                }
+              },
+            ),
+            GoRoute(
+              path: "draft",
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageNoticeDraftTeacher(),
+              ),
+            ),
           ],
-
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: PageNoticeJunior(),
+            child: PageNoticeTeacher(),
           ),
         ),
       ],
@@ -103,7 +146,9 @@ class TeacherBranch {
                 GoRoute(
                   name: 'drafts',
                   path: 'drafts',
-                  pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkDraftsTeacher()),
+                  pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageHomeworkDraftsTeacher()),
                 )
               ],
               pageBuilder: (context, state) {
@@ -114,7 +159,8 @@ class TeacherBranch {
                   // debugPrint("きちゃ");
 
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
                   final String selectDate = extraData['selectDate'];
                   print(selectDate);
                   return NoTransitionPage(

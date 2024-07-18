@@ -29,7 +29,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
     super.initState();
     // SampleData.noticesDataの各Noticeのクラス名をキーとして、選択状態を初期化
     for (var notice in SampleData.noticesData) {
-      _selectedClass[notice.className] = false;
+      _selectedClass[notice.className!] = false;
     }
   }
 

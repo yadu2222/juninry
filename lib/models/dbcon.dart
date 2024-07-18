@@ -58,7 +58,8 @@ class DatabaseHelper {
       user_type_id integer,
       mail_address  text,
       password text,
-      jwt_key text
+      jwt_key text,
+      ouchi_uuid text
     )
   ''');
 
@@ -69,12 +70,25 @@ class DatabaseHelper {
       homework_limit text not null,
       start_page integer not null,
       page_count integer not null,
-      homework_poster_uuid text not null,
       homework_note text,
       class_uuid text not null,
       teaching_material_uuid text not null,
       teaching_material_name text not null,
       subject_id integer not null
+    )
+  ''');
+
+    // お知らせの下書きを管理するためのテーブル
+    await db.execute('''
+    CREATE TABLE drafted_notices (
+      notice_id integer PRIMARY KEY autoincrement,
+      notice_date text not null,
+      notice_title text not null,
+      notice_explanatory text,
+      class_uuid text not null,
+      class_name text not null,
+      quoted_notice_uuid text,
+      FOREIGN KEY (quoted_notice_uuid) REFERENCES quoted_notices(quoted_notice_uuid)
     )
   ''');
   }
@@ -115,10 +129,20 @@ class DatabaseHelper {
 
   // 更新処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> update(String tableName,  Map<String, dynamic> row, ) async {
+  static Future<int> update(
+    String tableName,
+    Map<String, dynamic> row, [
+    String? whereClause,
+    List<dynamic>? whereArgs,
+  ]) async {
     Database? db = await instance.database;
-    print(await db!.rawQuery("select * from $tableName"));
-    return await db.update(tableName, row);
+    return await db?.update(
+          tableName,
+          row,
+          where: whereClause,
+          whereArgs: whereArgs,
+        ) ??
+        0;
   }
 
   // 削除処理
@@ -134,7 +158,7 @@ class DatabaseHelper {
       Database? db = await instance.database;
       await db!.delete('users');
       await db.delete('homeworkDrafts');
-      // TODO:おしらせしたがきdb削除処理の追加
+      await db.delete('drafted_notices');
     } catch (e) {
       return false;
     }
@@ -150,7 +174,7 @@ class DatabaseHelper {
     // クエリの実行
     List<Map<String, dynamic>> result = await db!.rawQuery(
       '''
-    SELECT * FROM homeworks 
+    SELECT * FROM homeworkDrafts
     WHERE DATE(homework_limit) = DATE(?)
     ''',
       [date],

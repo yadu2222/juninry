@@ -37,24 +37,24 @@ class NoticeCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 5,bottom: 10,left: 10,right: 10),
       // 表示する要素を配置
       widget: Row(
-        
+
         mainAxisAlignment: MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start, // 子ウィジェットを左揃えに設定
-            
+
             children: [
               Row(
-                
+
                 children: [
                   // 日付け
                   Container(
                     child: Text(
-                      noticeData.noticeDate,
+                      noticeData.noticeDate!,
                       style: Fonts.h2,
                     ),
                     margin: const EdgeInsets.only(left: 10),
-                    
+
                   ),
 
                   //日時と学年のテキスト間のスペースを設定
@@ -63,7 +63,7 @@ class NoticeCard extends StatelessWidget {
                   //学年
                   Container(
                     child: Text(
-                      noticeData.className,
+                      noticeData.className!,
                       style: Fonts.h4y,
                     ),
                   )
@@ -80,7 +80,7 @@ class NoticeCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           // アイコン
             Container(
               alignment: Alignment.center,

@@ -32,7 +32,6 @@ class UserReq {
     user = user ?? await User.getUser(); // 引数がnullであればuser情報をdbから取得
     try {
       await UserService.login(user); // ログイン処理を待つ
-      debugPrint('damedesu');
       ToastUtil.show(message: Messages.loginSuccess); // ログイン成功メッセージ
       // routerを再取得
       updRouter();
