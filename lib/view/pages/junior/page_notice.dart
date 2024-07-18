@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:juninry/constant/colors.dart';
-import 'package:juninry/view/components/organism/notice_list.dart';
+
+import '../../../constant/colors.dart';
 import '../../../constant/sample_data.dart';
+import '../../components/organism/notice_list.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.dartをインポート
 

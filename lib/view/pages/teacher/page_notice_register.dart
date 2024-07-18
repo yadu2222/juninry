@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/apis/controller/notice_req.dart';
-import 'package:juninry/constant/messages.dart';
-import 'package:juninry/models/class_model.dart';
-import 'package:juninry/models/drafted_notice_model.dart';
-import 'package:juninry/view/components/atoms/basic_button.dart';
-import 'package:juninry/view/components/organism/create_notice_form.dart';
-import 'package:juninry/view/components/template/basic_template.dart';
-import '../../../models/user_model.dart';
-import '../../../models/quoted_notice_model.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// API呼び出し
 import '../../../apis/controller/class_req.dart';
+import '../../../apis/controller/notice_req.dart';
+// 表示する文字たち
+import '../../../constant/messages.dart';
+// モデル
+import '../../../models/class_model.dart';
+import '../../../models/user_model.dart';
+import '../../../models/drafted_notice_model.dart';
+import '../../../models/quoted_notice_model.dart';
 import '../../../models/notice_model.dart';
+// コンポーネント
+import '../../components/atoms/basic_button.dart';
+import '../../components/organism/create_notice_form.dart';
+import '../../components/template/basic_template.dart';
 import '../../components/atoms/toast.dart';
 import '../../components/atoms/alert_dialog.dart';
-
-import 'package:intl/intl.dart';
 
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
@@ -109,7 +112,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
       debugPrint("titleString: $titleString");
       debugPrint("textString: $textString");
       // TODO: 遷移先
-      if (titleString != titleController.text || textString != textController.text) {
+      if (
+        (titleController.text  != titleString && titleController.text != "") ||
+        (textController.text != textString && textController.text != "")
+        ) {
         AlertDialogUtil.show(
           context: context,
           content: Messages.confirmationMsg,
