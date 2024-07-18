@@ -25,5 +25,6 @@ class Urls {
   static const String joinClass = '$version/auth/users/classes/join';  // POSTクラス参加
   static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
   static const String inviteClass = '$version/auth/users/classes/refresh'; // POST招待コード再発行
+  static const String getClass = '$version/auth/users/classes/affiliations'; // GETクラス一覧取得
 
 }

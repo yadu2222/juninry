@@ -64,4 +64,10 @@ class ClassReq {
       return [];
     }
   }
+
+
+//複数のClassを取得
+  Future<List<Class>> getClasses() async{
+    return await ClassService.getClasses();
+  }
 }

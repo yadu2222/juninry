@@ -18,14 +18,13 @@ class NoticeCard extends StatelessWidget {
   final Icon unknowIcon = const Icon(
     Icons.error_outline,
     color: AppColors.buttonCheck,
-
-    size: 45,
+    size: 40,
   );
 
   final Icon checkIcon = const Icon(
     Icons.check_circle,
     color: AppColors.buttonOk,
-    size: 45,
+    size: 40,
   );
 
   @override

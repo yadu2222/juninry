@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../../models/notice_model.dart';
 import '../service/notice_service.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 
