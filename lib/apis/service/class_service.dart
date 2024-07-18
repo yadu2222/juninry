@@ -68,26 +68,23 @@ class ClassService {
     return Class.resToClass(resData['srvResData']);
   }
 
-  //クラス一覧を取得するリクエストを作成
+
   static Future<List<Class>> getClasses() async {
     // リクエストを生成
-    try {
-
     final reqData = Request(
-    url: Urls.getClass, 
-    reqType: 'GET', 
-    headers: {'Content-Type': 'application/json'});
-
+        url: Urls.getClasses,
+        reqType: 'GET',
+        headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
+    final resData = await HttpReq.httpReq(reqData);
+    debugPrint(resData.toString());
+    List<Class> classList = [];
+    for (Map c in resData['srvResData']['classes']) {
+      debugPrint(c.toString());
+      classList.add(Class.resToClass(c));
+    }
     // 返す
-    return Class.resToClasses(resData['srvResData']['classes']);
-  }catch(e){
-    print("class一覧取得ミスってるって");
-    return [];
-  }
+    return classList;
   }
 
-
-  
 }

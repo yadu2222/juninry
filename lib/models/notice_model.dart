@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
 
 class Notice {
-  final String noticeUUID;
+
+  final String? noticeUUID;
   final String noticeTitle;
-  final String noticeDate;
-  final String className;
-  final int readStatus;
+  final String? noticeExplanatory;
+  final String? noticeDate;
+  final String? userName;
+  final String? className;
+  final String classUUID;
+  final String? quotedNoticeUUID;
+  final int? readStatus;
+
+// TODO :適用
+// おしらせID	notice_uuid
+// タイトル	notice_title
+// 内容	notice_explanatory
+// 日付	notice_date
+// 投稿者ID	user_uuid
+// クラスID	class_uuid
+// おしらせID	notice_uuid
+// ユーザーID	user_uuid
+// 確認の有無 notice_reads
 
   Notice({
-    required this.noticeUUID,
-    required this.noticeDate,
-    required this.className,
+    this.noticeUUID,
     required this.noticeTitle,
-    required this.readStatus,
+    this.noticeExplanatory,
+    this.noticeDate,
+    this.userName,
+    this.className,
+    required this.classUUID,
+    this.quotedNoticeUUID,
+    this.readStatus,
+
   });
 
   static Notice errorNotice() {

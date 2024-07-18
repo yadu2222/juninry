@@ -26,6 +26,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
 
   void initState() {
     super.initState();
+
     _fetchClasses(); // クラス情報を取得するメソッドを呼び出し
   }
 
@@ -42,6 +43,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
         value: (classInfo) => false, // 最初はすべてのクラスが未選択になるように設定
       );
     });
+
   }
 
   @override

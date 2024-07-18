@@ -77,6 +77,20 @@ class DatabaseHelper {
       subject_id integer not null
     )
   ''');
+
+    // お知らせの下書きを管理するためのテーブル
+    await db.execute('''
+    CREATE TABLE drafted_notices (
+      notice_id integer PRIMARY KEY autoincrement,
+      notice_date text not null,
+      notice_title text not null,
+      notice_explanatory text,
+      class_uuid text not null,
+      class_name text not null,
+      quoted_notice_uuid text,
+      FOREIGN KEY (quoted_notice_uuid) REFERENCES quoted_notices(quoted_notice_uuid)
+    )
+  ''');
   }
 
   // 登録処理
@@ -89,14 +103,16 @@ class DatabaseHelper {
 
   // 照会処理
   // 引数：table名
-  static Future<List<Map<String, dynamic>>> queryAllRows(String tableName) async {
+  static Future<List<Map<String, dynamic>>> queryAllRows(
+      String tableName) async {
     Database? db = await instance.database;
     // print(await db!.rawQuery("select * from $tableName"));
     return await db!.rawQuery("select * from $tableName");
   }
 
   // テーブル名、検索条件、検索ワード、ソート
-  static Future<List<Map<String, dynamic>>> queryBuilder(String tableName, List<String> where, List<String> whereArgs, String orderBy) async {
+  static Future<List<Map<String, dynamic>>> queryBuilder(String tableName,
+      List<String> where, List<String> whereArgs, String orderBy) async {
     Database? db = await instance.database;
     return await db!.query(
       tableName,
@@ -115,7 +131,10 @@ class DatabaseHelper {
 
   // 更新処理
   // 引数：table名、更新後のmap、検索キー
-  static Future<int> update(String tableName,  Map<String, dynamic> row, ) async {
+  static Future<int> update(
+    String tableName,
+    Map<String, dynamic> row,
+  ) async {
     Database? db = await instance.database;
     print(await db!.rawQuery("select * from $tableName"));
     return await db.update(tableName, row);
@@ -144,18 +163,37 @@ class DatabaseHelper {
 
   // TODO:クエリビルダーがうごくまでのしょち
   // くやしいね
-  static Future<List<Map<String, dynamic>>> getHomeworksForSpecificDate(String date) async {
+  static Future<List<Map<String, dynamic>>> getHomeworksForSpecificDate(
+      String date) async {
     Database? db = await instance.database;
 
     // クエリの実行
     List<Map<String, dynamic>> result = await db!.rawQuery(
       '''
-    SELECT * FROM homeworks 
+    SELECT * FROM homeworks
     WHERE DATE(homework_limit) = DATE(?)
     ''',
       [date],
     );
 
     return result;
+  }
+
+  //TODO: なんだこれ
+
+  static Future<int> updateNotice(
+    String tableName,
+    Map<String, dynamic> row,
+    String whereClause,
+    List<dynamic> whereArgs,
+  ) async {
+    Database? db = await instance.database;
+    return await db?.update(
+          tableName,
+          row,
+          where: whereClause,
+          whereArgs: whereArgs,
+        ) ??
+        0;
   }
 }

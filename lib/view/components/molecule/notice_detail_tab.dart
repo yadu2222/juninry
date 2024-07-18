@@ -26,12 +26,12 @@ class NoticeDetailTab extends StatelessWidget {
               children: [
                 // ひづけ
                 Text(
-                  tabData.noticeDate,
+                  tabData.noticeDate!,
                   style: Fonts.p,
                 ),
                 // クラス名
                 Text(
-                  tabData.className,
+                  tabData.className!,
                   style: Fonts.p,
                 )
               ],
@@ -48,11 +48,13 @@ class NoticeDetailTab extends StatelessWidget {
               indent: 0,
               endIndent: 0,
             ),
-            // // 本文
-            // Text(
-            //   tabData.noticeExplanatory,
-            //   style: Fonts.p,
-            // )
+
+            // 本文
+            Text(
+              tabData.noticeExplanatory!,
+              style: Fonts.p,
+            )
+
           ],
         ));
   }

@@ -20,7 +20,7 @@ class LatestNoticeCard extends StatelessWidget {
         child: Row(children: [
           SizedBox(
             child: Text(
-              noticeData.noticeDate,
+              noticeData.noticeDate!,
               style: Fonts.h4,
             ),
           ),
@@ -32,7 +32,10 @@ class LatestNoticeCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
+
           noticeData.readStatus == 0
+
+
               ? const Icon(
                   Icons.error_outline,
                   color: AppColors.buttonCheck,
