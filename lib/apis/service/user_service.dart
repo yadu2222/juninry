@@ -46,6 +46,7 @@ class UserService {
       User.insertUser(user); // 一時的に追加
       User updUser = await getUser();
       updUser.jwtKey = user.jwtKey;
+      updUser.ouchiUUID = user.ouchiUUID;
       User.updateUser(updUser); // update
     } else {
       User.updateUser(user);
@@ -88,7 +89,6 @@ class UserService {
     final resData = await HttpReq.httpReq(reqData);
     // ユーザー情報の更新
     await getUser();
-    // TODO:サーバー側が修正されたらOUCHINameに直す
-    return resData['srvResData']['className'];
+    return resData['srvResData']['ouchiName'];
   }
 }

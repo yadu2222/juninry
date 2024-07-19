@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import '../../../router/router.dart';
 // view
 import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/info_form.dart';
 import '../../components/atoms/basic_button.dart';
-import '../../components/molecule/invite_dialog.dart';
+import '../../components/atoms/alert_dialog.dart';
 // api
 import 'package:juninry/apis/controller/user_req.dart';
-// model
-import '../../../models/class_model.dart';
 // 定数
 import '../../../constant/messages.dart';
-// sample
-import '../../../constant/sample_data.dart';
 
 class PageJoinOUCHI extends HookWidget {
   PageJoinOUCHI({super.key});
@@ -29,15 +24,21 @@ class PageJoinOUCHI extends HookWidget {
     // おうちに参加
     void join() async {
       if (inviteCodeController.text.isNotEmpty) {
-        await userReq.joinOUCHIHandler(inviteCodeController.text);
+        String? ouchiName = await userReq.joinOUCHIHandler(inviteCodeController.text);
+        if (ouchiName != null) {
+          // 参加成功ダイアログ
+          AlertDialogUtil.show(
+            context: context,
+            content: '$ouchiName${Messages.joinClassSuccess}',
+            positiveAction: ('OK', () {}),
+          );
+        }
         inviteCodeController.clear(); // 入力値クリア
       } else {
         ToastUtil.show(message: Messages.inputError);
       }
     }
 
-    
-    
     return BasicTemplate(title: title, children: [
       const SizedBox(height: 30),
       const Text('おうちに参加しよう！'), // 説明文
@@ -53,7 +54,7 @@ class PageJoinOUCHI extends HookWidget {
         width: 0.4,
         text: '参加する',
         isColor: false,
-        onPressed:join,
+        onPressed: join,
         circular: 50,
       ),
     ]);

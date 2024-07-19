@@ -40,6 +40,7 @@ class User {
         userTypeId: loadData['userTypeId'],
         mailAddress: loadData['mailAddress'],
         password: loadData['password'],
+        ouchiUUID: loadData['ouchiUUID'],
       );
     } catch (e) {
       debugPrint('Error converting map to User: $e');

@@ -9,7 +9,6 @@ import '../../models/user_model.dart';
 // service
 import '../service/user_service.dart';
 
-
 class UserReq {
   final BuildContext context;
 
@@ -41,7 +40,6 @@ class UserReq {
       // ログイン完了後の処理
       GoRouter.of(context).go('/home');
     } catch (error) {
-      
       ToastUtil.show(message: Messages.loginError); // ログイン失敗メッセージ
     }
   }
@@ -56,16 +54,19 @@ class UserReq {
     }
   }
 
-   // おうちに参加する
-  Future<void> joinOUCHIHandler(String inviteCode) async {
+  // おうちに参加する
+  Future<String?> joinOUCHIHandler(String inviteCode) async {
     try {
-      await UserService.joinOUCHI(inviteCode); // クラス参加処理を待つ
+      return await UserService.joinOUCHI(inviteCode); // クラス参加処理を待つ
     } on PermittionError {
       handleException(ExceptionType.permittonError);
+      return null;
     } on JoinClassConflictException {
       handleException(ExceptionType.joinClassConflict);
+      return null;
     } catch (e) {
       ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
+      return null;
     }
   }
 }
