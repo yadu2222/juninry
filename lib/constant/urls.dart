@@ -34,5 +34,6 @@ class Urls {
   static const String getClasses = '$version/auth/users/classes/affiliations'; // GETクラス一覧取得
 
   // OUCHI
-  static const String joinOUCHI = '/v1/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
+  static const String joinOUCHI = '$version/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
+  static const String createOUCHI = '$version/auth/users/ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
 }

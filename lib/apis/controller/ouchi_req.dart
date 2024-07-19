@@ -3,12 +3,22 @@ import 'package:flutter/material.dart';
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../service/ouchi_service.dart';
-import '../error.dart';
+// import '../error.dart';
 
 class OUCHIReq {
   final BuildContext context;
   OUCHIReq(this.context);
 
+  // おうちを作成する
+  // TODO:エラーハンドリング
+  Future<String?> createOuchiHandler(String ouchiName) async {
+    try {
+      return await OUCHIService.createOuchi(ouchiName); // おうち作成処理を待つ
+    } catch (error) {
+      ToastUtil.show(message: Messages.createOuchiError); // 作成失敗メッセージ
+      return null;
+    }
+  }
 
   // 現在のポイントを取得
 
@@ -27,7 +37,4 @@ class OUCHIReq {
   // ご褒美を削除
 
   // ご褒美を取得
-
- 
-  
 }

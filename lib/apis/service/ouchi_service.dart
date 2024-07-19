@@ -1,13 +1,24 @@
-import 'package:flutter/material.dart';
-
 import '../http_req.dart';
-import '../../models/user_model.dart';
 import '../../constant/urls.dart';
 import '../../models/req_model.dart';
-import 'package:http/http.dart' as http;
-import '../error.dart';
+// import 'package:http/http.dart' as http;
+// import '../error.dart';
 
 class OUCHIService {
+
+  // おうち作成
+  static Future<String> createOuchi(String ouchiName) async {
+    // TODO:エラーハンドリング
+     // リクエストを生成
+    final reqData = Request(
+      url: Urls.createOUCHI,
+      reqType: 'POST',
+      body: {'className': ouchiName},
+      headers: {'Content-Type': 'application/json'},
+    );
+    final resData = await HttpReq.httpReq(reqData);
+    return resData['srvResData']['ouchiName'];
+  }
 
   // 現在のポイントを取得
 

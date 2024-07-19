@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import '../../../router/router.dart';
-// view
-import '../../components/atoms/toast.dart';
-import '../../components/template/basic_template.dart';
-import '../../components/atoms/info_form.dart';
-import '../../components/atoms/basic_button.dart';
-import '../../components/molecule/invite_dialog.dart';
-import '../../components/molecule/divider.dart';
-import '../../components/organism/join_list.dart';
+import 'package:juninry/view/pages/junior/page_ouchi_join.dart';
+import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
+import '../patron/page_ouchi_top.dart';
+import '../patron/page_ouchi_create.dart';
 // api
-import '../../../apis/controller/class_req.dart'; // リクエスト
+import 'package:juninry/apis/controller/user_req.dart';
 // model
-import '../../../models/class_model.dart';
-// 定数
-import '../../../constant/messages.dart';
-// sample
-import '../../../constant/sample_data.dart';
+import '../../../models/user_model.dart';
 
-
-// OUCHIUUIDがないユーザーがとばされるページ
-// 保護者は招待コード、子供は招待コード入力ページ
-class PageOUCHI extends HookWidget {
-  PageOUCHI({super.key});
+class PageOuchi extends HookWidget {
+  const PageOuchi({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    UserReq userReq = UserReq(context: context); // ClassReqクラスのインスタンスを生成
+    final isJunior = useState<bool?>(null); // 児童か判別
+    final isOUCHI = useState<bool?>(null); // おうちUUIDの有無を判別
+    useEffect(() {
+      Future<void> fetchData() async {
+        // おうちに参加してるかをチェックし、遷移
+        User user = await userReq.getUserHandler();
+        isOUCHI.value = user.ouchiUUID != null;
+        // ついでに児童か判別
+        isJunior.value = user.userTypeId == 2;
+      }
+
+      fetchData();
+      return () {};
+    }, []);
+    // ouchiの判別中はローディングを表示
+    if (isOUCHI.value == null) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      if (isOUCHI.value!) {
+        // おうちある(参加または作成画面)
+        return isJunior.value! ? PageJoinOuchi() : PageCreateOuchi();
+      } else {
+        // おうちない(トップ)
+        return isJunior.value! ? PageOuchiTopJunior() : const PageOuchiTopPatron();
+      }
+    }
   }
 }

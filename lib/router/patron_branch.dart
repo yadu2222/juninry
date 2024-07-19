@@ -7,8 +7,11 @@ import '../view/pages/patron/page_home.dart';
 import '../view/pages/patron/page_notice_detail.dart';
 import '../view/pages/patron/page_nextday_task.dart';
 import '../view/pages/patron/page_submittion.dart';
-import '../view/pages/patron/page_ouchi.dart';
+import '../view/pages/patron/page_ouchi_top.dart';
 import '../view/pages/share/page_students.dart';
+import '../view/pages/patron/page_ouchi_create.dart';
+import '../view/pages/patron/page_ouchi_top.dart';
+import '../view/pages/share/page_ouchi.dart';
 
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_homework.dart';
@@ -127,7 +130,7 @@ class PatronBranch {
         GoRoute(
           name: 'outhi',
           path: '/ouchi',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiPatron()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),

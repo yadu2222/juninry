@@ -13,8 +13,8 @@ import '../../../models/help_model.dart';
 // sample
 import '../../../constant/sample_data.dart';
 
-class PageOuchiTop extends HookWidget {
-  PageOuchiTop({super.key});
+class PageOuchiTopJunior extends HookWidget {
+  PageOuchiTopJunior({super.key});
 
   final String title = 'おうち';
 

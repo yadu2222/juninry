@@ -14,7 +14,7 @@ import '../view/pages/junior/page_nextday_task.dart';
 import '../view/pages/junior/page_notice.dart';
 // ouchi
 import '../view/pages/junior/page_reward.dart';
-import '../view/pages/junior/page_ouchi.dart';
+import '../view/pages/share/page_ouchi.dart';
 // user
 import '../view/pages/share/page_user.dart';
 
@@ -135,7 +135,7 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOUCHIJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
