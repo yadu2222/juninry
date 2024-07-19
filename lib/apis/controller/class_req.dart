@@ -14,16 +14,18 @@ class ClassReq {
   ClassReq({required this.context});
 
   // クラス参加
-  Future<void> joinClassHandler(String inviteCode) async {
-    
+  Future<String?> joinClassHandler(String inviteCode) async {
     try {
-      await ClassService.joinClass(inviteCode); // クラス参加処理を待つ
-    }on PermittionError {
+      return await ClassService.joinClass(inviteCode); // クラス参加処理を待つ
+    } on PermittionError {
       handleException(ExceptionType.permittonError);
+      return null;
     } on JoinClassConflictException {
       handleException(ExceptionType.joinClassConflict);
+      return null;
     } catch (e) {
       ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
+      return null;
     }
   }
 
@@ -65,7 +67,6 @@ class ClassReq {
     }
   }
 
-
   Future<List<Class>> getClassesHandler() async {
     try {
       return await ClassService.getClasses(); // クラス一覧を取得
@@ -74,6 +75,5 @@ class ClassReq {
       ToastUtil.show(message: Messages.getClasses);
       return [];
     }
-
   }
 }

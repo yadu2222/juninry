@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import './router.dart';
 
 // junior遷移先
 // home
@@ -15,6 +16,7 @@ import '../view/pages/junior/page_notice.dart';
 // ouchi
 import '../view/pages/junior/page_ouchi.dart';
 import '../view/pages/junior/page_reward.dart';
+import '../view/pages/junior/page_join_ouchi.dart';
 // user
 import '../view/pages/share/page_user.dart';
 
@@ -134,8 +136,13 @@ class JuniorBranch {
                 child: const PageRewardJunior(),
               ),
             ),
+            GoRoute(
+              name: 'join',
+              path: 'join',
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageJoinOUCHI()),
+            ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child:  PageJoinOUCHI()),
         )
       ],
     ),

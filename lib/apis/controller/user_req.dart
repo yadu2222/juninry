@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-
-import '../../models/user_model.dart';
-import '../service/user_service.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
+import '../error.dart';
+// view
+import '../../view/components/atoms/toast.dart';
+// model
+import '../../models/user_model.dart';
+// service
+import '../service/user_service.dart';
+
 
 class UserReq {
   final BuildContext context;
@@ -50,6 +53,19 @@ class UserReq {
     } catch (error) {
       ToastUtil.show(message: Messages.getUserError);
       return User.errorUser(); // 取得エラー
+    }
+  }
+
+   // おうちに参加する
+  Future<void> joinOUCHIHandler(String inviteCode) async {
+    try {
+      await UserService.joinOUCHI(inviteCode); // クラス参加処理を待つ
+    } on PermittionError {
+      handleException(ExceptionType.permittonError);
+    } on JoinClassConflictException {
+      handleException(ExceptionType.joinClassConflict);
+    } catch (e) {
+      ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
     }
   }
 }

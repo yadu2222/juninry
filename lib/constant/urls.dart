@@ -32,4 +32,7 @@ class Urls {
   static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
   static const String inviteClass = '$version/auth/users/classes/refresh'; // POST招待コード再発行
   static const String getClasses = '$version/auth/users/classes/affiliations'; // GETクラス一覧取得
+
+  // OUCHI
+  static const String joinOUCHI = '/v1/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
 }

@@ -1,7 +1,12 @@
+import 'package:http/http.dart' as http;
 import '../http_req.dart';
-import '../../models/user_model.dart';
-import '../../constant/urls.dart';
 import '../../models/req_model.dart';
+import '../../constant/urls.dart';
+import '../error.dart';
+// model
+import '../../models/user_model.dart';
+
+
 
 class UserService {
   static Future<void> registerUser(Map<String, dynamic> reqBody) async {
@@ -55,5 +60,35 @@ class UserService {
     Map resData = await HttpReq.httpReq(reqData);
     // 返す
     return User.resToUser(resData['srvResData']['userData']);
+  }
+
+  // OUCHIに参加
+  // 結果的に操作するのはuserモデルなのになあのきもち
+  static Future<String> joinOUCHI(
+    String inviteCode,
+  ) async {
+    errorHandling(http.Response response) {
+      if (response.statusCode == 403) {
+        throw const PermittionError(); // 親にはその権限がないよ
+      } else if (response.statusCode == 409) {
+        throw const JoinClassConflictException(); // すでに参加している場合をthrow
+      } else {
+        throw Exception('おうち参加に失敗しました');
+      }
+    }
+
+    // リクエストを生成
+    final reqData = Request(
+      url: Urls.joinOUCHI,
+      reqType: 'POST',
+      parData: inviteCode,
+      headers: {'Content-Type': 'application/json'},
+      errorHandling: errorHandling,
+    );
+    final resData = await HttpReq.httpReq(reqData);
+    // ユーザー情報の更新
+    await getUser();
+    // TODO:サーバー側が修正されたらOUCHINameに直す
+    return resData['srvResData']['className'];
   }
 }

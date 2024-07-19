@@ -9,14 +9,13 @@ import '../../components/atoms/basic_button.dart';
 import '../../components/molecule/invite_dialog.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/join_list.dart';
+import '../../components/atoms/alert_dialog.dart';
 // api
 import '../../../apis/controller/class_req.dart'; // リクエスト
 // model
 import '../../../models/class_model.dart';
 // 定数
 import '../../../constant/messages.dart';
-// sample
-import '../../../constant/sample_data.dart';
 
 class PageClass extends HookWidget {
   PageClass({super.key});
@@ -29,7 +28,7 @@ class PageClass extends HookWidget {
   Widget build(BuildContext context) {
     ClassReq classReq = ClassReq(context: context); // ClassReqクラスのインスタンスを生成
     final isTeacher = useState<bool>(false); // 教員か判別
-    final joinClasses = useState<List<Class>>(SampleData.classList); // データを格納するための変数
+    final joinClasses = useState<List<Class>>([]); // データを格納するための変数
     final conType = useState<bool>(true); // true:join,false:create
 
     // クラス作成
@@ -38,6 +37,7 @@ class PageClass extends HookWidget {
         Map<String, dynamic> resData = await classReq.createClassHandler(classNameController.text);
         if (resData['isCreate']) {
           inviteDialog(context, resData['classData']); // 作成成功ダイアログ
+
           classNameController.clear(); // 入力値クリア
         }
       } else {
@@ -45,11 +45,31 @@ class PageClass extends HookWidget {
       }
     }
 
+    // クラス一覧取得
+    Future<void> getClasses() async {
+      // TODO:APIからクラス一覧を取得
+      classReq.getClassesHandler().then((value) => joinClasses.value = value);
+    }
+
+    // 現在のtypeを切り替える(create or join)
+    void changeConType() {
+      conType.value = !conType.value;
+    }
+
     // クラスに参加
     void join() async {
       if (inviteCodeController.text.isNotEmpty) {
-        await classReq.joinClassHandler(inviteCodeController.text);
+        String? className = await classReq.joinClassHandler(inviteCodeController.text);
+        if (className != null) {
+          AlertDialogUtil.show(
+            context: context,
+            content: '$className${Messages.joinClassSuccess}',
+            positiveAction: ('OK', () {}),
+          );
+        }
+        getClasses(); // クラスを再取得
         inviteCodeController.clear(); // 入力値クリア
+        // TODO:getClass
       } else {
         ToastUtil.show(message: Messages.inputError);
       }
@@ -69,15 +89,6 @@ class PageClass extends HookWidget {
       } else {
         conTypeMap.value = tabs[1];
       }
-    }
-
-    // クラス一覧取得
-    Future<void> getClasses() async {
-      // TODO:APIからクラス一覧を取得
-    }
-    // 現在のtypeを切り替える(create or join)
-    void changeConType() {
-      conType.value = !conType.value;
     }
 
     // 招待コード再発行

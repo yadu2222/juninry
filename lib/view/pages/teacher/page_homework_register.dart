@@ -52,6 +52,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       registerHomeworkData.value = List.from(registerHomeworkData.value)..removeAt(index); // 削除
     }
 
+    // TODO:下書き保存処理
     // db保存処理
     Future<bool> save() async {
       // 元の配列と現在の配列を比較して変更があればDBに投げる
@@ -73,7 +74,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     }
 
     bool oldCheck() {
-      if (registerHomeworkDataOld.value != registerHomeworkData.value) {
+      if (registerHomeworkData.value.isNotEmpty && registerHomeworkDataOld.value != registerHomeworkData.value) {
+        print(registerHomeworkDataOld.value);
+        print(registerHomeworkData.value);
         // 変更がある場合
         // 保存を促す
         AlertDialogUtil.show(
@@ -95,6 +98,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
         );
         return false;
       } else {
+        context.go('/homework');
         return false;
       }
     }
@@ -108,7 +112,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
           final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateHook.value!));
           debugPrint(data.toString());
           registerHomeworkDataOld.value = data;
-          registerHomeworkData.value = registerHomeworkDataOld.value;
+          registerHomeworkData.value = data;
         }
       }
 
