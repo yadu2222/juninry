@@ -3,6 +3,7 @@ import '../../constant/urls.dart';
 import '../../models/req_model.dart';
 // import 'package:http/http.dart' as http;
 // import '../error.dart';
+import '../../models/user_model.dart';
 
 class OUCHIService {
 
@@ -13,11 +14,16 @@ class OUCHIService {
     final reqData = Request(
       url: Urls.createOUCHI,
       reqType: 'POST',
-      body: {'className': ouchiName},
+      body: {'ouchiName': ouchiName},
       headers: {'Content-Type': 'application/json'},
     );
     final resData = await HttpReq.httpReq(reqData);
-    return resData['srvResData']['ouchiName'];
+
+    // user情報を更新
+    User user = await User.getUser();
+    user.ouchiUUID = resData['srvResData']['ouchiUUID'];
+    await User.updateUser(user);
+    return resData['srvResData']['ouchiName'];  // おうちの名前を返す
   }
 
   // 現在のポイントを取得

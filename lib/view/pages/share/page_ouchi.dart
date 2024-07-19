@@ -21,7 +21,7 @@ class PageOuchi extends HookWidget {
       Future<void> fetchData() async {
         // おうちに参加してるかをチェックし、遷移
         User user = await userReq.getUserHandler();
-        isOUCHI.value = user.ouchiUUID != null;
+        isOUCHI.value = user.ouchiUUID != null; // true おうちある
         // ついでに児童か判別
         isJunior.value = user.userTypeId == 2;
       }
@@ -34,11 +34,12 @@ class PageOuchi extends HookWidget {
       return const Center(child: CircularProgressIndicator());
     } else {
       if (isOUCHI.value!) {
-        // おうちある(参加または作成画面)
-        return isJunior.value! ? PageJoinOuchi() : PageCreateOuchi();
-      } else {
-        // おうちない(トップ)
+        // おうちある(トップ)
         return isJunior.value! ? PageOuchiTopJunior() : const PageOuchiTopPatron();
+      } else {
+        // おうちない(参加または作成画面)
+        return isJunior.value! ? PageJoinOuchi() : PageCreateOuchi();
+        
       }
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/apis/controller/ouchi_req.dart';
+import 'package:go_router/go_router.dart';
 // view
 import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
@@ -29,7 +30,12 @@ class PageCreateOuchi extends HookWidget {
           AlertDialogUtil.show(
             context: context,
             content: '$ouchiName${Messages.createClassSuccess}',
-            positiveAction: ('OK', () {}),
+            positiveAction: (
+              'OK',
+              () {
+               context.go('/ouchi');
+              }
+            ),
           );
         }
         ouchiNameController.clear(); // 入力値クリア
@@ -51,7 +57,7 @@ class PageCreateOuchi extends HookWidget {
       // 確定
       BasicButton(
         width: 0.4,
-        text: '参加する',
+        text: '作成する',
         isColor: false,
         onPressed: join,
         circular: 50,
