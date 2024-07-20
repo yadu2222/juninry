@@ -11,7 +11,7 @@ import '../view/pages/junior/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
 import '../view/pages/junior/page_nextday_task.dart';
 // notice
-import '../view/pages/junior/page_notice.dart';
+import '../view/pages/share/page_notice.dart';
 // ouchi
 import '../view/pages/junior/page_ouchi.dart';
 import '../view/pages/junior/page_reward.dart';
@@ -66,7 +66,7 @@ class JuniorBranch {
           path: '/notice', // notice
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: PageNoticeJunior(),
+            child: PageNotice(),
           ),
         ),
       ],

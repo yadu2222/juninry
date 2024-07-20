@@ -23,13 +23,13 @@ import '../../components/atoms/alert_dialog.dart';
 
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
-  final int? draftedNoticeId;
-  final String? quotedNoticeUuid;
+  final int? draftedNoticeID;
+  final String? quotedNoticeUUID;
 
   const PageNoticeRegisterTeacher({
     super.key,
-    this.draftedNoticeId,
-    this.quotedNoticeUuid,
+    this.draftedNoticeID,
+    this.quotedNoticeUUID,
   });
 
   final String title = 'お知らせ作成';
@@ -37,7 +37,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final future = useMemoized(
-        () => _loadData(context), [draftedNoticeId, quotedNoticeUuid]);
+        () => _loadData(context), [draftedNoticeID, quotedNoticeUUID]);
     // 非同期通信が必要なデータ群
     final snapshot = useFuture(future);
 
@@ -49,9 +49,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
     }
     // エラーが発生した場合の表示
     if (snapshot.hasError) {
-      return BasicTemplate(title: title, children: const [
-        Center(child: Text(Messages.defaultError)),
-      ]);
+      context.go('/notice');
+      // return BasicTemplate(title: title, children: const [
+      //   Center(child: Text(Messages.defaultError)),
+
+      // ]);
     }
 
     // データが null の場合の処理
@@ -72,7 +74,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // DBから拾ってきた文字列を置いといて保存必要かみてみる
     final String titleString = draftedNoticeData.draftedNoticeTitle.toString();
-    final String textString = draftedNoticeData.draftedNoticeExplanatory.toString();
+    final String textString =
+        draftedNoticeData.draftedNoticeExplanatory.toString();
 
     // セーブ処理をする 返り血は成功したID
     Future<bool> save() async {
@@ -112,24 +115,28 @@ class PageNoticeRegisterTeacher extends HookWidget {
       debugPrint("titleString: $titleString");
       debugPrint("textString: $textString");
       // TODO: 遷移先
-      if (
-        (titleController.text  != titleString && titleController.text != "") ||
-        (textController.text != textString && textController.text != "")
-        ) {
+      if ((titleController.text != titleString && titleController.text != "") ||
+          (textController.text != textString && textController.text != "")) {
         AlertDialogUtil.show(
           context: context,
           content: Messages.confirmationMsg,
-          negativeAction: ( "無視する",  () {
-            context.go('/notice');
-          }),
-          positiveAction: ( "保存する",  () async {
-            if (await save()) {
-              context.go('/notice');
+          negativeAction: (
+            "無視する",
+            () {
+              context.go('/notice/quote');
             }
-          }),
+          ),
+          positiveAction: (
+            "保存する",
+            () async {
+              if (await save()) {
+                context.go('/notice/quote');
+              }
+            }
+          ),
         );
       } else {
-        context.go('/notice');
+        context.go('/notice/quote');
       }
     }
 
@@ -176,13 +183,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
                         // 保存できた時はIDを下書きデータに格納する　※上書き保存のため
                         if (await save()) {
                           AlertDialogUtil.show(
-                            context: context,
-                            content: Messages.draftMsg,
-                            neutralAction: ("OK", () {
-                              context.go('/notice/draft');
-                            })
-                          );
-
+                              context: context,
+                              content: Messages.draftMsg,
+                              neutralAction: (
+                                "OK",
+                                () {
+                                  context.go('/notice/draft');
+                                }
+                              ));
                         }
                       },
                       isColor: true,
@@ -193,7 +201,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       text: "投稿",
                       isColor: false,
                       onPressed: () async {
-                        NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+                        NoticeReq noticeReq =
+                            NoticeReq(context: context); // 通信用クラスのインスタンスを生成
 
                         bool result = await noticeReq.postNotice(Notice(
                           noticeTitle: titleController.text,
@@ -205,12 +214,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
                         if (result) {
                           // 投稿成功
                           AlertDialogUtil.show(
-                            context: context,
-                            content: Messages.postNoticeSuccess,
-                            neutralAction: ("OK", () {
-                              context.go('/notice');
-                            })
-                          );
+                              context: context,
+                              content: Messages.postNoticeSuccess,
+                              neutralAction: (
+                                "OK",
+                                () {
+                                  context.go('/notice');
+                                }
+                              ));
                         }
                       },
                       icon: Icons.check,
@@ -234,36 +245,39 @@ class PageNoticeRegisterTeacher extends HookWidget {
     QuotedNotice? quotedNoticeData;
 
     // draftedNoticeIdとquotedNoticeUuidの両方がnullの場合、新しい下書きを作成
-    if (draftedNoticeId == null && quotedNoticeUuid == null) {
+    if (draftedNoticeID == null && quotedNoticeUUID == null) {
       draftedNoticeData = DraftedNotice();
       // 保存されていたIDをクリア
       await prefs.remove('draftedNoticeId');
     } else {
       // 適用する下書きIDを決定
       // 優先度 引用された下書き > 保存されていた下書き
-      int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
+      int? currentDraftedNoticeId = draftedNoticeID ?? storedDraftedNoticeId;
       if (currentDraftedNoticeId != null) {
         // 既存の下書きを取得
-        draftedNoticeData = await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
+        draftedNoticeData =
+            await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
       } else {
         // 新しい下書きを作成
         draftedNoticeData = DraftedNotice();
       }
 
       // 新しい引用が提供された場合、下書きに引用IDを設定
-      if (quotedNoticeUuid != null) {
-        draftedNoticeData.quotedNoticeUuid = quotedNoticeUuid;
+      if (quotedNoticeUUID != null) {
+        draftedNoticeData.quotedNoticeUuid = quotedNoticeUUID;
       }
 
       // // 現在の下書きIDを保存
       if (draftedNoticeData.draftedNoticeId != null) {
-        await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId!);
+        await prefs.setInt(
+            'draftedNoticeId', draftedNoticeData.draftedNoticeId!);
       }
     }
 
     // 引用データを取得
     if (draftedNoticeData.quotedNoticeUuid != null) {
-      quotedNoticeData = await noticeReq.fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
+      quotedNoticeData = await noticeReq
+          .fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
     }
 
     // HACK: 表示しないけどDBにいれるお知らせ作成日だよ
@@ -271,7 +285,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
         DateFormat('yyyy.MM.dd').format(DateTime.now());
 
     // コントローラーの設定
-    final titleController = TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
+    final titleController =
+        TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
     final textController = TextEditingController(
         text: draftedNoticeData.draftedNoticeExplanatory ?? '');
 
@@ -279,6 +294,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
     List<Class> classesList = (quotedNoticeData != null)
         ? [quotedNoticeData.quotedClass]
         : await classReq.getClassesHandler();
+
+    debugPrint("classesList: $classesList");
 
     // 選択されているクラスを設定
     Class selectedClass = quotedNoticeData?.quotedClass ??

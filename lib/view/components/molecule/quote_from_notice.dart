@@ -1,6 +1,7 @@
 import 'package:juninry/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:juninry/constant/fonts.dart';
+import 'package:juninry/models/quoted_notice_model.dart';
 
 class QuoteFromNotice extends StatelessWidget {
   final String? quoteNoticeTitle;
@@ -27,9 +28,9 @@ class QuoteFromNotice extends StatelessWidget {
           Padding(
             padding: EdgeInsets.zero,
             child: Row(children: [
-              const Icon(
+              Icon(
                 Icons.attach_file,
-                color: AppColors.iconGray,
+                color: quoteNoticeTitle == null ? AppColors.iconGray : AppColors.main,
                 weight: 5,
               ),
               Text(quoteNoticeTitle ?? "投稿の引用", style: Fonts.p),

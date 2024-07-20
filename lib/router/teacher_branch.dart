@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/view/pages/teacher/page_notice.dart';
+import 'package:juninry/view/pages/share/page_notice.dart';
 import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 
 // 遷移先
@@ -12,9 +12,13 @@ import '../view/pages/share/page_class.dart';
 // notice
 import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
+import '../view/pages/teacher/page_notice_quote.dart';
+
+
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
+
 
 // 暫定的ホームたちにjuniorを使用
 // homework
@@ -91,16 +95,16 @@ class TeacherBranch {
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
                   // データを取り出してみる
-                  final int? draftedNoticeId = extraData['draftedNoticeId'];
-                  debugPrint(draftedNoticeId.toString());
-                  final String? quotedNoticeUuid =
-                      extraData['quotedNoticeUuid'];
-                  debugPrint(quotedNoticeUuid.toString());
+                  final int? draftedNoticeID = extraData['draftedNoticeID'];
+                  debugPrint(draftedNoticeID.toString());
+                  final String? quotedNoticeUUID =
+                      extraData['quotedNoticeUUID'];
+                  debugPrint(quotedNoticeUUID.toString());
                   return NoTransitionPage(
                     key: state.pageKey,
                     child: PageNoticeRegisterTeacher(
-                      draftedNoticeId: draftedNoticeId,
-                      quotedNoticeUuid: quotedNoticeUuid,
+                      draftedNoticeID: draftedNoticeID,
+                      quotedNoticeUUID: quotedNoticeUUID,
                     ),
                   );
                 } else {
@@ -119,10 +123,17 @@ class TeacherBranch {
                 child: const PageNoticeDraftTeacher(),
               ),
             ),
+            GoRoute(
+              path: "quote",
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageNoticeQuoteTeacher(),
+              ),
+            ),
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: PageNoticeTeacher(),
+            child: PageNotice(),
           ),
         ),
       ],
@@ -194,7 +205,8 @@ class TeacherBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

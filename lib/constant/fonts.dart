@@ -39,4 +39,9 @@ class Fonts {
   static const TextStyle h4y = TextStyle(fontSize: 18, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
   static const TextStyle py = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
   // static const TextStyle by = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
+
+
+  // お知らせ一覧のために
+  static const TextStyle notice = TextStyle(fontSize: 16, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold, height: 1.0);
+
 }
