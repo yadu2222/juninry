@@ -3,9 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/colors.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/router/router.dart';
-import 'package:juninry/view/components/molecule/notice_card.dart';
 import 'package:juninry/view/components/organism/notice_list.dart';
-import '../../../constant/fonts.dart';
 import '../../../models/notice_model.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.dartをインポート
@@ -34,7 +32,6 @@ class PageNotice extends HookWidget {
       try {
         List<Notice> fetchedNotices = await NoticeService.getNotices();
         notices.value = fetchedNotices;
-        print(fetchedNotices[0].className.toString());
       } catch (error) {
         debugPrint('Error fetching notices: $error');
       } finally {
@@ -45,14 +42,13 @@ class PageNotice extends HookWidget {
     // ユーザータイプ取得関数
     Future<void> isTeacher() async {
       teacherExtension.value = await isBranch(BranchType.teacher);
-      debugPrint("teacherExtension.value: ${teacherExtension.value}");
     }
 
     useEffect(() {
       isTeacher();
       fetchNotices();
       return null;
-    }, []);
+    }, [_scaffoldKey]);
 
     return Scaffold(
       key: _scaffoldKey, // 追加: Scaffold keyの設定

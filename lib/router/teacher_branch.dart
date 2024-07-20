@@ -14,11 +14,9 @@ import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_notice_quote.dart';
 
-
 import '../view/pages/teacher/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
-
 
 // 暫定的ホームたちにjuniorを使用
 // homework
@@ -91,23 +89,25 @@ class TeacherBranch {
               pageBuilder: (context, state) {
                 // データが送られてきたとき
                 if (state.extra != null) {
+                  debugPrint("テストテストテスト");
+                  debugPrint("extra: ${state.extra.toString()}");
                   // Map型でデータを送るためそれを取得
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
                   // データを取り出してみる
-                  final int? draftedNoticeID = extraData['draftedNoticeID'];
-                  debugPrint(draftedNoticeID.toString());
+                  final int? draftedNoticeId = extraData['draftedNoticeId'];
                   final String? quotedNoticeUUID =
                       extraData['quotedNoticeUUID'];
-                  debugPrint(quotedNoticeUUID.toString());
                   return NoTransitionPage(
                     key: state.pageKey,
                     child: PageNoticeRegisterTeacher(
-                      draftedNoticeID: draftedNoticeID,
+                      draftedNoticeId: draftedNoticeId,
                       quotedNoticeUUID: quotedNoticeUUID,
                     ),
                   );
                 } else {
+                  debugPrint("何もきてない");
+
                   // データが送られてきなかったとき
                   return NoTransitionPage(
                     key: state.pageKey,

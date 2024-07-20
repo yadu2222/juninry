@@ -23,12 +23,12 @@ import '../../components/atoms/alert_dialog.dart';
 
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
-  final int? draftedNoticeID;
+  final int? draftedNoticeId;
   final String? quotedNoticeUUID;
 
   const PageNoticeRegisterTeacher({
     super.key,
-    this.draftedNoticeID,
+    this.draftedNoticeId,
     this.quotedNoticeUUID,
   });
 
@@ -37,7 +37,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final future = useMemoized(
-        () => _loadData(context), [draftedNoticeID, quotedNoticeUUID]);
+        () => _loadData(context), [draftedNoticeId, quotedNoticeUUID]);
     // 非同期通信が必要なデータ群
     final snapshot = useFuture(future);
 
@@ -112,9 +112,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // 引用ボタン押した時に保存を促す
     void onQuoteClicked() {
-      debugPrint("titleString: $titleString");
-      debugPrint("textString: $textString");
-      // TODO: 遷移先
       if ((titleController.text != titleString && titleController.text != "") ||
           (textController.text != textString && textController.text != "")) {
         AlertDialogUtil.show(
@@ -245,14 +242,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
     QuotedNotice? quotedNoticeData;
 
     // draftedNoticeIdとquotedNoticeUuidの両方がnullの場合、新しい下書きを作成
-    if (draftedNoticeID == null && quotedNoticeUUID == null) {
+    if (draftedNoticeId == null && quotedNoticeUUID == null) {
       draftedNoticeData = DraftedNotice();
       // 保存されていたIDをクリア
       await prefs.remove('draftedNoticeId');
     } else {
       // 適用する下書きIDを決定
       // 優先度 引用された下書き > 保存されていた下書き
-      int? currentDraftedNoticeId = draftedNoticeID ?? storedDraftedNoticeId;
+      int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
       if (currentDraftedNoticeId != null) {
         // 既存の下書きを取得
         draftedNoticeData =
@@ -294,8 +291,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
     List<Class> classesList = (quotedNoticeData != null)
         ? [quotedNoticeData.quotedClass]
         : await classReq.getClassesHandler();
-
-    debugPrint("classesList: $classesList");
 
     // 選択されているクラスを設定
     Class selectedClass = quotedNoticeData?.quotedClass ??
