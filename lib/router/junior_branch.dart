@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../models/homework_model.dart';
 
 // junior遷移先
 // home
@@ -96,11 +97,12 @@ class JuniorBranch {
                 if (state.extra != null) {
                   // 遷移時に定義されたデータをrouterで再定義
                   final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
-                  final String homeworkId = extraData['homeworkId'];
+                  // final String homeworkId = extraData['homeworkId'];
+                  final Homework homework = extraData['homework'];
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageSubmissionJunior(homeworkUUID: homeworkId),
+                    child: PageSubmissionJunior(homework: homework),
                   );
 
                   // TODO:errorpage よういしたい
