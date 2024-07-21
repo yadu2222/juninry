@@ -92,7 +92,7 @@ class PageUserData extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _buildOption(Icons.person, 'マイページ', '/mypage'),
+              _buildOption(Icons.person, 'マイページ', '/userData/myPage'),
               _buildOption(Icons.notifications_none_outlined, '通知', '/notifications'),
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
               _buildOption(Icons.help, 'よくある質問', '/contact'),

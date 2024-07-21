@@ -15,9 +15,15 @@ class NoticeReq {
 
   // 複数のお知らせを取得
   Future<List<Notice>> getNotices() async {
+    try {
       return await NoticeService.getNotices();
+    } catch (error) {
+      debugPrint(error.toString());
+      return [];
+    }
 }
 
+  // 引用UUIDからお知らせを取得
   Future<QuotedNotice> fetchQuotedNotice(String noticeUuid) async {
     try {
       return NoticeService.getQuotedNotice(noticeUuid);
@@ -28,6 +34,7 @@ class NoticeReq {
     }
   }
 
+  // お知らせ登録
   Future<bool> postNotice(Notice notice) async {
     try {
       // 入力チェック
