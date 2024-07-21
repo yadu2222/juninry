@@ -10,7 +10,6 @@ import '../view/pages/share/page_class.dart';
 // homework
 import '../view/pages/share/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
-
 // notice
 import '../view/pages/share/page_notice.dart';
 // ouchi
@@ -143,12 +142,12 @@ class JuniorBranch {
       ],
     ),
 
-    // userData
+    // setting?
     StatefulShellBranch(
-      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'userData'),
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'setting'),
       routes: [
         GoRoute(
-          name: 'userData',
+          name: 'settings',
           path: '/settings',
           routes: [
             GoRoute(

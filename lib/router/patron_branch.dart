@@ -3,14 +3,19 @@ import 'package:go_router/go_router.dart';
 
 // 遷移先
 // patron
+// home
 import '../view/pages/patron/page_home.dart';
+import '../view/pages/share/page_students.dart';
+// notice
 import '../view/pages/patron/page_notice_detail.dart';
+import '../view/pages/share/page_notice.dart';
+// homework
 import '../view/pages/share/page_homework.dart';
 import '../view/pages/patron/page_submittion.dart';
-import '../view/pages/share/page_students.dart';
+// ouchi
 import '../view/pages/share/page_ouchi.dart';
-import '../view/pages/share/page_notice.dart';
-// 暫定的ホームたちにjuniorを使用
+// setting
+import '../view/pages/share/page_questions.dart';
 import '../view/pages/share/page_user.dart';
 
 // 保護者ブランチ
@@ -132,11 +137,21 @@ class PatronBranch {
 
     // userData
     StatefulShellBranch(
-      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'userData'),
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'setting'),
       routes: [
         GoRoute(
-          name: 'userData',
-          path: '/userData',
+          name: 'settings',
+          path: '/settings',
+          routes: [
+            GoRoute(
+              name: 'questions',
+              path: 'questions', // notice
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageQuestions(),
+              ),
+            ),
+          ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],

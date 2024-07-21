@@ -19,11 +19,9 @@ import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
 import '../view/pages/teacher/page_homework_submittions.dart';
 import '../view/pages/teacher/page_homework_detail.dart';
-
-// 暫定的ホームたちにjuniorを使用
-// homework
 // user
 import '../view/pages/share/page_user.dart';
+import '../view/pages/share/page_questions.dart';
 
 // 教員ブランチ
 class TeacherBranch {
@@ -224,13 +222,22 @@ class TeacherBranch {
       ],
     ),
 
-    // userData
     StatefulShellBranch(
-      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'userData'),
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'setting'),
       routes: [
         GoRoute(
-          name: 'userData',
-          path: '/userData',
+          name: 'settings',
+          path: '/settings',
+          routes: [
+            GoRoute(
+              name: 'questions',
+              path: 'questions', // notice
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageQuestions(),
+              ),
+            ),
+          ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
