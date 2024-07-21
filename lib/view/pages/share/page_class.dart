@@ -10,7 +10,6 @@ import '../../components/molecule/invite_dialog.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/join_list.dart';
 import '../../components/atoms/alert_dialog.dart';
-import '../../components/molecule/no_resourcs.dart';
 // api
 import '../../../apis/controller/class_req.dart'; // リクエスト
 // model

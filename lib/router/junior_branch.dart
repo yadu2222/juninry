@@ -7,9 +7,9 @@ import '../view/pages/share/page_home.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // homework
-import '../view/pages/junior/page_homework.dart';
+import '../view/pages/share/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
-import '../view/pages/junior/page_nextday_task.dart';
+
 // notice
 import '../view/pages/share/page_notice.dart';
 // ouchi
@@ -84,7 +84,7 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
             ),
             // 提出
             GoRoute(
@@ -107,13 +107,13 @@ class JuniorBranch {
                 } else {
                   return NoTransitionPage(
                     key: state.pageKey,
-                    child: const PageHomeworkJunior(),
+                    child: const PageHomework(),
                   );
                 }
               },
             )
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),

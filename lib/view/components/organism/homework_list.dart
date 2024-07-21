@@ -12,11 +12,14 @@ import 'package:intl/intl.dart'; // datetimeのフォーマット変換
 class HomeworkList extends StatelessWidget {
   final bool isClass; // クラス優先なのかどうか そうでなければ期日を優先する
   final List<dynamic> homeworkData;
+  final List<StatefulShellBranch> branchType;
+
+  final void Function(String) cardPressed;
 
   // 名前付きコンストラクタを用意することで表示を分岐
   // overloadみたいなものだよ
-  const HomeworkList.limit({super.key, required this.homeworkData, this.isClass = false});
-  const HomeworkList.classes({super.key, required this.homeworkData, this.isClass = true});
+  const HomeworkList.limit({super.key, required this.homeworkData, this.isClass = false, required this.cardPressed, required this.branchType});
+  const HomeworkList.classes({super.key, required this.homeworkData, this.isClass = true, required this.cardPressed, required this.branchType});
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +56,21 @@ class HomeworkList extends StatelessWidget {
             // 宿題
             return InkWell(
                 onTap: () async {
-                  // 児童のときは遷移
-                  if (await getBranches() == BranchType.junior.branch) {
-                    context.push('/homework/submittion', extra: {'homeworkId': homework.homeworkUuid});
-                  } else {
-                    // TODO:児童じゃなかった場合かつ未提出の場合は催促の機能 現状仕様等未確定のため保留
-                  }
+                  cardPressed(homeworkList['homeworkUUID']);
                 },
-                child: HomeworkCard.junior(
-                  // カードウィジェット配置
-                  homeworkData: homework as Homework,
-                ));
+                // カードウィジェット
+                // userにあわせたものを表示
+                child: branchType == BranchType.junior.branch
+                    ? HomeworkCard.junior(
+                        homeworkData: homework as Homework,
+                      )
+                    : branchType == BranchType.teacher.branch
+                        ? HomeworkCard.teacher(
+                            homeworkData: homework as Homework,
+                          )
+                        : HomeworkCard.patron(
+                            homeworkData: homework as Homework,
+                          ));
           }).toList() // キャスト
         ]);
       }).toList())), // キャスト
@@ -74,7 +81,6 @@ class HomeworkList extends StatelessWidget {
     //     itemDatas: homeworkData,
     //     listItem: (homework) => InkWell(
     //           onTap: () {
-    //             // TODO:これユーザーによって挙動変わるべきでは？のきもち
     //             // 画面遷移
     //             context.push('/homework/submittion',
     //                 extra: {'homeworkId': homework.homeworkUuid});

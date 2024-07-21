@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/constant/sample_data.dart';
-import 'package:juninry/view/components/atoms/dialog.dart';
+// import 'package:juninry/view/components/atoms/dialog.dart';
 import '../../components/template/basic_template.dart';
 
 import '../../components/organism/homework_register_tab.dart';

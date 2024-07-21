@@ -14,7 +14,7 @@ import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_notice_quote.dart';
 
-import '../view/pages/teacher/page_homework.dart';
+import '../view/pages/share/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
 
@@ -84,46 +84,43 @@ class TeacherBranch {
               ),
             ),
             GoRoute(
-              path: 'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
-              pageBuilder: (context, state) {
-                // データが送られてきたとき
-                if (state.extra != null) {
-                  debugPrint("テストテストテスト");
-                  debugPrint("extra: ${state.extra.toString()}");
-                  // Map型でデータを送るためそれを取得
-                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
-                  // データを取り出してみる
-                  final int? draftedNoticeId = extraData['draftedNoticeId'];
-                  final String? quotedNoticeUUID =
-                      extraData['quotedNoticeUUID'];
-                  return NoTransitionPage(
-                    key: state.pageKey,
-                    child: PageNoticeRegisterTeacher(
-                      draftedNoticeId: draftedNoticeId,
-                      quotedNoticeUUID: quotedNoticeUUID,
-                    ),
-                  );
-                } else {
-                  debugPrint("何もきてない");
+                path: 'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
+                pageBuilder: (context, state) {
+                  // データが送られてきたとき
+                  if (state.extra != null) {
+                    debugPrint("テストテストテスト");
+                    debugPrint("extra: ${state.extra.toString()}");
+                    // Map型でデータを送るためそれを取得
+                    final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                    // データを取り出してみる
+                    final int? draftedNoticeId = extraData['draftedNoticeId'];
+                    final String? quotedNoticeUUID = extraData['quotedNoticeUUID'];
+                    return NoTransitionPage(
+                      key: state.pageKey,
+                      child: PageNoticeRegisterTeacher(
+                        draftedNoticeId: draftedNoticeId,
+                        quotedNoticeUUID: quotedNoticeUUID,
+                      ),
+                    );
+                  } else {
+                    debugPrint("何もきてない");
 
-                  // データが送られてきなかったとき
-                  return NoTransitionPage(
-                    key: state.pageKey,
-                    child: const PageNoticeRegisterTeacher(),
-                  );
-                }
-              },
-              routes: [
-                GoRoute(
+                    // データが送られてきなかったとき
+                    return NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageNoticeRegisterTeacher(),
+                    );
+                  }
+                },
+                routes: [
+                  GoRoute(
                     path: "quote",
                     pageBuilder: (context, state) => NoTransitionPage(
                       key: state.pageKey,
                       child: PageNoticeQuoteTeacher(),
                     ),
                   ),
-
-              ]
-            ),
+                ]),
             GoRoute(
               path: "draft",
               pageBuilder: (context, state) => NoTransitionPage(
@@ -131,7 +128,6 @@ class TeacherBranch {
                 child: const PageNoticeDraftTeacher(),
               ),
             ),
-            
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
@@ -190,9 +186,9 @@ class TeacherBranch {
 
           pageBuilder: (context, state) => NoTransitionPage(
               key: state.pageKey,
-              child: const PageHomeworkTeacher(
-                classUUID: '',
-              )), // TODO:遷移処理？
+              child: const PageHomework(
+                  // classUUID: '',
+                  )), // TODO:遷移処理？
         ),
       ],
     ),
@@ -204,8 +200,7 @@ class TeacherBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),
