@@ -5,10 +5,10 @@ import '../../components/organism/submittion_list.dart';
 import '../../components/molecule/homework_card.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/template/basic_template.dart';
-import '../../components/atoms/student_view.dart';
+// import '../../components/atoms/student_view.dart';
 // model
 import '../../../models/homework_model.dart';
-import '../../../models/student_model.dart';
+// import '../../../models/student_model.dart';
 // api
 // import '../../../apis/controller/homework_req.dart';
 // image
@@ -26,7 +26,7 @@ class PageHomeworkDetail extends HookWidget {
   Widget build(BuildContext context) {
     // final HomeworkReq homeworkReq = HomeworkReq(context: context); // APIコントローラー
     final homework = useState<Homework>(SampleData.homeworkData[1]); // 課題データ
-    final student = useState<Student>(SampleData.studentData[0]); // 課題データ
+    // final student = useState<Student>(SampleData.studentData[0]); // 課題データ
     final images = useState<List<File?>>([]); // 画像配列 空で初期化
 
     // 初回起動時に実行
@@ -40,7 +40,7 @@ class PageHomeworkDetail extends HookWidget {
 
     return BasicTemplate(title: title, children: [
       HomeworkCard.teacher(homeworkData: SampleData.homeworkData[0]), // 課題カード
-      // ここに生徒の情報
+      // TODO:ここに生徒の情報
       // Row(
       //   mainAxisAlignment: MainAxisAlignment.center,
       //   children: [

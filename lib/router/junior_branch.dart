@@ -18,6 +18,7 @@ import '../view/pages/junior/page_reward.dart';
 import '../view/pages/share/page_ouchi.dart';
 // user
 import '../view/pages/share/page_user.dart';
+import '../view/pages/share/page_questions.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -148,7 +149,17 @@ class JuniorBranch {
       routes: [
         GoRoute(
           name: 'userData',
-          path: '/userData',
+          path: '/settings',
+          routes: [
+            GoRoute(
+              name: 'questions',
+              path: 'questions', // notice
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageQuestions(),
+              ),
+            ),
+          ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
