@@ -9,6 +9,9 @@ class DueHomeworkList extends StatelessWidget {
   // TODO:ユーザーごとに表示を変える必要がありけり
   @override
   Widget build(BuildContext context) {
-    return ListItemBox(itemDatas: homeworkData, listItem: (homework) => DueHomeworkCard(homeworkData: homework['homeworkData'], dueDate: homework['dueDate']));
+    return ListItemBox(itemDatas: homeworkData, 
+    listItem: (homework) => DueHomeworkCard(
+      homeworkData: homework['homeworkData'], dueDate: homework['dueDate']
+      ));
   }
 }

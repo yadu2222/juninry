@@ -25,7 +25,10 @@ class DueHomeworkCard extends StatelessWidget {
           // 課題データのリスト
           Column(
               children: List.generate(homeworkData.length, (index) {
-            return HomeworkCard(homeworkData: homeworkData[index]);
+            return InkWell(onTap: () {
+
+              // TODO:遷移
+            }, child: HomeworkCard(homeworkData: homeworkData[index]));
           }))
         ]));
   }

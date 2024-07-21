@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/homework_list.dart';
 import '../../components/molecule/progress_bar.dart';
+import '../../components/molecule/no_resourcs.dart';
 // api
 import '../../../apis/controller/homework_req.dart';
 
@@ -34,8 +35,8 @@ class PageHomeworkJunior extends HookWidget {
     }, []);
 
     return BasicTemplate(title: title, children: [
-      ProgressBar(progress: progress), // 進捗バー
-      Expanded(child: HomeworkList.limit(homeworkData: homeworkData.value)), // 課題リスト
+      homeworkData.value.isEmpty ? const SizedBox.shrink() : ProgressBar(progress: progress), // 進捗バー
+      homeworkData.value.isEmpty ? const NoResources() : Expanded(child: HomeworkList.limit(homeworkData: homeworkData.value)), // 課題リスト
     ]);
   }
 }

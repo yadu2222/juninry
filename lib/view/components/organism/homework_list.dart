@@ -6,8 +6,6 @@ import 'package:juninry/constant/colors.dart';
 import '../../../models/homework_model.dart';
 import '../molecule/homework_card.dart';
 import '../../components/molecule/divider.dart';
-import '../../../constant/messages.dart';
-import '../../../constant/fonts.dart';
 import 'package:intl/intl.dart'; // datetimeのフォーマット変換
 
 // 宿題のリスト
@@ -23,12 +21,7 @@ class HomeworkList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // list化が複雑化したため独自に定義
-    return homeworkData.isEmpty
-        ? const Text(
-            Messages.homeworkIsEmpty,
-            style: Fonts.h5w,
-          )
-        : SizedBox(
+    return SizedBox(
             width: MediaQuery.of(context).size.width * 0.92,
             // 空白に対応
             child: SingleChildScrollView(

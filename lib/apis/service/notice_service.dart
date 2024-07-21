@@ -24,7 +24,7 @@ class NoticeService {
       print(e.toString());
       // エラーメッセージを出力
       // エラーが発生した場合にエラーメッセージをリストで返す
-      return [Notice.errorNotice()];
+      return [];
     }
   }
 
