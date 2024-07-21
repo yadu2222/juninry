@@ -11,17 +11,21 @@ import '../../../models/homework_model.dart';
 // api
 import '../../../apis/controller/homework_req.dart';
 // image
-import 'package:image_picker/image_picker.dart';  // カメラ用ライブラリ
+import 'package:image_picker/image_picker.dart'; // カメラ用ライブラリ
 import 'dart:io'; // ファイル操作用ライブラリ
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 // sample
-import '../../../constant/sample_data.dart';
+// import '../../../constant/sample_data.dart';
 
 // 提出ページ
 class PageSubmissionJunior extends HookWidget {
-  final String homeworkUUID;
+  // final String homeworkUUID;
+  final Homework homework;
   const PageSubmissionJunior({
     super.key,
-    required this.homeworkUUID,
+    // required this.homeworkUUID,
+    required this.homework
   });
 
   final String title = '提出';
@@ -30,9 +34,15 @@ class PageSubmissionJunior extends HookWidget {
   Widget build(BuildContext context) {
     final picker = ImagePicker(); // カメラインスタンス
     final HomeworkReq homeworkReq = HomeworkReq(context: context); // APIコントローラー
-    final homework = useState<Homework>(SampleData.homeworkData[1]); // 課題データ
-    final images = useState<List<File?>>(List.filled(homework.value.pageCount, null)); // 画像配列 countの枚数を要素数にnullで初期化
-    final counter = useState<int>(homework.value.pageCount); //  画像の枚数をカウント
+    // final homework = useState<Homework>(); // 課題データ
+    final images = useState<List<File?>>(List.filled(homework.pageCount, null)); // 画像配列 countの枚数を要素数にnullで初期化
+    final counter = useState<int>(homework.pageCount); //  画像の枚数をカウント
+
+    Future<File> saveImage(File image) async {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = join(directory.path, basename(image.path));
+      return image.copy(imagePath);
+    }
 
     // 撮影処理
     Future<void> pickImage(int index) async {
@@ -43,9 +53,12 @@ class PageSubmissionJunior extends HookWidget {
         if (images.value[index] == null) {
           counter.value--;
         }
-        images.value[index] = (File(pickedFile.path)); // 画像用配列に保存
+        // 永続ストレージに画像を保存
+        File savedImage = await saveImage(File(pickedFile.path));
+        images.value[index] = savedImage; // 画像用配列に保存
       }
     }
+
     // 撮影カウンター
     bool isCounter() {
       if (counter.value == 0) {
@@ -80,22 +93,22 @@ class PageSubmissionJunior extends HookWidget {
         // submittionHomework メソッドに渡す
         // TODO:提出確認 特定のHOMEWORKを取得できるようになったら変更する
         // homeworkReq.submittionHomework(homeworkUUID, nonNullImages);
-        homeworkReq.submittionHomework("a3579e71-3be5-4b4d-a0df-1f05859a7103", nonNullImages);
+        homeworkReq.submittionHomework(homework.homeworkUUID!, nonNullImages);
       }
     }
 
     // テンプレート呼び出し
     return BasicTemplate(title: title, children: [
-      HomeworkCard(homeworkData: SampleData.homeworkData[0]), // 課題カード
+      HomeworkCard.teacher(homeworkData:homework), // 課題カード
       const DividerView(), // 区切り線
       // 提出リスト
       Expanded(
           child: SubmittionList(
-        homeworkData: homework.value,
+        homeworkData: homework,
         images: images.value,
         pickImage: pickImage,
       )), // 提出リスト
-      
+
       // 状態を元に提出ボタンを呼び出し
       isCounter()
           ? BasicButton(

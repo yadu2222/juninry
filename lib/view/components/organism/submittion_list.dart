@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../models/homework_model.dart';
 import '../molecule/submittion_card.dart';
 import '../../../constant/fonts.dart';
-import 'dart:io';   // ファイル操作用ライブラリ
+import 'dart:io'; // ファイル操作用ライブラリ
 
 // 提出リスト
 class SubmittionList extends StatelessWidget {
-  const SubmittionList({super.key, required this.homeworkData, required this.images, required this.pickImage});
+  const SubmittionList({super.key, required this.homeworkData, required this.images, this.pickImage});
   final Homework homeworkData;
   final List<File?> images;
-  final void Function(int index) pickImage;
+  final void Function(int index)? pickImage;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,9 @@ class SubmittionList extends StatelessWidget {
           return InkWell(
               onTap: () {
                 // カメラ起動
-                pickImage(index);
+                if (pickImage != null) {
+                  pickImage!(index);
+                }
               },
               child: item != null
                   ? Container(margin: const EdgeInsets.all(5), child: Column(children: [Image.file(item), Text('${(homeworkData.startPage + index).toString()}p', style: Fonts.h4)]))

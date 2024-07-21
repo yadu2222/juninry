@@ -27,7 +27,7 @@ class PageSubmissionPatron extends HookWidget {
     final List<File> images = []; // ここに取得した画像ファイルを格納したい
     // テンプレート呼び出し
     return BasicTemplate(title: title, children: [
-      HomeworkCard(homeworkData: SampleData.homeworkData[0]), // 課題カード
+      HomeworkCard.teacher(homeworkData: SampleData.homeworkData[0]), // 課題カード
       const DividerView(), // 区切り線
       // 提出リスト
       Expanded(child: PictureList(images: images))

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../models/homework_model.dart';
 
 // junior遷移先
 // home
@@ -7,14 +8,14 @@ import '../view/pages/share/page_home.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 // homework
-import '../view/pages/junior/page_homework.dart';
+import '../view/pages/share/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
-import '../view/pages/junior/page_nextday_task.dart';
+
 // notice
 import '../view/pages/share/page_notice.dart';
 // ouchi
-import '../view/pages/junior/page_ouchi.dart';
 import '../view/pages/junior/page_reward.dart';
+import '../view/pages/share/page_ouchi.dart';
 // user
 import '../view/pages/share/page_user.dart';
 
@@ -84,7 +85,7 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageNextDayTaskJunior()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
             ),
             // 提出
             GoRoute(
@@ -96,24 +97,25 @@ class JuniorBranch {
                 if (state.extra != null) {
                   // 遷移時に定義されたデータをrouterで再定義
                   final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
-                  final String homeworkId = extraData['homeworkId'];
+                  // final String homeworkId = extraData['homeworkId'];
+                  final Homework homework = extraData['homework'];
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageSubmissionJunior(homeworkUUID: homeworkId),
+                    child: PageSubmissionJunior(homework: homework),
                   );
 
                   // TODO:errorpage よういしたい
                 } else {
                   return NoTransitionPage(
                     key: state.pageKey,
-                    child: const PageHomeworkJunior(),
+                    child: const PageHomework(),
                   );
                 }
               },
             )
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),
@@ -135,7 +137,7 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),

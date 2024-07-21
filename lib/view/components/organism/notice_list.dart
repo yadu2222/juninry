@@ -5,6 +5,7 @@ import '../atoms/listItem_box.dart';
 //LISTの型指定のためのファイル
 import '../../../models/notice_model.dart';
 
+
 // お知らせリストのステートフルウィジェット
 class NoticeList extends StatelessWidget {
   //noticeDatasのListの型をnotice_nodel.dartから持ってくる
@@ -16,7 +17,6 @@ class NoticeList extends StatelessWidget {
 
   // ウィジェットの状態を作成する
 
-
   // ビルドメソッドはウィジェットツリーを構築する
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,5 @@ class NoticeList extends StatelessWidget {
       itemDatas: noticeDatas,
       listItem: (notice) => NoticeCard(noticeData: notice, isQuote: isQuote, isTeacher: isTeacher),
     );
-
   }
 }

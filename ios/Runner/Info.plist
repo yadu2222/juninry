@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -24,10 +26,27 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>教材の登録・課題の提出に使用します</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>マイクを使用する理由をここに記述します</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>課題の提出に使用します</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -41,29 +60,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-
-	<!-- カメラの権限要求 -->
-	<key>NSCameraUsageDescription</key>
-	<string>教材の登録・課題の提出に使用します</string>
-	<!-- アルバムの権限要求 -->
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>課題の提出に使用します</string>
-	<!-- マイク カメラアプリを使用する都合上動画の撮影も可能になるからだと思われ？ -->
-	<key>NSMicrophoneUsageDescription</key>
-	<string>マイクを使用する理由をここに記述します</string>
-	<!-- ネットワーク -->
-	<key>NSAppTransportSecurity</key>
-<dict>
-  <key>NSAllowsLocalNetworking</key>
-  <true />
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
-
-
-</dict>
-
-	
 </plist>

@@ -20,11 +20,7 @@ class PageHomeworkDraftsTeacher extends HookWidget {
   // dbから取得
   @override
   Widget build(BuildContext context) {
-
-
-
     final draftData = useState<List<List<RegisterHomework>>>([]);
-
     // dbから下書きデータを取得
     Future<void> getDrafts() async {
       final data = await RegisterHomework.getHomeworkDraftsList();
@@ -47,7 +43,9 @@ class PageHomeworkDraftsTeacher extends HookWidget {
       return () {};
     }, []);
 
-    return BasicTemplate(title: title, children: [
+
+    return BasicTemplate(title: title,
+     children: [
       // 下書き一覧
       HomeworkDraftList(
         homeworkData: draftData.value,

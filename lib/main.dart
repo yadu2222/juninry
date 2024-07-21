@@ -5,10 +5,11 @@ import './router/router.dart';
 import './constant/colors.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends HookWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     final router = useState<GoRouter?>(null); // GoRouterのインスタンス// null許容

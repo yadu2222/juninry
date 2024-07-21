@@ -8,12 +8,14 @@ class Messages {
   static const String draftMsg = "下書きを保存しました\n一覧画面に戻ります";
 
   // 成功
+  static const String draftRegisterSuccess = "下書きの保存に成功しました！";
   static const String registerSuccess = "登録に成功しました";
   static const String loginSuccess = "ログインに成功しました";
   static const String joinClassSuccess = 'に参加しました！'; // 参加成功
-  static const String createClassSuccess = 'を作成しました！'; // 参加成功
+  static const String createClassSuccess = 'を作成しました！'; // 作成成功
   static const String submittionHomeworkSuccess = '宿題を提出しました！'; // 提出成功
   static const String postNoticeSuccess = 'お知らせを投稿しました！\n一覧画面に戻ります'; // 投稿成功
+  static const String createSuccess = '作成に成功しました！'; // 生成成功
 
   // APIエラー
   static const String defaultError = "通信に失敗しました"; // データベースエラー
@@ -29,6 +31,8 @@ class Messages {
   static const String joinClassConflictError = "すでに参加しています！"; // 参加エラー1
   static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー
   static const String createClassError = 'クラス作成に失敗しました'; // 生成失敗
+    static const String createOuchiError = 'クラス作成に失敗しました'; // 生成失敗
+
   static const String submittionHomeworkError = '宿題の提出に失敗しました'; // 生成失敗
   static const String postNoticeError = 'お知らせの投稿に失敗しました'; // 生成失敗
 

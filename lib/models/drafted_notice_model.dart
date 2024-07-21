@@ -84,7 +84,7 @@ class DraftedNotice {
     row.remove('notice_id');
 
     try {
-      await DatabaseHelper.updateNotice(
+      return await DatabaseHelper.update(
           "drafted_notices", row, "notice_id = ?", [noticeId]);
       return noticeId;
     } catch (e) {

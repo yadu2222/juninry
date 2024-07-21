@@ -10,6 +10,8 @@ import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.
 import '../../../apis/service/notice_service.dart'; // 追加: NoticeServiceをインポート
 import '../../components/atoms/add_button.dart';
 
+import '../../components/molecule/no_resourcs.dart'; // からっぽ表示用のモジュール
+
 class PageNotice extends HookWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -68,17 +70,12 @@ class PageNotice extends HookWidget {
             children: [
               isLoading.value
                   ? const Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: NoticeList(
-                          noticeDatas: notices.value,
-                          isTeacher: teacherExtension.value)),
+                  : notices.value.isEmpty
+                      ? const NoResources()
+                      : Expanded(child: NoticeList(noticeDatas: notices.value, isTeacher: teacherExtension.value)),
             ],
           ),
-          if (teacherExtension.value)
-            Positioned(
-                bottom: 25,
-                right: 25,
-                child: AddButton(onPressed: addPressed)), // 追加ボタン
+          if (teacherExtension.value) Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addPressed)), // 追加ボタン
         ],
       ),
     );

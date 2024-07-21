@@ -63,7 +63,7 @@ class RegisterHomework {
   }
 
   // 下書きを保存
-  static Future<void> registerHomeworkDrafts(List<RegisterHomework> homeworks) async {
+  static Future<bool> registerHomeworkDrafts(List<RegisterHomework> homeworks) async {
     for (RegisterHomework homework in homeworks) {
       if (homework.homeworkId != null) {
         // すでに登録されているものは削除して再登録
@@ -84,6 +84,7 @@ class RegisterHomework {
         debugPrint('Homework inserted');
       } catch (e) {
         debugPrint('Error inserting homework: $e');
+        return false;
       }
     }
     // かくにん
@@ -91,6 +92,7 @@ class RegisterHomework {
     // List<Homework> test = await getHomeworkDrafts(homework.classUuid);
     // final List<Map<String, dynamic>> maps = await DatabaseHelper.queryBuilder('homeworks', ['class_uuid'], ['aaaaa'], 'homework_limit');  // 動作不良
     debugPrint(test.toString());
+    return true;
   }
 
   // idで削除
@@ -101,7 +103,7 @@ class RegisterHomework {
   // 下書きを取得
   // TODO:日付絞って取得　クラスも絞りなさい！！！！！！！！
   static Future<List<RegisterHomework>> getHomeworkDraftsForDate(DateTime selectDate) async {
-   final List<Map<String, dynamic>> data = await DatabaseHelper.getHomeworksForSpecificDate(selectDate.toString());
+    final List<Map<String, dynamic>> data = await DatabaseHelper.getHomeworksForSpecificDate(selectDate.toString());
     // final List<Map<String, dynamic>> data = await DatabaseHelper.queryAllRows('homeworks');
 
     List<RegisterHomework> homeworks = [];

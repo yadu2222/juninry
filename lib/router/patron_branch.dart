@@ -5,14 +5,12 @@ import 'package:go_router/go_router.dart';
 // patron
 import '../view/pages/patron/page_home.dart';
 import '../view/pages/patron/page_notice_detail.dart';
-import '../view/pages/patron/page_nextday_task.dart';
+import '../view/pages/share/page_homework.dart';
 import '../view/pages/patron/page_submittion.dart';
-import '../view/pages/patron/page_ouchi.dart';
 import '../view/pages/share/page_students.dart';
+import '../view/pages/share/page_ouchi.dart';
 import '../view/pages/share/page_notice.dart';
-
 // 暫定的ホームたちにjuniorを使用
-import '../view/pages/junior/page_homework.dart';
 import '../view/pages/share/page_user.dart';
 
 // 保護者ブランチ
@@ -88,9 +86,9 @@ class PatronBranch {
               path: 'nextday',
               pageBuilder: (context, state) => NoTransitionPage(
                   key: state.pageKey,
-                  child: const PageNextDayTaskPatron(
-                    userUUID: '',
-                  )), // TODO:遷移処理
+                  child: const PageHomework.near(
+                      // userUUID: '',
+                      )), // TODO:遷移処理
             ),
             // 課題提出
             GoRoute(
@@ -111,12 +109,12 @@ class PatronBranch {
                   } else {
                     return NoTransitionPage(
                       key: state.pageKey,
-                      child: const PageHomeworkJunior(),
+                      child: const PageHomework.near(),
                     );
                   }
                 })
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkJunior()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
         ),
       ],
     ),
@@ -127,7 +125,7 @@ class PatronBranch {
         GoRoute(
           name: 'outhi',
           path: '/ouchi',
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchiPatron()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),

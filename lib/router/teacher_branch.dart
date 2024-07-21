@@ -17,10 +17,12 @@ import '../view/pages/share/page_my_page.dart';
 import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_notice_quote.dart';
-
-import '../view/pages/teacher/page_homework.dart';
+// homework
+import '../view/pages/share/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
+import '../view/pages/teacher/page_homework_submittions.dart';
+import '../view/pages/teacher/page_homework_detail.dart';
 
 // 暫定的ホームたちにjuniorを使用
 // homework
@@ -93,7 +95,6 @@ class TeacherBranch {
               pageBuilder: (context, state) {
                 // データが送られてきたとき
                 if (state.extra != null) {
-
                   // Map型でデータを送るためそれを取得
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
@@ -111,26 +112,27 @@ class TeacherBranch {
                 } else {
                   debugPrint("何もきてない");
 
-                  // データが送られてきなかったとき
-                  return NoTransitionPage(
-                    key: state.pageKey,
-                    child: const PageNoticeRegisterTeacher(),
-                  );
-                }
-              },
-            ),
+                    // データが送られてきなかったとき
+                    return NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageNoticeRegisterTeacher(),
+                    );
+                  }
+                },
+                routes: [
+                  GoRoute(
+                    path: "quote",
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: PageNoticeQuoteTeacher(),
+                    ),
+                  ),
+                ]),
             GoRoute(
               path: "draft",
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageNoticeDraftTeacher(),
-              ),
-            ),
-            GoRoute(
-              path: "quote",
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: PageNoticeQuoteTeacher(),
               ),
             ),
           ],
@@ -149,7 +151,6 @@ class TeacherBranch {
         GoRoute(
           name: 'homework',
           path: '/homework',
-
           routes: [
             GoRoute(
               name: 'register',
@@ -158,9 +159,7 @@ class TeacherBranch {
                 GoRoute(
                   name: 'drafts',
                   path: 'drafts',
-                  pageBuilder: (context, state) => NoTransitionPage(
-                      key: state.pageKey,
-                      child: const PageHomeworkDraftsTeacher()),
+                  pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkDraftsTeacher()),
                 )
               ],
               pageBuilder: (context, state) {
@@ -171,10 +170,8 @@ class TeacherBranch {
                   // debugPrint("きちゃ");
 
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   final String selectDate = extraData['selectDate'];
-                  print(selectDate);
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
@@ -190,13 +187,44 @@ class TeacherBranch {
                 }
               },
             ),
+            // 提出状況確認
+            GoRoute(
+                name: 'submittions',
+                path: "submittions",
+                routes: [
+                  GoRoute(
+                      name: 'detail',
+                      path: "detail",
+                      routes: const [
+                        // ここに提出内容のページ
+                      ],
+                      pageBuilder: (context, state) {
+                        // 遷移時に定義されたデータをrouterで再定義
+                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                        final String homeworkUUID = extraData['homeworkUUID'];
+                        final String studentUUID = extraData['studentUUID'];
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          // 先ほど再定義したデータをここで渡す
+                          child: PageHomeworkDetail(
+                            homeworkUUID: homeworkUUID,
+                            studentUUID: studentUUID,
+                          ),
+                        );
+                      }),
+                ],
+                pageBuilder: (context, state) {
+                  // 遷移時に定義されたデータをrouterで再定義
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                  final String homeworkUUID = extraData['homeworkUUID'];
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    // 先ほど再定義したデータをここで渡す
+                    child: PageSubmissionsTeacher(homeworkUUID: homeworkUUID),
+                  );
+                }),
           ],
-
-          pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              child: const PageHomeworkTeacher(
-                classUUID: '',
-              )), // TODO:遷移処理？
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),

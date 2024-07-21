@@ -5,14 +5,25 @@ import '../atoms/teaching_material.dart';
 import '../../../models/homework_model.dart';
 import '../atoms/listitem.dart';
 
-
 // 課題カード
 class HomeworkCard extends StatelessWidget {
-  const HomeworkCard({
+  const HomeworkCard.patron({
     super.key,
     required this.homeworkData,
+    this.isJunior = false,
+    this.isTeacher = false,
   });
+
+  const HomeworkCard.teacher({
+    super.key,
+    required this.homeworkData,
+    this.isJunior = false,
+    this.isTeacher = true,
+  });
+  const HomeworkCard.junior({super.key, required this.homeworkData, this.isJunior = true, this.isTeacher = false});
   final Homework homeworkData;
+  final bool isJunior;
+  final bool isTeacher;
 
   // TODO:user情報に合わせて判別すべきでは？ そのとおりだ
 
@@ -37,11 +48,19 @@ class HomeworkCard extends StatelessWidget {
             TeachingMaterial(itemData: homeworkData),
             const Spacer(), // 間隔を埋める
             // アイコン
-            Container(
-              alignment: Alignment.center,
-              // 課題の提出状態を判別している
-              child: Center(child: homeworkData.submitFlg== 1 ? checkIcon : cameraIcon),
-            ),
+
+            isTeacher
+                ? const SizedBox.shrink()
+                : Container(
+                    alignment: Alignment.center,
+                    // 課題の提出状態を判別している
+                    child: Center(
+                        child: homeworkData.submitFlg == 1
+                            ? checkIcon
+                            : isJunior
+                                ? cameraIcon
+                                : null),
+                  ),
           ],
         ));
   }
