@@ -5,22 +5,12 @@ import '../../../constant/colors.dart';
 // bottombar
 // 基本触らない
 class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
-  const BottomBarView({
-    super.key,
-    required this.selectedIndex,
-    required this.onItemTapped,
-    required this.isOuchi
-  });
-  const BottomBarView.teacher({
-    super.key,
-    required this.selectedIndex,
-    required this.onItemTapped,
-    required this.isOuchi
-  });
+  const BottomBarView({super.key, required this.selectedIndex, required this.onItemTapped, required this.isOuchi});
+  const BottomBarView.teacher({super.key, required this.selectedIndex, required this.onItemTapped, required this.isOuchi});
 
   final bool isOuchi;
 
-  List<BottomNavigationBarItem> getItems()  {
+  List<BottomNavigationBarItem> getItems() {
     BottomNavigationBarItem home = const BottomNavigationBarItem(
       icon: Icon(Icons.home_filled),
       label: 'ホーム',
@@ -39,8 +29,8 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
       label: 'おうち',
     );
     BottomNavigationBarItem mypage = const BottomNavigationBarItem(
-      icon: Icon(Icons.person_outline),
-      label: 'マイページ',
+      icon: Icon(Icons.settings),
+      label: '設定',
     );
 
     final List<BottomNavigationBarItem> items = [];
@@ -72,7 +62,7 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
         ),
         padding: const EdgeInsets.only(top: 5),
         child: BottomNavigationBar(
-          items:getItems(),
+          items: getItems(),
           currentIndex: selectedIndex,
           backgroundColor: AppColors.main,
           selectedItemColor: AppColors.iconLight,
