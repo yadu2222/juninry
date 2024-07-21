@@ -14,6 +14,7 @@ import '../view/pages/share/page_homework.dart';
 import '../view/pages/patron/page_submittion.dart';
 // ouchi
 import '../view/pages/share/page_ouchi.dart';
+import '../view/pages/patron/page_ouchi_top.dart';
 // setting
 import '../view/pages/share/page_questions.dart';
 import '../view/pages/share/page_user.dart';
@@ -130,6 +131,15 @@ class PatronBranch {
         GoRoute(
           name: 'outhi',
           path: '/ouchi',
+          routes: [
+            GoRoute(
+              path: 'top',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageOuchiTopPatron(),
+              ),
+            )
+          ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],

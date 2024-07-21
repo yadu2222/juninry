@@ -9,7 +9,7 @@ import '../../../models/ouchi_model.dart';
 // TODO:デザイン
 inviteDialog({required BuildContext context, inviteClass.Class? classData, Ouchi? ouchiData}) {
   DialogUtil.show(
-      isBarrier: false,
+      isBarrier: true,
       context: context,
       child: Container(
         padding: const EdgeInsets.all(20),

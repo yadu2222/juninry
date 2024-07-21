@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
 import '../models/homework_model.dart';
 
 // junior遷移先
@@ -129,11 +130,21 @@ class JuniorBranch {
           path: '/ouchi',
           routes: [
             GoRoute(
-              name: 'GOHOUBI',
-              path: 'reward', // notice
+              name: 'top',
+              path: 'top', // notice
+              routes: [
+                GoRoute(
+                  name: 'GOHOUBI',
+                  path: 'reward', // notice
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const PageRewardJunior(),
+                  ),
+                ),
+              ],
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
-                child: const PageRewardJunior(),
+                child: PageOuchiTopJunior(),
               ),
             ),
           ],
