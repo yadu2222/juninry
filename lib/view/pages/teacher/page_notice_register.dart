@@ -50,10 +50,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
     // エラーが発生した場合の表示
     if (snapshot.hasError) {
       context.go('/notice');
-      // return BasicTemplate(title: title, children: const [
-      //   Center(child: Text(Messages.defaultError)),
-
-      // ]);
     }
 
     // データが null の場合の処理
@@ -71,6 +67,17 @@ class PageNoticeRegisterTeacher extends HookWidget {
     final quotedNoticeData = data.quotedNoticeData;
     final titleController = data.titleController;
     final textController = data.textController;
+
+    // 遷移処理する時に前回の値保存してほしいなぁ
+    useEffect(() {
+      return () {
+        // ページを離れる際にdraftedNoticeIdを保存
+        if (data.draftedNoticeData.draftedNoticeId != null) {
+          data.prefs.setInt(
+              'draftedNoticeId', data.draftedNoticeData.draftedNoticeId!);
+        }
+      };
+    }, [data]);
 
     // DBから拾ってきた文字列を置いといて保存必要かみてみる
     final String titleString = draftedNoticeData.draftedNoticeTitle.toString();
@@ -238,6 +245,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? storedDraftedNoticeId = prefs.getInt('draftedNoticeId');
 
+    debugPrint("prefs: $storedDraftedNoticeId");
+
     DraftedNotice draftedNoticeData;
     QuotedNotice? quotedNoticeData;
 
@@ -264,11 +273,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
         draftedNoticeData.quotedNoticeUuid = quotedNoticeUUID;
       }
 
-      // // 現在の下書きIDを保存
-      if (draftedNoticeData.draftedNoticeId != null) {
-        await prefs.setInt(
-            'draftedNoticeId', draftedNoticeData.draftedNoticeId!);
-      }
+      // // // 現在の下書きIDを保存
+      // if (draftedNoticeData.draftedNoticeId != null) {
+      //   await prefs.setInt(
+      //       'draftedNoticeId', draftedNoticeData.draftedNoticeId!);
+      // }
     }
 
     // 引用データを取得
@@ -308,6 +317,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
       titleController: titleController,
       textController: textController,
       userName: user.userName,
+      prefs: prefs,
     );
   }
 }
@@ -320,6 +330,7 @@ class _PageData {
   final TextEditingController titleController;
   final TextEditingController textController;
   final String userName;
+  final SharedPreferences prefs;
 
   _PageData({
     required this.classesList,
@@ -329,5 +340,6 @@ class _PageData {
     required this.titleController,
     required this.textController,
     required this.userName,
+    required this.prefs,
   });
 }
