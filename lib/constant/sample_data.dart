@@ -325,11 +325,11 @@ class SampleData {
 
   static List<Map> dueHomeworkData = [
     {
-      'dueDate': DateTime.now().add(const Duration(days: 1)),
+      'homeworkLimit': DateTime.now().add(const Duration(days: 1)),
       'homeworkData': homeworkData
     },
     {
-      'dueDate': DateTime.now().add(const Duration(days: 2)),
+      'homeworkLimit': DateTime.now().add(const Duration(days: 2)),
       'homeworkData': homeworkData
     },
   ];

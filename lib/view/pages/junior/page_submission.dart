@@ -11,7 +11,7 @@ import '../../../models/homework_model.dart';
 // api
 import '../../../apis/controller/homework_req.dart';
 // image
-import 'package:image_picker/image_picker.dart';  // カメラ用ライブラリ
+import 'package:image_picker/image_picker.dart'; // カメラ用ライブラリ
 import 'dart:io'; // ファイル操作用ライブラリ
 // sample
 import '../../../constant/sample_data.dart';
@@ -46,6 +46,7 @@ class PageSubmissionJunior extends HookWidget {
         images.value[index] = (File(pickedFile.path)); // 画像用配列に保存
       }
     }
+
     // 撮影カウンター
     bool isCounter() {
       if (counter.value == 0) {
@@ -86,7 +87,7 @@ class PageSubmissionJunior extends HookWidget {
 
     // テンプレート呼び出し
     return BasicTemplate(title: title, children: [
-      HomeworkCard(homeworkData: SampleData.homeworkData[0]), // 課題カード
+      HomeworkCard.teacher(homeworkData: SampleData.homeworkData[0]), // 課題カード
       const DividerView(), // 区切り線
       // 提出リスト
       Expanded(
@@ -95,7 +96,7 @@ class PageSubmissionJunior extends HookWidget {
         images: images.value,
         pickImage: pickImage,
       )), // 提出リスト
-      
+
       // 状態を元に提出ボタンを呼び出し
       isCounter()
           ? BasicButton(

@@ -10,6 +10,7 @@ import '../../components/molecule/invite_dialog.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/join_list.dart';
 import '../../components/atoms/alert_dialog.dart';
+import '../../components/molecule/no_resourcs.dart';
 // api
 import '../../../apis/controller/class_req.dart'; // リクエスト
 // model
@@ -131,10 +132,13 @@ class PageClass extends HookWidget {
         onPressed: conTypeMap.value['api'],
         circular: 50,
       ),
-      const DividerView(
-        icon: Icons.door_back_door,
-        title: '参加中のクラス',
-      ),
+
+      joinClasses.value.isEmpty
+          ? const SizedBox.shrink()
+          : const DividerView(
+              icon: Icons.door_back_door,
+              title: '参加中のクラス',
+            ),
       // 現在参加中のクラス一覧
       Expanded(
         child: JoinList(

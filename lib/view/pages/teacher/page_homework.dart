@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../models/homework_model.dart';
 import '../../components/template/basic_template.dart';
-import '../../components/organism/due_homework_list.dart';
+import '../../components/organism/homework_list.dart';
 
 import '../../components/atoms/add_button.dart';
 
@@ -46,7 +46,7 @@ class PageHomeworkTeacherState extends State<PageHomeworkTeacher> {
         // newExoandedでラップするとサイズを自動調整してくれるようになる
         // べんり〜〜！！！
         Expanded(
-            child: DueHomeworkList(
+            child: HomeworkList.limit(
           homeworkData: SampleData.dueHomeworkData,
         )),
       ]),
