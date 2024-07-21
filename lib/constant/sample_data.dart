@@ -341,6 +341,7 @@ class SampleData {
         className: '4-5',
         classUUID: '12345',
         noticeTitle: 'お知らせがたくさん',
+        noticeExplanatory: '少子化じゃなかったころ',
 
         readStatus: 0),
     Notice( noticeUUID: 'aaaaa',classUUID: '', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: 1),

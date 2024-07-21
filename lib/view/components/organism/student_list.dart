@@ -68,11 +68,11 @@ class StudentList extends StatelessWidget {
             }).toList())))
         : ListItemBox<dynamic>(
             itemDatas: studentData,
-            listItem: (index) => InkWell(
+            listItem: (student) => InkWell(
                 onTap: () async {
                   isTeacher();
                 },
-                child: StudentCard(studentData: studentData[index] as Student)),
+                child: StudentCard(studentData: student as Student)),
           );
   }
 }
