@@ -13,10 +13,11 @@ import '../view/pages/share/page_class.dart';
 import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_notice_quote.dart';
-
+// homework
 import '../view/pages/share/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
+import '../view/pages/teacher/page_submittion_homework.dart';
 
 // 暫定的ホームたちにjuniorを使用
 // homework
@@ -144,7 +145,6 @@ class TeacherBranch {
         GoRoute(
           name: 'homework',
           path: '/homework',
-
           routes: [
             GoRoute(
               name: 'register',
@@ -166,7 +166,6 @@ class TeacherBranch {
                   // 遷移時に定義されたデータをrouterで再定義
                   final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   final String selectDate = extraData['selectDate'];
-                  print(selectDate);
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
@@ -182,13 +181,26 @@ class TeacherBranch {
                 }
               },
             ),
-          ],
+            // 提出状況確認
+            GoRoute(
+                path: "submittions",
+                routes: const [
+                  // ここに提出内容のページ
+                ],
+                pageBuilder: (context, state) {
+                  // 遷移時に定義されたデータをrouterで再定義
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                  final String homeworkUUID = extraData['homeworkUUID'];
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    // 先ほど再定義したデータをここで渡す
+                    child: PageSubmissionsTeacher(homeworkUUID: homeworkUUID),
+                  );
 
-          pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey,
-              child: const PageHomework(
-                  // classUUID: '',
-                  )), // TODO:遷移処理？
+                  // 下書きを選択していない場合
+                }),
+          ],
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),

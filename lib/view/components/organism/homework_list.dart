@@ -14,7 +14,7 @@ class HomeworkList extends StatelessWidget {
   final List<dynamic> homeworkData;
   final List<StatefulShellBranch> branchType;
 
-  final void Function(String) cardPressed;
+  final void Function(Homework) cardPressed;
 
   // 名前付きコンストラクタを用意することで表示を分岐
   // overloadみたいなものだよ
@@ -58,7 +58,7 @@ class HomeworkList extends StatelessWidget {
             // 宿題
             return InkWell(
                 onTap: () async {
-                  cardPressed(homeworkList['homeworkUUID']);
+                  cardPressed(homework);
                 },
                 // カードウィジェット
                 // userにあわせたものを表示
@@ -77,8 +77,10 @@ class HomeworkList extends StatelessWidget {
         ]);
       }).toList())), // キャスト
     );
+  }
+}
 
-    // もとのやつ
+ // もとのやつ
     // return ListItemBox<dynamic>(
     //     itemDatas: homeworkData,
     //     listItem: (homework) => InkWell(
@@ -89,5 +91,3 @@ class HomeworkList extends StatelessWidget {
     //           },
     //           child: HomeworkCard(homeworkData: homework),
     //         ));
-  }
-}

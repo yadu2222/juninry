@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/models/homework_model.dart';
 // view
 import '../../components/template/basic_template.dart';
 import '../../components/organism/homework_list.dart';
@@ -32,18 +33,29 @@ class PageHomework extends HookWidget {
     }
 
     // homworkカードを押下した際の処理
-    void cardPressed(String homeworkId) async {
+    void cardPressed(Homework homework) async {
       // 児童のときは遷移
       if (await isBranch(BranchType.junior)) {
-        context.go('/homework/submittion', extra: {'homeworkId': homeworkId});
+        context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID});
 
         // ほごしゃ
       } else if (await isBranch(BranchType.junior)) {
-        // TODO:児童じゃなかった場合かつ未提出の場合は催促の機能 現状仕様等未確定のため保留
+        // 未提出
+        if (homework.submitFlg == 0) {
+          // TODO:ここで提出の催促
+          // 提出済
+        } else {
+          context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID});
+        }
 
         // 教員
       } else {
         // TODO:提出生徒一覧ページに遷移
+        // // 画面遷移
+        context.push('/homework/submittions/',
+            // 下書き一覧に選択した日付を渡す
+            // datetimeを渡すとrouterがエラーを吐くので、文字列に変換して渡す
+            extra: {'homeworkUUID': homework.homeworkUUID});
       }
     }
 
