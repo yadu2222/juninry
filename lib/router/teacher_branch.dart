@@ -113,6 +113,16 @@ class TeacherBranch {
                   );
                 }
               },
+              routes: [
+                GoRoute(
+                    path: "quote",
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: PageNoticeQuoteTeacher(),
+                    ),
+                  ),
+
+              ]
             ),
             GoRoute(
               path: "draft",
@@ -121,13 +131,7 @@ class TeacherBranch {
                 child: const PageNoticeDraftTeacher(),
               ),
             ),
-            GoRoute(
-              path: "quote",
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: PageNoticeQuoteTeacher(),
-              ),
-            ),
+            
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,

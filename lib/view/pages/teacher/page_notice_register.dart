@@ -127,20 +127,20 @@ class PageNoticeRegisterTeacher extends HookWidget {
           negativeAction: (
             "無視する",
             () {
-              context.go('/notice/quote');
+              context.go('/notice/register/quote');
             }
           ),
           positiveAction: (
             "保存する",
             () async {
               if (await save()) {
-                context.go('/notice/quote');
+                context.go('/notice/register/quote');
               }
             }
           ),
         );
       } else {
-        context.go('/notice/quote');
+        context.go('/notice/register/quote');
       }
     }
 
