@@ -17,15 +17,9 @@ class NoticeService {
       // リクエストメソッドにオブジェクトを投げる
       Map resData = await HttpReq.httpReq(reqData);
 
-      // 通知が存在するか確認
-      print('おこられちゃう」～～');
-      print(resData.toString());
-
-        // 通知リストを返す
-        return Notice.resToNotices(resData['srvResData']['notices']);
-
+      // 通知リストを返す
+      return Notice.resToNotices(resData['srvResData']['notices']);
     } catch (e) {
-
       print("じつはよ、、例外がでてるんだ");
       print(e.toString());
       // エラーメッセージを出力
@@ -56,6 +50,5 @@ class NoticeService {
       'Content-Type': 'application/json'
     });
     await HttpReq.httpReq(reqData);
-
   }
 }
