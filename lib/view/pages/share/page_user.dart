@@ -6,7 +6,9 @@ import '../../../models/user_model.dart';
 import '../../components/template/basic_template.dart';
 
 class PageUserData extends StatelessWidget {
-  const PageUserData({super.key,});
+  const PageUserData({
+    super.key,
+  });
 
   final String title = 'ユーザー';
 
@@ -14,10 +16,10 @@ class PageUserData extends StatelessWidget {
   Widget build(BuildContext context) {
     void logout() async {
       // ログアウト処理
-      bool isLogout = await User.logout();  // dbからデータを削除
+      bool isLogout = await User.logout(); // dbからデータを削除
       if (isLogout) {
         // ログイン画面に遷移
-       context.go('/login');
+        context.go('/login');
       } else {}
     }
 
@@ -28,6 +30,13 @@ class PageUserData extends StatelessWidget {
         isColor: false,
         onPressed: () {
           logout();
+        },
+      ),
+      BasicButton(
+        text: 'マイページ',
+        isColor: true,
+        onPressed: () {
+          context.go('/userData/myPage');
         },
       ),
     ]);

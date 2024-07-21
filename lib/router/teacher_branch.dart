@@ -9,6 +9,10 @@ import 'package:juninry/view/pages/teacher/page_notice_draft.dart';
 import '../view/pages/share/page_home.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
+
+// mypage
+import '../view/pages/share/page_my_page.dart';
+
 // notice
 import '../view/pages/teacher/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
@@ -89,8 +93,7 @@ class TeacherBranch {
               pageBuilder: (context, state) {
                 // データが送られてきたとき
                 if (state.extra != null) {
-                  debugPrint("テストテストテスト");
-                  debugPrint("extra: ${state.extra.toString()}");
+
                   // Map型でデータを送るためそれを取得
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
@@ -205,6 +208,16 @@ class TeacherBranch {
         GoRoute(
           name: 'userData',
           path: '/userData',
+          routes: [
+            GoRoute(
+              name: 'mypage',
+              path: 'mypage',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageMyPage(),
+              ),
+            ),
+          ],
           pageBuilder: (context, state) =>
               NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )

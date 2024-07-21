@@ -78,13 +78,15 @@ class HomeworkService {
     // 宿題のデータがあれば
     try {
       if (resData["srvResData"] == null) {
-        
+
       }
     } catch (e) {
       debugPrint(e.toString());
     }
     debugPrint(resData.toString());
     // 返す
-   
   }
+
+  // 宿題提出ログを取得
+  
 }
