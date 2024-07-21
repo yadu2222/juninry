@@ -7,7 +7,9 @@ import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/info_form.dart';
 import '../../components/atoms/basic_button.dart';
-import '../../components/atoms/alert_dialog.dart';
+import '../../components/molecule/invite_dialog.dart';
+// model
+import '../../../models/ouchi_model.dart';
 // 定数
 import '../../../constant/messages.dart';
 
@@ -24,19 +26,22 @@ class PageCreateOuchi extends HookWidget {
     // おうちを作成
     void join() async {
       if (ouchiNameController.text.isNotEmpty) {
-        String? ouchiName = await ouchiReq.createOuchiHandler(ouchiNameController.text);
-        if (ouchiName != null) {
-          // 参加成功ダイアログ
-          AlertDialogUtil.show(
-            context: context,
-            content: '$ouchiName${Messages.createClassSuccess}',
-            positiveAction: (
-              'OK',
-              () {
-               context.go('/ouchi');
-              }
-            ),
-          );
+        Ouchi? ouchiData = await ouchiReq.createOuchiHandler(ouchiNameController.text);
+        if (ouchiData != null) {
+          // 作成成功ダイアログ
+          // AlertDialogUtil.show(
+          //   context: context,
+          //   content: '$ouchiName${Messages.createClassSuccess}/',
+          //   positiveAction: (
+          //     'OK',
+          //     () {
+          //      context.go('/ouchi');
+          //     }
+          //   ),
+          // );
+          inviteDialog(context: context, ouchiData: ouchiData).then((result) {
+            context.go('/ouchi'); // ダイアログを閉じた後に遷移
+          });
         }
         ouchiNameController.clear(); // 入力値クリア
       } else {

@@ -6,8 +6,6 @@ import '../error.dart';
 // model
 import '../../models/user_model.dart';
 
-
-
 class UserService {
   static Future<void> registerUser(Map<String, dynamic> reqBody) async {
     // リクエストを生成
@@ -64,7 +62,7 @@ class UserService {
   }
 
   // OUCHIに参加
-  // 結果的に操作するのはuserモデルなのになあのきもち
+  // 結果的に操作するのはuserモデルだよなあのきもち
   static Future<String> joinOUCHI(
     String inviteCode,
   ) async {
@@ -88,7 +86,8 @@ class UserService {
     );
     final resData = await HttpReq.httpReq(reqData);
     // ユーザー情報の更新
-    await getUser();
+    User user = await getUser();
+    await User.updateUser(user);
     return resData['srvResData']['ouchiName'];
   }
 }

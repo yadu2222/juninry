@@ -4,6 +4,7 @@ import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../service/ouchi_service.dart';
 // import '../error.dart';
+import '../../models/ouchi_model.dart';
 
 class OUCHIReq {
   final BuildContext context;
@@ -11,7 +12,7 @@ class OUCHIReq {
 
   // おうちを作成する
   // TODO:エラーハンドリング
-  Future<String?> createOuchiHandler(String ouchiName) async {
+  Future<Ouchi?> createOuchiHandler(String ouchiName) async {
     try {
       return await OUCHIService.createOuchi(ouchiName); // おうち作成処理を待つ
     } catch (error) {

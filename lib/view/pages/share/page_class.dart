@@ -36,7 +36,7 @@ class PageClass extends HookWidget {
       if (classNameController.text.isNotEmpty) {
         Map<String, dynamic> resData = await classReq.createClassHandler(classNameController.text);
         if (resData['isCreate']) {
-          inviteDialog(context, resData['classData']); // 作成成功ダイアログ
+          inviteDialog(context: context, classData: resData['classData']); // 作成成功ダイアログ
 
           classNameController.clear(); // 入力値クリア
         }
@@ -95,7 +95,7 @@ class PageClass extends HookWidget {
     void invite(Class classData) async {
       Map<String, dynamic> resData = await classReq.inviteClassHandler(classData.classUUID!);
       if (resData['isCreate']) {
-        inviteDialog(context, resData['classData']); // 作成成功ダイアログ
+        inviteDialog(context: context, classData: resData['classData']); // 作成成功ダイアログ
         // 成功したということは参加クラスが増えたということなので、クラスも再取得
         await getClasses();
       } else {

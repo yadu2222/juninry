@@ -4,11 +4,13 @@ import '../../models/req_model.dart';
 // import 'package:http/http.dart' as http;
 // import '../error.dart';
 import '../../models/user_model.dart';
+import '../../models/ouchi_model.dart';
+
 
 class OUCHIService {
 
   // おうち作成
-  static Future<String> createOuchi(String ouchiName) async {
+  static Future<Ouchi> createOuchi(String ouchiName) async {
     // TODO:エラーハンドリング
      // リクエストを生成
     final reqData = Request(
@@ -23,7 +25,7 @@ class OUCHIService {
     User user = await User.getUser();
     user.ouchiUUID = resData['srvResData']['ouchiUUID'];
     await User.updateUser(user);
-    return resData['srvResData']['ouchiName'];  // おうちの名前を返す
+    return Ouchi.resToOuchi(resData['srvResData']);  // おうちデータを返す
   }
 
   // 現在のポイントを取得
