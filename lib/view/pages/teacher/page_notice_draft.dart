@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
 import 'package:go_router/go_router.dart';
+
 import '../../../models/drafted_notice_model.dart';
 import '../../components/atoms/listItem_box.dart';
 import '../../components/molecule/draft_card.dart';

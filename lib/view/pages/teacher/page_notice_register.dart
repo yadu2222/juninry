@@ -24,12 +24,12 @@ import '../../components/atoms/alert_dialog.dart';
 class PageNoticeRegisterTeacher extends HookWidget {
   // お知らせの下書きを管理する
   final int? draftedNoticeId;
-  final String? quotedNoticeUuid;
+  final String? quotedNoticeUUID;
 
   const PageNoticeRegisterTeacher({
     super.key,
     this.draftedNoticeId,
-    this.quotedNoticeUuid,
+    this.quotedNoticeUUID,
   });
 
   final String title = 'お知らせ作成';
@@ -37,7 +37,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final future = useMemoized(
-        () => _loadData(context), [draftedNoticeId, quotedNoticeUuid]);
+        () => _loadData(context), [draftedNoticeId, quotedNoticeUUID]);
     // 非同期通信が必要なデータ群
     final snapshot = useFuture(future);
 
@@ -49,9 +49,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
     }
     // エラーが発生した場合の表示
     if (snapshot.hasError) {
-      return BasicTemplate(title: title, children: const [
-        Center(child: Text(Messages.defaultError)),
-      ]);
+      context.go('/notice');
     }
 
     // データが null の場合の処理
@@ -70,9 +68,21 @@ class PageNoticeRegisterTeacher extends HookWidget {
     final titleController = data.titleController;
     final textController = data.textController;
 
+    // 遷移処理する時に前回の値保存してほしいなぁ
+    useEffect(() {
+      return () {
+        // ページを離れる際にdraftedNoticeIdを保存
+        if (data.draftedNoticeData.draftedNoticeId != null) {
+          data.prefs.setInt(
+              'draftedNoticeId', data.draftedNoticeData.draftedNoticeId!);
+        }
+      };
+    }, [data]);
+
     // DBから拾ってきた文字列を置いといて保存必要かみてみる
     final String titleString = draftedNoticeData.draftedNoticeTitle.toString();
-    final String textString = draftedNoticeData.draftedNoticeExplanatory.toString();
+    final String textString =
+        draftedNoticeData.draftedNoticeExplanatory.toString();
 
     // セーブ処理をする 返り血は成功したID
     Future<bool> save() async {
@@ -109,27 +119,28 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // 引用ボタン押した時に保存を促す
     void onQuoteClicked() {
-      debugPrint("titleString: $titleString");
-      debugPrint("textString: $textString");
-      // TODO: 遷移先
-      if (
-        (titleController.text  != titleString && titleController.text != "") ||
-        (textController.text != textString && textController.text != "")
-        ) {
+      if ((titleController.text != titleString && titleController.text != "") ||
+          (textController.text != textString && textController.text != "")) {
         AlertDialogUtil.show(
           context: context,
           content: Messages.confirmationMsg,
-          negativeAction: ( "無視する",  () {
-            context.go('/notice');
-          }),
-          positiveAction: ( "保存する",  () async {
-            if (await save()) {
-              context.go('/notice');
+          negativeAction: (
+            "無視する",
+            () {
+              context.go('/notice/quote');
             }
-          }),
+          ),
+          positiveAction: (
+            "保存する",
+            () async {
+              if (await save()) {
+                context.go('/notice/quote');
+              }
+            }
+          ),
         );
       } else {
-        context.go('/notice');
+        context.go('/notice/quote');
       }
     }
 
@@ -176,13 +187,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
                         // 保存できた時はIDを下書きデータに格納する　※上書き保存のため
                         if (await save()) {
                           AlertDialogUtil.show(
-                            context: context,
-                            content: Messages.draftMsg,
-                            neutralAction: ("OK", () {
-                              context.go('/notice/draft');
-                            })
-                          );
-
+                              context: context,
+                              content: Messages.draftMsg,
+                              neutralAction: (
+                                "OK",
+                                () {
+                                  context.go('/notice/draft');
+                                }
+                              ));
                         }
                       },
                       isColor: true,
@@ -193,7 +205,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       text: "投稿",
                       isColor: false,
                       onPressed: () async {
-                        NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+                        NoticeReq noticeReq =
+                            NoticeReq(context: context); // 通信用クラスのインスタンスを生成
 
                         bool result = await noticeReq.postNotice(Notice(
                           noticeTitle: titleController.text,
@@ -205,12 +218,14 @@ class PageNoticeRegisterTeacher extends HookWidget {
                         if (result) {
                           // 投稿成功
                           AlertDialogUtil.show(
-                            context: context,
-                            content: Messages.postNoticeSuccess,
-                            neutralAction: ("OK", () {
-                              context.go('/notice');
-                            })
-                          );
+                              context: context,
+                              content: Messages.postNoticeSuccess,
+                              neutralAction: (
+                                "OK",
+                                () {
+                                  context.go('/notice');
+                                }
+                              ));
                         }
                       },
                       icon: Icons.check,
@@ -230,11 +245,13 @@ class PageNoticeRegisterTeacher extends HookWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? storedDraftedNoticeId = prefs.getInt('draftedNoticeId');
 
+    debugPrint("prefs: $storedDraftedNoticeId");
+
     DraftedNotice draftedNoticeData;
     QuotedNotice? quotedNoticeData;
 
     // draftedNoticeIdとquotedNoticeUuidの両方がnullの場合、新しい下書きを作成
-    if (draftedNoticeId == null && quotedNoticeUuid == null) {
+    if (draftedNoticeId == null && quotedNoticeUUID == null) {
       draftedNoticeData = DraftedNotice();
       // 保存されていたIDをクリア
       await prefs.remove('draftedNoticeId');
@@ -244,26 +261,29 @@ class PageNoticeRegisterTeacher extends HookWidget {
       int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
       if (currentDraftedNoticeId != null) {
         // 既存の下書きを取得
-        draftedNoticeData = await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
+        draftedNoticeData =
+            await DraftedNotice.getDraftedNotice(currentDraftedNoticeId);
       } else {
         // 新しい下書きを作成
         draftedNoticeData = DraftedNotice();
       }
 
       // 新しい引用が提供された場合、下書きに引用IDを設定
-      if (quotedNoticeUuid != null) {
-        draftedNoticeData.quotedNoticeUuid = quotedNoticeUuid;
+      if (quotedNoticeUUID != null) {
+        draftedNoticeData.quotedNoticeUuid = quotedNoticeUUID;
       }
 
-      // // 現在の下書きIDを保存
-      if (draftedNoticeData.draftedNoticeId != null) {
-        await prefs.setInt('draftedNoticeId', draftedNoticeData.draftedNoticeId!);
-      }
+      // // // 現在の下書きIDを保存
+      // if (draftedNoticeData.draftedNoticeId != null) {
+      //   await prefs.setInt(
+      //       'draftedNoticeId', draftedNoticeData.draftedNoticeId!);
+      // }
     }
 
     // 引用データを取得
     if (draftedNoticeData.quotedNoticeUuid != null) {
-      quotedNoticeData = await noticeReq.fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
+      quotedNoticeData = await noticeReq
+          .fetchQuotedNotice(draftedNoticeData.quotedNoticeUuid!);
     }
 
     // HACK: 表示しないけどDBにいれるお知らせ作成日だよ
@@ -271,7 +291,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
         DateFormat('yyyy.MM.dd').format(DateTime.now());
 
     // コントローラーの設定
-    final titleController = TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
+    final titleController =
+        TextEditingController(text: draftedNoticeData.draftedNoticeTitle ?? '');
     final textController = TextEditingController(
         text: draftedNoticeData.draftedNoticeExplanatory ?? '');
 
@@ -296,6 +317,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
       titleController: titleController,
       textController: textController,
       userName: user.userName,
+      prefs: prefs,
     );
   }
 }
@@ -308,6 +330,7 @@ class _PageData {
   final TextEditingController titleController;
   final TextEditingController textController;
   final String userName;
+  final SharedPreferences prefs;
 
   _PageData({
     required this.classesList,
@@ -317,5 +340,6 @@ class _PageData {
     required this.titleController,
     required this.textController,
     required this.userName,
+    required this.prefs,
   });
 }

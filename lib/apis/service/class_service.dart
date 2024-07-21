@@ -32,7 +32,7 @@ class ClassService {
         throw Exception('クラス参加に失敗しました');
       }
     }
-    
+
     // リクエストを生成
     final reqData = Request(
       url: Urls.joinClass,
@@ -75,10 +75,8 @@ class ClassService {
         headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
     final resData = await HttpReq.httpReq(reqData);
-    debugPrint(resData.toString());
     List<Class> classList = [];
     for (Map c in resData['srvResData']['classes']) {
-      debugPrint(c.toString());
       classList.add(Class.resToClass(c));
     }
     // 返す

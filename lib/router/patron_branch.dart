@@ -7,15 +7,11 @@ import '../view/pages/patron/page_home.dart';
 import '../view/pages/patron/page_notice_detail.dart';
 import '../view/pages/patron/page_nextday_task.dart';
 import '../view/pages/patron/page_submittion.dart';
-import '../view/pages/patron/page_ouchi_top.dart';
 import '../view/pages/share/page_students.dart';
-import '../view/pages/patron/page_ouchi_create.dart';
-import '../view/pages/patron/page_ouchi_top.dart';
 import '../view/pages/share/page_ouchi.dart';
-
+import '../view/pages/share/page_notice.dart';
 // 暫定的ホームたちにjuniorを使用
 import '../view/pages/junior/page_homework.dart';
-import '../view/pages/junior/page_notice.dart';
 import '../view/pages/share/page_user.dart';
 
 // 保護者ブランチ
@@ -72,7 +68,7 @@ class PatronBranch {
 
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
-            child: PageNoticeJunior(),
+            child: PageNotice(),
           ),
         ),
       ],
