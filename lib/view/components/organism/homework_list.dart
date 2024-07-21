@@ -35,21 +35,23 @@ class HomeworkList extends StatelessWidget {
         return Column(children: [
           // 期日またはクラス名で表示
 
-          isClass
-              ? DividerView(
-                  indent: 10,
-                  endIndent: 10,
-                  icon: Icons.menu_book_rounded,
-                  title: "${homeworkList['className']}",
-                  dividColor: AppColors.iconLight,
-                )
-              : DividerView(
-                  indent: 10,
-                  endIndent: 10,
-                  icon: Icons.calendar_month_outlined,
-                  title: "${DateFormat('MM.dd').format(homeworkList['homeworkLimit'])}まで",
-                  dividColor: AppColors.iconLight,
-                ),
+          Container(
+              margin: const EdgeInsets.only(top: 5),
+              child: isClass
+                  ? DividerView(
+                      indent: 10,
+                      endIndent: 10,
+                      icon: Icons.menu_book_rounded,
+                      title: "${homeworkList['className']}",
+                      dividColor: AppColors.iconLight,
+                    )
+                  : DividerView(
+                      indent: 10,
+                      endIndent: 10,
+                      icon: Icons.calendar_month_outlined,
+                      title: "${DateFormat('MM.dd').format(homeworkList['homeworkLimit'])}まで",
+                      dividColor: AppColors.iconLight,
+                    )),
           ...homeworkList['homeworkData'].asMap().entries.map((entry) {
             // 期日ごとの宿題をリスト化
             final homework = entry.value; // アイテム
