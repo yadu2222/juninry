@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 // view
 import '../../components/molecule/homework_card.dart';
 import '../../components/molecule/divider.dart';
@@ -29,6 +30,13 @@ class PageSubmissionsTeacher extends HookWidget {
     final homeworkData = useState<Homework>(SampleData.homeworkData[0]); // 宿題データ
     final studentData = useState<List<Student>>(SampleData.studentData); // 提出者データ
 
+    // 生徒カード押下時の処理
+    void moveSubmissionDetail(Student student) {
+      // 提出者の詳細ページへ遷移
+      context.go('/homework/submittions/detail',
+          extra: {'studentUUID': student.studentUUID,'homeworkUUID':homeworkData.value.homeworkUUID});
+    }
+
     // 初回起動時に実行
     useEffect(() {
       // TODO:homework!!!!!!!!!!!!!!!!取得!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -42,10 +50,11 @@ class PageSubmissionsTeacher extends HookWidget {
     return BasicTemplate(title: title, children: [
       HomeworkCard.teacher(homeworkData: homeworkData.value), // 課題カード
       const DividerView(), // 区切り線
-      // 提出リスト
+      // 提出した人たちのリスト
       Expanded(
           child: StudentList(
         studentData: studentData.value,
+        onTap: moveSubmissionDetail,
       )), // 提出リスト
     ]);
   }

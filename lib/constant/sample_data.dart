@@ -181,11 +181,13 @@ class SampleData {
 
   static List<Student> studentData = [
     Student(
+      studentUUID: 'aaa',
       name: '山田太郎',
       num: 34,
       gender: 1,
     ),
     Student(
+      studentUUID: 'bbb',
       name: '山田花子',
       num: 35,
       gender: 2,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:juninry/models/student_model.dart';
 import 'package:juninry/constant/colors.dart';
 
-import '../../../router/router.dart';
 import '../../components/molecule/divider.dart';
 import '../molecule/student_card.dart';
 import '../atoms/listItem_box.dart';
@@ -13,21 +12,13 @@ class StudentList extends StatelessWidget {
   final void Function(int)? isShow;
   final List<bool>? isShowList; // そのクラスを表示するか
   final bool classes; // 複数クラス表示か否か
+  final void Function(Student)? onTap;
 
-  const StudentList({super.key, required this.studentData, this.isShow,this.isShowList, this.classes = false});
-  const StudentList.classes({super.key, required this.studentData, required this.isShow,required this.isShowList,  this.classes = true});
+  const StudentList({super.key, required this.studentData, this.isShow, this.isShowList, this.classes = false, this.onTap});
+  const StudentList.classes({super.key, required this.studentData, required this.isShow, required this.isShowList, this.classes = true,this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    void isTeacher() async {
-      // 教員であれば
-      if (await isBranch(BranchType.teacher)) {
-        // context.push('/homework/submittion', extra: {'homeworkId': student.homeworkUuid});
-        // なんか遷移する
-        // 遷移先がまだ
-      }
-    }
-
     // list化が複雑化したため独自に定義
     return classes
         ? SizedBox(
@@ -56,13 +47,14 @@ class StudentList extends StatelessWidget {
                 ...studentList['students'].asMap().entries.map((entry) {
                   // 児童カード
                   final student = entry.value as Student; // アイテム
-                  return 
-                      isShowList![key] ?
-                  InkWell(
-                      onTap: () async {
-                        isTeacher();
-                      },
-                      child: StudentCard(studentData: student))  : const SizedBox.shrink();
+                  return isShowList![key]
+                      ? InkWell(
+                          onTap: () async {
+                            // isTeacher();
+                            // 遷移する？
+                          },
+                          child: StudentCard(studentData: student))
+                      : const SizedBox.shrink();
                 }).toList(),
               ]);
             }).toList())))
@@ -70,7 +62,9 @@ class StudentList extends StatelessWidget {
             itemDatas: studentData,
             listItem: (student) => InkWell(
                 onTap: () async {
-                  isTeacher();
+                  if (onTap != null) {
+                    onTap!(student);
+                  }
                 },
                 child: StudentCard(studentData: student as Student)),
           );

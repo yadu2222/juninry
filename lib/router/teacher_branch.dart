@@ -17,7 +17,8 @@ import '../view/pages/teacher/page_notice_quote.dart';
 import '../view/pages/share/page_homework.dart';
 import '../view/pages/teacher/page_homework_register.dart';
 import '../view/pages/teacher/page_homework_drafts.dart';
-import '../view/pages/teacher/page_submittion_homework.dart';
+import '../view/pages/teacher/page_homework_submittions.dart';
+import '../view/pages/teacher/page_homework_detail.dart';
 
 // 暫定的ホームたちにjuniorを使用
 // homework
@@ -183,9 +184,29 @@ class TeacherBranch {
             ),
             // 提出状況確認
             GoRoute(
+                name: 'submittions',
                 path: "submittions",
-                routes: const [
-                  // ここに提出内容のページ
+                routes: [
+                  GoRoute(
+                      name: 'detail',
+                      path: "detail",
+                      routes: const [
+                        // ここに提出内容のページ
+                      ],
+                      pageBuilder: (context, state) {
+                        // 遷移時に定義されたデータをrouterで再定義
+                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                        final String homeworkUUID = extraData['homeworkUUID'];
+                        final String studentUUID = extraData['studentUUID'];
+                        return NoTransitionPage(
+                          key: state.pageKey,
+                          // 先ほど再定義したデータをここで渡す
+                          child: PageHomeworkDetail(
+                            homeworkUUID: homeworkUUID,
+                            studentUUID: studentUUID,
+                          ),
+                        );
+                      }),
                 ],
                 pageBuilder: (context, state) {
                   // 遷移時に定義されたデータをrouterで再定義
@@ -196,8 +217,6 @@ class TeacherBranch {
                     // 先ほど再定義したデータをここで渡す
                     child: PageSubmissionsTeacher(homeworkUUID: homeworkUUID),
                   );
-
-                  // 下書きを選択していない場合
                 }),
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),

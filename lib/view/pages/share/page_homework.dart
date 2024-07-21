@@ -47,20 +47,16 @@ class PageHomework extends HookWidget {
         } else {
           context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID});
         }
-
         // 教員
       } else {
-        // TODO:提出生徒一覧ページに遷移
         // // 画面遷移
         context.push('/homework/submittions/',
-            // 下書き一覧に選択した日付を渡す
-            // datetimeを渡すとrouterがエラーを吐くので、文字列に変換して渡す
+            // 選択した宿題のUUIDを遷移先に渡す
             extra: {'homeworkUUID': homework.homeworkUUID});
       }
     }
 
     Future<void> getHomework() async {
-      debugPrint('課題を取得するよ');
       if (near) {
         final data = await homeworkReq.getNextdayHomeworksHandler();
         homeworkData.value = data;
