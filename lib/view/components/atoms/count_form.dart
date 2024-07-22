@@ -17,8 +17,8 @@ class CountForm extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 入力タイプ切り替え
-    final isType = useState<bool>(false);
-    void _onPressed() {
+    final isType = useState<bool>(countController.text.isNotEmpty);
+    void onPressed() {
       isType.value = !isType.value;
     }
 
@@ -60,6 +60,6 @@ class CountForm extends HookWidget {
       ),
     ];
 
-    return Row(children: [IconButton(icon: const Icon(Icons.autorenew), onPressed: _onPressed), ...isType.value ? widget1 : widget2]);
+    return Row(children: [IconButton(icon: const Icon(Icons.autorenew), onPressed: onPressed), ...isType.value ? widget1 : widget2]);
   }
 }
