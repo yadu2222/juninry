@@ -17,7 +17,7 @@ class CountForm extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 入力タイプ切り替え
-    final isType = useState<bool>(countController.text.isNotEmpty);
+    final isType = useState<bool>(countController.text == '0');
     void onPressed() {
       isType.value = !isType.value;
     }
