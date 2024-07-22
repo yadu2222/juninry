@@ -49,7 +49,8 @@ class PageUserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _buildOption(IconData icon, String text, String route, {bool onLogout = false}) {
+    Widget _buildOption(IconData icon, String text, String route,
+        {bool onLogout = false}) {
       return GestureDetector(
         onTap: () {
           if (onLogout) {
@@ -59,7 +60,8 @@ class PageUserData extends StatelessWidget {
           }
         },
         child: Container(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(color: Colors.grey.withOpacity(0.3)),
@@ -92,8 +94,9 @@ class PageUserData extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _buildOption(Icons.person, 'マイページ', '/mypage'),
-              _buildOption(Icons.notifications_none_outlined, '通知', '/notifications'),
+              _buildOption(Icons.person, 'マイページ', '/settings/myPage'),
+              _buildOption(
+                  Icons.notifications_none_outlined, '通知', '/notifications'),
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
               _buildOption(Icons.help, 'よくある質問', '/settings/questions'),
               _buildOption(Icons.door_back_door, 'ログアウト', '', onLogout: true),

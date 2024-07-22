@@ -19,6 +19,7 @@ import '../view/pages/share/page_ouchi.dart';
 // user
 import '../view/pages/share/page_user.dart';
 import '../view/pages/share/page_questions.dart';
+import '../view/pages/share/page_my_page.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -86,7 +87,8 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
+              pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey, child: const PageHomework.near()),
             ),
             // 提出
             GoRoute(
@@ -97,7 +99,8 @@ class JuniorBranch {
                 // extraがnullである場合trycatchでエラーを回避
                 if (state.extra != null) {
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
                   // final String homeworkId = extraData['homeworkId'];
                   final Homework homework = extraData['homework'];
                   return NoTransitionPage(
@@ -116,7 +119,8 @@ class JuniorBranch {
               },
             )
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),
@@ -148,7 +152,8 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
@@ -169,8 +174,17 @@ class JuniorBranch {
                 child: const PageQuestions(),
               ),
             ),
+            GoRoute(
+              name: 'myPage',
+              path: 'myPage',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageMyPage(),
+              ),
+            ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

@@ -41,6 +41,9 @@ dependencies:
   fluttertoast: ^8.0.8
   mime: ^1.0.0
   http_parser: ^4.0.0
+  table_calendar: ^3.1.2
+  flutter_datetime_picker_plus: ^2.2.0
+
   flutter_launcher_icons: ^0.13.1
 
 
@@ -60,13 +63,13 @@ flutter_native_splash:
   color_dark: '#F8CE64'
   image_dark: 'assets/images/Juninry.png'
   fullscreen: true
- 
-  
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -115,13 +118,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
-flutter_icons:
-  android: true
-  ios: true
-  remove_alpha_ios: true
-  image_path: "assets/images/icon.png"
-
-
-
-  

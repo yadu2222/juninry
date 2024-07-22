@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/apis/error.dart';
+import 'package:juninry/models/homework_submission_record.dart';
 import 'dart:io';
 // import '../../models/homework_model.dart';
 import '../service/homework_service.dart';
@@ -52,6 +53,16 @@ class HomeworkReq {
       return await HomeworkService.getHomeScreenHomework(); // 課題取得を待ち返却
     } on HomeworkIsEmptyException {
       handleException(ExceptionType.homeworkIsEmpty);
+      return [];
+    }
+  }
+
+  Future<List<HomeworkSubmissionRecord>> submissionLogHandler(
+      DateTime targetMonth) async {
+    try {
+      return await HomeworkService.submissionLog(targetMonth);
+    } on DefaultException {
+      handleException(ExceptionType.DefaultException);
       return [];
     }
   }
