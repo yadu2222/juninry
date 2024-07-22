@@ -116,10 +116,9 @@ class HomeworkService {
       DateTime targetMonth) async {
     // リクエストを生成
     final reqData = Request(
-      url: Urls.submissionLog,
-      reqType: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: {'targetMonth': targetMonth.toString()},
+      url: Urls.submissionLog + targetMonth.toString(),
+      reqType: 'GET',
+      headers: {},
     );
 
     // リクエストメソッドにオブジェクトを投げる

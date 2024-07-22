@@ -89,6 +89,7 @@ class PageMyPage extends HookWidget {
 
     // 月が変更されたらその月の提出状況を取得する
     useEffect(() {
+      debugPrint(focusedDayState.value.toString());
       _fetchSubmissionLog(focusedDayState.value);
       return null;
     }, [focusedDayState.value]);

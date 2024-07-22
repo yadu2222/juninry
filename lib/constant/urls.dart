@@ -28,7 +28,7 @@ class Urls {
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
   static const String getNextdayHomeworks = '$version/auth/users/homeworks/nextday'; // GETつぎのひの宿題取得
   static const String submittionHomework = '$version/auth/users/homeworks/submit'; // POST宿題提出
-  static const String submissionLog = '$version/auth/users/homeworks/record'; // POST宿題提出履歴取得
+  static const String submissionLog = '$version/auth/users/homeworks/record?targetMonth='; // POST宿題提出履歴取得
 
   // class
   static const String getClassmates = '$version/auth/users/classes/users'; // GETクラスメイト取得
