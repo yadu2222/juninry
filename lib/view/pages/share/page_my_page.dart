@@ -7,6 +7,10 @@ import '../../components/template/basic_template.dart';
 import '../../../constant/fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import '../../../apis/controller/homework_req.dart';
+import '../../../models/user_model.dart';
+import '../../components/atoms/background_circle.dart';
+import '../../components/atoms/submission_record_dot.dart';
 
 class CurveClipper extends CustomClipper<Path> {
   @override
@@ -37,6 +41,8 @@ class PageMyPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeworkReq = HomeworkReq(context: context);
+
     // 現在の日付と時刻を取得
     DateTime now = DateTime.now();
 
@@ -48,31 +54,41 @@ class PageMyPage extends HookWidget {
     // アイコンのために何かいるだろう。。。
 
     // 選択されている月を取得
-    final focusedDayState = useState(DateTime.utc(now.year, now.month, 1, 0, 0, 0));
+    final focusedDayState =
+        useState(DateTime.utc(now.year, now.month, 1, 0, 0, 0));
 
     // 提出データ
     final submissionData = useState([]);
 
     // カレンダーを日本語にするために頑張ってる（誰かわからないけど。。。)
-    Future<void> initializeLocale() async {
+    Future<void> _initializeLocale() async {
       await initializeDateFormatting('ja_JP', null);
       isInitialized.value = true;
     }
 
+    // お名前頂戴します
+    Future<void> _fetchName() async {
+      name.value = await User.getUser().then((user) => user.userName);
+    }
+
+    Future<void> _fetchSubmissionLog(DateTime) async {
+      submissionData.value =
+          await homeworkReq.submissionLogHandler(focusedDayState.value);
+    }
 
     // TODO: ユーザー名取得
     // TODO: ユーザーの性別取得
     // TODO: 課題提出状況取得 エンドポイント作成
     // 頑張ってそれらを反映させる
     useEffect(() {
-      initializeLocale();
-
+      _fetchName();
+      _initializeLocale();
       return null; // Cleanup function for useEffect, if needed
     }, []);
 
     // 月が変更されたらその月の提出状況を取得する
     useEffect(() {
-      debugPrint("Focused day changed: ${focusedDayState.value}");
+      _fetchSubmissionLog(focusedDayState.value);
       return null;
     }, [focusedDayState.value]);
 
@@ -85,17 +101,7 @@ class PageMyPage extends HookWidget {
               // 背景色をコンテナで埋める
               color: AppColors.iconLight,
             ),
-            Positioned(
-              top: 0,
-              child: ClipPath(
-                clipper: CurveClipper(),
-                child: Container(
-                  color: AppColors.main,
-                  height: 80,
-                  width: 393,
-                ),
-              ),
-            ),
+            const BackgroundCircle(),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -104,9 +110,10 @@ class PageMyPage extends HookWidget {
                   const SizedBox(height: 5),
                   // TODO: アイコン人によって変えるよ
                   Container(
+                    // アイコンの背景くん
                     width: 114,
                     height: 114,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.iconLight,
                     ),
@@ -114,9 +121,9 @@ class PageMyPage extends HookWidget {
                         color: AppColors.subjectMath, size: 110),
                   ),
 
-                  Text(focusedDayState.value.toString(), style: Fonts.h3),
+                  Text(name.value, style: Fonts.h3),
                   const SizedBox(height: 10),
-                  // TODO: これ何個並べるんだろう？
+                  // TODO: トロフィーくん
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center, // 中央揃え
                     children: List.generate(3, (index) {
@@ -145,8 +152,28 @@ class PageMyPage extends HookWidget {
                             calendarBuilders: CalendarBuilders(
                               markerBuilder: (context, date, events) {
                                 // ここにマーカーを表示する
-                                debugPrint("date: $date");
-                                debugPrint("events: $events");
+                                for (Map<DateTime, int> check
+                                    in submissionData.value) {
+                                  if (check.containsKey(date)) {
+                                    // Mapのvalueを出力
+                                    return SubmissionRecordDot(
+                                        record: check[date]!);
+                                  }
+                                }
+                              },
+                              todayBuilder: (context, day, focusedDay) {
+                                return Container(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors.main,
+                                        ),
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Text(
+                                          day.day.toString(),
+                                          style: Fonts.h1w,
+                                        )));
                               },
                             ),
                           )

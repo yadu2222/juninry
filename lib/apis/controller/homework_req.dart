@@ -55,4 +55,13 @@ class HomeworkReq {
       return [];
     }
   }
+
+  Future<List<Map<DateTime, int>>> submissionLogHandler(
+      DateTime targetMonth) async {
+    try {
+      return await HomeworkService.submissionLog(targetMonth);
+    } catch (e) {
+      return [];
+    }
+  }
 }
