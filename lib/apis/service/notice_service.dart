@@ -3,6 +3,7 @@ import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
 import 'package:http/http.dart' as http;
+import '../http_req.dart';
 import '../error.dart';
 
 class NoticeService {

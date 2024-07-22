@@ -35,7 +35,7 @@ class PageOuchiJunior extends HookWidget {
       ReweadPoint(rewards: rewards.value, onTap: movePointHistory),
       // 交換所あるよという主張
       const OuchiShortCuts(),
-       const DividerView(
+      const DividerView(
         icon: Icons.flag,
         title: 'おてつだい',
       ),

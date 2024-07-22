@@ -1,5 +1,4 @@
 import 'package:juninry/models/class_model.dart';
-
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
 import '../models/drafted_notice_model.dart';
@@ -8,7 +7,6 @@ import '../models/user_model.dart';
 import '../models/teaching_item_model.dart';
 import '../models/help_model.dart';
 import '../models/reward_model.dart';
-import '../models/class_model.dart';
 // import '../models/register_homework_model.dart';
 import '../models/quoted_notice_model.dart';
 
@@ -285,14 +283,6 @@ class SampleData {
         iconId: 2,
         rewardPoint: 30,
         isReword: false),
-    Help(
-        helpTitle: 'せんたくもの',
-        helpContent: 'たたむところまでおねがいね',
-        helpCategory: '',
-        helpTag: '定番',
-        iconId: 2,
-        rewardPoint: 30,
-        isReword: false),
   ];
 
   static List<Reward> rewardData = [
@@ -342,28 +332,24 @@ class SampleData {
         className: '4-5',
         classUUID: '12345',
         noticeTitle: 'お知らせがたくさん',
-
+        noticeExplanatory: '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
         readStatus: 0),
-    Notice( noticeUUID: 'aaaaa', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;',  readStatus: 1),
-    Notice( noticeUUID: 'aaaaa',  noticeDate: '2025.6.6', className: '3-A', noticeTitle: '夏休みの宿題について', readStatus: 0)
-
-        noticeExplanatory:
-            '少子化じゃなかったころおしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文おしらせ本文',
-        noticeRead: 0),
     Notice(
+        noticeUUID: 'aaaaa',
         noticeDate: '2024-6-2',
         noticeTitle: 'ほんのすこしのしんじつ',
-        classUUID: '12345',
         className: ';~~;',
+        classUUID: '12345',
         noticeExplanatory: '少子化じゃなかったころ',
-        noticeRead: 1),
+        readStatus: 1),
     Notice(
+        noticeUUID: 'aaaaa',
         noticeDate: '2025.6.6',
         className: '3-A',
         classUUID: '12345',
         noticeTitle: '夏休みの宿題について',
         noticeExplanatory: '最終日まで残さないように。\n二行目だよ。',
-        noticeRead: 0)
+        readStatus: 0)
   ];
 
   static List<DraftedNotice> draftedNoticesData = [
@@ -395,7 +381,6 @@ class SampleData {
       quotedNoticeTitle: '引用したお知らせ2',
       quotedClass: classList[1],
     ),
-
   ];
 
   static List<Class> classList = [

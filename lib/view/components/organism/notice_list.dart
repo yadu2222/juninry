@@ -23,7 +23,6 @@ class _NoticeListState extends State<NoticeList> {
   // ビルドメソッドはウィジェットツリーを構築する
   @override
   Widget build(BuildContext context) {
-    // 現在は空のコンテナを返している
     return InkWell(
           onTap: () {
           // 画面遷移

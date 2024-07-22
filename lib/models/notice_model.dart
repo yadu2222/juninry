@@ -42,6 +42,7 @@ class Notice {
       noticeTitle: '',
       noticeDate: '',
       className: '',
+      classUUID: '',
       readStatus: 0,
     );
   }
@@ -58,10 +59,11 @@ class Notice {
     try {
       return loadData.map((data) {
         return Notice(
-          noticeUUID: data['NoticeUuid'] ?? '',
+          noticeUUID: data['NoticeUUID'] ?? '',
           noticeTitle: data['NoticeTitle'] ?? '',
           noticeDate: formatDate(data['NoticeDate'] ?? ''),
           className: data['ClassName'] ?? '',
+          classUUID: data['ClassUUID'] ?? '',
           readStatus: data['ReadStatus'] ?? 0,
         );
       }).toList();
