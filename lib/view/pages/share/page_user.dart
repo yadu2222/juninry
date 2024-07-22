@@ -38,9 +38,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/constant/colors.dart';
+import 'package:juninry/view/components/atoms/basic_button.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/user_model.dart';
 import '../../components/template/basic_template.dart';
+import '../../../apis/controller/ouchi_req.dart';
+import '../../components/atoms/toast.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class PageUserData extends StatelessWidget {
   const PageUserData({super.key});
@@ -49,8 +54,8 @@ class PageUserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _buildOption(IconData icon, String text, String route,
-        {bool onLogout = false}) {
+    OUCHIReq ouchiReq = OUCHIReq(context); // ClassReqクラスのインスタンスを生成
+    Widget _buildOption(IconData icon, String text, String route, {bool onLogout = false}) {
       return GestureDetector(
         onTap: () {
           if (onLogout) {
@@ -100,6 +105,22 @@ class PageUserData extends StatelessWidget {
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
               _buildOption(Icons.help, 'よくある質問', '/settings/questions'),
               _buildOption(Icons.door_back_door, 'ログアウト', '', onLogout: true),
+              BasicButton(
+                  text: '',
+                  isColor: true,
+                  onPressed: () async {
+                    String? link = await ouchiReq.friendLineAccount();
+                    if (link != null) {
+                      final Uri url = Uri.parse(link);
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url);
+                        ToastUtil.show(message: link);
+                      } else {
+                        // Error handling
+                        ToastUtil.show(message: 'Could not launch $link');
+                      }
+                    }
+                  })
             ],
           ),
         ),

@@ -6,13 +6,11 @@ import '../../models/req_model.dart';
 import '../../models/user_model.dart';
 import '../../models/ouchi_model.dart';
 
-
 class OUCHIService {
-
   // おうち作成
   static Future<Ouchi> createOuchi(String ouchiName) async {
     // TODO:エラーハンドリング
-     // リクエストを生成
+    // リクエストを生成
     final reqData = Request(
       url: Urls.createOUCHI,
       reqType: 'POST',
@@ -25,7 +23,16 @@ class OUCHIService {
     User user = await User.getUser();
     user.ouchiUUID = resData['srvResData']['ouchiUUID'];
     await User.updateUser(user);
-    return Ouchi.resToOuchi(resData['srvResData']);  // おうちデータを返す
+    return Ouchi.resToOuchi(resData['srvResData']); // おうちデータを返す
+  }
+
+  // lineアカウントと連携
+  static Future<String> friendLineAccount() async {
+    // TODO:エラーハンドリング
+    // リクエストを生成
+    final reqData = Request(url: Urls.friendLineAccount, reqType: 'GET', headers: {});
+    final resData = await HttpReq.httpReq(reqData);
+    return resData['url']; // おうちデータを返す
   }
 
   // 現在のポイントを取得
@@ -45,6 +52,4 @@ class OUCHIService {
   // ご褒美を削除
 
   // ご褒美を取得
-
-  
 }

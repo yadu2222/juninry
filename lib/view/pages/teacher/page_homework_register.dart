@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+
 // view
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/toast.dart';
@@ -9,7 +11,8 @@ import '../../components/organism/homework_register_tab.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/register_homework_list.dart';
 import '../../components/atoms/basic_button.dart';
-import 'package:juninry/view/components/molecule/class_dropdown.dart';
+import 'package:juninry/view/components/organism/homework_note_tab.dart';
+
 // model
 import '../../../models/register_homework_model.dart';
 import '../../../models/class_model.dart';
@@ -18,6 +21,7 @@ import '../../../models/teaching_item_model.dart';
 import '../../../apis/controller/class_req.dart';
 // constant
 import '../../../constant/messages.dart';
+
 // sample
 import 'package:juninry/constant/sample_data.dart';
 
@@ -29,8 +33,8 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     Icons.drive_file_rename_outline_rounded,
     size: 30,
   );
-  const PageHomeworkRegisterTeacher({super.key, this.selectDate});
-  final String? selectDate; // routeがエラーを吐くのでStringで受け取る
+  const PageHomeworkRegisterTeacher({super.key, this.selectedDate});
+  final String? selectedDate; // routeがエラーを吐くのでStringで受け取る
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +42,17 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     // 教材リスト
     final teachingMaterialData = useState<List<TeachingItem>>([]); // 表示する教材のリスト
     // 課題データ
-    final selectDateHook = useState<String?>(selectDate); // dbから取得する日付データ格納 stringじゃないと下書きページから渡されるときにエラーを吐く？様子
+    final selectDateOld = useState<String?>(selectedDate); // dbから取得する日付データ格納 stringじゃないと下書きページから渡されるときにエラーを吐く？様子
+    final selectDate = useState<DateTime>(DateTime.now()); // 登録する日付
     final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化 現在選択中の課題データを格納
     final registerHomeworkDataOld = useState<List<RegisterHomework>>([]); // 空で初期化 dbから読み込んだ課題データを格納
     // クラスのデータ
     final classList = useState<List<Class>>([]); // 空で初期化  // apiから取得
-    final selectClass = useState<Class?>(null); // nullで初期化 選択中のクラス
+    final selectClass = useState<Class>(Class(className: 'からっぽだね')); // nullで初期化 選択中のクラス
 
     // indexを受け取って配列に追加
     void add(int index) {
-      // TODO:日付
-      // TODO:クラスUUID
-      final newHomework = RegisterHomework(homeworkLimit: DateTime.now(), classUUID: "aaa", teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
+      final newHomework = RegisterHomework(homeworkLimit: selectDate.value, classUUID: selectClass.value.classUUID!, teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
       registerHomeworkData.value = List.from(registerHomeworkData.value)..add(newHomework); // 追加
     }
 
@@ -66,6 +69,13 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       selectClass.value = classList.value[0]; // 初期値
     }
 
+    // // 日付を選択
+    Future<void> selectDatePicker() async {
+      DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime.now(), maxTime: DateTime(2030, 12, 31), onChanged: (date) {
+        selectDate.value = date;
+      }, currentTime: DateTime.now(), locale: LocaleType.jp);
+    }
+
     // db保存処理
     Future<bool> save() async {
       // 元の配列と現在の配列を比較して変更があればDBに投げる
@@ -73,10 +83,16 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       for (var homework in registerHomeworkDataOld.value) {
         RegisterHomework.deleteHomeworkDrafts(homework);
       }
+      // 日付とクラスを更新
+      for (var homework in registerHomeworkData.value) {
+        homework.classUUID = selectClass.value.classUUID!;
+        homework.homeworkLimit = selectDate.value;
+      }
       bool isRegister = await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
       return isRegister;
     }
 
+    // 下書き保存
     Future<void> draftSave() async {
       if (await save()) {
         ToastUtil.show(message: Messages.draftRegisterSuccess);
@@ -86,8 +102,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       }
     }
 
+    // 変更がある場合の処理
     bool oldCheck() {
-      if (registerHomeworkData.value.isNotEmpty && registerHomeworkDataOld.value != registerHomeworkData.value) {
+      if (registerHomeworkData.value.isNotEmpty && registerHomeworkDataOld.value != registerHomeworkData.value || selectDateOld.value != selectDate.value.toString()) {
         // 変更がある場合
         // 保存を促す
         AlertDialogUtil.show(
@@ -113,6 +130,11 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       }
     }
 
+    //クラス選択時の処理
+    void onClassChanged(Class value) {
+      selectClass.value = value;
+    }
+
     // 初回のみ実行
     // ここでapiから教材リストを取得
     useEffect(() {
@@ -120,19 +142,23 @@ class PageHomeworkRegisterTeacher extends HookWidget {
         getClasses(); // クラス一覧を取得
 
         // 下書きを呼び出している場合
-        if (selectDate != null) {
-          debugPrint('しゅとくしゅとくしゅとく');
-          final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateHook.value!));
+        if (selectedDate != null) {
+          final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateOld.value!));
           debugPrint(data.toString());
           registerHomeworkDataOld.value = data;
           registerHomeworkData.value = data;
+          selectDate.value = DateTime.parse(selectDateOld.value!);
+        } else {
+          // 引数が空のときは変数に格納する日付をあわせる
+          selectDate.value = DateTime.now();
+          selectDateOld.value = selectDate.value.toString();
         }
       }
 
       fetchData();
       teachingMaterialData.value = SampleData.teachingItemData;
       return () {};
-    }, [selectDateHook]);
+    }, []);
 
     return BasicTemplate(
         title: title,
@@ -146,18 +172,13 @@ class PageHomeworkRegisterTeacher extends HookWidget {
             },
             icon: featureIconButton),
         children: [
-          // // ここに課題登録フォームを追加
-          //  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          //   //日付とクラスのセレクトボックス
-          //   Text(DateFormat('yyyy.MM.dd').format(DateTime.now()), style: Fonts.h4),
-          //   ClassDropdown(
-          //     selectedClass: selectedClass,
-          //     items: classesList,
-          //     onChanged: onClassChanged,
-          //   )
-          // ]),
-
-
+          HomeworkNoteTab(
+            selectDate: selectDatePicker,
+            date: selectDate.value.toString(),
+            selectClass: selectClass.value,
+            classList: classList.value,
+            onChanged: onClassChanged,
+          ),
 
           HomeworkRegisterTab(
             teachingItemData: SampleData.teachingItemData,
