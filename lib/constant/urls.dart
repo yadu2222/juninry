@@ -2,7 +2,8 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
-  static const String host = '127.0.0.1';
+  static const String host = '10.200.1.53';
+  // static const String host = '127.0.0.1';
   // static const String host = '10.0.2.2';
   // static const String host = 'localhost';
 
@@ -36,4 +37,5 @@ class Urls {
   // OUCHI
   static const String joinOUCHI = '$version/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
   static const String createOUCHI = '$version/auth/users/ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
+  static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
 }

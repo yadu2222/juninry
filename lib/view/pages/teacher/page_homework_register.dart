@@ -42,7 +42,8 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     // 教材リスト
     final teachingMaterialData = useState<List<TeachingItem>>([]); // 表示する教材のリスト
     // 課題データ
-    final selectDateHook = useState<String?>(selectedDate); // dbから取得する日付データ格納 stringじゃないと下書きページから渡されるときにエラーを吐く？様子
+    final selectDateOld = useState<String?>(selectedDate); // dbから取得する日付データ格納 stringじゃないと下書きページから渡されるときにエラーを吐く？様子
+    final selectDate = useState<DateTime>(DateTime.now()); // 登録する日付
     final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化 現在選択中の課題データを格納
     final registerHomeworkDataOld = useState<List<RegisterHomework>>([]); // 空で初期化 dbから読み込んだ課題データを格納
     // クラスのデータ
@@ -51,10 +52,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     // indexを受け取って配列に追加
     void add(int index) {
-      // TODO:日付
-      // TODO:クラスUUID
-      final newHomework =
-          RegisterHomework(homeworkLimit: DateTime.parse(selectDateHook.value!), classUUID: selectClass.value.classUUID!, teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
+      final newHomework = RegisterHomework(homeworkLimit: selectDate.value, classUUID: selectClass.value.classUUID!, teachingItem: teachingMaterialData.value[index]); // 追加したいオブジェクト
       registerHomeworkData.value = List.from(registerHomeworkData.value)..add(newHomework); // 追加
     }
 
@@ -72,9 +70,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     }
 
     // // 日付を選択
-    Future<void> selectDate() async {
+    Future<void> selectDatePicker() async {
       DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime.now(), maxTime: DateTime(2030, 12, 31), onChanged: (date) {
-        selectDateHook.value = date.toString();
+        selectDate.value = date;
       }, currentTime: DateTime.now(), locale: LocaleType.jp);
     }
 
@@ -88,7 +86,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       // 日付とクラスを更新
       for (var homework in registerHomeworkData.value) {
         homework.classUUID = selectClass.value.classUUID!;
-        homework.homeworkLimit = DateTime.parse(selectDateHook.value!);
+        homework.homeworkLimit = selectDate.value;
       }
       bool isRegister = await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
       return isRegister;
@@ -106,7 +104,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     // 変更がある場合の処理
     bool oldCheck() {
-      if (registerHomeworkData.value.isNotEmpty && registerHomeworkDataOld.value != registerHomeworkData.value) {
+      if (registerHomeworkData.value.isNotEmpty && registerHomeworkDataOld.value != registerHomeworkData.value || selectDateOld.value != selectDate.value.toString()) {
         // 変更がある場合
         // 保存を促す
         AlertDialogUtil.show(
@@ -145,13 +143,15 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
         // 下書きを呼び出している場合
         if (selectedDate != null) {
-          debugPrint('しゅとくしゅとくしゅとく');
-          final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateHook.value!));
+          final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateOld.value!));
           debugPrint(data.toString());
           registerHomeworkDataOld.value = data;
           registerHomeworkData.value = data;
+          selectDate.value = DateTime.parse(selectDateOld.value!);
         } else {
-          selectDateHook.value = DateTime.now().toString();
+          // 引数が空のときは変数に格納する日付をあわせる
+          selectDate.value = DateTime.now();
+          selectDateOld.value = selectDate.value.toString();
         }
       }
 
@@ -173,8 +173,8 @@ class PageHomeworkRegisterTeacher extends HookWidget {
             icon: featureIconButton),
         children: [
           HomeworkNoteTab(
-            selectDate: selectDate,
-            date: selectDateHook.value,
+            selectDate: selectDatePicker,
+            date: selectDate.value.toString(),
             selectClass: selectClass.value,
             classList: classList.value,
             onChanged: onClassChanged,

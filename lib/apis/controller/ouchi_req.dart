@@ -38,4 +38,16 @@ class OUCHIReq {
   // ご褒美を削除
 
   // ご褒美を取得
+
+  // lineと連携
+   Future<String?> friendLineAccount() async {
+    try {
+      return await OUCHIService.friendLineAccount(); // おうち作成処理を待つ
+    } catch (error) {
+      ToastUtil.show(message: Messages.createOuchiError); // 作成失敗メッセージ
+      return null;
+    }
+  }
+
+
 }
