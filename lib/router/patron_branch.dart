@@ -103,7 +103,8 @@ class PatronBranch {
                 pageBuilder: (context, state) {
                   if (state.extra != null) {
                     // 遷移時に定義されたデータをrouterで再定義
-                    final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                    final Map<String, dynamic> extraData =
+                        state.extra as Map<String, dynamic>;
                     final String homeworkId = extraData['homeworkId'];
                     return NoTransitionPage(
                       key: state.pageKey,
@@ -120,7 +121,8 @@ class PatronBranch {
                   }
                 })
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
+          pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey, child: const PageHomework.near()),
         ),
       ],
     ),
@@ -140,12 +142,13 @@ class PatronBranch {
               ),
             )
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
 
-    // userData
+    // settings
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'setting'),
       routes: [
@@ -162,7 +165,8 @@ class PatronBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

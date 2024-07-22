@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:juninry/constant/colors.dart';
+import 'package:juninry/view/components/atoms/life_gauge.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
 import '../../components/template/basic_template.dart';
 import '../../../constant/fonts.dart';
@@ -12,6 +13,7 @@ import '../../../models/user_model.dart';
 import '../../components/atoms/background_circle.dart';
 import '../../components/atoms/submission_record_dot.dart';
 import '../../../models/homework_submission_record.dart';
+import '../../components/atoms/gender_icon.dart';
 
 class CurveClipper extends CustomClipper<Path> {
   @override
@@ -52,7 +54,8 @@ class PageMyPage extends HookWidget {
     // おなまえ
     final name = useState("");
 
-    // アイコンのために何かいるだろう。。。
+    // 顔面アイコン用のアレ
+    final iconType = useState(0);
 
     // 選択されている月を取得
     final focusedDayState =
@@ -72,14 +75,17 @@ class PageMyPage extends HookWidget {
       name.value = await User.getUser().then((user) => user.userName);
     }
 
+    // TODO: ユーザーの性別取得
+    Future<void> _fetchUser() async {
+      iconType.value = 1;
+    }
+
+    // 提出状況取得
     Future<void> _fetchSubmissionLog(DateTime) async {
       submissionData.value =
           await homeworkReq.submissionLogHandler(focusedDayState.value);
     }
 
-    // TODO: ユーザー名取得
-    // TODO: ユーザーの性別取得
-    // TODO: 課題提出状況取得 エンドポイント作成
     // 頑張ってそれらを反映させる
     useEffect(() {
       _fetchName();
@@ -110,29 +116,34 @@ class PageMyPage extends HookWidget {
                 crossAxisAlignment: CrossAxisAlignment.center, // ここで左右中央に配置
                 children: [
                   const SizedBox(height: 5),
-                  // TODO: アイコン人によって変えるよ
                   Container(
-                    // アイコンの背景くん
-                    width: 114,
-                    height: 114,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.iconLight,
-                    ),
-                    child: const Icon(Icons.face_5,
-                        color: AppColors.subjectMath, size: 110),
-                  ),
-
+                      // アイコンの背景くん
+                      width: 114,
+                      height: 114,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.iconLight,
+                      ),
+                      child: // 性別を判別　// TODO：うまく反映できてない
+                          iconType.value == 1
+                              ? GenderType.male.getIcon(size: 110)
+                              : iconType.value == 2
+                                  ? GenderType.female.getIcon(size: 110)
+                                  : GenderType.others.getIcon(size: 110)),
                   Text(name.value, style: Fonts.h3),
                   const SizedBox(height: 10),
-                  // TODO: トロフィーくん
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center, // 中央揃え
-                    children: List.generate(3, (index) {
-                      return const Icon(Icons.emoji_events_outlined,
-                          size: 50, color: AppColors.main);
-                    }),
-                  ),
+                  submissionData.value.isNotEmpty
+                      ? LifeGauge(
+                          record: submissionData.value
+                              as List<HomeworkSubmissionRecord>)
+                      : Row(  // TODO: これマジで美しくないコード
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            3,
+                            (i) => const Icon(Icons.favorite,
+                                size: 50, color: AppColors.main),
+                          ),
+                        ),
                   const SizedBox(height: 20),
                   ListItem(
                     spreadRadius: 2,

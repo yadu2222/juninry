@@ -10,7 +10,7 @@ import '../view/pages/share/page_home.dart';
 import '../view/pages/share/page_students.dart';
 import '../view/pages/share/page_class.dart';
 
-// mypage
+// myPage
 import '../view/pages/share/page_my_page.dart';
 
 // notice
@@ -249,8 +249,8 @@ class TeacherBranch {
               ),
             ),
             GoRoute(
-              name: 'mypage',
-              path: 'mypage',
+              name: 'myPage',
+              path: 'myPage',
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageMyPage(),
