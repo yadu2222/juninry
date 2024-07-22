@@ -26,10 +26,10 @@ class StudentCard extends StatelessWidget {
                 child:
                     // 性別を判別
                     studentData.gender == 1
-                        ? GenderType.maile.icon
+                        ? GenderType.male.getIcon()
                         : studentData.gender == 2
-                            ? GenderType.female.icon
-                            : GenderType.others.icon),
+                            ? GenderType.female.getIcon()
+                            : GenderType.others.getIcon()),
           ),
         ]));
   }

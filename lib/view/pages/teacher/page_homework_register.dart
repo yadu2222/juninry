@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:juninry/constant/sample_data.dart';
-// import 'package:juninry/view/components/atoms/dialog.dart';
+// view
 import '../../components/template/basic_template.dart';
-
+import '../../components/atoms/toast.dart';
+import '../../components/atoms/alert_dialog.dart';
 import '../../components/organism/homework_register_tab.dart';
 import '../../components/molecule/divider.dart';
 import '../../components/organism/register_homework_list.dart';
-import '../../../models/teaching_item_model.dart';
 import '../../components/atoms/basic_button.dart';
-
-import '../../../constant/messages.dart';
+import 'package:juninry/view/components/molecule/class_dropdown.dart';
+// model
 import '../../../models/register_homework_model.dart';
-import '../../components/atoms/toast.dart';
-import '../../components/atoms/alert_dialog.dart';
+import '../../../models/class_model.dart';
+import '../../../models/teaching_item_model.dart';
+// api
+import '../../../apis/controller/class_req.dart';
+// constant
+import '../../../constant/messages.dart';
+// sample
+import 'package:juninry/constant/sample_data.dart';
 
 class PageHomeworkRegisterTeacher extends HookWidget {
   // タイトル
@@ -29,13 +34,16 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    ClassReq classReq = ClassReq(context: context); // ClassReqクラスのインスタンスを生成
     // 教材リスト
-    final teachingMaterialData = useState<List<TeachingItem>>([]);
-    final selectDateHook = useState<String?>(selectDate);
-    // 選択中の課題データ
-    final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化
-    // 読み込んだ課題データ
-    final registerHomeworkDataOld = useState<List<RegisterHomework>>([]); // 空で初期化
+    final teachingMaterialData = useState<List<TeachingItem>>([]); // 表示する教材のリスト
+    // 課題データ
+    final selectDateHook = useState<String?>(selectDate); // dbから取得する日付データ格納 stringじゃないと下書きページから渡されるときにエラーを吐く？様子
+    final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化 現在選択中の課題データを格納
+    final registerHomeworkDataOld = useState<List<RegisterHomework>>([]); // 空で初期化 dbから読み込んだ課題データを格納
+    // クラスのデータ
+    final classList = useState<List<Class>>([]); // 空で初期化  // apiから取得
+    final selectClass = useState<Class?>(null); // nullで初期化 選択中のクラス
 
     // indexを受け取って配列に追加
     void add(int index) {
@@ -52,7 +60,12 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       registerHomeworkData.value = List.from(registerHomeworkData.value)..removeAt(index); // 削除
     }
 
-    // TODO:下書き保存処理
+    // クラス一覧を取得
+    Future<void> getClasses() async {
+      classList.value = await classReq.getClassesHandler();
+      selectClass.value = classList.value[0]; // 初期値
+    }
+
     // db保存処理
     Future<bool> save() async {
       // 元の配列と現在の配列を比較して変更があればDBに投げる
@@ -104,6 +117,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     // ここでapiから教材リストを取得
     useEffect(() {
       Future<void> fetchData() async {
+        getClasses(); // クラス一覧を取得
+
+        // 下書きを呼び出している場合
         if (selectDate != null) {
           debugPrint('しゅとくしゅとくしゅとく');
           final data = await RegisterHomework.getHomeworkDraftsForDate(DateTime.parse(selectDateHook.value!));
@@ -130,7 +146,19 @@ class PageHomeworkRegisterTeacher extends HookWidget {
             },
             icon: featureIconButton),
         children: [
-          // ここに課題登録フォームを追加
+          // // ここに課題登録フォームを追加
+          //  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          //   //日付とクラスのセレクトボックス
+          //   Text(DateFormat('yyyy.MM.dd').format(DateTime.now()), style: Fonts.h4),
+          //   ClassDropdown(
+          //     selectedClass: selectedClass,
+          //     items: classesList,
+          //     onChanged: onClassChanged,
+          //   )
+          // ]),
+
+
+
           HomeworkRegisterTab(
             teachingItemData: SampleData.teachingItemData,
             onTap: add,
