@@ -31,6 +31,12 @@ class PageClass extends HookWidget {
     final joinClasses = useState<List<Class>>([]); // データを格納するための変数
     final conType = useState<bool>(true); // true:join,false:create
 
+    // クラス一覧取得
+    Future<void> getClasses() async {
+      // TODO:APIからクラス一覧を取得
+      classReq.getClassesHandler().then((value) => joinClasses.value = value);
+    }
+
     // クラス作成
     void create() async {
       if (classNameController.text.isNotEmpty) {
@@ -39,16 +45,11 @@ class PageClass extends HookWidget {
           inviteDialog(context: context, classData: resData['classData']); // 作成成功ダイアログ
 
           classNameController.clear(); // 入力値クリア
+          getClasses(); // クラスを再取得
         }
       } else {
         ToastUtil.show(message: Messages.inputError); // 入力不足エラー
       }
-    }
-
-    // クラス一覧取得
-    Future<void> getClasses() async {
-      // TODO:APIからクラス一覧を取得
-      classReq.getClassesHandler().then((value) => joinClasses.value = value);
     }
 
     // 現在のtypeを切り替える(create or join)

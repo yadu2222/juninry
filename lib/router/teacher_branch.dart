@@ -168,7 +168,7 @@ class TeacherBranch {
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageHomeworkRegisterTeacher(selectDate: selectDate),
+                    child: PageHomeworkRegisterTeacher(selectedDate: selectDate),
                   );
 
                   // 下書きを選択していない場合
