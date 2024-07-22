@@ -39,9 +39,8 @@ class PageCreateOuchi extends HookWidget {
           //     }
           //   ),
           // );
-          inviteDialog(context: context, ouchiData: ouchiData).then((result) {
-            context.go('/ouchi'); // ダイアログを閉じた後に遷移
-          });
+          inviteDialog(context: context, ouchiData: ouchiData);
+          context.go('/ouchi/top');
         }
         ouchiNameController.clear(); // 入力値クリア
       } else {

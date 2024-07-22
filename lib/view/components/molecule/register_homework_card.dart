@@ -29,8 +29,8 @@ class RegisterHomeworkCard extends StatelessWidget {
                 color: AppColors.buttonCheck,
               ),
               onPressed: () {
+                // 配列から削除
                 onTap(index);
-                // TODO:配列から削除
               },
             ),
             // 教材の表示

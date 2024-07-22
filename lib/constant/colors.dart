@@ -33,6 +33,9 @@ class AppColors {
   static const Color dialogNeutral = Color(0xFF8E8E93);
   static const Color dialogPositive = Color(0xFF007AFF);
 
+  // ヘルプからー
+  static const Color help = Color.fromARGB(255, 196, 196, 198);
+
 
   // つかいやすい色
   static const Color glay = Color(0xFFE8EAED);

@@ -2,11 +2,17 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
+  // ループバックアドレス使いたい人におすすめ
   // static const String host = '127.0.0.1';
-    // static const String host = '192.168.3.168';
 
+  // Androidエミュレーターにおすすめ
   // static const String host = '10.0.2.2';
+
+  // iOSエミュレーターにおすすめ
   static const String host = 'localhost';
+
+  // ローカル環境
+  // static const String host = '192.168.3.168';
   // static const String host = '192.168.0.12';
 
   static const String port = '4561';

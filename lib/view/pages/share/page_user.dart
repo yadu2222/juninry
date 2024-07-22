@@ -95,7 +95,7 @@ class PageUserData extends StatelessWidget {
               _buildOption(Icons.person, 'マイページ', '/userData/myPage'),
               _buildOption(Icons.notifications_none_outlined, '通知', '/notifications'),
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
-              _buildOption(Icons.help, 'よくある質問', '/contact'),
+              _buildOption(Icons.help, 'よくある質問', '/settings/questions'),
               _buildOption(Icons.door_back_door, 'ログアウト', '', onLogout: true),
             ],
           ),
