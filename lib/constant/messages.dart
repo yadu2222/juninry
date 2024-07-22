@@ -5,6 +5,7 @@ class Messages {
 
   // 下書き
   static const String draft = "下書き";
+  static const String draftDelete = "下書きを削除してよろしいですか？";
   static const String draftMsg = "下書きを保存しました\n一覧画面に戻ります";
 
   // 成功
@@ -31,7 +32,7 @@ class Messages {
   static const String joinClassConflictError = "すでに参加しています！"; // 参加エラー1
   static const String inviteClassError = "招待コードの発行に失敗しました"; // 参加エラー
   static const String createClassError = 'クラス作成に失敗しました'; // 生成失敗
-    static const String createOuchiError = 'クラス作成に失敗しました'; // 生成失敗
+  static const String createOuchiError = 'クラス作成に失敗しました'; // 生成失敗
 
   static const String submittionHomeworkError = '宿題の提出に失敗しました'; // 生成失敗
   static const String postNoticeError = 'お知らせの投稿に失敗しました'; // 生成失敗
@@ -39,14 +40,12 @@ class Messages {
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足
 
-
   // 通信エラー
   static const String databaseError = "ごめんなさい";
   static const String databaseErrorMsg = "保存に失敗しました\n再度実行してください";
 
-
   // 空だねというとき
   static const String homeworkIsEmpty = "宿題はありません"; // 取得エラー
-  static const String noticeTitleIsEmpty = "タイトルを入力してください"; 
+  static const String noticeTitleIsEmpty = "タイトルを入力してください";
   static const String isEmpty = "データが見つかりません";
 }

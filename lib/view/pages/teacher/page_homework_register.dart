@@ -75,8 +75,6 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     bool oldCheck() {
       if (registerHomeworkData.value.isNotEmpty && registerHomeworkDataOld.value != registerHomeworkData.value) {
-        print(registerHomeworkDataOld.value);
-        print(registerHomeworkData.value);
         // 変更がある場合
         // 保存を促す
         AlertDialogUtil.show(

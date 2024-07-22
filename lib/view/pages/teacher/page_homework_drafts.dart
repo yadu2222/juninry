@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../components/template/basic_template.dart';
 
-
 import '../../components/organism/homework_draft_list.dart';
 import '../../../models/register_homework_model.dart';
+import '../../components/atoms/alert_dialog.dart';
+import '../../../constant/messages.dart';
 
 class PageHomeworkDraftsTeacher extends HookWidget {
   // タイトル
@@ -35,6 +36,23 @@ class PageHomeworkDraftsTeacher extends HookWidget {
       await getDrafts(); // 削除後に再取得
     }
 
+    // 削除確認ダイアログ
+    void deleteCheck(List<RegisterHomework> homeworks) {
+      // 変更がある場合
+      // 保存を促す
+      AlertDialogUtil.show(
+        context: context,
+        content: Messages.draftDelete,
+        negativeAction: ("いいえ", () {}),
+        positiveAction: (
+          "削除する",
+          () async {
+            delete(homeworks);
+          }
+        ),
+      );
+    }
+
     // TODO:読み込みのタイミングがなんか変
     // useEffect内で非同期処理を実行するための方法
     useEffect(() {
@@ -43,15 +61,9 @@ class PageHomeworkDraftsTeacher extends HookWidget {
       return () {};
     }, []);
 
-
-    return BasicTemplate(title: title,
-     children: [
+    return BasicTemplate(title: title, children: [
       // 下書き一覧
-      HomeworkDraftList(
-        homeworkData: draftData.value,
-        delete: delete,
-        get: getDrafts
-      ),
+      HomeworkDraftList(homeworkData: draftData.value, delete: deleteCheck, get: getDrafts),
     ]);
   }
 }
