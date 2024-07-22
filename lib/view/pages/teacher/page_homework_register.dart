@@ -92,7 +92,6 @@ class PageHomeworkRegisterTeacher extends HookWidget {
             "保存する",
             () async {
               draftSave();
-              context.go('/homework');
             }
           ),
         );
