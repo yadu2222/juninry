@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/apis/error.dart';
+import 'package:juninry/models/homework_submission_record.dart';
 import 'dart:io';
 // import '../../models/homework_model.dart';
 import '../service/homework_service.dart';
@@ -56,11 +57,12 @@ class HomeworkReq {
     }
   }
 
-  Future<List<Map<DateTime, int>>> submissionLogHandler(
+  Future<List<HomeworkSubmissionRecord>> submissionLogHandler(
       DateTime targetMonth) async {
     try {
       return await HomeworkService.submissionLog(targetMonth);
-    } catch (e) {
+    } on DefaultException {
+      handleException(ExceptionType.DefaultException);
       return [];
     }
   }

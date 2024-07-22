@@ -11,6 +11,7 @@ import '../../../apis/controller/homework_req.dart';
 import '../../../models/user_model.dart';
 import '../../components/atoms/background_circle.dart';
 import '../../components/atoms/submission_record_dot.dart';
+import '../../../models/homework_submission_record.dart';
 
 class CurveClipper extends CustomClipper<Path> {
   @override
@@ -152,12 +153,10 @@ class PageMyPage extends HookWidget {
                             calendarBuilders: CalendarBuilders(
                               markerBuilder: (context, date, events) {
                                 // ここにマーカーを表示する
-                                for (Map<DateTime, int> check
+                                for (HomeworkSubmissionRecord record
                                     in submissionData.value) {
-                                  if (check.containsKey(date)) {
-                                    // Mapのvalueを出力
-                                    return SubmissionRecordDot(
-                                        record: check[date]!);
+                                  if (date.day == record.limitDate.day) {
+                                    return SubmissionRecordDot(record: record);
                                   }
                                 }
                               },
@@ -172,7 +171,7 @@ class PageMyPage extends HookWidget {
                                         padding: const EdgeInsets.all(3.0),
                                         child: Text(
                                           day.day.toString(),
-                                          style: Fonts.h1w,
+                                          style: Fonts.pw,
                                         )));
                               },
                             ),

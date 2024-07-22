@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/models/homework_submission_record.dart';
 import '../../../constant/colors.dart';
 
 // 色の透明度を変更する関数
-Color changeColorOpacity(int record) {
+Color changeColorOpacity(bool record) {
   return Color.fromARGB(255, 111, 111, 111);
 }
 
 class SubmissionRecordDot extends StatelessWidget {
-  final int record;
+  final HomeworkSubmissionRecord record;
 
   const SubmissionRecordDot({required this.record});
 
@@ -18,7 +19,7 @@ class SubmissionRecordDot extends StatelessWidget {
       height: 5,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: changeColorOpacity(record),
+        color: changeColorOpacity(true),
       ),
     );
   }
