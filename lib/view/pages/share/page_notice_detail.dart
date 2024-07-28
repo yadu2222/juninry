@@ -13,7 +13,7 @@ import 'package:go_router/go_router.dart';
 
 class PageNoticeDetail extends HookWidget {
   final String noticeUuid;
-  PageNoticeDetail({super.key, required this.noticeUuid});
+  const PageNoticeDetail({super.key, required this.noticeUuid});
 
   // fields
   final String title = "おしらせ詳細";

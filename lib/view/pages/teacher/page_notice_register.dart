@@ -66,7 +66,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
     final classesList = data.classesList;
     final selectedClass = useState<Class>(data.selectedClass);
     final draftedNoticeData = data.draftedNoticeData;
-    final quotedNoticeData = data.quotedNoticeData;
+    final quotedNoticeData = useState(data.quotedNoticeData);
     final titleController = data.titleController;
     final textController = data.textController;
 
@@ -101,7 +101,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
       draftedNoticeData.draftedNoticeTitle = titleController.text;
       draftedNoticeData.draftedNoticeExplanatory = textController.text;
       // これいらんかも おまもり
-      draftedNoticeData.quotedNoticeUuid = quotedNoticeData?.quotedNoticeUuid;
+      draftedNoticeData.quotedNoticeUuid = quotedNoticeData.value?.quotedNoticeUuid;
       // 下書き保存処理
       int saveId;
       // タイトルが入力されていない場合は保存しない
@@ -160,6 +160,13 @@ class PageNoticeRegisterTeacher extends HookWidget {
       }
     }
 
+    // 引用の削除
+    void onDeleteClicked() {
+      data.prefs.remove('quotedNoticeUUID');
+      quotedNoticeData.value = null;
+
+    }
+
     // 1ページに必要な要素を並べる
     return BasicTemplate(
         title: title,
@@ -184,8 +191,9 @@ class PageNoticeRegisterTeacher extends HookWidget {
                   titleController: titleController, //タイトルを管理するコントローラー
                   textController: textController, //本文を管理するコントローラー
                   quoteNoticeTitle:
-                      quotedNoticeData?.quotedNoticeTitle, //引用元のタイトル
-                  onQuoteClicked: onQuoteClicked // 引用ボタン押した時の処理
+                      quotedNoticeData.value?.quotedNoticeTitle, //引用元のタイトル
+                  onQuoteClicked: onQuoteClicked, // 引用ボタン押した時の処理
+                  onDeleteClicked: onDeleteClicked
                   )),
           //ボタン
           Align(
@@ -227,7 +235,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                         bool result = await noticeReq.postNoticeHandler(Notice(
                           noticeTitle: titleController.text,
                           noticeExplanatory: textController.text,
-                          quotedNoticeUUID: quotedNoticeData?.quotedNoticeUuid,
+                          quotedNoticeUUID: quotedNoticeData.value?.quotedNoticeUuid,
                           classUUID: selectedClass.value.classUUID!,
                         ));
 
@@ -266,10 +274,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
     DraftedNotice draftedNoticeData;
     QuotedNotice? quotedNoticeData;
 
-    debugPrint("\n\n\n\n\n\n\n\n");
-    debugPrint("送られてきたdraftedNoticeId: $draftedNoticeId");
-    debugPrint("送られてきたquotedNoticeUUID: $quotedNoticeUUID");
-
     // SharedPreferencesからdraftedNoticeIdを取得
     SharedPreferences cache = await SharedPreferences.getInstance();
 
@@ -290,9 +294,6 @@ class PageNoticeRegisterTeacher extends HookWidget {
     int? currentDraftedNoticeId = draftedNoticeId ?? storedDraftedNoticeId;
     String? currentQuotedNoticeUUID =
         quotedNoticeUUID ?? storedQuotedNoticeUUID;
-
-    debugPrint("保存されていたdraftedNoticeId: $storedDraftedNoticeId");
-    debugPrint("保存されていたquotedNoticeUUID: $storedQuotedNoticeUUID");
 
     // 下書きのIDがある場合は、その下書きを取得　なかったら新規作成
     if (currentDraftedNoticeId != null) {

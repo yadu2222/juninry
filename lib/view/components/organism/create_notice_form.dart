@@ -16,6 +16,7 @@ class CreateNoticeForm extends StatelessWidget {
   final String userName; // 名前
   final String? quoteNoticeTitle; // 引用されているお知らせタイトル
   final void Function() onQuoteClicked; // 引用されているお知らせをクリックした時の処理
+  final void Function() onDeleteClicked;// 引用削除時の処理
 
   final void Function(Class value) onClassChanged; // クラス選択時の処理
   final TextEditingController titleController; // タイトル
@@ -28,6 +29,7 @@ class CreateNoticeForm extends StatelessWidget {
     required this.userName,
     required this.quoteNoticeTitle,
     required this.onQuoteClicked,
+    required this.onDeleteClicked,
     required this.onClassChanged,
     required this.titleController,
     required this.textController,
@@ -79,6 +81,7 @@ class CreateNoticeForm extends StatelessWidget {
             //引用するお知らせ
             quoteNoticeTitle: quoteNoticeTitle,
             onQuoteClicked: onQuoteClicked,
+            onDeleteClicked: onDeleteClicked,
           ),
 
           // 入力ブロック
