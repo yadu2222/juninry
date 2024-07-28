@@ -13,6 +13,7 @@ import '../view/pages/share/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
 // notice
 import '../view/pages/share/page_notice.dart';
+import '../view/pages/share/page_notice_detail.dart';
 // ouchi
 import '../view/pages/junior/page_reward.dart';
 import '../view/pages/share/page_ouchi.dart';
@@ -28,6 +29,7 @@ class JuniorBranch {
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'home'),
       routes: [
+        GoRoute(path: '/', redirect: (context, state) => '/home'),
         GoRoute(
           name: 'home',
           path: '/home',
@@ -67,6 +69,32 @@ class JuniorBranch {
         GoRoute(
           name: 'notice',
           path: '/notice', // notice
+          routes: [
+            // TODO:引数
+            GoRoute(
+              path: 'detail',
+              pageBuilder: (context, state) {
+                if (state.extra != null) {
+                  // 遷移時に定義されたデータをrouterで再定義
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
+                  String noticeUUID = extraData['noticeUUID'];
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeDetail(
+                      noticeUuid: noticeUUID,
+                    ),
+                  );
+                } else {
+                  // noticeUUIDが送られてきていない場合、一覧にリダイレクト
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNotice(),
+                  );
+                }
+              },
+            ),
+          ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: PageNotice(),

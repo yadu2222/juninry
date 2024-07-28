@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import '../view/pages/patron/page_home.dart';
 import '../view/pages/share/page_students.dart';
 // notice
-import '../view/pages/patron/page_notice_detail.dart';
 import '../view/pages/share/page_notice.dart';
+import '../view/pages/share/page_notice_detail.dart';
 // homework
 import '../view/pages/share/page_homework.dart';
 import '../view/pages/patron/page_submittion.dart';
@@ -62,13 +62,21 @@ class PatronBranch {
             // TODO:引数
             GoRoute(
               path: 'detail',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: const PageNoticeDetailPatron(
-                  noticeUUID: '123456',
-                ),
-              ),
-            )
+              pageBuilder: (context, state) {
+                debugPrint("state.extra: ${state.extra}");
+                // Map型でデータを送るためそれを取得
+                final Map<String, dynamic> extraData =
+                    state.extra as Map<String, dynamic>;
+                // データを取り出してみる
+                final String? noticeUUID = extraData['noticeUUID'];
+                return NoTransitionPage(
+                  key: state.pageKey,
+                  child: PageNoticeDetail(
+                    noticeUuid: noticeUUID!,
+                  ),
+                );
+              },
+            ),
           ],
 
           pageBuilder: (context, state) => NoTransitionPage(

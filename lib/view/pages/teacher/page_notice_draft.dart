@@ -31,7 +31,7 @@ class PageNoticeDraftTeacher extends HookWidget {
 
     // タップした時の遷移先
     void onTap(int draftedNoticeId) {
-      context.push('/notice/register',
+      context.go('/notice/register',
           extra: {'draftedNoticeId': draftedNoticeId});
     }
 

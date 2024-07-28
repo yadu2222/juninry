@@ -65,6 +65,21 @@ Future<bool> isBranch(BranchType branchType) async {
   return branches == branchType.branch;
 }
 
+// ユーザータイプ取得関数
+Future<BranchType> getBranchType() async {
+  User user = await User.getUser();
+  switch (user.userTypeId) {
+    case 1:
+      return BranchType.teacher;
+    case 2:
+      return BranchType.junior;
+    case 3:
+      return BranchType.patron;
+    default:
+      return BranchType.junior;
+  }
+}
+
 // ouchiUUIDが保存されているかを判別
 Future<bool> isOUCHICheck() async {
   User user = await User.getUser();

@@ -2,23 +2,9 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
-
-  // ループバックアドレス使いたい人におすすめ
-  // static const String host = '127.0.0.1';
-
-  // Androidエミュレーターにおすすめ
-
-  static const String host = '10.200.1.53';
-  // static const String host = '127.0.0.1';
-
-  // static const String host = '10.0.2.2';
-
-  // iOSエミュレーターにおすすめ
-  // static const String host = 'localhost';
-
-  // ローカル環境
-  // static const String host = '192.168.3.168';
-  // static const String host = '192.168.0.12';
+  // IPほちいね〜.local
+  // static const String host = 'M2.local';
+  static const String host = 'localhost';
 
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
@@ -32,6 +18,7 @@ class Urls {
 
   // notice
   static const String getNotices = '$version/auth/users/notices/notices'; // GETお知らせ取得
+  static const String noticeRead = '$version/auth/users/notices/read/'; // POST既読
   static const String noticeDetail = '$version/auth/users/notices/'; // GETお知らせ詳細
   static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
 

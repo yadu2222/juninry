@@ -26,7 +26,7 @@ class PageNotice extends HookWidget {
     // 追加ボタン押下時の処理
     void addPressed() {
       // 遷移処理
-      context.go('/notice/register');
+      context.go('/notice/register', extra: {'newNotice': true});
     }
 
     // お知らせ一覧取得関数

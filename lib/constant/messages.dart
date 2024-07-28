@@ -44,6 +44,8 @@ class Messages {
   static const String databaseError = "ごめんなさい";
   static const String databaseErrorMsg = "保存に失敗しました\n再度実行してください";
 
+  
+
   // 空だねというとき
   static const String homeworkIsEmpty = "宿題はありません"; // 取得エラー
   static const String noticeTitleIsEmpty = "タイトルを入力してください";
