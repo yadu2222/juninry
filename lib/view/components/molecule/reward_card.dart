@@ -7,7 +7,7 @@ import '../atoms/basic_button.dart';
 import '../../../models/reward_model.dart';
 // constant
 import 'package:juninry/constant/fonts.dart';
-import '../../../constant/help_icon.dart';
+import '../../../constant/reward_icon.dart';
 import '../atoms/dialog.dart';
 import './divider.dart';
 
@@ -42,7 +42,7 @@ class RewardCard extends StatelessWidget {
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
-                    HelpIcon.getIcon(rewardData.iconId),
+                    RewardIcon.getIcon(rewardData.iconId),
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
                     Text(rewardData.rewardName, style: Fonts.h4),
                   ]),
@@ -67,7 +67,7 @@ class RewardCard extends StatelessWidget {
                     children: [
                   // icon
                   Row(children: [
-                    HelpIcon.getIcon(rewardData.iconId),
+                    RewardIcon.getIcon(rewardData.iconId),
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
                     // おてつだいのタイトル
                     Text(

@@ -3,12 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
 // view
-import '../../components/template/scroll_template.dart';
 import '../../components/organism/reward_list.dart';
 import '../../components/atoms/add_button.dart';
 // model
 import '../../../models/reward_model.dart';
-
 // api
 import '../../../apis/controller/reward_req.dart';
 

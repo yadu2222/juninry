@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/basic_button.dart';
 import '../../components/atoms/info_form.dart';
-import '../../components/molecule/help_icons.dart';
+import '../../components/molecule/reward_icons.dart';
 // api
 import '../../../apis/controller/reward_req.dart';
 // model
@@ -21,7 +21,7 @@ class PageRewardRegisterPatron extends HookWidget {
     RewardReq rewardReq = RewardReq(context: context);
 
     final iconId = useState<int>(0); // 選択中のid
-    final choiceIcon = useState<List<bool>>(List.generate(5, (i) => i == iconId.value)); // 選択中かを判別するためのリスト
+    final choiceIcon = useState<List<bool>>(List.generate(10, (i) => i == iconId.value)); // 選択中かを判別するためのリスト
 
     // useTextEditingControllerを使うことで再ビルド時にも値が保持される
     final titleController = useTextEditingController();
@@ -31,7 +31,7 @@ class PageRewardRegisterPatron extends HookWidget {
     // アイコン選択
     void choiceIconHandler(int id) {
       iconId.value = id; // 選択中のアイコンを更新
-      choiceIcon.value = List.generate(5, (i) => i == id); // 初期化し、選択されたもののみtrue
+      choiceIcon.value = List.generate(10, (i) => i == id); // 初期化し、選択されたもののみtrue
     }
 
     void registeHelp() {
@@ -46,7 +46,7 @@ class PageRewardRegisterPatron extends HookWidget {
     }
 
     return BasicTemplate(title: title, children: [
-      HelpIcons(choiceIcon: choiceIcon.value, choiceIconHandler: choiceIconHandler),
+      RewardIcons(choiceIcon: choiceIcon.value, choiceIconHandler: choiceIconHandler),
       InfoForm(label: 'タイトル', controller: titleController),
       InfoForm(label: '概要', controller: contentController),
       InfoForm(
