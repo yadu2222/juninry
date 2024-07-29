@@ -28,4 +28,12 @@ class RewardService {
     Map resData = await HttpReq.httpReq(reqData);
     return resData['srvResData']['ouchiPoint'];
   }
+
+  // ごほうび登録
+  static Future<void> registerReward(Reward reward) async {
+    // リクエストを生成
+    final reqData = Request(url: Urls.registerReward, reqType: 'POST', body: Reward.rewardToMap(reward), headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
+    await HttpReq.httpReq(reqData);
+  }
 }

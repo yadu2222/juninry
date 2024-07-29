@@ -34,4 +34,15 @@ class RewardReq {
       return null;
     }
   }
+
+  // GOHOUBI登録
+  Future<void> registerRewardHandler(Reward reward) async {
+    try {
+      await RewardService.registerReward(reward);
+      ToastUtil.show(message: Messages.registerSuccess); // 登録に成功
+    } catch (error) {
+      ToastUtil.show(message: Messages.registerError);
+    }
+  }
+
 }

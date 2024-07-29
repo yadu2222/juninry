@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/patron/page_reward.dart';
+import 'package:juninry/view/pages/patron/page_reward_register.dart';
 
 // 遷移先
 // patron
@@ -104,8 +106,7 @@ class PatronBranch {
                 pageBuilder: (context, state) {
                   if (state.extra != null) {
                     // 遷移時に定義されたデータをrouterで再定義
-                    final Map<String, dynamic> extraData =
-                        state.extra as Map<String, dynamic>;
+                    final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                     final String homeworkId = extraData['homeworkId'];
                     return NoTransitionPage(
                       key: state.pageKey,
@@ -122,8 +123,7 @@ class PatronBranch {
                   }
                 })
           ],
-          pageBuilder: (context, state) => NoTransitionPage(
-              key: state.pageKey, child: const PageHomework.near()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
         ),
       ],
     ),
@@ -136,25 +136,41 @@ class PatronBranch {
           path: '/ouchi',
           routes: [
             GoRoute(
-              path: 'top',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: const PageOuchiTopPatron(),
-              ),
-              routes: [
-                // 登録
-                GoRoute(
-                      path: 'register',
+                path: 'top',
+                pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageOuchiTopPatron(),
+                    ),
+                routes: [
+                  // 登録
+                  GoRoute(
+                    path: 'register',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageHelpRegisterPatron(),
+                    ),
+                  ),
+
+                  // ごほうびに遷移
+                  GoRoute(
+                      path: 'reward',
                       pageBuilder: (context, state) => NoTransitionPage(
                             key: state.pageKey,
-                            child: const PageHelpRegisterPatron(),
+                            child: const PageRewardPatron(),
                           ),
-                      )
-              ]
-            )
+                      routes: [
+                        // ごほうびの追加
+                        GoRoute(
+                          path: 'register',
+                          pageBuilder: (context, state) => NoTransitionPage(
+                            key: state.pageKey,
+                            child: const PageRewardRegisterPatron(),
+                          ),
+                        )
+                      ])
+                ])
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
@@ -176,8 +192,7 @@ class PatronBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

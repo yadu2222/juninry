@@ -17,9 +17,8 @@ import '../../../apis/controller/user_req.dart';
 // sample
 import '../../../constant/messages.dart';
 
-
-class PageReward extends HookWidget {
-  const PageReward({super.key});
+class PageRewardJunior extends HookWidget {
+  const PageRewardJunior({super.key});
 
   final String title = 'ごほうび';
   @override
@@ -65,8 +64,7 @@ class PageReward extends HookWidget {
     }
 
     // GOHOUBI取得
-    // おてつだいの取得
-    void getHelps() async {
+    void getRewards() async {
       rewardData.value = await rewardReq.getRewardsHandler();
       // helpData.value = SampleData.helpData;
     }
@@ -79,7 +77,7 @@ class PageReward extends HookWidget {
       }
 
       getOuchiPoint();
-      getHelps();
+      getRewards();
       // 児童かを判別
       isBranch(BranchType.junior).then((value) => isJunior.value = value);
       return () {};

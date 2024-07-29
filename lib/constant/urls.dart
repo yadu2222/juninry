@@ -61,4 +61,5 @@ class Urls {
   // GOHOUBI
   static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得
   static const String exchangeReward = '$version/auth/users/ouchies/rewards/exchange'; // POSTごほうび交換
+  static const String registerReward = '$version/auth/users/ouchies/rewards/register'; // POSTごほうび登録
 }

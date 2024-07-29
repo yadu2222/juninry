@@ -15,7 +15,7 @@ import '../view/pages/junior/page_submission.dart';
 import '../view/pages/share/page_notice.dart';
 import '../view/pages/teacher/page_notice_detail.dart';
 // ouchi
-import '../view/pages/share/page_reward.dart';
+import '../view/pages/junior/page_reward.dart';
 import '../view/pages/share/page_ouchi.dart';
 // user
 import '../view/pages/share/page_user.dart';
@@ -151,7 +151,7 @@ class JuniorBranch {
                   path: 'reward', // notice
                   pageBuilder: (context, state) => NoTransitionPage(
                     key: state.pageKey,
-                    child: const PageReward(),
+                    child: const PageRewardJunior(),
                   ),
                 ),
               ],

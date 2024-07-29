@@ -16,14 +16,12 @@ class RewardCard extends StatelessWidget {
     super.key,
     required this.rewardData,
     required this.isRewardPoint,
-    required this.onTap,
+    this.buy,
   });
 
   final Reward rewardData;
   final bool isRewardPoint;
-  final void Function(Reward) onTap;
-
-
+  final void Function(Reward)? buy;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +88,9 @@ class RewardCard extends StatelessWidget {
                       text: '${rewardData.rewardPoint.toString()}P',
                       isColor: isRewardPoint,
                       onPressed: () {
-                        onTap(rewardData);
+                        if (buy != null) {
+                          buy!(rewardData);
+                        }
                       })
                 ]))));
   }

@@ -15,6 +15,16 @@ class Reward {
     this.stock,
   });
 
+
+  static Map<String,dynamic> rewardToMap(Reward reward) {
+    return {
+      'rewardTitle': reward.rewardName,
+      'rewardContent': reward.note,
+      'iconId': reward.iconId,
+      'rewardPoint': reward.rewardPoint,
+    };
+  }
+
   static List<Reward> resToReward(Map loadData) {
     List<Reward> rewards = [];
     for (Map loadItem in loadData['rewardData']) {

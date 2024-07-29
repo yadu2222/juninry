@@ -7,18 +7,18 @@ import '../../components/atoms/basic_button.dart';
 import '../../components/atoms/info_form.dart';
 import '../../components/molecule/help_icons.dart';
 // api
-import '../../../apis/controller/help_req.dart';
+import '../../../apis/controller/reward_req.dart';
 // model
-import '../../../models/help_model.dart';
+import '../../../models/reward_model.dart';
 
-class PageHelpRegisterPatron extends HookWidget {
-  const PageHelpRegisterPatron({super.key});
+class PageRewardRegisterPatron extends HookWidget {
+  const PageRewardRegisterPatron({super.key});
 
-  final String title = 'おてつだい登録';
+  final String title = 'GOHOUBI登録';
 
   @override
   Widget build(BuildContext context) {
-    HelpReq helpReq = HelpReq(context: context);
+    RewardReq rewardReq = RewardReq(context: context);
 
     final iconId = useState<int>(0); // 選択中のid
     final choiceIcon = useState<List<bool>>(List.generate(5, (i) => i == iconId.value)); // 選択中かを判別するためのリスト
@@ -35,15 +35,14 @@ class PageHelpRegisterPatron extends HookWidget {
     }
 
     void registeHelp() {
-      // おてつだい登録処理
-      Help help = Help(
-        helpTitle: titleController.text,
-        helpContent: contentController.text,
+      // ごほうび登録処理
+      Reward reward = Reward(
+        rewardName: titleController.text,
+        note: contentController.text,
         iconId: iconId.value,
         rewardPoint: int.parse(rewardPointController.text),
-        // rewardPoint: 15
       );
-      helpReq.registerHelpHandler(help).then((_) => Navigator.pop(context));
+      rewardReq.registerRewardHandler(reward).then((_) => Navigator.pop(context));
     }
 
     return BasicTemplate(title: title, children: [
