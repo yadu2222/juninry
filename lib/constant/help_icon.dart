@@ -3,17 +3,18 @@ import './colors.dart';
 
 class HelpIcon {
   // お手伝いのアイコンを取得
-  static Container getIcon(int index) {
+  static Container getIcon(int index, {Color mainColor = AppColors.main, Color iconColor = AppColors.iconLight, double size = 20, bool border = false}) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.main,
+        color: mainColor,
         borderRadius: BorderRadius.circular(30),
+        border: border ? Border.all(color: AppColors.subjectJapanese, width: 3) : Border.all(color: iconColor, width: 3),
       ),
       padding: const EdgeInsets.all(4),
       child: Icon(
         helpIcons[index],
-        color: AppColors.iconLight,
-        size: 20,
+        color: iconColor,
+        size: size,
       ),
     );
   }

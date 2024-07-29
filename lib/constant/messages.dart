@@ -43,6 +43,7 @@ class Messages {
   static const String destionHelpError = 'おてつだいの報告に失敗しました'; // 生成失敗
   static const String exchangeError = 'ごほうびの交換に失敗しました'; // 生成失敗
 
+
   // 警告
   static const String pointShortage = "ポイントが不足しています"; // ポイント不足
 

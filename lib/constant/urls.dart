@@ -56,6 +56,7 @@ class Urls {
   // help
   static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
   static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化
+  static const String registerHelp = '$version/auth/users/ouchies/helps/register'; // POSTおてつだい登録
 
   // GOHOUBI
   static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得

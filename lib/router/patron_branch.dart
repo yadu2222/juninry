@@ -15,6 +15,7 @@ import '../view/pages/patron/page_submittion.dart';
 // ouchi
 import '../view/pages/share/page_ouchi.dart';
 import '../view/pages/patron/page_ouchi_top.dart';
+import '../view/pages/patron/page_help_register.dart';
 // setting
 import '../view/pages/share/page_questions.dart';
 import '../view/pages/share/page_user.dart';
@@ -140,6 +141,16 @@ class PatronBranch {
                 key: state.pageKey,
                 child: const PageOuchiTopPatron(),
               ),
+              routes: [
+                // 登録
+                GoRoute(
+                      path: 'register',
+                      pageBuilder: (context, state) => NoTransitionPage(
+                            key: state.pageKey,
+                            child: const PageHelpRegisterPatron(),
+                          ),
+                      )
+              ]
             )
           ],
           pageBuilder: (context, state) =>

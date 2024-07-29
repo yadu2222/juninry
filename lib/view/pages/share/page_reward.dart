@@ -16,7 +16,7 @@ import '../../../apis/controller/reward_req.dart';
 import '../../../apis/controller/user_req.dart';
 // sample
 import '../../../constant/messages.dart';
-import '../../../constant/sample_data.dart';
+
 
 class PageReward extends HookWidget {
   const PageReward({super.key});
@@ -29,7 +29,7 @@ class PageReward extends HookWidget {
 
     final isJunior = useState<bool>(false); // 児童かどうか
     final ouchiPoint = useState<int>(0); // ouchipoint
-    final rewardData = useState<List<Reward>>(SampleData.rewardData); // GOHOUBIデータ
+    final rewardData = useState<List<Reward>>([]); // GOHOUBIデータ
 
     // ごほうび交換
     void exchange(Reward reward) {

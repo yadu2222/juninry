@@ -35,5 +35,13 @@ class HelpReq {
     }
   }
 
-  
+  // おてつだい登録
+  Future<void> registerHelpHandler(Help help) async {
+    try {
+      await HelpService.registerHelp(help);
+      ToastUtil.show(message: Messages.registerSuccess); // 登録に成功
+    } catch (error) {
+      ToastUtil.show(message: Messages.registerError);
+    }
+  }
 }

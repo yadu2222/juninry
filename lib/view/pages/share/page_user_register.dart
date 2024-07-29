@@ -76,9 +76,9 @@ class PageUserRegister extends HookWidget {
         backgroundColor: AppColors.main, // 背景色設定
         body: BasicTemplate(title: title, popIcon: false, children: [
           const SizedBox(height: 50),
-          InfoForm(label: 'お名前', controller: nameController),
-          InfoForm(label: 'メールアドレス', controller: mailController),
-          InfoForm(label: 'パスワード', controller: passController),
+          InfoForm(label: 'お名前', controller: nameController, inputType: TextInputType.text),
+          InfoForm(label: 'メールアドレス', controller: mailController, inputType: TextInputType.emailAddress),
+          InfoForm(label: 'パスワード', controller: passController, inputType: TextInputType.visiblePassword),
           // userType選択
           DropDownUtil(
             items: userTypeItem,

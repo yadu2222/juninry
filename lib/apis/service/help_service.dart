@@ -8,8 +8,6 @@ import '../../models/req_model.dart';
 // import '../error.dart';
 
 class HelpService {
-
-
   // TODO:エラーハンドリング
   // おてつだい取得
   static Future<List<Help>> getHelps() async {
@@ -29,5 +27,13 @@ class HelpService {
     // リクエストメソッドにオブジェクトを投げる
     Map resData = await HttpReq.httpReq(reqData);
     return resData['srvResData']['ouchiPoint'];
+  }
+
+  // おてつだい登録
+  static Future<void> registerHelp(Help help) async {
+    // リクエストを生成
+    final reqData = Request(url: Urls.registerHelp, reqType: 'POST', body: Help.helpToMap(help), headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
+    await HttpReq.httpReq(reqData);
   }
 }

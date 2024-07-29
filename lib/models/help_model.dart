@@ -19,6 +19,15 @@ class Help {
     this.isReword,
   });
 
+  static Map<String,dynamic> helpToMap(Help help){
+    return {
+      'helpTitle': help.helpTitle,
+      'helpContent': help.helpContent,
+      'iconId': help.iconId,
+      'rewardPoint': help.rewardPoint,
+    };
+  }
+
   static List<Help> resToHelps(Map loadData){
     List<Help> helps = [];
     for (Map loadItem in loadData['helpData']) {

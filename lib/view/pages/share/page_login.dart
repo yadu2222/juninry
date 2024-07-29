@@ -39,8 +39,8 @@ class PageLogin extends StatelessWidget {
 
         body: BasicTemplate(title: title, popIcon: false, children: [
           const SizedBox(height: 50),
-          InfoForm(label: 'メールアドレス', controller: mailController),
-          InfoForm(label: 'パスワード', controller: passController),
+          InfoForm(label: 'メールアドレス', controller: mailController,inputType: TextInputType.emailAddress,),
+          InfoForm(label: 'パスワード', controller: passController,inputType: TextInputType.visiblePassword),
           const SizedBox(height: 40),
           BasicButton(
             width: 0.4,
