@@ -2,14 +2,13 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
-
   // ループバックアドレス使いたい人におすすめ
   // static const String host = '127.0.0.1';
 
   // Androidエミュレーターにおすすめ
 
   // static const String host = '10.200.1.53';
- static const String host = '127.0.0.1';
+  static const String host = '127.0.0.1';
 
   // static const String host = '10.0.2.2';
 
@@ -55,6 +54,10 @@ class Urls {
   static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
 
   // help
-    static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
-    static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化 
+  static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
+  static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化
+
+  // GOHOUBI
+  static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得
+  static const String exchangeReward = '$version/auth/users/ouchies/rewards/exchange'; // POSTごほうび交換
 }

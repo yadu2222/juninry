@@ -28,7 +28,7 @@ class Help {
         helpContent: loadItem['helpContent'],
         iconId: loadItem['iconId'],
         rewardPoint: loadItem['rewardPoint'],
-        isReword: true,
+        isReword: loadItem['submittedToday'],
       ));
     }
     return helps;

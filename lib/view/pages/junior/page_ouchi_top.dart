@@ -27,11 +27,6 @@ class PageOuchiTopJunior extends HookWidget {
     final ouchiPoint = useState<int>(0); // データを格納するための変数
     final helpData = useState<List<Help>>([]); // データを格納するための変数
 
-    // ポイントの取得
-    void getOuchiPoint() async {
-      User user = await userReq.getUserHandler();
-      ouchiPoint.value = user.ouchiPoint!;
-    }
 
     // おてつだい消化処理
     void helpdiDestion(Help help) async {
@@ -65,6 +60,12 @@ class PageOuchiTopJunior extends HookWidget {
     }
 
     useEffect(() {
+      // ポイントの取得
+      void getOuchiPoint() async {
+        User user = await userReq.getUserHandler();
+        ouchiPoint.value = user.ouchiPoint!;
+      }
+
       getOuchiPoint(); // ポイントの取得
       // 児童かを判別
       getHelps(); // おてつだいの取得
