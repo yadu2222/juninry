@@ -1,9 +1,47 @@
+// import 'package:flutter/material.dart';
+// import 'package:go_router/go_router.dart';
+// import '../../../constant/fonts.dart';
+// import '../../../view/components/atoms/basic_button.dart';
+// import '../../../models/user_model.dart';
+// import '../../components/template/basic_template.dart';
+
+// class PageUserData extends StatelessWidget {
+//   const PageUserData({super.key,});
+
+//   final String title = 'ユーザー';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     void logout() async {
+//       // ログアウト処理
+//       bool isLogout = await User.logout();  // dbからデータを削除
+//       if (isLogout) {
+//         // ログイン画面に遷移
+//        context.go('/login');
+//       } else {}
+//     }
+
+//     return BasicTemplate(title: title, children: [
+//       const Text('ユーザー情報', style: Fonts.h3),
+//       BasicButton(
+//         text: 'ログアウト',
+//         isColor: false,
+//         onPressed: () {
+//           logout();
+//         },
+//       ),
+//     ]);
+//   }
+// }
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import '../../../constant/colors.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/user_model.dart';
 import '../../components/template/basic_template.dart';
+import '../../components/atoms/alert_dialog.dart';
 
 class PageUserData extends StatelessWidget {
   const PageUserData({super.key});
@@ -24,6 +62,11 @@ class PageUserData extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           if (onLogout) {
+            AlertDialogUtil.show(
+              context: context,
+              content: "ログアウトしますか？",
+              positiveAction: ("はい", () async _performLogout(context))
+            )
             _showLogoutConfirmationDialog(context); // 確認ダイアログを表示
           } else {
             _navigateToRoute(context, route); // ルートに遷移
@@ -62,8 +105,9 @@ class PageUserData extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20), // コンテナの角を丸める
+
+            borderRadius: BorderRadius.circular(20),
+
           ),
           child: Column(
             children: [

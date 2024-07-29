@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
-import '../../models/user_model.dart';
-import '../service/user_service.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
+import '../error.dart';
+// view
+import '../../view/components/atoms/toast.dart';
+// model
+import '../../models/user_model.dart';
+// service
+import '../service/user_service.dart';
 
 class UserReq {
   final BuildContext context;
@@ -32,14 +34,12 @@ class UserReq {
     user = user ?? await User.getUser(); // 引数がnullであればuser情報をdbから取得
     try {
       await UserService.login(user); // ログイン処理を待つ
-      debugPrint('damedesu');
       ToastUtil.show(message: Messages.loginSuccess); // ログイン成功メッセージ
       // routerを再取得
       updRouter();
       // ログイン完了後の処理
       GoRouter.of(context).go('/home');
     } catch (error) {
-      
       ToastUtil.show(message: Messages.loginError); // ログイン失敗メッセージ
     }
   }
@@ -51,6 +51,22 @@ class UserReq {
     } catch (error) {
       ToastUtil.show(message: Messages.getUserError);
       return User.errorUser(); // 取得エラー
+    }
+  }
+
+  // おうちに参加する
+  Future<String?> joinOUCHIHandler(String inviteCode) async {
+    try {
+      return await UserService.joinOUCHI(inviteCode); // クラス参加処理を待つ
+    } on PermittionError {
+      handleException(ExceptionType.permittonError);
+      return null;
+    } on JoinClassConflictException {
+      handleException(ExceptionType.joinClassConflict);
+      return null;
+    } catch (e) {
+      ToastUtil.show(message: Messages.joinClassError); // 参加失敗メッセージ
+      return null;
     }
   }
 }

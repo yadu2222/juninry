@@ -14,6 +14,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
   bool _isUnconfirmedSelected = false; // 未確認フィルタが選択されているかどうか
   bool _selectAll = false; // すべてのクラスが選択されているかどうか
   Map<String, bool> _selectedClass = {}; // 選択されたクラスを保持するマップ
+  Map<String, String> _classNames = {}; // クラスUUIDとクラス名をマッピングするマップ
   ScrollController _scrollController = ScrollController(); // スクロールコントローラー
 
   final Icon checkIcon = const Icon(
@@ -23,10 +24,8 @@ class _FilterDrawerState extends State<FilterDrawer> {
   );
 
   @override
-
   void initState() {
     super.initState();
-
     _fetchClasses(); // クラス情報を取得するメソッドを呼び出し
   }
 
@@ -39,11 +38,17 @@ class _FilterDrawerState extends State<FilterDrawer> {
       // 取得したクラス情報をもとに_selectedClassを初期化
       _selectedClass = Map.fromIterable(
         classes,
-        key: (classInfo) => classInfo.className,
+        key: (classInfo) => classInfo.classUUID,
         value: (classInfo) => false, // 最初はすべてのクラスが未選択になるように設定
       );
-    });
 
+      // クラスUUIDとクラス名をマッピング
+      _classNames = Map.fromIterable(
+        classes,
+        key: (classInfo) => classInfo.classUUID,
+        value: (classInfo) => classInfo.className,
+      );
+    });
   }
 
   @override
@@ -60,8 +65,8 @@ class _FilterDrawerState extends State<FilterDrawer> {
     });
   }
 
-  // 選択されたクラス名のリストを取得するメソッド
-  List<String> _getSelectedClasses() {
+  // 選択されたクラスUUIDのリストを取得するメソッド
+  List<String> _getSelectedClassUUIDs() {
     return _selectedClass.entries
         .where((entry) => entry.value)
         .map((entry) => entry.key)
@@ -140,20 +145,20 @@ class _FilterDrawerState extends State<FilterDrawer> {
                 controller: _scrollController,
                 padding: const EdgeInsets.all(16.0),
                 children: _selectedClass.keys
-                    .map((item) => CheckboxListTile(
+                    .map((uuid) => CheckboxListTile(
                           controlAffinity: ListTileControlAffinity.leading,
                           title: Padding(
                             padding: const EdgeInsets.only(left: 14.0),
                             child: Text(
-                              item,
+                              _classNames[uuid] ?? '',
                               overflow: TextOverflow.ellipsis,
                               style: Fonts.h3,
                             ),
                           ),
-                          value: _selectedClass[item],
+                          value: _selectedClass[uuid],
                           onChanged: (bool? value) {
                             setState(() {
-                              _selectedClass[item] = value ?? false;
+                              _selectedClass[uuid] = value ?? false;
                             });
                           },
                           contentPadding: EdgeInsets.symmetric(
@@ -168,8 +173,8 @@ class _FilterDrawerState extends State<FilterDrawer> {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
-                List<String> selectedClasses = _getSelectedClasses();
-                print('Selected Classes: $selectedClasses'); // 選択されたクラスをコンソールに表示
+                List<String> selectedClassUUIDs = _getSelectedClassUUIDs();
+                print('Selected Class UUIDs: $selectedClassUUIDs'); // 選択されたクラスのUUIDをコンソールに表示
                 Navigator.pop(context); // ドロワーを閉じる
               },
               child: Text('選択されたクラスを表示'),

@@ -1,7 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Notice {
-
   final String? noticeUUID;
   final String noticeTitle;
   final String? noticeExplanatory;
@@ -33,38 +35,34 @@ class Notice {
     required this.classUUID,
     this.quotedNoticeUUID,
     this.readStatus,
-
   });
 
   static Notice errorNotice() {
     return Notice(
       noticeUUID: '',
+      classUUID: '',
       noticeTitle: '',
       noticeDate: '',
       className: '',
-      classUUID: '',
       readStatus: 0,
     );
   }
 
-  // 日付を月、日だけに整形するメソッド
+  // 日付を4桁の月日に整形するメソッド
   static String formatDate(String date) {
-    DateTime dateTime = DateTime.parse(date);
-    String month = dateTime.month.toString();
-    String day = dateTime.day.toString();
-    return '$month.$day';
+    return DateFormat('MM.dd').format(DateTime.parse(date));
   }
 
   static List<Notice> resToNotices(List loadData) {
     try {
       return loadData.map((data) {
         return Notice(
-          noticeUUID: data['NoticeUUID'] ?? '',
-          noticeTitle: data['NoticeTitle'] ?? '',
+          noticeUUID: data['NoticeUuid'] as String?,
+          classUUID: data['ClassUuid'] as String,
+          noticeTitle: data['NoticeTitle'] as String,
           noticeDate: formatDate(data['NoticeDate'] ?? ''),
-          className: data['ClassName'] ?? '',
-          classUUID: data['ClassUUID'] ?? '',
-          readStatus: data['ReadStatus'] ?? 0,
+          className: data['ClassName'] as String?,
+          readStatus: data['ReadStatus'] as int?,
         );
       }).toList();
     } catch (e) {

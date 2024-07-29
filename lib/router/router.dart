@@ -65,6 +65,15 @@ Future<bool> isBranch(BranchType branchType) async {
   return branches == branchType.branch;
 }
 
+// ouchiUUIDが保存されているかを判別
+Future<bool> isOUCHICheck() async {
+  User user = await User.getUser();
+  if (user.ouchiUUID == "") {
+    return false;
+  }
+  return true;
+}
+
 
 // ルーターの作成
 Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
@@ -76,6 +85,7 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
     }
     return true;
   }
+
 
   bool isLogin = await isLoginCheck();
   return GoRouter(

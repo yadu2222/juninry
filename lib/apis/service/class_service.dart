@@ -8,14 +8,12 @@ import 'package:http/http.dart' as http;
 import '../error.dart';
 
 class ClassService {
+  // クラスメイト取得
   static Future<List<Map<String, dynamic>>> getClassmates() async {
     // リクエストを生成
-    debugPrint("1");
     final reqData = Request(url: Urls.getClassmates, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    debugPrint("2");
     Map resData = await HttpReq.httpReq(reqData);
-    debugPrint("3");
     debugPrint(resData.toString());
     // 返す
     return Class.resToClassmates(resData['srvResData']);
@@ -34,7 +32,7 @@ class ClassService {
         throw Exception('クラス参加に失敗しました');
       }
     }
-    
+
     // リクエストを生成
     final reqData = Request(
       url: Urls.joinClass,
@@ -77,10 +75,8 @@ class ClassService {
         headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
     final resData = await HttpReq.httpReq(reqData);
-    debugPrint(resData.toString());
     List<Class> classList = [];
     for (Map c in resData['srvResData']['classes']) {
-      debugPrint(c.toString());
       classList.add(Class.resToClass(c));
     }
     // 返す

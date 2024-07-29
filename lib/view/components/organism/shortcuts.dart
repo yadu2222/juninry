@@ -4,12 +4,11 @@ import '../../components/molecule/shortcut_set.dart';
 // ショートカット
 class Shortcuts extends StatelessWidget {
   final int userType;
-  Shortcuts.teacher({super.key, this.userType = 1});
-  Shortcuts.junior({super.key, this.userType = 2});
-  Shortcuts.patron({super.key, this.userType = 3});
+  Shortcuts.teacher({super.key, this.userType = 0});
+  Shortcuts.junior({super.key, this.userType = 1});
+  Shortcuts.patron({super.key, this.userType = 2});
 
   final List shortcutList = [
-
     // 0 : teacher
     {
       'title': [
@@ -34,25 +33,25 @@ class Shortcuts extends StatelessWidget {
     // 1:junior
     {
       'title': [
-        '宿題登録',
-        'お知らせ登録',
+        '宿題一覧',
+        'マイページ',
         '生徒一覧',
-        '教材管理',
+        '????',
       ],
       'pass': [
-       '/homework/register',
-        '/notice',
+        '/homework/register',
+        '/ouchi',
         '/home/students',
-        '/homework',
+        '/home',
       ],
       'icons': [
         Icons.menu_book_rounded,
-        Icons.notifications_none,
+        Icons.person,
         Icons.face_outlined,
-        Icons.book_outlined,
+        Icons.auto_awesome,
       ]
     },
-     // 2 : patron
+    // 2 : patron
     {
       'title': [
         '教員一覧',
@@ -73,11 +72,10 @@ class Shortcuts extends StatelessWidget {
         Icons.menu_book_rounded,
       ]
     },
-
   ];
 
   @override
   Widget build(BuildContext context) {
-    return ShortcutSet(shortcutList: shortcutList[userType - 1]['title'], icons: shortcutList[userType - 1]['icons'], movePages: shortcutList[userType - 1]['pass']);
+    return ShortcutSet(shortcutList: shortcutList[userType]['title'], icons: shortcutList[userType]['icons'], movePages: shortcutList[userType]['pass']);
   }
 }

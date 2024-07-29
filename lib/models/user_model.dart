@@ -9,17 +9,24 @@ class User {
   String mailAddress;
   String password;
   String? jwtKey;
+  String? ouchiUUID;
 
-  User({required this.userName, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey});
+  User({required this.userName, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey, this.ouchiUUID});
 
   static User errorUser() {
-    return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jwtKey: '');
+    return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jwtKey: '', ouchiUUID: '');
   }
 
   // mapをUserに変換
   static User toUser(Map loadData) {
     try {
-      return User(userName: 'hoge', userTypeId: loadData['user_type_id'] ?? 0, mailAddress: loadData['mail_address'], password: loadData['password'], jwtKey: loadData['jwt_key']);
+      return User(
+          userName: 'hoge',
+          userTypeId: loadData['user_type_id'] ?? 0,
+          mailAddress: loadData['mail_address'],
+          password: loadData['password'],
+          jwtKey: loadData['jwt_key'],
+          ouchiUUID: loadData['ouchi_uuid']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
       return errorUser();
@@ -33,6 +40,7 @@ class User {
         userTypeId: loadData['userTypeId'],
         mailAddress: loadData['mailAddress'],
         password: loadData['password'],
+        ouchiUUID: loadData['ouchiUUID'],
       );
     } catch (e) {
       debugPrint('Error converting map to User: $e');
@@ -56,7 +64,7 @@ class User {
 
   // Userをmapに変換
   static Map<String, dynamic> toMap(User user) {
-    return {'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jwt_key': user.jwtKey};
+    return {'user_type_id': user.userTypeId, 'mail_address': user.mailAddress, 'password': user.password, 'jwt_key': user.jwtKey, 'ouchi_uuid': user.ouchiUUID};
   }
 
   // dbからuser情報を取得
@@ -67,7 +75,7 @@ class User {
       debugPrint(user.toString());
       return toUser(user[0]);
     } else {
-      debugPrint('できてない？');
+      debugPrint('no user.');
       return errorUser();
     }
   }
@@ -83,22 +91,5 @@ class User {
   static Future<void> updateUser(User user) async {
     debugPrint('updateUser');
     await DatabaseHelper.update('users', toMap(user));
-  }
-
-  // 既にdbが存在しているかを判定し、なければsampleuserを追加
-  // のちのちはユーザー追加がなくなるはず
-  // static dbSampleUserAdd() async {
-  //   debugPrint('dbSampleUserAdd');
-  //   if (!await DatabaseHelper.firstdb()) {
-  //     _createSampleUser();
-  //   }
-  // }
-
-  // type_idは本来apiからもらうものだが、テストに使いたいため個々に記載
-  static _createSampleUser() async {
-    // debugPrint('_createSampleUser');
-    // await DatabaseHelper.insert('users', toMap(SampleData.teacherUser));
-    // await DatabaseHelper.insert('users', toMap(SampleData.juniorUser));
-    // await DatabaseHelper.insert('users', toMap(SampleData.patronUser));
   }
 }

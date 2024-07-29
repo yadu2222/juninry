@@ -3,10 +3,11 @@ import '../../../constant/fonts.dart';
 import '../../../constant/colors.dart';
 import '../atoms/dialog.dart';
 import '../../../models/class_model.dart' as inviteClass;
+import '../../../models/ouchi_model.dart';
 
 // 招待コードの表示
 // TODO:デザイン
-inviteDialog(BuildContext context, inviteClass.Class resData) {
+inviteDialog({required BuildContext context, inviteClass.Class? classData, Ouchi? ouchiData}) {
   DialogUtil.show(
       isBarrier: true,
       context: context,
@@ -26,11 +27,11 @@ inviteDialog(BuildContext context, inviteClass.Class resData) {
                 style: Fonts.py,
               ),
               Text(
-                '${resData.className}\nの招待コードは',
+                classData != null ? '${classData.className}\nの招待コードは' : '${ouchiData!.ouchiName}\nの招待コードは',
                 style: Fonts.h4,
               ),
               Text(
-                resData.inviteCode!,
+                classData != null ? classData.inviteCode! : ouchiData!.inviteCode,
                 style: Fonts.h1,
               ),
               const Text(

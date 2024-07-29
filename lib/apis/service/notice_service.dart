@@ -5,6 +5,7 @@ import '../../models/notice_model.dart';
 import 'package:http/http.dart' as http;
 import '../http_req.dart';
 import '../error.dart';
+import '../http_req.dart';
 
 class NoticeService {
   static Future<List<Notice>> getNotices() async {
@@ -17,23 +18,28 @@ class NoticeService {
       // リクエストメソッドにオブジェクトを投げる
       Map resData = await HttpReq.httpReq(reqData);
 
-      // 通知が存在するか確認
-      print('おこられちゃう」～～');
-      print(resData.toString());
-   
-        // 通知リストを返す
-        return Notice.resToNotices(resData['srvResData']['notices']);
-     
+      // 通知リストを返す
+      return Notice.resToNotices(resData['srvResData']['notices']);
     } catch (e) {
-
       print("じつはよ、、例外がでてるんだ");
       print(e.toString());
       // エラーメッセージを出力
       // エラーが発生した場合にエラーメッセージをリストで返す
-      return [Notice.errorNotice()];
+      return [];
     }
   }
-  
+
+  static Future<List<Notice>> filterNotice(String noticeUuid) async {
+    // リクエストを生成
+    final reqData = Request(
+          url: Urls.noticeFilter + noticeUuid,
+          reqType: 'GET',
+        );
+    // リクエストメソッドにオブジェクトを投げる
+    Map resData = await HttpReq.httpReq(reqData);
+    return Notice.resToNotices(resData['srvResData']['notices']);
+  }
+
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {
     // リクエストのオブジェクトを生成
     final reqData = Request(
@@ -56,6 +62,5 @@ class NoticeService {
       'Content-Type': 'application/json'
     });
     await HttpReq.httpReq(reqData);
-
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './teaching_item_model.dart';
 
 class Homework {
-  String? homeworkUuid;
+  String? homeworkUUID;
   DateTime? homeworkLimit; // TODO:dateにすべきでは？
   int startPage;
   int pageCount;
@@ -15,7 +15,7 @@ class Homework {
   TeachingItem teachingItem;
 
   Homework({
-    this.homeworkUuid,
+    this.homeworkUUID,
     this.homeworkLimit,
     required this.startPage,
     required this.pageCount,
@@ -28,7 +28,7 @@ class Homework {
   });
 
   static Homework errHomework = Homework(
-    homeworkUuid: '',
+    homeworkUUID: '',
     homeworkLimit: DateTime.now(),
     startPage: 0,
     pageCount: 0,
@@ -66,36 +66,35 @@ class Homework {
           // 変換してほしいのかチェック
           if (time) {
             addHomeworks[key] = DateTime.parse(loadItem[key]); // mapにkeyを追加
-          }else{
+          } else {
             addHomeworks[key] = loadItem[key]; // mapにkeyを追加
           }
 
-
-    //       "srvResMsg": "OK",
-    // "srvResData": [
-    //   {
-    //     "homeworkLimit": "0001-01-01T00:00:00Z",
-    //     "homeworkData": [
-    //       {
-    //         "homeworkUUID": "a3579e71-3be5-4b4d-a0df-1f05859a7104",
-    //         "startPage": 24,
-    //         "pageCount": 2,
-    //         "homeworkNote": "がんばってくださ～い＾＾",
-    //         "teachingMaterialName": "漢字ドリル3",
-    //         "subjectId": 1,
-    //         "subjectName": "国語",
-    //         "teachingMaterialImageUUID": "a575f18c-d639-4b6d-ad57-a9d7a7f84575",
-    //         "className": "3-2 ふたば学級",
-    //         "submitFlag": 1  // 提出フラグ 1 提出 0 未提出
-    //       },,,
-    //     ]
-    //   },,,
-    // ]
+          //       "srvResMsg": "OK",
+          // "srvResData": [
+          //   {
+          //     "homeworkLimit": "0001-01-01T00:00:00Z",
+          //     "homeworkData": [
+          //       {
+          //         "homeworkUUID": "a3579e71-3be5-4b4d-a0df-1f05859a7104",
+          //         "startPage": 24,
+          //         "pageCount": 2,
+          //         "homeworkNote": "がんばってくださ～い＾＾",
+          //         "teachingMaterialName": "漢字ドリル3",
+          //         "subjectId": 1,
+          //         "subjectName": "国語",
+          //         "teachingMaterialImageUUID": "a575f18c-d639-4b6d-ad57-a9d7a7f84575",
+          //         "className": "3-2 ふたば学級",
+          //         "submitFlag": 1  // 提出フラグ 1 提出 0 未提出
+          //       },,,
+          //     ]
+          //   },,,
+          // ]
           addHomeworks['homeworkData'] = []; // mapに空リストを追加
           // データをHomeworkに変換してリストに追加
           for (Map loadHomework in loadItem['homeworkData']) {
             Homework homework = Homework(
-              homeworkUuid: loadHomework['homeworkUUID'],
+              homeworkUUID: loadHomework['homeworkUUID'],
               startPage: loadHomework['startPage'],
               pageCount: loadHomework['pageCount'],
               homeworkNote: loadHomework['homeworkNote'],
@@ -118,7 +117,7 @@ class Homework {
         for (Map loadItem in resData) {
           for (Map loadHomework in loadItem['homeworkData']) {
             Homework homework = Homework(
-              homeworkUuid: loadHomework['homeworkUUID'],
+              homeworkUUID: loadHomework['homeworkUUID'],
               startPage: loadHomework['startPage'],
               pageCount: loadHomework['pageCount'],
               homeworkNote: loadHomework['homeworkNote'],
@@ -145,7 +144,7 @@ class Homework {
   static Homework dBtoHomework(Map loadData) {
     try {
       return Homework(
-        homeworkUuid: loadData['homework_id'].toString(),
+        homeworkUUID: loadData['homework_id'].toString(),
         homeworkLimit: DateTime.parse(loadData['homework_limit']),
         startPage: loadData['start_page'],
         pageCount: loadData['page_count'],

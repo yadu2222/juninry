@@ -1,6 +1,4 @@
 ### clone後の手順
-  ルートフォルダに`aseets/fonts/`フォルダを作成。フォントファイルをもらうか[ここ](https://fonts.google.com/noto/specimen/Noto+Sans+JP)からダウンロードし配置。
-
   ターミナルで以下のコマンドを実行し、パッケージを読み込む
   ```
   flutter pub get
