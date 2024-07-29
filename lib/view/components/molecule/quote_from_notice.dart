@@ -1,7 +1,6 @@
 import 'package:juninry/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:juninry/constant/fonts.dart';
-import 'package:juninry/models/quoted_notice_model.dart';
 
 class QuoteFromNotice extends StatelessWidget {
   final String? quoteNoticeTitle;

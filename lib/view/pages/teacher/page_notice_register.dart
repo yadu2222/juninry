@@ -38,8 +38,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final future = useMemoized(
-        () => _loadData(context), [draftedNoticeId, quotedNoticeUUID]);
+    ClassReq classReq = ClassReq(context: context); // 通信用クラスのインスタンスを生成
+    NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
+
+    final future = useMemoized(() => _loadData(context, classReq, noticeReq),
+        [draftedNoticeId, quotedNoticeUUID]);
     // 非同期通信が必要なデータ群
     final snapshot = useFuture(future);
 
@@ -63,7 +66,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
 
     // 値を格納する
     final data = snapshot.data!;
-    final classesList = data.classesList;
+    final classesList = useState<List<Class>>(data.classesList);
     final selectedClass = useState<Class>(data.selectedClass);
     final draftedNoticeData = data.draftedNoticeData;
     final quotedNoticeData = useState(data.quotedNoticeData);
@@ -80,11 +83,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
         debugPrint("data: ${data.draftedNoticeData.draftedNoticeId}");
         // ページを離れる際にdraftedNoticeIdを保存
         if (data.draftedNoticeData.draftedNoticeId != null) {
-          data.prefs.setInt(
+          data.cache.setInt(
               'draftedNoticeId', data.draftedNoticeData.draftedNoticeId!);
           debugPrint("保存された");
         } else {
-          data.prefs.remove('draftedNoticeId');
+          data.cache.remove('draftedNoticeId');
           debugPrint("削除された");
         }
       };
@@ -101,7 +104,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
       draftedNoticeData.draftedNoticeTitle = titleController.text;
       draftedNoticeData.draftedNoticeExplanatory = textController.text;
       // これいらんかも おまもり
-      draftedNoticeData.quotedNoticeUuid = quotedNoticeData.value?.quotedNoticeUuid;
+      draftedNoticeData.quotedNoticeUuid =
+          quotedNoticeData.value?.quotedNoticeUuid;
       // 下書き保存処理
       int saveId;
       // タイトルが入力されていない場合は保存しない
@@ -161,10 +165,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
     }
 
     // 引用の削除
-    void onDeleteClicked() {
-      data.prefs.remove('quotedNoticeUUID');
+    void onDeleteClicked() async {
+      data.cache.remove('quotedNoticeUUID');
       quotedNoticeData.value = null;
-
+      classesList.value = await classReq.getClassesHandler();
     }
 
     // 1ページに必要な要素を並べる
@@ -184,7 +188,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
           // お知らせ作成フォーム
           Expanded(
               child: CreateNoticeForm(
-                  classesList: classesList, //クラスリスト
+                  classesList: classesList.value, //クラスリスト
                   onClassChanged: onClassChanged, //クラス選択時の処理
                   selectedClass: selectedClass.value, //現在選択されているクラス
                   userName: data.userName, //名前
@@ -193,8 +197,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                   quoteNoticeTitle:
                       quotedNoticeData.value?.quotedNoticeTitle, //引用元のタイトル
                   onQuoteClicked: onQuoteClicked, // 引用ボタン押した時の処理
-                  onDeleteClicked: onDeleteClicked
-                  )),
+                  onDeleteClicked: onDeleteClicked)),
           //ボタン
           Align(
               heightFactor: 1.3,
@@ -229,13 +232,11 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       text: "投稿",
                       isColor: false,
                       onPressed: () async {
-                        NoticeReq noticeReq =
-                            NoticeReq(context: context); // 通信用クラスのインスタンスを生成
-
                         bool result = await noticeReq.postNoticeHandler(Notice(
                           noticeTitle: titleController.text,
                           noticeExplanatory: textController.text,
-                          quotedNoticeUUID: quotedNoticeData.value?.quotedNoticeUuid,
+                          quotedNoticeUUID:
+                              quotedNoticeData.value?.quotedNoticeUuid,
                           classUUID: selectedClass.value.classUUID!,
                         ));
 
@@ -266,10 +267,8 @@ class PageNoticeRegisterTeacher extends HookWidget {
         ]);
   }
 
-  Future<_PageData> _loadData(context) async {
-    ClassReq classReq = ClassReq(context: context); // 通信用クラスのインスタンスを生成
-    NoticeReq noticeReq = NoticeReq(context: context); // 通信用クラスのインスタンスを生成
-
+  Future<_PageData> _loadData(
+      context, ClassReq classReq, NoticeReq noticeReq) async {
     // _loadDataの一部
     DraftedNotice draftedNoticeData;
     QuotedNotice? quotedNoticeData;
@@ -349,7 +348,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
       titleController: titleController,
       textController: textController,
       userName: user.userName,
-      prefs: cache,
+      cache: cache,
     );
   }
 }
@@ -362,7 +361,7 @@ class _PageData {
   final TextEditingController titleController;
   final TextEditingController textController;
   final String userName;
-  final SharedPreferences prefs;
+  final SharedPreferences cache;
 
   _PageData({
     required this.classesList,
@@ -372,6 +371,6 @@ class _PageData {
     required this.titleController,
     required this.textController,
     required this.userName,
-    required this.prefs,
+    required this.cache,
   });
 }
