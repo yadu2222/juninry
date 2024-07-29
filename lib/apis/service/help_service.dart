@@ -21,4 +21,13 @@ class HelpService {
     // 返す
     return Help.resToHelps(resData['srvResData']);
   }
+
+  // おてつだい消化
+  static Future<int> destionHelp(Help help) async {
+    // リクエストを生成
+    final reqData = Request(url: Urls.destionHelp, reqType: 'POST', body: {'helpUUID': help.helpUuid}, headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
+    Map resData = await HttpReq.httpReq(reqData);
+    return resData['srvResData']['ouchiPoint'];
+  }
 }

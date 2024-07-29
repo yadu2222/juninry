@@ -6,7 +6,7 @@ import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/info_form.dart';
 import '../../components/atoms/basic_button.dart';
-import '../../components/atoms/alert_dialog.dart';
+// import '../../components/atoms/alert_dialog.dart';
 import '../../components/atoms/dialog.dart';
 // api
 import 'package:juninry/apis/controller/user_req.dart';

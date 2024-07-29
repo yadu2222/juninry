@@ -55,6 +55,6 @@ class Urls {
   static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
 
   // help
-    static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // POST招待コードでOUCHIに参加
-
+    static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
+    static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化 
 }
