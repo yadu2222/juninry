@@ -24,9 +24,9 @@ class RewardIcon {
   static List<IconData> helpIcons = [
     Icons.icecream, // あいす
     Icons.cake, // おかし
-    Icons.local_laundry_service, // ごはん
+    Icons.local_dining, // ごはん
     Icons.sports_baseball, // ボールなど
-    Icons.toys, // おもちゃ
+    Icons.rocket_launch, // おもちゃ
     Icons.menu_book_rounded, // 本
     Icons.checkroom, // ようふく
     Icons.local_movies_rounded, // えいが
