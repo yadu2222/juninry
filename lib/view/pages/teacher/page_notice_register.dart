@@ -285,6 +285,10 @@ class PageNoticeRegisterTeacher extends HookWidget {
       cache.remove('quotedNoticeUUID');
     }
 
+    if (draftedNoticeId != null) {
+      cache.remove('quotedNoticeUUID');
+    }
+    
     // 前回の値を拾うよ
     int? storedDraftedNoticeId = cache.getInt('draftedNoticeId');
     String? storedQuotedNoticeUUID = cache.getString('quotedNoticeUUID');
