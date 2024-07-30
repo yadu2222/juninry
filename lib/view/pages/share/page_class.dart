@@ -89,7 +89,15 @@ class PageClass extends HookWidget {
         'inputType': TextInputType.number,
         'inputFormat': [FilteringTextInputFormatter.digitsOnly]
       },
-      {'title': '新しいクラスを作成しましょう', 'button': '作成する', 'label': '新しいクラス名', 'controller': classNameController, 'api': create, 'inputType': TextInputType.text, 'inputFormat': []},
+      {
+        'title': '新しいクラスを作成しましょう',
+        'button': '作成する',
+        'label': '新しいクラス名',
+        'controller': classNameController,
+        'api': create,
+        'inputType': TextInputType.text,
+        'inputFormat': [FilteringTextInputFormatter.singleLineFormatter]
+      },
     ];
 
     final conTypeMap = useState<Map>(tabs[0]); // true:invite,false:create
