@@ -37,7 +37,7 @@ class ClassService {
         ? Request(
             url: Urls.joinClass,
             reqType: 'POST',
-            body: {'studentNumber': studentNum},
+            body: {'studentNumber': int.parse(studentNum!)},
             parData: inviteCode,
             headers: {'Content-Type': 'application/json'},
             errorHandling: errorHandling,
