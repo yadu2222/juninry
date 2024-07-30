@@ -16,7 +16,7 @@ class Class {
       addClassInfo['className'] = loadItem['className'];
       addClassInfo['students'] = []; // mapに空リストを追加
       for (Map loadStudent in loadItem['juniorData']) {
-        addClassInfo['students'].add(Student(studentUUID: loadStudent['userUUID'], name: loadStudent['userName'], gender: loadStudent['genderId']));
+        addClassInfo['students'].add(Student(studentUUID: loadStudent['userUUID'], name: loadStudent['userName'], gender: loadStudent['genderId'],num:loadStudent['studentNumber']));
       }
       classmates.add(addClassInfo);
     }
