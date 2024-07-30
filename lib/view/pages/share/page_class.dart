@@ -87,7 +87,9 @@ class PageClass extends HookWidget {
         'controller': inviteCodeController,
         'api': join,
         'inputType': TextInputType.number,
-        'inputFormat': [FilteringTextInputFormatter.digitsOnly]
+        'inputFormat': [FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(4),
+        ]
       },
       {
         'title': '新しいクラスを作成しましょう',
@@ -96,7 +98,7 @@ class PageClass extends HookWidget {
         'controller': classNameController,
         'api': create,
         'inputType': TextInputType.text,
-        'inputFormat': [FilteringTextInputFormatter.singleLineFormatter]
+        'inputFormat': [LengthLimitingTextInputFormatter(15)]
       },
     ];
 

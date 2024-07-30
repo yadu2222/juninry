@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart';
 // view
 import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
@@ -51,6 +52,8 @@ class PageJoinOuchi extends HookWidget {
         label: '招待コード',
         controller: inviteCodeController,
         icon: Icons.autorenew,
+        inputType: TextInputType.number,
+        inputFormatter: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
       ),
       const SizedBox(height: 20),
       // 確定

@@ -33,7 +33,7 @@ class ClassService {
     }
 
     // リクエストを生成
-    final reqData = studentNum != null
+    final reqData = studentNum != ''
         ? Request(
             url: Urls.joinClass,
             reqType: 'POST',

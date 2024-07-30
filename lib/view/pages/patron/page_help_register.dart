@@ -48,8 +48,8 @@ class PageHelpRegisterPatron extends HookWidget {
 
     return BasicTemplate(title: title, children: [
       HelpIcons(choiceIcon: choiceIcon.value, choiceIconHandler: choiceIconHandler),
-      InfoForm(label: 'タイトル', controller: titleController),
-      InfoForm(label: '概要', controller: contentController),
+      InfoForm(label: 'タイトル', controller: titleController, inputFormatter: [LengthLimitingTextInputFormatter(10)]),
+      InfoForm(label: '概要', controller: contentController, inputFormatter: [LengthLimitingTextInputFormatter(20)]),
       InfoForm(
         label: 'ポイント',
         controller: rewardPointController,

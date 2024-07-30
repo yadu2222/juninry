@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../models/user_model.dart';
+import 'package:flutter/services.dart';
 
 import '../../components/atoms/toast.dart';
 import '../../components/template/basic_template.dart';
@@ -40,7 +41,7 @@ class PageLogin extends StatelessWidget {
         body: BasicTemplate(title: title, popIcon: false, children: [
           const SizedBox(height: 50),
           InfoForm(label: 'メールアドレス', controller: mailController,inputType: TextInputType.emailAddress,),
-          InfoForm(label: 'パスワード', controller: passController,inputType: TextInputType.visiblePassword),
+          InfoForm(label: 'パスワード', controller: passController,inputType: TextInputType.visiblePassword, inputFormatter: [LengthLimitingTextInputFormatter(20)]),
           const SizedBox(height: 40),
           BasicButton(
             width: 0.4,
