@@ -62,7 +62,7 @@ class PageClass extends HookWidget {
     // クラスに参加
     void join() async {
       if (inviteCodeController.text.isNotEmpty) {
-        String? className = await classReq.joinClassHandler(inviteCodeController.text,studentNumController.text);
+        String? className = await classReq.joinClassHandler(inviteCodeController.text, studentNumController.text);
         if (className != null) {
           AlertDialogUtil.show(
             context: context,
@@ -80,9 +80,16 @@ class PageClass extends HookWidget {
 
     // 教員の場合のみ表示
     List<Map> tabs = [
-      {'title': 'クラスに参加しましょう', 'button': '参加する', 'label': '招待コード', 'controller': inviteCodeController, 'api': join,'inputType':TextInputType.number,'inputFormat': [FilteringTextInputFormatter.digitsOnly]
+      {
+        'title': 'クラスに参加しましょう',
+        'button': '参加する',
+        'label': '招待コード',
+        'controller': inviteCodeController,
+        'api': join,
+        'inputType': TextInputType.number,
+        'inputFormat': [FilteringTextInputFormatter.digitsOnly]
       },
-      {'title': '新しいクラスを作成しましょう', 'button': '作成する', 'label': '新しいクラス名', 'controller': classNameController, 'api': create,'inputType': TextInputType.text,'inputFormat':[]},
+      {'title': '新しいクラスを作成しましょう', 'button': '作成する', 'label': '新しいクラス名', 'controller': classNameController, 'api': create, 'inputType': TextInputType.text, 'inputFormat': []},
     ];
 
     final conTypeMap = useState<Map>(tabs[0]); // true:invite,false:create

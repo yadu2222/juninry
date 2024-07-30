@@ -20,7 +20,7 @@ class InfoForm extends StatelessWidget {
   final void Function()? onTap;
   final TextEditingController controller;
   final TextInputType inputType; // 数値以外許さないか
-  final List<TextInputFormatter> inputFormatter;
+  final List<dynamic> inputFormatter; // TextInputFormatter ひとまずの処置
 
   // TODO:バリデーション
   @override
