@@ -37,6 +37,18 @@ extension BranchTypeExt on BranchType {
         return PatronBranch.patronBranchs;
     }
   }
+
+  IconData get icon{
+    switch (this) {
+      case BranchType.teacher:
+        return Icons.abc;
+      case BranchType.junior:
+        return Icons.delete_forever;
+      case BranchType.patron:
+        return Icons.abc_sharp;
+    }
+  
+  }
 }
 
 Future<List<StatefulShellBranch>> getBranches() async {

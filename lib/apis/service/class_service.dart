@@ -20,8 +20,7 @@ class ClassService {
   }
 
   // クラスに参加
-  static Future<String> joinClass(String inviteCode,) async {
-
+  static Future<String> joinClass(String inviteCode, String? studentNum) async {
     // こうやってthrowしてcatchで拾うのはどうだろうか
     errorHandling(http.Response response) {
       if (response.statusCode == 403) {
@@ -34,13 +33,22 @@ class ClassService {
     }
 
     // リクエストを生成
-    final reqData = Request(
-      url: Urls.joinClass,
-      reqType: 'POST',
-      parData: inviteCode,
-      headers: {'Content-Type': 'application/json'},
-      errorHandling: errorHandling,
-    );
+    final reqData = studentNum != ''
+        ? Request(
+            url: Urls.joinClass,
+            reqType: 'POST',
+            body: {'studentNumber': int.parse(studentNum!)},
+            parData: inviteCode,
+            headers: {'Content-Type': 'application/json'},
+            errorHandling: errorHandling,
+          )
+        : Request(
+            url: Urls.joinClass,
+            reqType: 'POST',
+            parData: inviteCode,
+            headers: {'Content-Type': 'application/json'},
+            errorHandling: errorHandling,
+          );
     final resData = await HttpReq.httpReq(reqData);
     return resData['srvResData']['className'];
   }
@@ -66,13 +74,9 @@ class ClassService {
     return Class.resToClass(resData['srvResData']);
   }
 
-
   static Future<List<Class>> getClasses() async {
     // リクエストを生成
-    final reqData = Request(
-        url: Urls.getClasses,
-        reqType: 'GET',
-        headers: {'Content-Type': 'application/json'});
+    final reqData = Request(url: Urls.getClasses, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
     final resData = await HttpReq.httpReq(reqData);
     List<Class> classList = [];
@@ -82,5 +86,4 @@ class ClassService {
     // 返す
     return classList;
   }
-
 }

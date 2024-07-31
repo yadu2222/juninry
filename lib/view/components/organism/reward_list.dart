@@ -12,14 +12,14 @@ class RewardList extends StatelessWidget {
   final bool isJunior;
   final List<Reward> rewards;
 
-  final void Function(Reward) buy;
+  final void Function(Reward)? buy;
 
   const RewardList({
     super.key,
     required this.isJunior,
     required this.rewardPoint,
     required this.rewards,
-    required this.buy,
+    this.buy,
   });
 
   @override
@@ -31,7 +31,7 @@ class RewardList extends StatelessWidget {
       ),
       ListItemBox<Reward>(
         itemDatas: rewards,
-        listItem: (reward) => RewardCard(rewardData: reward, onTap: buy, isRewardPoint: rewardPoint >= reward.rewardPoint),
+        listItem: (reward) => RewardCard(rewardData: reward, buy: buy, isRewardPoint: rewardPoint >= reward.rewardPoint),
       )
     ]);
   }

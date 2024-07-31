@@ -19,7 +19,7 @@ class HelpCard extends StatelessWidget {
   });
 
   final Help helpData;
-  final void Function(Help) onTap;
+  final void Function(Help)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,9 @@ class HelpCard extends StatelessWidget {
                       onPressed: () {
                         // 未達成であれば
                         if (helpData.isReword!) {
-                          onTap(helpData);
+                          if (onTap != null) {
+                            onTap!(helpData);
+                          }
                         }
                       })
                 ]))));

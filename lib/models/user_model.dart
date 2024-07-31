@@ -10,8 +10,9 @@ class User {
   String password;
   String? jwtKey;
   String? ouchiUUID;
+  int? ouchiPoint;
 
-  User({required this.userName, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey, this.ouchiUUID});
+  User({required this.userName, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey, this.ouchiUUID,this.ouchiPoint});
 
   static User errorUser() {
     return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jwtKey: '', ouchiUUID: '');
@@ -26,7 +27,8 @@ class User {
           mailAddress: loadData['mail_address'],
           password: loadData['password'],
           jwtKey: loadData['jwt_key'],
-          ouchiUUID: loadData['ouchi_uuid']);
+          ouchiUUID: loadData['ouchi_uuid'],
+          ouchiPoint: loadData['ouchi_point']);
     } catch (e) {
       debugPrint('Error converting map to User: $e');
       return errorUser();
@@ -41,6 +43,7 @@ class User {
         mailAddress: loadData['mailAddress'],
         password: loadData['password'],
         ouchiUUID: loadData['ouchiUUID'],
+        ouchiPoint: loadData['ouchiPoint'],
       );
     } catch (e) {
       debugPrint('Error converting map to User: $e');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter/services.dart';
 import '../../../router/router.dart';
 // view
 import '../../components/atoms/toast.dart';
@@ -23,6 +24,7 @@ class PageClass extends HookWidget {
   final String title = 'クラス';
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController inviteCodeController = TextEditingController();
+  final TextEditingController studentNumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class PageClass extends HookWidget {
     // クラスに参加
     void join() async {
       if (inviteCodeController.text.isNotEmpty) {
-        String? className = await classReq.joinClassHandler(inviteCodeController.text);
+        String? className = await classReq.joinClassHandler(inviteCodeController.text, studentNumController.text);
         if (className != null) {
           AlertDialogUtil.show(
             context: context,
@@ -78,8 +80,26 @@ class PageClass extends HookWidget {
 
     // 教員の場合のみ表示
     List<Map> tabs = [
-      {'title': 'クラスに参加しましょう', 'button': '参加する', 'label': '招待コード', 'controller': inviteCodeController, 'api': join},
-      {'title': '新しいクラスを作成しましょう', 'button': '作成する', 'label': '新しいクラス名', 'controller': classNameController, 'api': create},
+      {
+        'title': 'クラスに参加しましょう',
+        'button': '参加する',
+        'label': '招待コード',
+        'controller': inviteCodeController,
+        'api': join,
+        'inputType': TextInputType.number,
+        'inputFormat': [FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(4),
+        ]
+      },
+      {
+        'title': '新しいクラスを作成しましょう',
+        'button': '作成する',
+        'label': '新しいクラス名',
+        'controller': classNameController,
+        'api': create,
+        'inputType': TextInputType.text,
+        'inputFormat': [LengthLimitingTextInputFormatter(15)]
+      },
     ];
 
     final conTypeMap = useState<Map>(tabs[0]); // true:invite,false:create
@@ -122,7 +142,18 @@ class PageClass extends HookWidget {
         icon: Icons.autorenew,
         isIcon: isTeacher.value,
         onTap: changeConType, // type切り替え
+        inputType: conTypeMap.value['inputType'],
+        inputFormatter: conTypeMap.value['inputFormat'],
       ),
+
+      isTeacher.value
+          ? const SizedBox.shrink()
+          : InfoForm(
+              label: '出席番号(なければ空欄)',
+              controller: studentNumController,
+              inputType: TextInputType.number,
+              inputFormatter: [FilteringTextInputFormatter.digitsOnly],
+            ),
       const SizedBox(height: 20),
       // 確定
       BasicButton(

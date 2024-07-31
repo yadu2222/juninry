@@ -4,8 +4,8 @@ import '../../models/req_model.dart';
 import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
-import 'package:http/http.dart' as http;
-import '../error.dart';
+// import 'package:http/http.dart' as http;
+// import '../error.dart';
 import '../http_req.dart';
 
 class NoticeService {

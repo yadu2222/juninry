@@ -2,9 +2,23 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
-  // IPほちいね〜.local
-  // static const String host = 'M2.local';
-  static const String host = 'localhost';
+  // ループバックアドレス使いたい人におすすめ
+  // static const String host = '127.0.0.1';
+
+  // Androidエミュレーターにおすすめ
+
+  // static const String host = '10.200.1.53';
+  static const String host = '127.0.0.1';
+
+  // static const String host = '10.0.2.2';
+
+  // iOSエミュレーターにおすすめ
+  // static const String host = 'localhost';
+
+  // ローカル環境
+  // static const String host = '10.200.1.53';
+  // static const String host = '192.168.3.168';
+  // static const String host = '192.168.0.12';
 
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
@@ -39,4 +53,14 @@ class Urls {
   static const String joinOUCHI = '$version/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
   static const String createOUCHI = '$version/auth/users/ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
   static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
+
+  // help
+  static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
+  static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化
+  static const String registerHelp = '$version/auth/users/ouchies/helps/register'; // POSTおてつだい登録
+
+  // GOHOUBI
+  static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得
+  static const String exchangeReward = '$version/auth/users/ouchies/rewards/exchange'; // POSTごほうび交換
+  static const String registerReward = '$version/auth/users/ouchies/rewards/register'; // POSTごほうび登録
 }

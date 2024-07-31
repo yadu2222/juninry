@@ -65,8 +65,7 @@ class PageUserData extends StatelessWidget {
           }
         },
         child: Container(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(color: Colors.grey.withOpacity(0.3)),
@@ -100,27 +99,26 @@ class PageUserData extends StatelessWidget {
           child: Column(
             children: [
               _buildOption(Icons.person, 'マイページ', '/settings/myPage'),
-              _buildOption(
-                  Icons.notifications_none_outlined, '通知', '/notifications'),
+              _buildOption(Icons.notifications_none_outlined, '通知', '/notifications'),
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
               _buildOption(Icons.help, 'よくある質問', '/settings/questions'),
               _buildOption(Icons.door_back_door, 'ログアウト', '', onLogout: true),
-              BasicButton(
-                  text: '',
-                  isColor: true,
-                  onPressed: () async {
-                    String? link = await ouchiReq.friendLineAccount();
-                    if (link != null) {
-                      final Uri url = Uri.parse(link);
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url);
-                        ToastUtil.show(message: link);
-                      } else {
-                        // Error handling
-                        ToastUtil.show(message: 'Could not launch $link');
-                      }
-                    }
-                  })
+              // BasicButton(
+              //     text: '',
+              //     isColor: true,
+              //     onPressed: () async {
+              //       String? link = await ouchiReq.friendLineAccount();
+              //       if (link != null) {
+              //         final Uri url = Uri.parse(link);
+              //         if (await canLaunchUrl(url)) {
+              //           await launchUrl(url);
+              //           ToastUtil.show(message: link);
+              //         } else {
+              //           // Error handling
+              //           ToastUtil.show(message: 'Could not launch $link');
+              //         }
+              //       }
+              //     })
             ],
           ),
         ),

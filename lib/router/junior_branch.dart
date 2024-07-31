@@ -70,7 +70,6 @@ class JuniorBranch {
           name: 'notice',
           path: '/notice', // notice
           routes: [
-            // TODO:引数
             GoRoute(
               path: 'detail',
               pageBuilder: (context, state) {

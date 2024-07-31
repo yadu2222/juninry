@@ -87,7 +87,8 @@ class UserService {
     final resData = await HttpReq.httpReq(reqData);
     // ユーザー情報の更新
     User user = await getUser();
-    await User.updateUser(user);
+    await login(user);
+
     return resData['srvResData']['ouchiName'];
   }
 }

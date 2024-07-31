@@ -6,11 +6,16 @@ import '../../components/template/scroll_template.dart';
 import '../../components/molecule/reward_point.dart';
 import '../../components/organism/reward_list.dart';
 import '../../components/atoms/toast.dart';
+import '../../components/atoms/alert_dialog.dart';
 // model
 import '../../../models/reward_model.dart';
+import '../../../models/user_model.dart';
+
+// api
+import '../../../apis/controller/reward_req.dart';
+import '../../../apis/controller/user_req.dart';
 // sample
 import '../../../constant/messages.dart';
-import '../../../constant/sample_data.dart';
 
 class PageRewardJunior extends HookWidget {
   const PageRewardJunior({super.key});
@@ -18,20 +23,61 @@ class PageRewardJunior extends HookWidget {
   final String title = 'ごほうび';
   @override
   Widget build(BuildContext context) {
+    RewardReq rewardReq = RewardReq(context: context);
+    UserReq userReq = UserReq(context: context);
+
     final isJunior = useState<bool>(false); // 児童かどうか
-    final rewardPoint = useState<int>(10); // データを格納するための変数
-    final rewardData = useState<List<Reward>>(SampleData.rewardData); // データを格納するための変数
-    void buy(Reward reward) {
-      if (rewardPoint.value >= reward.rewardPoint) {
-        // 購入処理
-        // APIへ加算申請
+    final ouchiPoint = useState<int>(0); // ouchipoint
+    final rewardData = useState<List<Reward>>([]); // GOHOUBIデータ
+
+    // ごほうび交換
+    void exchange(Reward reward) {
+      // 交換処理
+      rewardReq.ExchangeRewardHandler(reward).then((value) {
+        if (value != null) {
+          // ポイントの更新
+          ouchiPoint.value = value;
+        }
+      });
+    }
+
+    // 交換しますか？チェック
+    void exchangeCheck(Reward reward) {
+      // ポイントが足りているかチェック
+      if (ouchiPoint.value >= reward.rewardPoint) {
+        AlertDialogUtil.show(
+          context: context,
+          title: '交換確認',
+          content: '本当に交換しますか？',
+          positiveAction: (
+            'はい',
+            () {
+              exchange(reward);
+            }
+          ),
+          negativeAction: ('いいえ', () {}),
+        );
       } else {
         // ポイントが足りないよ〜〜〜
         ToastUtil.show(message: Messages.pointShortage);
       }
     }
 
+    // GOHOUBI取得
+    void getRewards() async {
+      rewardData.value = await rewardReq.getRewardsHandler();
+      // helpData.value = SampleData.helpData;
+    }
+
     useEffect(() {
+      // ポイントの取得
+      void getOuchiPoint() async {
+        User user = await userReq.getUserHandler();
+        ouchiPoint.value = user.ouchiPoint!;
+      }
+
+      getOuchiPoint();
+      getRewards();
       // 児童かを判別
       isBranch(BranchType.junior).then((value) => isJunior.value = value);
       return () {};
@@ -43,13 +89,13 @@ class PageRewardJunior extends HookWidget {
     return ScrollTemplate(title: title, children: [
       // ここにおうちのコンテンツを追加
       // たまっているポイント
-      ReweadPoint(rewards: rewardPoint.value, onTap: reward),
+      ReweadPoint(rewards: ouchiPoint.value, onTap: reward),
       // ごほうびリスト
       RewardList(
         isJunior: isJunior.value,
         rewards: rewardData.value,
-        buy: buy,
-        rewardPoint: rewardPoint.value,
+        buy: exchangeCheck,
+        rewardPoint: ouchiPoint.value,
       )
     ]);
   }

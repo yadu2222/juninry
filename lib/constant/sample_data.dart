@@ -148,24 +148,48 @@ class SampleData {
   ];
 
   static List<Help> helpData = [
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: true),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
-    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', helpCategory: '', helpTag: '定番', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(
+      helpTitle: 'せんたくもの',
+      helpContent: 'たたむところまでおねがいね',
+      iconId: 2,
+      rewardPoint: 30,
+       isReword: true
+    ),
+    Help(
+      helpTitle: 'せんたくもの',
+      helpContent: 'たたむところまでおねがいね',
+      iconId: 2,
+      rewardPoint: 30,
+       isReword: true
+    ),
+    Help(
+      helpTitle: 'せんたくもの',
+      helpContent: 'たたむところまでおねがいね',
+      iconId: 2,
+      rewardPoint: 30,
+       isReword: true
+    ),
+    Help(
+      helpTitle: 'せんたくもの',
+      helpContent: 'たたむところまでおねがいね',
+      iconId: 2,
+      rewardPoint: 30,
+       isReword: false
+    ),
+    Help(
+      helpTitle: 'せんたくもの',
+      helpContent: 'たたむところまでおねがいね',
+      iconId: 2,
+      rewardPoint: 30,
+      isReword: true
+    ),
+    Help(
+      helpTitle: 'せんたくもの',
+      helpContent: 'たたむところまでおねがいね',
+      iconId: 2,
+      rewardPoint: 30,
+      isReword: false
+    ),
   ];
 
   static List<Reward> rewardData = [
