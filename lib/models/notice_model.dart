@@ -57,12 +57,12 @@ class Notice {
     try {
       return loadData.map((data) {
         return Notice(
-          noticeUUID: data['NoticeUuid'] as String?,
-          classUUID: data['ClassUuid'] as String,
-          noticeTitle: data['NoticeTitle'] as String,
-          noticeDate: formatDate(data['NoticeDate'] ?? ''),
-          className: data['ClassName'] as String?,
-          readStatus: data['ReadStatus'] as int?,
+          noticeUUID: data['noticeUUID'] as String?,
+          classUUID: data['classUUID'] as String,
+          noticeTitle: data['noticeTitle'] as String,
+          noticeDate: formatDate(data['noticeDate'] ?? ''),
+          className: data['className'] as String?,
+          readStatus: data['readStatus'] as int?,
         );
       }).toList();
     } catch (e) {
