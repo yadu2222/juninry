@@ -27,55 +27,60 @@ class HomeworkList extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.92,
       // 空白に対応
-      child: SingleChildScrollView(
-          child: Column(
-              children: homeworkData.asMap().entries.map((entry) {
-        // リスト化
-        final homeworkList = entry.value; // アイテム
-        return Column(children: [
-          // 期日またはクラス名で表示
+      child: MediaQuery.removePadding(
+          // これでラップすると余白が削除される
+          context: context,
+          removeTop: true,
+          removeBottom: true,
+          child: ListView.builder(
+              itemCount: homeworkData.length,
+              itemBuilder: (BuildContext context, int index) {
+                // リスト化
+                final homeworkList = homeworkData[index]; // アイテム
+                return Column(children: [
+                  // 期日またはクラス名で表示
 
-          Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: isClass
-                  ? DividerView(
-                      indent: 10,
-                      endIndent: 10,
-                      icon: Icons.menu_book_rounded,
-                      title: "${homeworkList['className']}",
-                      dividColor: AppColors.iconLight,
-                    )
-                  : DividerView(
-                      indent: 10,
-                      endIndent: 10,
-                      icon: Icons.calendar_month_outlined,
-                      title: "${DateFormat('MM.dd').format(homeworkList['homeworkLimit'])}まで",
-                      dividColor: AppColors.iconLight,
-                    )),
-          ...homeworkList['homeworkData'].asMap().entries.map((entry) {
-            // 期日ごとの宿題をリスト化
-            final homework = entry.value; // アイテム
-            // 宿題
-            return InkWell(
-                onTap: () async {
-                  cardPressed(homework);
-                },
-                // カードウィジェット
-                // userにあわせたものを表示
-                child: branchType == BranchType.junior.branch
-                    ? HomeworkCard.junior(
-                        homeworkData: homework as Homework,
-                      )
-                    : branchType == BranchType.teacher.branch
-                        ? HomeworkCard.teacher(
-                            homeworkData: homework as Homework,
-                          )
-                        : HomeworkCard.patron(
-                            homeworkData: homework as Homework,
-                          ));
-          }).toList() // キャスト
-        ]);
-      }).toList())), // キャスト
+                  Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: isClass
+                          ? DividerView(
+                              indent: 10,
+                              endIndent: 10,
+                              icon: Icons.menu_book_rounded,
+                              title: "${homeworkList['className']}",
+                              dividColor: AppColors.iconLight,
+                            )
+                          : DividerView(
+                              indent: 10,
+                              endIndent: 10,
+                              icon: Icons.calendar_month_outlined,
+                              title: "${DateFormat('MM.dd').format(homeworkList['homeworkLimit'])}まで",
+                              dividColor: AppColors.iconLight,
+                            )),
+                  ...homeworkList['homeworkData'].asMap().entries.map((entry) {
+                    // 期日ごとの宿題をリスト化
+                    final homework = entry.value; // アイテム
+                    // 宿題
+                    return InkWell(
+                        onTap: () async {
+                          cardPressed(homework);
+                        },
+                        // カードウィジェット
+                        // userにあわせたものを表示
+                        child: branchType == BranchType.junior.branch
+                            ? HomeworkCard.junior(
+                                homeworkData: homework as Homework,
+                              )
+                            : branchType == BranchType.teacher.branch
+                                ? HomeworkCard.teacher(
+                                    homeworkData: homework as Homework,
+                                  )
+                                : HomeworkCard.patron(
+                                    homeworkData: homework as Homework,
+                                  ));
+                  }).toList() // キャスト
+                ]);
+              })),
     );
   }
 }

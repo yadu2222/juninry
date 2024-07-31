@@ -27,7 +27,6 @@ class PageOuchiTopJunior extends HookWidget {
     final ouchiPoint = useState<int>(0); // データを格納するための変数
     final helpData = useState<List<Help>>([]); // データを格納するための変数
 
-
     // おてつだい消化処理
     void helpdiDestion(Help help) async {
       // 保護者に確認を取るべきでは？ とらなくていいらしいです
@@ -54,7 +53,7 @@ class PageOuchiTopJunior extends HookWidget {
     }
 
     // おてつだいの取得
-    void getHelps() async {
+    Future<void> getHelps() async {
       helpData.value = await helpReq.getHelpsHandler();
       // helpData.value = SampleData.helpData;
     }
@@ -84,7 +83,14 @@ class PageOuchiTopJunior extends HookWidget {
         title: 'おてつだい',
       ),
       // おてつだい一覧(デイリーミッションなかんじ)
-      Expanded(child: Helplist(helps: helpData.value, reward: destionCheck))
+      helpData.value.isEmpty
+          ? const Center(child: Text('まだおてつだいがありません'))
+          : Expanded(
+              child: RefreshIndicator(
+                  onRefresh: () async {
+                    await getHelps();
+                  },
+                  child: Helplist(helps: helpData.value, reward: destionCheck)))
     ]);
   }
 }

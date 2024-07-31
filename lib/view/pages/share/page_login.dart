@@ -29,7 +29,7 @@ class PageLogin extends StatelessWidget {
     // ログイン処理
     void login() async {
       if (mailController.text.isNotEmpty && passController.text.isNotEmpty) {
-        await userReq.loginHandler(User(userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text,jwtKey: ""), updRouter);
+        await userReq.loginHandler(User(userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text, jwtKey: ""), updRouter);
       } else {
         ToastUtil.show(message: Messages.inputError);
       }
@@ -40,8 +40,16 @@ class PageLogin extends StatelessWidget {
 
         body: BasicTemplate(title: title, popIcon: false, children: [
           const SizedBox(height: 50),
-          InfoForm(label: 'メールアドレス', controller: mailController,inputType: TextInputType.emailAddress,),
-          InfoForm(label: 'パスワード', controller: passController,inputType: TextInputType.visiblePassword, inputFormatter: [LengthLimitingTextInputFormatter(20)]),
+          InfoForm(
+            label: 'メールアドレス',
+            controller: mailController,
+            inputType: TextInputType.emailAddress,
+          ),
+          InfoForm(
+            label: 'パスワード',
+            controller: passController,
+            inputType: TextInputType.visiblePassword,
+          ),
           const SizedBox(height: 40),
           BasicButton(
             width: 0.4,

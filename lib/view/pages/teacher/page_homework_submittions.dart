@@ -33,16 +33,17 @@ class PageSubmissionsTeacher extends HookWidget {
     // 生徒カード押下時の処理
     void moveSubmissionDetail(Student student) {
       // 提出者の詳細ページへ遷移
-      context.go('/homework/submittions/detail',
-          extra: {'studentUUID': student.studentUUID,'homeworkUUID':homeworkData.value.homeworkUUID});
+      context.go('/homework/submittions/detail', extra: {'studentUUID': student.studentUUID, 'homeworkUUID': homeworkData.value.homeworkUUID});
     }
+
+    Future<void> getSubmittionData() async {}
 
     // 初回起動時に実行
     useEffect(() {
       // TODO:homework!!!!!!!!!!!!!!!!取得!!!!!!!!!!!!!!!!!!!!!!!!!
       // TODO: ここで課題IDを元に提出済の人間たちを取得
-      Future<void> fetchData() async {}
-      fetchData();
+      getSubmittionData();
+
       return () {};
     }, []);
 
@@ -52,10 +53,14 @@ class PageSubmissionsTeacher extends HookWidget {
       const DividerView(), // 区切り線
       // 提出した人たちのリスト
       Expanded(
-          child: StudentList(
-        studentData: studentData.value,
-        onTap: moveSubmissionDetail,
-      )), // 提出リスト
+          child: RefreshIndicator(
+              onRefresh: () async {
+                await getSubmittionData();
+              },
+              child: StudentList(
+                studentData: studentData.value,
+                onTap: moveSubmissionDetail,
+              ))), // 提出リスト
     ]);
   }
 }

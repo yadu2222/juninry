@@ -22,7 +22,7 @@ class PageOuchiTopPatron extends HookWidget {
     final helpData = useState<List<Help>>([]); // データを格納するための変数
 
     // おてつだいの取得
-    void getHelps() async {
+    Future<void> getHelps() async {
       helpData.value = await helpReq.getHelpsHandler();
       // helpData.value = SampleData.helpData;
     }
@@ -43,14 +43,21 @@ class PageOuchiTopPatron extends HookWidget {
     return Stack(children: [
       BasicTemplate(title: title, children: [
         // ここにおうちのコンテンツを追加
-        // 交換所あるよという主張
         const OuchiShortCuts(),
         const DividerView(
           icon: Icons.flag,
           title: 'おてつだい',
         ),
         // おてつだい一覧(デイリーミッションなかんじ)
-        Expanded(child: helpData.value.isEmpty ? const Center(child: Text('おてつだいを登録しましょう！')) : Helplist(helps: helpData.value)),
+        Expanded(
+            child: helpData.value.isEmpty
+                ? const Center(child: Text('おてつだいを登録しましょう！'))
+                // スクロールで再取得
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      await getHelps();
+                    },
+                    child: Helplist(helps: helpData.value))),
       ]),
       Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addHelp)), // 追加ボタン
     ]);
