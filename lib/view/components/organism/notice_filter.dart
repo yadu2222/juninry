@@ -16,8 +16,8 @@ class FilterDrawer extends StatefulWidget {
   void Function() refreshNotices;
 
   FilterDrawer(
-      {required this.readStatusFilter,
-      required this.readFilterEnabled,
+      {this.readStatusFilter = const {},
+      this.readFilterEnabled = false,
       required this.classList,
       required this.classListFilter,
       required this.onClassListChanged,
@@ -85,26 +85,28 @@ class _FilterDrawerState extends State<FilterDrawer> {
           ),
 
           // 絞り込みメニュー
-          widget.readFilterEnabled
+          !widget.readFilterEnabled
               ? Container()
-              : const DividerView(
-                  title: '確認状況',
-                  fontStyle: Fonts.h3,
-                  dividColor: AppColors.main,
-                  indent: 10,
-                  endIndent: 10,
-                ),
-          ...widget.readStatusFilter.entries.map((entry) {
-            return _tile(
-              title: entry.key == 0 ? '未確認' : '確認済み',
-              value: entry.value,
-              onChanged: (bool? value) {
-                setState(() {
-                  widget.readStatusFilter[entry.key] = value!;
-                });
-              },
-            );
-          }),
+              : Column(children: [
+                  const DividerView(
+                    title: '確認状況',
+                    fontStyle: Fonts.h3,
+                    dividColor: AppColors.main,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  ...widget.readStatusFilter.entries.map((entry) {
+                    return _tile(
+                      title: entry.key == 0 ? '未確認' : '確認済み',
+                      value: entry.value,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          widget.readStatusFilter[entry.key] = value!;
+                        });
+                      },
+                    );
+                  }),
+                ]),
 
           const DividerView(
             title: 'クラス選択',

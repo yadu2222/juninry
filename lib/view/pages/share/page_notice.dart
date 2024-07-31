@@ -61,7 +61,7 @@ class PageNotice extends HookWidget {
         notices.value = fetchedNotices;
         // 既読状態が存在するならば、既読ソートの選択肢を生成
         // TODO: 分岐条件逆
-        if (fetchedNotices.first.readStatus != null) {
+        if (fetchedNotices.first.readStatus == null) {
           readFilterEnabled.value = true;
         }
       } catch (error) {
@@ -116,20 +116,21 @@ class PageNotice extends HookWidget {
     }
 
     void onAllClassListChanged(bool value) {
-      debugPrint("押された? " + value.toString());
       if (value) {
-        classListFilter.value = List<String>.from(classList.value.map((e) => e.classUUID!));
+        classListFilter.value =
+            List<String>.from(classList.value.map((e) => e.classUUID!));
       } else {
         classListFilter.value = [];
       }
     }
 
     useEffect(() {
+      classListFilter.value = [];
       isTeacher();
       fetchNotices();
       getClassList();
       return null;
-    }, []);
+    }, [_scaffoldKey]);
 
     return Scaffold(
       key: _scaffoldKey, // 追加: Scaffold keyの設定
@@ -165,12 +166,6 @@ class PageNotice extends HookWidget {
                               isTeacher: teacherExtension.value)),
             ],
           ),
-          Column(children: [
-            ...classListFilter.value.map((item) => Text(item.toString())),
-            // List<Widget>として渡す
-            ...readStatusFilter.value.entries.map((item) =>
-                Text(item.key.toString() + '値' + item.value.toString()))
-          ]),
 
           if (teacherExtension.value)
             Positioned(

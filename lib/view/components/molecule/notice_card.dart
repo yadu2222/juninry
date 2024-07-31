@@ -102,13 +102,14 @@ class NoticeCard extends StatelessWidget {
                   child: Center(
                       child:
                           // 教師だったら既読ないよー
-                          isTeacher
-                              ? null
-                              :
-                              // 未確認かを判別
-                              noticeData.readStatus == 1
-                                  ? checkIcon
-                                  : unknownIcon),
+                          // isTeacher
+                          //     ? null
+                          //     :
+                              noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
+                                  ? null
+                                  : noticeData.readStatus == 1
+                                      ? checkIcon
+                                      : unknownIcon),
                 ),
               ],
             )));
