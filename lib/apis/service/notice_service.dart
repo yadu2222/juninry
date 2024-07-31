@@ -9,13 +9,20 @@ import '../../models/notice_model.dart';
 import '../http_req.dart';
 
 class NoticeService {
-  static Future<List<Notice>> getNotices() async {
+  static Future<List<Notice>> getNotices(List<String> classUUIDs, int? readStatus) async {
+    String queryParams = '?';
+    classUUIDs.forEach((classUUID) {
+      queryParams += 'classUUID[]=$classUUID&';
+    });
+    if (readStatus != null) {
+      queryParams += 'readStatus=$readStatus';
+    }
     try {
       // リクエストを生成
       final reqData = Request(
-          url: Urls.getNotices,
+          url: Urls.getNotices + queryParams,
           reqType: 'GET',
-          headers: {'Content-Type': 'application/json'});
+          headers: {});
       // リクエストメソッドにオブジェクトを投げる
       Map resData = await HttpReq.httpReq(reqData);
 

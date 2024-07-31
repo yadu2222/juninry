@@ -12,9 +12,10 @@ class NoticeReq {
   NoticeReq({required this.context});
 
   // 複数のお知らせを取得
-  Future<List<Notice>> getNotices() async {
+  Future<List<Notice>> getNoticesHandler(
+      {List<String> classUUIDs = const [], int? readStatus}) async {
     try {
-      return await NoticeService.getNotices();
+      return await NoticeService.getNotices(classUUIDs, readStatus);
     } catch (error) {
       debugPrint(error.toString());
       return [];
@@ -23,7 +24,6 @@ class NoticeReq {
 
   // 既読情報を送信
   Future<bool> updateReadStatusHandler(String noticeUuid) async {
-    debugPrint("既読処理しようとしてます");
     try {
       return await NoticeService.updateReadStatus(noticeUuid);
     } catch (error) {

@@ -25,9 +25,9 @@ class PageNoticeQuoteTeacher extends HookWidget {
     // お知らせ一覧取得関数
     Future<void> fetchNotices() async {
       try {
-        List<Notice> fetchedNotices = await NoticeService.getNotices();
-        notices.value = fetchedNotices;
-        print(fetchedNotices[0].className.toString());
+        // List<Notice> fetchedNotices = await NoticeService.getNotices();
+        // notices.value = fetchedNotices;
+        // print(fetchedNotices[0].className.toString());
       } catch (error) {
         debugPrint('Error fetching notices: $error');
       } finally {
@@ -42,7 +42,7 @@ class PageNoticeQuoteTeacher extends HookWidget {
 
     return Scaffold(
       key: _scaffoldKey, // 追加: Scaffold keyの設定
-      endDrawer: FilterDrawer(), // 追加: FilterDrawerの設定
+      // endDrawer: FilterDrawer(), // 追加: FilterDrawerの設定
       backgroundColor: AppColors.main, // HACK:背景色パワープレイ！！
       body: Stack(
         children: [

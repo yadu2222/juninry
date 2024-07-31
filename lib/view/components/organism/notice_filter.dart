@@ -1,10 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:juninry/apis/service/class_service.dart';
 import 'package:juninry/constant/colors.dart';
+import 'package:juninry/models/req_model.dart';
+import 'package:juninry/view/components/molecule/divider.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/class_model.dart'; // クラスモデルをインポート
 
 class FilterDrawer extends StatefulWidget {
+  Map<(String, int), bool> readStatusFilter; // 未確認フィルタ
+  List<Class> classList; // 所属クラス
+  List<Class> classListFilter; // 取得クラスの絞り込み
+  void Function(bool value, Class item) onClassListChanged;
+  void Function() refreshNotices;
+
+  FilterDrawer(
+      {required this.readStatusFilter,
+      required this.classList,
+      required this.classListFilter,
+      required this.onClassListChanged,
+      required this.refreshNotices,
+      super.key});
+
   @override
   _FilterDrawerState createState() => _FilterDrawerState();
 }
@@ -12,8 +30,31 @@ class FilterDrawer extends StatefulWidget {
 class _FilterDrawerState extends State<FilterDrawer> {
   bool _isConfirmedSelected = false; // 確認済みフィルタが選択されているかどうか
   bool _isUnconfirmedSelected = false; // 未確認フィルタが選択されているかどうか
-  bool _selectAll = false; // すべてのクラスが選択されているかどうか
-  Map<String, bool> _selectedClass = {}; // 選択されたクラスを保持するマップ
+  late bool _selectAll; // すべてのクラスが選択されているかどうか
+
+  Map<String, bool> _selectedClass =
+      {}; // HACK: チェックボックス用のマップ widget.classListFilterを直接参照してくれないよ
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedClass = {
+      for (Class item in widget.classList)
+        item.classUUID!: widget.classListFilter.contains(item)
+    };
+
+    _selectAll = widget.classListFilter.length == widget.classList.length;
+  }
+
+  void _checkAllClassSelected() {
+    if (widget.classListFilter.length == widget.classList.length) {
+      _selectAll = true;
+    } else {
+      _selectAll = false;
+    }
+  }
+
   ScrollController _scrollController = ScrollController(); // スクロールコントローラー
 
   final Icon checkIcon = const Icon(
@@ -23,156 +64,157 @@ class _FilterDrawerState extends State<FilterDrawer> {
   );
 
   @override
-
-  void initState() {
-    super.initState();
-
-    _fetchClasses(); // クラス情報を取得するメソッドを呼び出し
-  }
-
-  // クラス情報をAPIから取得するメソッド
-  void _fetchClasses() async {
-    // APIからのクラス情報の取得
-    List<Class> classes = await ClassService.getClasses(); // このメソッドは実際のデータ取得方法に置き換える必要があります
-
-    setState(() {
-      // 取得したクラス情報をもとに_selectedClassを初期化
-      _selectedClass = Map.fromIterable(
-        classes,
-        key: (classInfo) => classInfo.className,
-        value: (classInfo) => false, // 最初はすべてのクラスが未選択になるように設定
-      );
-    });
-
-  }
-
-  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
 
-  // すべてのクラスの選択状態を切り替えるメソッド
-  void _toggleSelectAll() {
-    setState(() {
-      _selectAll = !_selectAll; // _selectAllの状態を反転
-      _selectedClass.updateAll((key, value) => _selectAll); // すべてのクラスの選択状態を更新
-    });
-  }
-
-  // 選択されたクラス名のリストを取得するメソッド
-  List<String> _getSelectedClasses() {
-    return _selectedClass.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.zero, // 角を四角に設定
       ),
       child: Column(
         children: <Widget>[
           // ドロワーのヘッダー部分
           Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: AppColors.main,
-            ),
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(top: 30, left: 30),
-            child: Text(
-              '絞り込み',
-              style: Fonts.h2w,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            height: kToolbarHeight +
+                MediaQuery.of(context).padding.top, // ツールバーの高さ + 画面上部の余白
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top), // 画面上部の余白
+            color: AppColors.main,
+            child: Stack(
+              // 自由な位置に配置するぞ！の親
               children: [
-                // 未確認フィルタボタン
-                _buildFilterButton(
-                  title: '未確認',
-                  isSelected: _isUnconfirmedSelected,
-                  onTap: () {
-                    setState(() {
-                      _isUnconfirmedSelected = !_isUnconfirmedSelected;
-                      if (_isUnconfirmedSelected) {
-                        _isConfirmedSelected = false;
-                      }
-                    });
-                  },
-                ),
-                // 確認済みフィルタボタン
-                _buildFilterButton(
-                  title: '確認済み',
-                  isSelected: _isConfirmedSelected,
-                  onTap: () {
-                    setState(() {
-                      _isConfirmedSelected = !_isConfirmedSelected;
-                      if (_isConfirmedSelected) {
-                        _isUnconfirmedSelected = false;
-                      }
-                    });
-                  },
-                ),
-                // 全件選択/全件解除ボタン
-                _buildFilterButton(
-                  title: _selectAll ? '全件解除' : '全件選択',
-                  isSelected: _selectAll,
-                  onTap: _toggleSelectAll,
-                ),
-                Divider(thickness: 3.0), // 仕切り線
+                Positioned(
+                    // 自由な位置に配置するぞ！の子
+                    right: (MediaQuery.of(context).size.width - 200) /
+                        2, // 全体の横幅引くSizedBoxの幅の半分
+                    child: const SizedBox(
+                      // テキストに横幅を設置できないので使われた人
+                      width: 200, // 横幅君
+                      height: kToolbarHeight, // ツールバーの高さに合わせる
+                      child: Center(
+                        // テキストに横幅を設置できないので使われた人
+                        child: Text(
+                          '絞り込み',
+                          style: Fonts.titleFont,
+                        ),
+                      ),
+                    )),
               ],
             ),
           ),
+          widget.readStatusFilter.isEmpty
+              ? Container()
+              : const DividerView(
+                  title: '既読ステータス',
+                  fontStyle: Fonts.h3,
+                  dividColor: AppColors.main,
+                  indent: 10,
+                  endIndent: 10,
+                ),
+          ...widget.readStatusFilter.entries.map((entry) {
+            return _tile(
+              title: entry.key.$1,
+              value: entry.value,
+              onChanged: (bool? value) {
+                setState(() {
+                  widget.readStatusFilter[entry.key] = value!;
+                });
+              },
+            );
+          }),
+          // _tile(
+          //   title: '確認済み',
+          //   value: _isConfirmedSelected,
+          //   onChanged: (bool? value) {
+          //     setState(() {
+          //       _isConfirmedSelected = !_isConfirmedSelected;
+          //     });
+          //   },
+          // ),
+          // _tile(
+          //   title: '未確認',
+          //   value: _isUnconfirmedSelected,
+          //   onChanged: (bool? value) {
+          //     setState(() {
+          //       _isUnconfirmedSelected = !_isUnconfirmedSelected;
+          //     });
+          //   },
+          // ),
+
+          const DividerView(
+            title: 'クラス選択',
+            fontStyle: Fonts.h3,
+            dividColor: AppColors.main,
+            indent: 10,
+            endIndent: 10,
+          ),
           // クラスのリスト
           Expanded(
-            child: Scrollbar(
-              thickness: 10.0,
-              thumbVisibility: true,
+            child: ListView(
+              padding: EdgeInsets.only(top: 0),
               controller: _scrollController,
-              child: ListView(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(16.0),
-                children: _selectedClass.keys
-                    .map((item) => CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: Padding(
-                            padding: const EdgeInsets.only(left: 14.0),
-                            child: Text(
-                              item,
-                              overflow: TextOverflow.ellipsis,
-                              style: Fonts.h3,
-                            ),
-                          ),
-                          value: _selectedClass[item],
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _selectedClass[item] = value ?? false;
-                            });
-                          },
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 8.0),
-                        ))
-                    .toList(),
-              ),
-            ),
-          ),
-          // 選択されたクラスを表示するボタン
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                List<String> selectedClasses = _getSelectedClasses();
-                print('Selected Classes: $selectedClasses'); // 選択されたクラスをコンソールに表示
-                Navigator.pop(context); // ドロワーを閉じる
-              },
-              child: Text('選択されたクラスを表示'),
+              children: [
+                _tile(
+                    title: '全選択/解除',
+                    value: _selectAll,
+                    onChanged: (bool? value) {
+                      // 全選択の状態を反転する
+                      setState(() {
+                        _selectAll = !_selectAll;
+                      });
+                      // 全件選択されている場合は全件解除する
+                      _selectedClass.forEach(
+                        (String key, bool value) {
+                          if (value != _selectAll) {
+                            // 状態を変更する必要のある場合
+                            if (value) {
+                              // 選択されている場合
+                              widget.classListFilter
+                                  .removeWhere((item) => item.classUUID == key);
+                            } else {
+                              // 選択されていない場合
+                              widget.classListFilter.add(
+                                // UUIDが一致するクラスを追加
+                                widget.classList.firstWhere(
+                                    (item) => item.classUUID == key),
+                              );
+                            }
+                          }
+                          _selectedClass[key] =
+                              _selectAll; // 選択状態を_selectAllと同一にする
+                        },
+                      );
+                    }),
+                ...widget.classList.map((item) => _tile(
+                      title: item.className,
+                      value: _selectedClass[item.classUUID] ?? false,
+                      onChanged: (bool? value) {
+                        if (value == null) return;
+                        setState(() {
+                          // ローカルクラスの選択状態を変更する
+                          _selectedClass[item.classUUID!] = value;
+                        });
+                        widget.onClassListChanged(
+                            value, item); // pages内のクラスリストを変更する
+                        _checkAllClassSelected(); // 全選択の状態を確認する
+                      },
+                    )),
+
+                // 選択されたクラスを表示するボタン
+                Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        widget.refreshNotices();
+                        Navigator.pop(context); // ドロワーを閉じる
+                      },
+                      child: Text('選択されたクラスを表示'),
+                    )),
+              ],
             ),
           ),
         ],
@@ -180,34 +222,23 @@ class _FilterDrawerState extends State<FilterDrawer> {
     );
   }
 
-  // フィルタボタンを作成するウィジェット
-  Widget _buildFilterButton({
+  Widget _tile({
     required String title,
-    required bool isSelected,
-    required VoidCallback onTap,
+    required bool value,
+    required ValueChanged<bool?> onChanged,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 31.0, vertical: 8.0),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 24,
-            height: 24,
-            child: isSelected ? checkIcon : null, // 選択状態に応じてチェックアイコンを表示
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: ListTile(
-              title: Text(
-                title,
-                style: Fonts.h3,
-              ),
-              onTap: onTap,
-              contentPadding: EdgeInsets.zero,
+    return Container(
+        height: 40,
+        alignment: Alignment.center,
+        child: CheckboxListTile(
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: Fonts.h4,
             ),
-          ),
-        ],
-      ),
-    );
+            value: value,
+            onChanged: onChanged));
   }
 }

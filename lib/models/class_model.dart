@@ -6,7 +6,11 @@ class Class {
   String? inviteCode;
   List<Student>? students;
 
-  Class({this.classUUID, required this.className, this.students, this.inviteCode});
+  Class(
+      {this.classUUID,
+      required this.className,
+      this.students,
+      this.inviteCode});
 
   // レスポンスデータをクラス情報に変換
   static List<Map<String, dynamic>> resToClassmates(List resData) {
@@ -16,7 +20,11 @@ class Class {
       addClassInfo['className'] = loadItem['className'];
       addClassInfo['students'] = []; // mapに空リストを追加
       for (Map loadStudent in loadItem['juniorData']) {
-        addClassInfo['students'].add(Student(studentUUID: loadStudent['userUUID'], name: loadStudent['userName'], gender: loadStudent['genderId'],num:loadStudent['studentNumber']));
+        addClassInfo['students'].add(Student(
+            studentUUID: loadStudent['userUUID'],
+            name: loadStudent['userName'],
+            gender: loadStudent['genderId'],
+            num: loadStudent['studentNumber']));
       }
       classmates.add(addClassInfo);
     }
@@ -35,7 +43,7 @@ class Class {
   // 複数のクラス情報に変換
   static List<Class> resToClasses(List loadData) {
     try {
-        return loadData.map((data) {
+      return loadData.map((data) {
         return Class(
           classUUID: data['classUuid'] ?? '',
           className: data['className'] ?? '',
@@ -46,4 +54,14 @@ class Class {
       return [];
     }
   }
+
+  // クラスが同一かどうかの判定はclassUUIDの一致とする
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Class && other.classUUID == classUUID;
+  }
+
+  @override
+  int get hashCode => classUUID.hashCode;
 }
