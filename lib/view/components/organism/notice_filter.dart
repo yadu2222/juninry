@@ -1,25 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:juninry/apis/service/class_service.dart';
 import 'package:juninry/constant/colors.dart';
-import 'package:juninry/models/req_model.dart';
 import 'package:juninry/view/components/molecule/divider.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/class_model.dart'; // クラスモデルをインポート
 
 class FilterDrawer extends StatefulWidget {
-  Map<(String, int), bool> readStatusFilter; // 未確認フィルタ
+  Map<int, bool> readStatusFilter; // 未確認フィルタ
+  bool readFilterEnabled;
   List<Class> classList; // 所属クラス
-  List<Class> classListFilter; // 取得クラスの絞り込み
+  List<String> classListFilter; // 取得クラスの絞り込み
   void Function(bool value, Class item) onClassListChanged;
+  void Function(bool value) onAllClassListChanged;
   void Function() refreshNotices;
 
   FilterDrawer(
       {required this.readStatusFilter,
+      required this.readFilterEnabled,
       required this.classList,
       required this.classListFilter,
       required this.onClassListChanged,
+      required this.onAllClassListChanged,
       required this.refreshNotices,
       super.key});
 
@@ -28,34 +30,10 @@ class FilterDrawer extends StatefulWidget {
 }
 
 class _FilterDrawerState extends State<FilterDrawer> {
-  bool _isConfirmedSelected = false; // 確認済みフィルタが選択されているかどうか
-  bool _isUnconfirmedSelected = false; // 未確認フィルタが選択されているかどうか
-  late bool _selectAll; // すべてのクラスが選択されているかどうか
-
-  Map<String, bool> _selectedClass =
-      {}; // HACK: チェックボックス用のマップ widget.classListFilterを直接参照してくれないよ
-
   @override
   void initState() {
     super.initState();
-
-    _selectedClass = {
-      for (Class item in widget.classList)
-        item.classUUID!: widget.classListFilter.contains(item)
-    };
-
-    _selectAll = widget.classListFilter.length == widget.classList.length;
   }
-
-  void _checkAllClassSelected() {
-    if (widget.classListFilter.length == widget.classList.length) {
-      _selectAll = true;
-    } else {
-      _selectAll = false;
-    }
-  }
-
-  ScrollController _scrollController = ScrollController(); // スクロールコントローラー
 
   final Icon checkIcon = const Icon(
     Icons.check,
@@ -65,7 +43,6 @@ class _FilterDrawerState extends State<FilterDrawer> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -106,10 +83,12 @@ class _FilterDrawerState extends State<FilterDrawer> {
               ],
             ),
           ),
-          widget.readStatusFilter.isEmpty
+
+          // 絞り込みメニュー
+          widget.readFilterEnabled
               ? Container()
               : const DividerView(
-                  title: '既読ステータス',
+                  title: '確認状況',
                   fontStyle: Fonts.h3,
                   dividColor: AppColors.main,
                   indent: 10,
@@ -117,7 +96,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                 ),
           ...widget.readStatusFilter.entries.map((entry) {
             return _tile(
-              title: entry.key.$1,
+              title: entry.key == 0 ? '未確認' : '確認済み',
               value: entry.value,
               onChanged: (bool? value) {
                 setState(() {
@@ -126,24 +105,6 @@ class _FilterDrawerState extends State<FilterDrawer> {
               },
             );
           }),
-          // _tile(
-          //   title: '確認済み',
-          //   value: _isConfirmedSelected,
-          //   onChanged: (bool? value) {
-          //     setState(() {
-          //       _isConfirmedSelected = !_isConfirmedSelected;
-          //     });
-          //   },
-          // ),
-          // _tile(
-          //   title: '未確認',
-          //   value: _isUnconfirmedSelected,
-          //   onChanged: (bool? value) {
-          //     setState(() {
-          //       _isUnconfirmedSelected = !_isUnconfirmedSelected;
-          //     });
-          //   },
-          // ),
 
           const DividerView(
             title: 'クラス選択',
@@ -155,68 +116,41 @@ class _FilterDrawerState extends State<FilterDrawer> {
           // クラスのリスト
           Expanded(
             child: ListView(
-              padding: EdgeInsets.only(top: 0),
-              controller: _scrollController,
+              padding: const EdgeInsets.only(top: 0),
               children: [
                 _tile(
                     title: '全選択/解除',
-                    value: _selectAll,
+                    value: widget.classListFilter.length ==
+                        widget.classList.length,
                     onChanged: (bool? value) {
-                      // 全選択の状態を反転する
-                      setState(() {
-                        _selectAll = !_selectAll;
-                      });
-                      // 全件選択されている場合は全件解除する
-                      _selectedClass.forEach(
-                        (String key, bool value) {
-                          if (value != _selectAll) {
-                            // 状態を変更する必要のある場合
-                            if (value) {
-                              // 選択されている場合
-                              widget.classListFilter
-                                  .removeWhere((item) => item.classUUID == key);
-                            } else {
-                              // 選択されていない場合
-                              widget.classListFilter.add(
-                                // UUIDが一致するクラスを追加
-                                widget.classList.firstWhere(
-                                    (item) => item.classUUID == key),
-                              );
-                            }
-                          }
-                          _selectedClass[key] =
-                              _selectAll; // 選択状態を_selectAllと同一にする
-                        },
-                      );
+                      widget.onAllClassListChanged(value!);
                     }),
                 ...widget.classList.map((item) => _tile(
                       title: item.className,
-                      value: _selectedClass[item.classUUID] ?? false,
+                      value: widget.classListFilter.contains(item.classUUID!),
                       onChanged: (bool? value) {
                         if (value == null) return;
-                        setState(() {
-                          // ローカルクラスの選択状態を変更する
-                          _selectedClass[item.classUUID!] = value;
-                        });
+
                         widget.onClassListChanged(
                             value, item); // pages内のクラスリストを変更する
-                        _checkAllClassSelected(); // 全選択の状態を確認する
                       },
-                    )),
-
-                // 選択されたクラスを表示するボタン
-                Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        widget.refreshNotices();
-                        Navigator.pop(context); // ドロワーを閉じる
-                      },
-                      child: Text('選択されたクラスを表示'),
                     )),
               ],
             ),
           ),
+          // 選択されたクラスを表示するボタン
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.refreshNotices();
+                    Navigator.pop(context); // ドロワーを閉じる
+                  },
+                  child: Text('選択されたクラスを表示'),
+                )),
+          )
         ],
       ),
     );

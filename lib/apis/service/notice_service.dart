@@ -11,12 +11,15 @@ import '../http_req.dart';
 class NoticeService {
   static Future<List<Notice>> getNotices(List<String> classUUIDs, int? readStatus) async {
     String queryParams = '?';
+
     classUUIDs.forEach((classUUID) {
       queryParams += 'classUUID[]=$classUUID&';
     });
     if (readStatus != null) {
       queryParams += 'readStatus=$readStatus';
     }
+
+    debugPrint("URL: " + Urls.getNotices + queryParams);
     try {
       // リクエストを生成
       final reqData = Request(
