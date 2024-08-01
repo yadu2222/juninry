@@ -14,7 +14,7 @@ import '../view/pages/share/page_class.dart';
 import '../view/pages/share/page_my_page.dart';
 
 // notice
-import '../view/pages/teacher/page_notice_detail.dart';
+import '../view/pages/share/page_notice_detail.dart';
 import '../view/pages/teacher/page_notice_register.dart';
 import '../view/pages/teacher/page_notice_quote.dart';
 // homework
@@ -80,12 +80,20 @@ class TeacherBranch {
             // TODO:引数
             GoRoute(
               path: 'detail',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: const PageNoticeDetailTeacher(
-                    // noticeUUID: '123456',
-                    ),
-              ),
+              pageBuilder: (context, state) {
+                debugPrint("state.extra: ${state.extra}");
+                // Map型でデータを送るためそれを取得
+                final Map<String, dynamic> extraData =
+                    state.extra as Map<String, dynamic>;
+                // データを取り出してみる
+                final String? noticeUUID = extraData['noticeUUID'];
+                return NoTransitionPage(
+                  key: state.pageKey,
+                  child: PageNoticeDetail(
+                    noticeUuid: noticeUUID!,
+                  ),
+                );
+              },
             ),
             GoRoute(
                 path:
@@ -100,11 +108,13 @@ class TeacherBranch {
                     final int? draftedNoticeId = extraData['draftedNoticeId'];
                     final String? quotedNoticeUUID =
                         extraData['quotedNoticeUUID'];
+                    final bool? newNotice = extraData['newNotice'];
                     return NoTransitionPage(
                       key: state.pageKey,
                       child: PageNoticeRegisterTeacher(
                         draftedNoticeId: draftedNoticeId,
                         quotedNoticeUUID: quotedNoticeUUID,
+                        newNotice: newNotice,
                       ),
                     );
                   } else {
@@ -125,14 +135,14 @@ class TeacherBranch {
                       child: PageNoticeQuoteTeacher(),
                     ),
                   ),
+                  GoRoute(
+                    path: "draft",
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageNoticeDraftTeacher(),
+                    ),
+                  ),
                 ]),
-            GoRoute(
-              path: "draft",
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: const PageNoticeDraftTeacher(),
-              ),
-            ),
           ],
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
@@ -176,7 +186,8 @@ class TeacherBranch {
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageHomeworkRegisterTeacher(selectedDate: selectDate),
+                    child:
+                        PageHomeworkRegisterTeacher(selectedDate: selectDate),
                   );
 
                   // 下書きを選択していない場合

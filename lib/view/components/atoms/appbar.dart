@@ -32,7 +32,11 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
                 // しょりものせれるようにしたよ
                 // TODO:ぶすなのでなおす
                 try {
-                  popFunction!();
+                  if (popFunction != null) {
+                    popFunction!();
+                  } else {
+                    context.pop(context);
+                  }
                 } catch (e) {
                   // errorってことは処理がなかったということ？
                   context.pop(context);

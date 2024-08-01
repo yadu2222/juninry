@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/constant/colors.dart';
 import '../atoms/gender_icon.dart';
 import '../atoms/student_view.dart';
 import '../../../models/student_model.dart';
@@ -9,8 +10,10 @@ class StudentCard extends StatelessWidget {
   StudentCard({
     super.key,
     required this.studentData,
+    this.readStatusList = false,
   });
   final Student studentData;
+  final bool readStatusList;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,12 @@ class StudentCard extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             child: Center(
-                child:
+                child: readStatusList
+                    ? Icon(
+                        color: AppColors.buttonOk,
+                        size: 30,
+                        studentData.readStatus == 1 ? Icons.check : null)
+                    :
                     // 性別を判別
                     studentData.gender == 1
                         ? GenderType.male.getIcon()

@@ -38,19 +38,20 @@ class NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListItem(
-        padding: const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
-        // 表示する要素を配置
-        widget: InkWell(
-            onTap: () {
-              debugPrint("noticeUUID: ${noticeData.noticeUUID}");
-              isQuote
-                  ? context.go('/notice/register',
-                      extra: {'quotedNoticeUUID': noticeData.noticeUUID})
-                  : context.go('/notice/detail',
-                      extra: {'noticeUUID': noticeData.noticeUUID});
-            },
-            child: Row(
+    return InkWell(
+        onTap: () {
+          debugPrint("noticeUUID: ${noticeData.noticeUUID}");
+          isQuote
+              ? context.go('/notice/register',
+                  extra: {'quotedNoticeUUID': noticeData.noticeUUID})
+              : context.go('/notice/detail',
+                  extra: {'noticeUUID': noticeData.noticeUUID});
+        },
+        child: ListItem(
+            padding:
+                const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
+            // 表示する要素を配置
+            widget: Row(
               mainAxisAlignment:
                   MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
               crossAxisAlignment:
@@ -101,13 +102,14 @@ class NoticeCard extends StatelessWidget {
                   child: Center(
                       child:
                           // 教師だったら既読ないよー
-                          isTeacher
-                              ? null
-                              :
-                              // 未確認かを判別
-                              noticeData.readStatus == 1
-                                  ? checkIcon
-                                  : unknownIcon),
+                          // isTeacher
+                          //     ? null
+                          //     :
+                              noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
+                                  ? null
+                                  : noticeData.readStatus == 1
+                                      ? checkIcon
+                                      : unknownIcon),
                 ),
               ],
             )));

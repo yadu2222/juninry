@@ -14,7 +14,7 @@ import '../view/pages/share/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
 // notice
 import '../view/pages/share/page_notice.dart';
-import '../view/pages/teacher/page_notice_detail.dart';
+import '../view/pages/share/page_notice_detail.dart';
 // ouchi
 import '../view/pages/junior/page_reward.dart';
 import '../view/pages/share/page_ouchi.dart';
@@ -31,6 +31,7 @@ class JuniorBranch {
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'home'),
       routes: [
+        GoRoute(path: '/', redirect: (context, state) => '/home'),
         GoRoute(
           name: 'home',
           path: '/home',
@@ -72,15 +73,29 @@ class JuniorBranch {
           path: '/notice', // notice
           routes: [
             GoRoute(
-              name: 'detail',
               path: 'detail',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: PageNoticeDetailTeacher(),
-              ),
+              pageBuilder: (context, state) {
+                if (state.extra != null) {
+                  // 遷移時に定義されたデータをrouterで再定義
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
+                  String noticeUUID = extraData['noticeUUID'];
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNoticeDetail(
+                      noticeUuid: noticeUUID,
+                    ),
+                  );
+                } else {
+                  // noticeUUIDが送られてきていない場合、一覧にリダイレクト
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: PageNotice(),
+                  );
+                }
+              },
             ),
           ],
-
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: PageNotice(),
@@ -101,7 +116,8 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
+              pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey, child: const PageHomework.near()),
             ),
             // 提出
             GoRoute(
@@ -112,7 +128,8 @@ class JuniorBranch {
                 // extraがnullである場合trycatchでエラーを回避
                 if (state.extra != null) {
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData =
+                      state.extra as Map<String, dynamic>;
                   // final String homeworkId = extraData['homeworkId'];
                   final Homework homework = extraData['homework'];
                   return NoTransitionPage(
@@ -131,7 +148,8 @@ class JuniorBranch {
               },
             )
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),
@@ -171,7 +189,8 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
@@ -201,7 +220,8 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),

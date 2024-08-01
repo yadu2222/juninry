@@ -32,8 +32,10 @@ class Urls {
 
   // notice
   static const String getNotices = '$version/auth/users/notices/notices'; // GETお知らせ取得
+  static const String noticeRead = '$version/auth/users/notices/read/'; // POST既読
   static const String noticeDetail = '$version/auth/users/notices/'; // GETお知らせ詳細
   static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
+  static const String noticeReadStatus = '$version/auth/users/notices/status/';  // GET生徒の既読状態
 
   // homework
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
