@@ -31,6 +31,9 @@ class NoticeService {
       Map resData = await HttpReq.httpReq(reqData);
 
       List<Notice> notices = [];
+      if (resData['srvResData']['notices'] == null) { // 表示すべきお知らせがない
+        return notices;
+      }
       for (Map<String, dynamic> notice in resData['srvResData']['notices']) {
         notices.add(Notice.resToNotice(notice));
       }

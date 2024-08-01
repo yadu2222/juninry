@@ -76,9 +76,6 @@ class HttpReq {
       return jsonDecode(response.body) as Map<String, dynamic>;
       // 失敗時の処理
     } else {
-      if (response.statusCode == 401) {
-        await User.logout();
-      }
       return reqData.errorHandling(response);
     }
   }

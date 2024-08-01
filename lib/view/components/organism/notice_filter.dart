@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:juninry/constant/colors.dart';
+import 'package:juninry/view/components/atoms/basic_button.dart';
 import 'package:juninry/view/components/molecule/divider.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/class_model.dart'; // クラスモデルをインポート
@@ -49,6 +50,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      // backgroundColor: AppColors.iconLight,  // XXX: 色設定するとそれはそれできもい
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.zero, // 角を四角に設定
       ),
@@ -93,7 +95,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                   ),
                   const DividerView(
                     icon: Icons.bookmark_border_outlined,
-                    iconColor: AppColors.iconDark,
+                    iconColor: AppColors.iconMiddleGray,
                     title: '確認状況',
                     fontStyle: Fonts.h3,
                     dividColor: AppColors.main,
@@ -121,7 +123,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
           ),
           const DividerView(
             icon: Icons.menu_book,
-            iconColor: AppColors.iconDark,
+            iconColor: AppColors.iconMiddleGray,
             title: 'クラス選択',
             fontStyle: Fonts.h3,
             dividColor: AppColors.main,
@@ -158,15 +160,50 @@ class _FilterDrawerState extends State<FilterDrawer> {
           // 選択されたクラスを表示するボタン
           Align(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    widget.refreshNotices();
-                    Navigator.pop(context); // ドロワーを閉じる
-                  },
-                  child: Text('選択されたクラスを表示'),
-                )),
+            child: BasicButton(
+              text: '適用',
+              onPressed: () {
+                widget.refreshNotices();
+                Navigator.pop(context); // ドロワーを閉じる
+              },
+              isColor: true,
+            ),
+            // child: Container(
+            //     width: MediaQuery.of(context).size.width * 0.45,
+            //     margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
+            //     child: ElevatedButton(
+            //       onPressed: () {
+            //         widget.refreshNotices();
+            //         Navigator.pop(context); // ドロワーを閉じる
+            //       },
+            //       style: ElevatedButton.styleFrom(
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           backgroundColor: AppColors.iconLight),
+            //       child: Row(
+            //         children: [
+            //           // Container(
+            //           //   decoration: BoxDecoration(
+            //           //     color: AppColors.main,
+            //           //     borderRadius: BorderRadius.circular(30),
+            //           //   ),
+            //           //   padding: const EdgeInsets.all(4),
+            //           //   child: const Icon(
+            //           //     Icons.notifications_none,
+            //           //     color: AppColors.iconLight,
+            //           //     size: 20,
+            //           //   ),
+            //           // ),
+            //           Expanded(
+            //             child: Container(
+            //               alignment: Alignment.center, // 残りのスペースの中央に配置
+            //               child: const Text('絞り込み適用', style: Fonts.p),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     )),
           )
         ],
       ),
@@ -198,7 +235,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                   return Colors.transparent;
                 },
               ),
-              side: const BorderSide(color: AppColors.main),
+              side: const BorderSide(color: AppColors.main, width: 2),
             ),
             const SizedBox(width: 8),
             Expanded(

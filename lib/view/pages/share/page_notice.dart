@@ -33,7 +33,7 @@ class PageNotice extends HookWidget {
     final classListFilter = useState<List<String>>([]);
     final readFilterEnabled = useState(false); // 既読フィルターを表示するか否か
     final readStatusFilter =
-        useState<Map<int, bool>>({0: true, 1: true}); // 既読フィルターの選択状態
+        useState<Map<int, bool>>({1: true, 0: true}); // 既読フィルターの選択状態
 
     // 追加ボタン押下時の処理
     void addPressed() {
@@ -60,8 +60,10 @@ class PageNotice extends HookWidget {
         List<Notice> fetchedNotices = await noticeReq.getNoticesHandler();
         notices.value = fetchedNotices;
         // 既読状態が存在するならば、既読フィルターを表示する
-        if (fetchedNotices.first.readStatus != null) {
-          readFilterEnabled.value = true;
+        if (fetchedNotices.isNotEmpty) {
+          if (fetchedNotices.first.readStatus != null) {
+            readFilterEnabled.value = true;
+          }
         }
       } catch (error) {
         debugPrint('Error fetching notices: $error');
@@ -78,9 +80,9 @@ class PageNotice extends HookWidget {
         if (readStatusFilter.value.entries.first.value !=
             readStatusFilter.value.entries.last.value) {
           if (readStatusFilter.value.entries.first.value) {
-            readStatus = 1;
+            readStatus = readStatusFilter.value.entries.first.key;
           } else {
-            readStatus = 0;
+            readStatus = readStatusFilter.value.entries.last.key;
           }
         }
       }
