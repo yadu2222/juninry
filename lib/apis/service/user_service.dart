@@ -44,7 +44,7 @@ class UserService {
       User.insertUser(user); // 一時的に追加
       User updUser = await getUser();
       updUser.jwtKey = user.jwtKey;
-    
+
       User.updateUser(updUser); // update
     } else {
       User.updateUser(user);
@@ -80,7 +80,7 @@ class UserService {
     final reqData = Request(
       url: Urls.joinOUCHI,
       reqType: 'POST',
-      parData: inviteCode,
+      pasParams: inviteCode,
       headers: {'Content-Type': 'application/json'},
       errorHandling: errorHandling,
     );

@@ -18,28 +18,34 @@ class HttpReq {
     }
     String url = Urls.baseUrl + reqData.url; // urlを生成
     // パラメータがあればurlと合成
-    if (reqData.parData != null) {
-      url += "/${reqData.parData}";
+    if (reqData.pasParams != null) {
+      url += "/${reqData.pasParams}";
     }
+
+    Uri uri = Uri.parse(url);
+
+    // クエリパラメータの処理
+    if (reqData.queryParams != null) {
+      uri = uri.replace(queryParameters: reqData.queryParams);
+    }
+
     http.Response response = http.Response('{}', 500); // 初期値を設定（例: 空のレスポンス）;
     // リクエストの種類によって処理を分岐
     switch (reqData.reqType) {
       case 'GET':
         response = await http.get(
-          Uri.parse(url),
+          uri,
           headers: reqData.headers,
         );
         break;
       case 'POST':
-        response = await http.post(Uri.parse(url),
-            headers: reqData.headers, body: jsonEncode(reqData.body));
+        response = await http.post(uri, headers: reqData.headers, body: jsonEncode(reqData.body));
         break;
       case 'PUT':
-        response = await http.put(Uri.parse(url),
-            headers: reqData.headers, body: jsonEncode(reqData.body));
+        response = await http.put(uri, headers: reqData.headers, body: jsonEncode(reqData.body));
         break;
       case 'MULTIPART':
-        var request = http.MultipartRequest('POST', Uri.parse(url));
+        var request = http.MultipartRequest('POST', uri);
         request.headers.addAll(reqData.headers);
 
         // nullチェック
@@ -51,8 +57,7 @@ class HttpReq {
         // ファイルを追加
         if (reqData.files != null) {
           for (File file in reqData.files!) {
-            String mimeType =
-                lookupMimeType(file.path) ?? 'application/octet-stream';
+            String mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
             request.files.add(
               await http.MultipartFile.fromPath(
                 'images',

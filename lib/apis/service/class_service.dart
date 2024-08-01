@@ -38,14 +38,14 @@ class ClassService {
             url: Urls.joinClass,
             reqType: 'POST',
             body: {'studentNumber': int.parse(studentNum!)},
-            parData: inviteCode,
+            pasParams: inviteCode,
             headers: {'Content-Type': 'application/json'},
             errorHandling: errorHandling,
           )
         : Request(
             url: Urls.joinClass,
             reqType: 'POST',
-            parData: inviteCode,
+            pasParams: inviteCode,
             headers: {'Content-Type': 'application/json'},
             errorHandling: errorHandling,
           );
@@ -69,7 +69,7 @@ class ClassService {
   // クラス招待コード再発行
   static Future<Class> inviteClass(String classUUID) async {
     // リクエストを生成
-    final reqData = Request(url: Urls.inviteClass, reqType: 'PUT', headers: {'Content-Type': 'application/json'}, parData: classUUID);
+    final reqData = Request(url: Urls.inviteClass, reqType: 'PUT', headers: {'Content-Type': 'application/json'}, pasParams: classUUID);
     final resData = await HttpReq.httpReq(reqData);
     return Class.resToClass(resData['srvResData']);
   }

@@ -50,11 +50,7 @@ class RewardService {
   // 交換されたごほうびを消化
   static Future<void> digestionExchange(Exchange exchange) async {
     // リクエストを生成
-    final reqData = Request(
-      url: Urls.digestionExchange,
-      reqType: 'PUT',
-       parData:  exchange.rewardExchangingId.toString(), 
-       headers: {'Content-Type': 'application/json'});
+    final reqData = Request(url: Urls.digestionExchange, reqType: 'PUT', pasParams: exchange.rewardExchangingId.toString(), headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
     await HttpReq.httpReq(reqData);
   }

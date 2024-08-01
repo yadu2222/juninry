@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io'; 
+import 'dart:io';
 
 // デフォルトのエラーハンドリング関数
 Map<String, dynamic> defaultErrorHandling(http.Response response) {
@@ -18,15 +18,8 @@ class Request {
   Map<String, String> headers; // ヘッダー (Authorizationは除く)
   Map<String, dynamic>? body; // ボディ
   Function(http.Response) errorHandling; // エラーハンドリング関数 失敗時の処理
-  String? parData;
+  String? pasParams;
   List<File>? files;
-  Request({
-    required this.reqType,
-    required this.url,
-    this.headers = const {},
-    this.body,
-    this.errorHandling = defaultErrorHandling,
-    this.parData,
-    this.files
-  });
+  Map<String, String>? queryParams;
+  Request({required this.reqType, required this.url, this.headers = const {}, this.body, this.errorHandling = defaultErrorHandling, this.pasParams, this.files, this.queryParams});
 }
