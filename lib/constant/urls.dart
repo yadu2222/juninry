@@ -9,7 +9,7 @@ class Urls {
   // Androidエミュレーターにおすすめ
 
   // static const String host = '10.200.1.53';
-  static const String host = '127.0.0.1';
+  // static const String host = '127.0.0.1';
 
   // static const String host = '10.0.2.2';
 
@@ -18,7 +18,7 @@ class Urls {
 
   // ローカル環境
   // static const String host = '10.200.1.53';
-  // static const String host = '192.168.3.168';
+  static const String host = '192.168.3.168';
   // static const String host = '192.168.0.12';
 
   static const String port = '4561';

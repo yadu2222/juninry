@@ -38,71 +38,56 @@ class NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
         onTap: () {
           debugPrint("noticeUUID: ${noticeData.noticeUUID}");
-          isQuote
-              ? context.go('/notice/register',
-                  extra: {'quotedNoticeUUID': noticeData.noticeUUID})
-              : context.go('/notice/detail',
-                  extra: {'noticeUUID': noticeData.noticeUUID});
+          isQuote ? context.go('/notice/register', extra: {'quotedNoticeUUID': noticeData.noticeUUID}) : context.go('/notice/detail', extra: {'noticeUUID': noticeData.noticeUUID});
         },
         child: ListItem(
-            padding:
-                const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
-            // 表示する要素を配置
-            widget: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
+          padding: const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
+          // 表示する要素を配置
+          widget: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
+            crossAxisAlignment: CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
 
-              children: [
-                Row(
-                  children: [
-                    // 日付け
-                    Text(
-                      noticeData.noticeDate!,
-                      style: Fonts.h3,
-                    ),
-                    const SizedBox(width: 15),
-                    // 学年
-                    Text(
-                      noticeData.className!,
-                      style: Fonts.py,
-                    ),
-                  ],
-                ),
+            children: [
+              Row(
+                children: [
+                  // 日付け
+                  Text(
+                    noticeData.noticeDate!,
+                    style: Fonts.h3,
+                  ),
+                  const SizedBox(width: 15),
+                  // 学年
+                  Text(
+                    noticeData.className!,
+                    style: Fonts.py,
+                  ),
+                ],
+              ),
 
-
-                // アイコン
-                Container(
-                  alignment: Alignment.center,
-                  child: Center(
-                      child:
-                          // 教師だったら既読ないよー
-                          // isTeacher
-                          //     ? null
-                          //     :
-                              noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
-                                  ? null
-                                  : noticeData.readStatus == 1
-                                      ? checkIcon
-                                      : unknownIcon),
-
-                ),
-              ],
-            ),
-            // アイコン
-            if (!isTeacher) ...[
-              noticeData.readStatus == 1
-                  ? checkIcon
-                  : unknownIcon,
+              // アイコン
+              Container(
+                alignment: Alignment.center,
+                child: Center(
+                    child:
+                        // 教師だったら既読ないよー
+                        // isTeacher
+                        //     ? null
+                        //     :
+                        noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
+                            ? null
+                            : noticeData.readStatus == 1
+                                ? checkIcon
+                                : unknownIcon),
+              ),
+              // // アイコン
+              // if (!isTeacher) ...[
+              //   noticeData.readStatus == 1 ? checkIcon : unknownIcon,
+              // ],
             ],
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
