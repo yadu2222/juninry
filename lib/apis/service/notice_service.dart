@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:juninry/models/student_model.dart';
+
 import '../../models/req_model.dart';
 import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
@@ -9,18 +12,38 @@ import '../error.dart';
 
 
 class NoticeService {
-  static Future<List<Notice>> getNotices() async {
+  static Future<List<Notice>> getNotices(List<String> classUUIDs, int? readStatus) async {
+    String queryParams = '?';
+
+    classUUIDs.forEach((classUUID) {
+      queryParams += 'classUUID[]=$classUUID&';
+    });
+    if (readStatus != null) {
+      queryParams += 'readStatus=$readStatus';
+    }
+
+    debugPrint("URL: " + Urls.getNotices + queryParams);
     try {
       // リクエストを生成
       final reqData = Request(
-          url: Urls.getNotices,
+          url: Urls.getNotices + queryParams,
           reqType: 'GET',
-          headers: {'Content-Type': 'application/json'});
+          headers: {});
       // リクエストメソッドにオブジェクトを投げる
       Map resData = await HttpReq.httpReq(reqData);
 
+      List<Notice> notices = [];
+      if (resData['srvResData']['notices'] == null) { // 表示すべきお知らせがない
+        return notices;
+      }
+      for (Map<String, dynamic> notice in resData['srvResData']['notices']) {
+        notices.add(Notice.resToNotice(notice));
+      }
+
+      return notices;
+
       // 通知リストを返す
-      return Notice.resToNotices(resData['srvResData']['notices']);
+      // return Notice.resToNotices(resData['srvResData']['notices']);
     } catch (e) {
       print("じつはよ、、例外がでてるんだ");
       print(e.toString());
@@ -30,15 +53,30 @@ class NoticeService {
     }
   }
 
-  static Future<List<Notice>> filterNotice(String noticeUuid) async {
-    // リクエストを生成
+
+  static Future<bool> updateReadStatus(String noticeUuid) async {
     final reqData = Request(
-          url: Urls.noticeFilter + noticeUuid,
-          reqType: 'GET',
-        );
-    // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    return Notice.resToNotices(resData['srvResData']['notices']);
+        url: Urls.noticeRead + noticeUuid,
+        reqType: 'POST',
+        headers: {});
+    Map result = await HttpReq.httpReq(reqData);
+    debugPrint(result.toString());
+    return true;
+  }
+
+  static Future<List<Student>> getStudentReadStatus(String noticeUUID) async {
+    final reqData = Request(
+        url: Urls.noticeReadStatus + noticeUUID,
+        reqType: 'GET',
+        headers: {});
+    Map result = await HttpReq.httpReq(reqData);
+    List<Student> students = [];
+    for (Map<String, dynamic> student in result['srvResData']) {
+      students.add(Student.resToStudent(student));
+    }
+
+    return students;
+
   }
 
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {
@@ -50,6 +88,18 @@ class NoticeService {
 
     Map resData = await HttpReq.httpReq(reqData);
     return QuotedNotice.resToQuotedNotice(resData);
+  }
+
+  static Future<Notice> getNoticeDetail(String noticeUuid) async {
+    // リクエストのオブジェクトを生成
+    final reqData = Request(
+        url: Urls.noticeDetail + noticeUuid,
+        reqType: 'GET',
+        headers: {}); // HACK: 空のヘッダー定義しないとエラーでこける
+
+    Map resData = await HttpReq.httpReq(reqData);
+    debugPrint("getNoticeDetail: $resData");
+    return Notice.resToNotice(resData['srvResData']);
   }
 
   static Future<void> registerNotice(Notice notice) async {

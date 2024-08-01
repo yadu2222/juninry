@@ -38,25 +38,26 @@ class NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListItem(
-      padding: const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
-      widget: InkWell(
+
+    return InkWell(
         onTap: () {
           debugPrint("noticeUUID: ${noticeData.noticeUUID}");
-          final route = isQuote
-              ? '/notice/register'
-              : '/notice/detail';
-          final extra = isQuote
-              ? {'quotedNoticeUUID': noticeData.noticeUUID}
-              : {'noticeUUID': noticeData.noticeUUID};
-          context.go(route, extra: extra);
+          isQuote
+              ? context.go('/notice/register',
+                  extra: {'quotedNoticeUUID': noticeData.noticeUUID})
+              : context.go('/notice/detail',
+                  extra: {'noticeUUID': noticeData.noticeUUID});
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListItem(
+            padding:
+                const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
+            // 表示する要素を配置
+            widget: Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
+
               children: [
                 Row(
                   children: [
@@ -73,15 +74,23 @@ class NoticeCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                // 見出し
-                Row(
-                  children: [
-                    const SizedBox(width: 2),
-                    Text(
-                      noticeData.noticeTitle,
-                      style: Fonts.notice,
-                    ),
-                  ],
+
+
+                // アイコン
+                Container(
+                  alignment: Alignment.center,
+                  child: Center(
+                      child:
+                          // 教師だったら既読ないよー
+                          // isTeacher
+                          //     ? null
+                          //     :
+                              noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
+                                  ? null
+                                  : noticeData.readStatus == 1
+                                      ? checkIcon
+                                      : unknownIcon),
+
                 ),
               ],
             ),

@@ -12,7 +12,7 @@ class Notice {
   final String? className;
   final String classUUID;
   final String? quotedNoticeUUID;
-  final int? readStatus;
+  int? readStatus;
 
 // TODO :適用
 // おしらせID	notice_uuid
@@ -53,21 +53,26 @@ class Notice {
     return DateFormat('MM.dd').format(DateTime.parse(date));
   }
 
-  static List<Notice> resToNotices(List loadData) {
+  static Notice resToNotice(Map loadData) {
     try {
-      return loadData.map((data) {
-        return Notice(
-          noticeUUID: data['noticeUUID'] as String?,
-          classUUID: data['classUUID'] as String,
-          noticeTitle: data['noticeTitle'] as String,
-          noticeDate: formatDate(data['noticeDate'] ?? ''),
-          className: data['className'] as String?,
-          readStatus: data['readStatus'] as int?,
-        );
-      }).toList();
+
+      return Notice(
+        noticeUUID: loadData['noticeUUID'] as String?,
+        noticeExplanatory: loadData['noticeExplanatory'] as String?,
+        userName: loadData['userName'] as String?,
+        quotedNoticeUUID: loadData['quotedNoticeUUID'] as String?,
+        className: loadData['className'] as String?,
+        classUUID: loadData['classUUID'] as String,
+        noticeDate: formatDate(loadData['noticeDate'] ?? ''),
+        readStatus: (loadData['readStatus'] == null)
+            ? null // HACK: 既読ステータスがキャスト可能ならば数字を入れそうでなければnullを入れる、きもすぎ
+            : loadData['readStatus'] as int?,
+        noticeTitle: loadData['noticeTitle'] as String,
+      );
+
     } catch (e) {
-      debugPrint('Error converting map to Notices: $e');
-      return [errorNotice()];
+      debugPrint('Error converting map to Notice: $e');
+      return errorNotice();
     }
   }
 }

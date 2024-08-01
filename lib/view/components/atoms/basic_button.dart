@@ -28,13 +28,15 @@ class BasicButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    Color buttonColor = isColor ? AppColors.subjectScience : AppColors.subjectJapanese;
     return Container(
         width: screenWidth * width,
         height: height,
         margin: margin,
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: isColor ? AppColors.subjectScience : AppColors.subjectJapanese,
+                backgroundColor: buttonColor,
+                disabledBackgroundColor: buttonColor,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(circular) //こちらを適用
                     )),
             onPressed: onPressed,

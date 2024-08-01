@@ -1,15 +1,16 @@
 import 'package:juninry/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:juninry/constant/fonts.dart';
-import 'package:juninry/models/quoted_notice_model.dart';
 
 class QuoteFromNotice extends StatelessWidget {
   final String? quoteNoticeTitle;
   final Function() onQuoteClicked;
+  final Function() onDeleteClicked;
   const QuoteFromNotice(
       {super.key,
       required this.quoteNoticeTitle,
-      required this.onQuoteClicked});
+      required this.onQuoteClicked,
+      required this.onDeleteClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class QuoteFromNotice extends StatelessWidget {
       highlightElevation: 0, //ボタンの影を消す
       splashColor: Colors.transparent,
       onPressed: onQuoteClicked,
+      onLongPress: onDeleteClicked,
       child: Column(
         children: [
           Padding(
@@ -30,7 +32,9 @@ class QuoteFromNotice extends StatelessWidget {
             child: Row(children: [
               Icon(
                 Icons.attach_file,
-                color: quoteNoticeTitle == null ? AppColors.iconGray : AppColors.main,
+                color: quoteNoticeTitle == null
+                    ? AppColors.iconGray
+                    : AppColors.main,
                 weight: 5,
               ),
               Text(quoteNoticeTitle ?? "投稿の引用", style: Fonts.p),

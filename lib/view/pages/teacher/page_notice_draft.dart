@@ -31,7 +31,10 @@ class PageNoticeDraftTeacher extends HookWidget {
 
     // タップした時の遷移先
     void onTap(int draftedNoticeId) {
-      context.push('/notice/register', extra: {'draftedNoticeId': draftedNoticeId});
+
+      context.go('/notice/register',
+          extra: {'draftedNoticeId': draftedNoticeId});
+
     }
 
     // useEffect内で非同期処理を実行するための方法
