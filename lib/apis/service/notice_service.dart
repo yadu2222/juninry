@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/models/student_model.dart';
 
 import '../../models/req_model.dart';
 import '../../constant/urls.dart';
@@ -48,7 +49,6 @@ class NoticeService {
   }
 
   static Future<bool> updateReadStatus(String noticeUuid) async {
-    debugPrint("既読処理しようとしてます");
     final reqData = Request(
         url: Urls.noticeRead + noticeUuid,
         reqType: 'POST',
@@ -56,6 +56,20 @@ class NoticeService {
     Map result = await HttpReq.httpReq(reqData);
     debugPrint(result.toString());
     return true;
+  }
+
+  static Future<List<Student>> getStudentReadStatus(String noticeUUID) async {
+    final reqData = Request(
+        url: Urls.noticeReadStatus + noticeUUID,
+        reqType: 'GET',
+        headers: {});
+    Map result = await HttpReq.httpReq(reqData);
+    List<Student> students = [];
+    for (Map<String, dynamic> student in result['srvResData']) {
+      students.add(Student.resToStudent(student));
+    }
+
+    return students;
   }
 
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {

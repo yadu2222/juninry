@@ -59,9 +59,8 @@ class PageNotice extends HookWidget {
       try {
         List<Notice> fetchedNotices = await noticeReq.getNoticesHandler();
         notices.value = fetchedNotices;
-        // 既読状態が存在するならば、既読ソートの選択肢を生成
-        // TODO: 分岐条件逆
-        if (fetchedNotices.first.readStatus == null) {
+        // 既読状態が存在するならば、既読フィルターを表示する
+        if (fetchedNotices.first.readStatus != null) {
           readFilterEnabled.value = true;
         }
       } catch (error) {

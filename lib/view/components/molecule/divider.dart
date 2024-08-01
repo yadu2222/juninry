@@ -3,11 +3,12 @@ import '../../../constant/fonts.dart';
 
 // タイトルと区切り線
 class DividerView extends StatelessWidget {
-  const DividerView({Key? key, this.icon, this.endIcon, this.title, this.fontStyle = Fonts.h3w, this.dividColor = Colors.white, this.indent = 20, this.endIndent = 20, this.dividWeight = 1.5}) : super(key: key);
+  const DividerView({Key? key, this.icon, this.endIcon, this.iconColor = Colors.white, this.title, this.fontStyle = Fonts.h3w, this.dividColor = Colors.white, this.indent = 20, this.endIndent = 20, this.dividWeight = 1.5}) : super(key: key);
 
   // null許容
   final IconData? icon; // 表示したいアイコン
   final InkWell? endIcon; // 表示したいアイコン iconbuttonってなんであんなマージとるんですかね
+  final Color iconColor;
   final String? title; // タイトル
   final TextStyle fontStyle;
   final Color dividColor; // 線の色
@@ -24,7 +25,7 @@ class DividerView extends StatelessWidget {
           child: icon != null
               ? Icon(
                   icon!,
-                  color: Colors.white,
+                  color: iconColor,
                   size: 30,
                 )
               : const SizedBox.shrink(),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart'; // MIMEタイプを推測するためのパッケージ
@@ -29,10 +31,12 @@ class HttpReq {
         );
         break;
       case 'POST':
-        response = await http.post(Uri.parse(url), headers: reqData.headers, body: jsonEncode(reqData.body));
+        response = await http.post(Uri.parse(url),
+            headers: reqData.headers, body: jsonEncode(reqData.body));
         break;
       case 'PUT':
-        response = await http.put(Uri.parse(url), headers: reqData.headers, body: jsonEncode(reqData.body));
+        response = await http.put(Uri.parse(url),
+            headers: reqData.headers, body: jsonEncode(reqData.body));
         break;
       case 'MULTIPART':
         var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -47,7 +51,8 @@ class HttpReq {
         // ファイルを追加
         if (reqData.files != null) {
           for (File file in reqData.files!) {
-            String mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
+            String mimeType =
+                lookupMimeType(file.path) ?? 'application/octet-stream';
             request.files.add(
               await http.MultipartFile.fromPath(
                 'images',
@@ -71,6 +76,9 @@ class HttpReq {
       return jsonDecode(response.body) as Map<String, dynamic>;
       // 失敗時の処理
     } else {
+      if (response.statusCode == 401) {
+        await User.logout();
+      }
       return reqData.errorHandling(response);
     }
   }

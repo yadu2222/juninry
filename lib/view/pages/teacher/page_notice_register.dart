@@ -219,7 +219,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                               neutralAction: (
                                 "OK",
                                 () {
-                                  context.go('/notice/register/draft');
+                                  context.go('/notice');
                                 }
                               ));
                         }
@@ -288,7 +288,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
     if (draftedNoticeId != null) {
       cache.remove('quotedNoticeUUID');
     }
-    
+
     // 前回の値を拾うよ
     int? storedDraftedNoticeId = cache.getInt('draftedNoticeId');
     String? storedQuotedNoticeUUID = cache.getString('quotedNoticeUUID');

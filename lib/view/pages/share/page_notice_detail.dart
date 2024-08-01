@@ -4,6 +4,7 @@ import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/notice_model.dart';
 import 'package:juninry/router/router.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
+import 'package:juninry/view/components/organism/student_read_status_list.dart';
 import '../../../apis/controller/notice_req.dart';
 import '../../components/template/basic_template.dart';
 import 'package:juninry/view/components/molecule/notice_detail_tab.dart';
@@ -42,17 +43,15 @@ class PageNoticeDetail extends HookWidget {
           isTeacher.value = true;
           return Column(
             children: [
-              // 明日までの宿題
               const DividerView(
                 icon: Icons.menu_book_outlined,
                 title: '確認状況',
               ),
               // お知らせを確認した学生諸君
-              StudentList(
-                  //TODO: 既読一覧の取得
-                  studentData:
-                      SampleData.studentData // ここではサンプルのList<map>を渡している
-                  )
+              StudentReadStatusList(
+                studentData: await noticeReq.getStudentReadStatusHandler(
+                    noticeUuid), // ここではサンプルのList<map>を渡している
+              )
             ],
           );
 
@@ -113,8 +112,10 @@ class PageNoticeDetail extends HookWidget {
       popIcon: true, // 戻るボタン
       featureIconButton: isTeacher.value
           ? IconButton(
-              onPressed: () { // 引用付きの新規お知らせを作成
-                context.go('/notice/register', extra: {'quotedNoticeUUID': noticeUuid, 'newNotice': true});
+              onPressed: () {
+                // 引用付きの新規お知らせを作成
+                context.go('/notice/register',
+                    extra: {'quotedNoticeUUID': noticeUuid, 'newNotice': true});
               },
               icon: const Icon(
                 Icons.attach_file, // 右側のアイコン

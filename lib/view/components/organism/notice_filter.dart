@@ -53,7 +53,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
         borderRadius: BorderRadius.zero, // 角を四角に設定
       ),
       child: Column(
-        children: <Widget>[
+        children: [
           // ドロワーのヘッダー部分
           Container(
             height: kToolbarHeight +
@@ -88,7 +88,12 @@ class _FilterDrawerState extends State<FilterDrawer> {
           !widget.readFilterEnabled
               ? Container()
               : Column(children: [
+                  const SizedBox(
+                    height: 15,
+                  ),
                   const DividerView(
+                    icon: Icons.bookmark_border_outlined,
+                    iconColor: AppColors.iconDark,
                     title: '確認状況',
                     fontStyle: Fonts.h3,
                     dividColor: AppColors.main,
@@ -106,15 +111,24 @@ class _FilterDrawerState extends State<FilterDrawer> {
                       },
                     );
                   }),
+                  const SizedBox(
+                    height: 5,
+                  ),
                 ]),
 
+          const SizedBox(
+            height: 15,
+          ),
           const DividerView(
+            icon: Icons.menu_book,
+            iconColor: AppColors.iconDark,
             title: 'クラス選択',
             fontStyle: Fonts.h3,
             dividColor: AppColors.main,
             indent: 10,
             endIndent: 10,
           ),
+
           // クラスのリスト
           Expanded(
             child: ListView(
@@ -140,11 +154,12 @@ class _FilterDrawerState extends State<FilterDrawer> {
               ],
             ),
           ),
+
           // 選択されたクラスを表示するボタン
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
                   onPressed: () {
                     widget.refreshNotices();
@@ -163,18 +178,39 @@ class _FilterDrawerState extends State<FilterDrawer> {
     required bool value,
     required ValueChanged<bool?> onChanged,
   }) {
-    return Container(
+    return GestureDetector(
+      onTap: () => onChanged(!value),
+      child: Container(
         height: 40,
         alignment: Alignment.center,
-        child: CheckboxListTile(
-            contentPadding: EdgeInsets.zero,
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              style: Fonts.h4,
+        child: Row(
+          children: [
+            Checkbox(
+              value: value,
+              onChanged: onChanged,
+              activeColor: AppColors.main,
+              checkColor: Colors.white,
+              fillColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return AppColors.main;
+                  }
+                  return Colors.transparent;
+                },
+              ),
+              side: const BorderSide(color: AppColors.main),
             ),
-            value: value,
-            onChanged: onChanged));
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: Fonts.h4,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

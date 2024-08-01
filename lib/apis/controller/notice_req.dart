@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/models/student_model.dart';
 
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
@@ -30,6 +31,16 @@ class NoticeReq {
       debugPrint(error.toString());
       ToastUtil.show(message: Messages.defaultError); // 通信失敗メッセージ
       return false;
+    }
+  }
+
+  // 生徒の既読状態を取得
+  Future<List<Student>> getStudentReadStatusHandler(String noticeUUID) async {
+    try {
+      return await NoticeService.getStudentReadStatus(noticeUUID);
+    } catch (error) {
+      debugPrint(error.toString());
+      return [];
     }
   }
 
