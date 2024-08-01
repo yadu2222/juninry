@@ -44,7 +44,7 @@ class UserService {
       User.insertUser(user); // 一時的に追加
       User updUser = await getUser();
       updUser.jwtKey = user.jwtKey;
-      updUser.ouchiUUID = user.ouchiUUID;
+    
       User.updateUser(updUser); // update
     } else {
       User.updateUser(user);

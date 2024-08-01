@@ -6,7 +6,7 @@ import 'package:juninry/constant/fonts.dart';
 class BasicButton extends StatelessWidget {
   const BasicButton(
       {super.key,
-      required this.text,
+      this.text,
       this.icon,
       this.iconSize = 30,
       this.width = 0.475,
@@ -16,7 +16,7 @@ class BasicButton extends StatelessWidget {
       this.circular = 10,
       this.margin = const EdgeInsets.only(top: 5, bottom: 15)});
 
-  final String text;
+  final String? text;
   final IconData? icon;
   final double iconSize;
   final bool isColor;
@@ -42,13 +42,15 @@ class BasicButton extends StatelessWidget {
             onPressed: onPressed,
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               icon != null ? Icon(icon, color: AppColors.iconLight, size: iconSize) : const SizedBox.shrink(),
-              Expanded(
-                  child: Container(
-                      alignment: Alignment.center, // 残りのスペースの中央に配置
-                      child: Text(
-                        text,
-                        style: Fonts.h5w,
-                      )))
+              text != null
+                  ? Expanded(
+                      child: Container(
+                          alignment: Alignment.center, // 残りのスペースの中央に配置
+                          child: Text(
+                            text!,
+                            style: Fonts.h5w,
+                          )))
+                  : const SizedBox.shrink()
             ])));
   }
 }

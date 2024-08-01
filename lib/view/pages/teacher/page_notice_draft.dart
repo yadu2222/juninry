@@ -31,8 +31,10 @@ class PageNoticeDraftTeacher extends HookWidget {
 
     // タップした時の遷移先
     void onTap(int draftedNoticeId) {
+
       context.go('/notice/register',
           extra: {'draftedNoticeId': draftedNoticeId});
+
     }
 
     // useEffect内で非同期処理を実行するための方法
@@ -42,21 +44,25 @@ class PageNoticeDraftTeacher extends HookWidget {
     }, []);
 
     return BasicTemplate(title: "下書き", children: [
-      ListItemBox(
-        itemDatas: draftData.value,
-        listItem: (draftedNoticeData) =>
-            DraftCard(
-              onTap: () {
-                onTap(draftedNoticeData.draftedNoticeId!);
-              },
-              delete: () {
-                delete(draftedNoticeData.draftedNoticeId!);
-              },
-              date: draftedNoticeData.draftedNoticeDate!.substring(5),
-              widget: Text(draftedNoticeData.draftedNoticeTitle.toString(), maxLines: 1, overflow: TextOverflow.ellipsis,),
+      Expanded(
+        child: ListItemBox(
+          itemDatas: draftData.value,
+          listItem: (draftedNoticeData) => DraftCard(
+            onTap: () {
+              onTap(draftedNoticeData.draftedNoticeId!);
+            },
+            delete: () {
+              delete(draftedNoticeData.draftedNoticeId!);
+            },
+            date: draftedNoticeData.draftedNoticeDate!.substring(5),
+            widget: Text(
+              draftedNoticeData.draftedNoticeTitle.toString(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
-
+      )
     ]);
   }
 }

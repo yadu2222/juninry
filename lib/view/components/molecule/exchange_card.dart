@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:juninry/constant/colors.dart';
+import "package:intl/intl.dart";
 // view
 import '../atoms/listitem.dart';
 import '../atoms/basic_button.dart';
 // model
-import '../../../models/help_model.dart';
+import '../../../models/exchange_model.dart';
 // constant
 import 'package:juninry/constant/fonts.dart';
-import '../../../constant/help_icon.dart';
+import '../../../constant/reward_icon.dart';
 import '../atoms/dialog.dart';
 import './divider.dart';
+import 'package:juninry/constant/colors.dart';
 
-class HelpCard extends StatelessWidget {
-  const HelpCard({
-    super.key,
-    required this.helpData,
-    required this.onTap,
-  });
+class ExchangeCard extends StatelessWidget {
+  const ExchangeCard({super.key, required this.exchangeData, this.exchange, required this.isJunior});
 
-  final Help helpData;
-  final void Function(Help)? onTap;
+  final Exchange exchangeData;
+  final bool isJunior;
+  final void Function(Exchange)? exchange;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +38,9 @@ class HelpCard extends StatelessWidget {
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
-                    HelpIcon.getIcon(helpData.iconId),
+                    RewardIcon.getIcon(exchangeData.iconId),
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
-                    Text(helpData.helpTitle, style: Fonts.h4),
+                    Text(exchangeData.rewardTitle, style: Fonts.h4),
                   ]),
                   const DividerView(
                     dividColor: AppColors.main,
@@ -50,9 +48,21 @@ class HelpCard extends StatelessWidget {
                     endIndent: 0,
                   ),
                   Text(
-                    helpData.helpContent,
+                    exchangeData.rewardContent,
                     style: Fonts.p,
-                  ) // 中身
+                  ),
+                  const SizedBox(height: 5),
+                  Row(children: [
+                    const Icon(
+                      Icons.person,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 5), // 余白(アイコンとテキストの間
+                    Text(
+                      exchangeData.userName,
+                      style: Fonts.p,
+                    )
+                  ])
                 ]),
               ));
         },
@@ -65,32 +75,33 @@ class HelpCard extends StatelessWidget {
                     children: [
                   // icon
                   Row(children: [
-                    HelpIcon.getIcon(helpData.iconId),
+                    // おてつだいの日付
+                    Text(
+                      DateFormat('MM.dd').format(exchangeData.exchangeAt),
+                      style: Fonts.pg,
+                    ),
+                    const SizedBox(width: 10), // 余白(アイコンとテキストの間
+                    RewardIcon.getIcon(exchangeData.iconId),
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
                     // おてつだいのタイトル
                     Text(
-                      helpData.helpTitle,
+                      exchangeData.rewardTitle,
                       style: Fonts.p,
                     ),
                   ]),
-                  // できたよボタン
-                  // juniorでのみ表示
+                  // 交換ボタン
+                  // patronでのみ表示
                   BasicButton(
+                      iconSize: 20,
                       margin: const EdgeInsets.only(
                         top: 7,
                         bottom: 7,
                       ),
-                      width: 0.3,
-                      icon: helpData.isReword! ? Icons.check : Icons.military_tech,
-                      text: '${helpData.rewardPoint.toString()}P',
-                      isColor: !helpData.isReword!,
+                      width: 0.2,
+                      icon: exchangeData.isExchange ? Icons.check : Icons.local_offer,
+                      isColor: exchangeData.isExchange,
                       onPressed: () {
-                        // 未達成であれば
-                        if (!helpData.isReword!) {
-                          if (onTap != null) {
-                            onTap!(helpData);
-                          }
-                        }
+                        exchange?.call(exchangeData);
                       })
                 ]))));
   }

@@ -48,7 +48,6 @@ class HomeworkCard extends StatelessWidget {
             TeachingMaterial(itemData: homeworkData),
             const Spacer(), // 間隔を埋める
             // アイコン
-
             isTeacher
                 ? const SizedBox.shrink()
                 : Container(

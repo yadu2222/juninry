@@ -36,7 +36,7 @@ class PageHomework extends HookWidget {
     void cardPressed(Homework homework) async {
       // 児童のときは遷移
       if (await isBranch(BranchType.junior)) {
-        context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID,'homework':homework});
+        context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID, 'homework': homework});
 
         // ほごしゃ
       } else if (await isBranch(BranchType.junior)) {
@@ -56,6 +56,7 @@ class PageHomework extends HookWidget {
       }
     }
 
+    // 課題を取得
     Future<void> getHomework() async {
       if (near) {
         final data = await homeworkReq.getNextdayHomeworksHandler();
@@ -85,17 +86,22 @@ class PageHomework extends HookWidget {
         homeworkData.value.isEmpty
             ? const NoResources()
             : Expanded(
-                child: near
-                    ? HomeworkList.classes(
-                        homeworkData: homeworkData.value,
-                        cardPressed: cardPressed,
-                        branchType: branchType.value,
-                      )
-                    : HomeworkList.limit(
-                        homeworkData: homeworkData.value,
-                        cardPressed: cardPressed,
-                        branchType: branchType.value,
-                      )), // 課題リスト
+                // スクロールで再取得
+                child: RefreshIndicator(
+                    onRefresh: () async {
+                      await getHomework();
+                    },
+                    child: near
+                        ? HomeworkList.classes(
+                            homeworkData: homeworkData.value,
+                            cardPressed: cardPressed,
+                            branchType: branchType.value,
+                          )
+                        : HomeworkList.limit(
+                            homeworkData: homeworkData.value,
+                            cardPressed: cardPressed,
+                            branchType: branchType.value,
+                          ))), // 課題リスト
       ]),
       if (branchType.value == BranchType.teacher.branch) Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addPressed)), // 教員なら追加ボタンを表示
     ]);

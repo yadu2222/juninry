@@ -64,4 +64,6 @@ class Urls {
   static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得
   static const String exchangeReward = '$version/auth/users/ouchies/rewards/exchange'; // POSTごほうび交換
   static const String registerReward = '$version/auth/users/ouchies/rewards/register'; // POSTごほうび登録
+  static const String getExchanges = '$version/auth/users/ouchies/rewards/exchanges'; // GET交換履歴取得
+  static const String digestionExchange = '$version/auth/users/ouchies/rewards/digestion'; // POST交換消化
 }

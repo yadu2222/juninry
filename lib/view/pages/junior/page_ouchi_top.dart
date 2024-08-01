@@ -27,6 +27,11 @@ class PageOuchiTopJunior extends HookWidget {
     final ouchiPoint = useState<int>(0); // データを格納するための変数
     final helpData = useState<List<Help>>([]); // データを格納するための変数
 
+    // おてつだいの取得
+    Future<void> getHelps() async {
+      helpData.value = await helpReq.getHelpsHandler();
+      // helpData.value = SampleData.helpData;
+    }
 
     // おてつだい消化処理
     void helpdiDestion(Help help) async {
@@ -34,7 +39,10 @@ class PageOuchiTopJunior extends HookWidget {
       help.isReword = false;
       helpData.value = List.from(helpData.value);
       // APIへ加算申請とポイントの更新
-      await helpReq.destionHelpHandler(help).then((value) => ouchiPoint.value = value!);
+      await helpReq.destionHelpHandler(help).then((value) {
+        ouchiPoint.value = value!;
+        getHelps();
+      });
     }
 
     // 本当にできたのか？と確認し、消化処理に投げる
@@ -53,19 +61,13 @@ class PageOuchiTopJunior extends HookWidget {
       );
     }
 
-    // おてつだいの取得
-    void getHelps() async {
-      helpData.value = await helpReq.getHelpsHandler();
-      // helpData.value = SampleData.helpData;
+    // ポイントの取得
+    Future<void> getOuchiPoint() async {
+      User user = await userReq.getUserHandler();
+      ouchiPoint.value = user.ouchiPoint!;
     }
 
     useEffect(() {
-      // ポイントの取得
-      void getOuchiPoint() async {
-        User user = await userReq.getUserHandler();
-        ouchiPoint.value = user.ouchiPoint!;
-      }
-
       getOuchiPoint(); // ポイントの取得
       // 児童かを判別
       getHelps(); // おてつだいの取得
@@ -78,13 +80,23 @@ class PageOuchiTopJunior extends HookWidget {
       // たまっているポイント
       ReweadPoint(rewards: ouchiPoint.value, onTap: movePointHistory),
       // 交換所あるよという主張
-      const OuchiShortCuts(),
+      OuchiShortCuts(
+        // 遷移先から戻ってきたら再取得
+        onTap: getOuchiPoint,
+      ),
       const DividerView(
         icon: Icons.flag,
         title: 'おてつだい',
       ),
       // おてつだい一覧(デイリーミッションなかんじ)
-      Expanded(child: Helplist(helps: helpData.value, reward: destionCheck))
+      helpData.value.isEmpty
+          ? const Center(child: Text('まだおてつだいがありません'))
+          : Expanded(
+              child: RefreshIndicator(
+                  onRefresh: () async {
+                    await getHelps();
+                  },
+                  child: Helplist(helps: helpData.value, reward: destionCheck)))
     ]);
   }
 }

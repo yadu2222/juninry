@@ -148,48 +148,12 @@ class SampleData {
   ];
 
   static List<Help> helpData = [
-    Help(
-      helpTitle: 'せんたくもの',
-      helpContent: 'たたむところまでおねがいね',
-      iconId: 2,
-      rewardPoint: 30,
-       isReword: true
-    ),
-    Help(
-      helpTitle: 'せんたくもの',
-      helpContent: 'たたむところまでおねがいね',
-      iconId: 2,
-      rewardPoint: 30,
-       isReword: true
-    ),
-    Help(
-      helpTitle: 'せんたくもの',
-      helpContent: 'たたむところまでおねがいね',
-      iconId: 2,
-      rewardPoint: 30,
-       isReword: true
-    ),
-    Help(
-      helpTitle: 'せんたくもの',
-      helpContent: 'たたむところまでおねがいね',
-      iconId: 2,
-      rewardPoint: 30,
-       isReword: false
-    ),
-    Help(
-      helpTitle: 'せんたくもの',
-      helpContent: 'たたむところまでおねがいね',
-      iconId: 2,
-      rewardPoint: 30,
-      isReword: true
-    ),
-    Help(
-      helpTitle: 'せんたくもの',
-      helpContent: 'たたむところまでおねがいね',
-      iconId: 2,
-      rewardPoint: 30,
-      isReword: false
-    ),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', iconId: 2, rewardPoint: 30, isReword: false),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', iconId: 2, rewardPoint: 30, isReword: true),
+    Help(helpTitle: 'せんたくもの', helpContent: 'たたむところまでおねがいね', iconId: 2, rewardPoint: 30, isReword: false),
   ];
 
   static List<Reward> rewardData = [
@@ -224,7 +188,7 @@ class SampleData {
   ];
 
   static List<Notice> noticesData = [
-    Notice(noticeUUID: 'aaaaa', noticeDate: '2024-6-3', className: '4-5', classUUID: '12345', noticeTitle: 'お知らせがたくさん', noticeExplanatory: '少子化じゃなかったころ', readStatus: 0),
+    Notice(noticeUUID: 'aaaaa', noticeDate: '2024-6-3', className: '4-5', classUUID: '12345', noticeTitle: '【持ち物】お弁当', noticeExplanatory: '明日の遠足ではお弁当がいります。忘れずに持ってきてください', readStatus: 0),
     Notice(noticeUUID: 'aaaaa', classUUID: '', noticeDate: '2024-6-2', noticeTitle: 'ほんのすこしのしんじつ', className: ';~~;', readStatus: 1),
     Notice(
       noticeUUID: 'aaaaa',

@@ -7,11 +7,12 @@ import 'package:go_router/go_router.dart';
 // ショートカットボタン
 // 遷移する
 class ShortcutButton extends StatelessWidget {
-  const ShortcutButton({Key? key, required this.title, required this.icon, required this.movePage}) : super(key: key);
+  const ShortcutButton({super.key, required this.title, required this.icon, required this.movePage, this.onTap});
 
   final String title; // ボタンのタイトル
   final IconData icon; // ボタンを押したときのアイコン
   final String movePage; // 遷移先のパス
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ShortcutButton extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 5, right: 5, left: 5),
         child: ElevatedButton(
           onPressed: () {
-            context.go(movePage);
+            context.push(movePage).then((_) => onTap?.call());
           },
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(

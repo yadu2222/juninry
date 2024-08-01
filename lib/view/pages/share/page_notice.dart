@@ -162,9 +162,14 @@ class PageNotice extends HookWidget {
                   : notices.value.isEmpty
                       ? const NoResources()
                       : Expanded(
-                          child: NoticeList(
-                              noticeDatas: notices.value,
-                              isTeacher: teacherExtension.value)),
+
+                          // スクロールで再取得
+                          child: RefreshIndicator(
+                              onRefresh: () async {
+                                await fetchNotices();
+                              },
+                              child: NoticeList(noticeDatas: notices.value, isTeacher: teacherExtension.value))),
+
             ],
           ),
 

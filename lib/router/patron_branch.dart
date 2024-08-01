@@ -18,6 +18,7 @@ import '../view/pages/patron/page_submittion.dart';
 import '../view/pages/share/page_ouchi.dart';
 import '../view/pages/patron/page_ouchi_top.dart';
 import '../view/pages/patron/page_help_register.dart';
+import '../view/pages/share/page_onedari.dart';
 // setting
 import '../view/pages/share/page_questions.dart';
 import '../view/pages/share/page_user.dart';
@@ -175,7 +176,16 @@ class PatronBranch {
                             child: const PageRewardRegisterPatron(),
                           ),
                         )
-                      ])
+                      ]),
+                  // onedari
+                  GoRoute(
+                    name: 'onedari',
+                    path: 'onedari',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageOnedari(),
+                    ),
+                  )
                 ])
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),

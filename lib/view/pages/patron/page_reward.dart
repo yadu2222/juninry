@@ -20,7 +20,7 @@ class PageRewardPatron extends HookWidget {
     final rewardData = useState<List<Reward>>([]); // GOHOUBIデータ
 
     // GOHOUBI取得
-    void getRewards() async {
+    Future<void> getRewards() async {
       rewardData.value = await rewardReq.getRewardsHandler();
       // helpData.value = SampleData.helpData;
     }
@@ -45,11 +45,15 @@ class PageRewardPatron extends HookWidget {
         Expanded(
             child: rewardData.value.isEmpty
                 ? const Center(child: Text('ごほうびを登録しましょう！'))
-                : RewardList(
-                    isJunior: false,
-                    rewards: rewardData.value,
-                    rewardPoint: 0,
-                  ))
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      await getRewards();
+                    },
+                    child: RewardList(
+                      isJunior: false,
+                      rewards: rewardData.value,
+                      rewardPoint: 0,
+                    )))
       ]),
       Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addReward)), // 追加ボタン
     ]);
