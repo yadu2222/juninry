@@ -72,7 +72,13 @@ class PageNotice extends HookWidget {
                   ? const Center(child: CircularProgressIndicator())
                   : notices.value.isEmpty
                       ? const NoResources()
-                      : Expanded(child: NoticeList(noticeDatas: notices.value, isTeacher: teacherExtension.value)),
+                      : Expanded(
+                          // スクロールで再取得
+                          child: RefreshIndicator(
+                              onRefresh: () async {
+                                await fetchNotices();
+                              },
+                              child: NoticeList(noticeDatas: notices.value, isTeacher: teacherExtension.value))),
             ],
           ),
           if (teacherExtension.value) Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addPressed)), // 追加ボタン

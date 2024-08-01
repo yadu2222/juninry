@@ -14,9 +14,9 @@ class ClassReq {
   ClassReq({required this.context});
 
   // クラス参加
-  Future<String?> joinClassHandler(String inviteCode) async {
+  Future<String?> joinClassHandler(String inviteCode,String? studentNum) async {
     try {
-      return await ClassService.joinClass(inviteCode); // クラス参加処理を待つ
+      return await ClassService.joinClass(inviteCode,studentNum); // クラス参加処理を待つ
     } on PermittionError {
       handleException(ExceptionType.permittonError);
       return null;

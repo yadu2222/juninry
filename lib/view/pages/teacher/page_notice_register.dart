@@ -216,6 +216,9 @@ class PageNoticeRegisterTeacher extends HookWidget {
                         ));
 
                         if (result) {
+                          // 下書きから破壊
+                          await DraftedNotice.deleteDraftedNotice(
+                              draftedNoticeData.draftedNoticeId!);
                           // 投稿成功
                           AlertDialogUtil.show(
                               context: context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter/services.dart';
 import '../../../router/router.dart';
 // view
 import '../../components/atoms/toast.dart';
@@ -23,6 +24,7 @@ class PageClass extends HookWidget {
   final String title = 'クラス';
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController inviteCodeController = TextEditingController();
+  final TextEditingController studentNumController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,12 @@ class PageClass extends HookWidget {
     final isTeacher = useState<bool>(false); // 教員か判別
     final joinClasses = useState<List<Class>>([]); // データを格納するための変数
     final conType = useState<bool>(true); // true:join,false:create
+
+    // クラス一覧取得
+    Future<void> getClasses() async {
+      // TODO:APIからクラス一覧を取得
+      classReq.getClassesHandler().then((value) => joinClasses.value = value);
+    }
 
     // クラス作成
     void create() async {
@@ -39,16 +47,11 @@ class PageClass extends HookWidget {
           inviteDialog(context: context, classData: resData['classData']); // 作成成功ダイアログ
 
           classNameController.clear(); // 入力値クリア
+          getClasses(); // クラスを再取得
         }
       } else {
         ToastUtil.show(message: Messages.inputError); // 入力不足エラー
       }
-    }
-
-    // クラス一覧取得
-    Future<void> getClasses() async {
-      // TODO:APIからクラス一覧を取得
-      classReq.getClassesHandler().then((value) => joinClasses.value = value);
     }
 
     // 現在のtypeを切り替える(create or join)
@@ -59,7 +62,7 @@ class PageClass extends HookWidget {
     // クラスに参加
     void join() async {
       if (inviteCodeController.text.isNotEmpty) {
-        String? className = await classReq.joinClassHandler(inviteCodeController.text);
+        String? className = await classReq.joinClassHandler(inviteCodeController.text, studentNumController.text);
         if (className != null) {
           AlertDialogUtil.show(
             context: context,
@@ -77,8 +80,26 @@ class PageClass extends HookWidget {
 
     // 教員の場合のみ表示
     List<Map> tabs = [
-      {'title': 'クラスに参加しましょう', 'button': '参加する', 'label': '招待コード', 'controller': inviteCodeController, 'api': join},
-      {'title': '新しいクラスを作成しましょう', 'button': '作成する', 'label': '新しいクラス名', 'controller': classNameController, 'api': create},
+      {
+        'title': 'クラスに参加しましょう',
+        'button': '参加する',
+        'label': '招待コード',
+        'controller': inviteCodeController,
+        'api': join,
+        'inputType': TextInputType.number,
+        'inputFormat': [FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(4),
+        ]
+      },
+      {
+        'title': '新しいクラスを作成しましょう',
+        'button': '作成する',
+        'label': '新しいクラス名',
+        'controller': classNameController,
+        'api': create,
+        'inputType': TextInputType.text,
+        'inputFormat': [LengthLimitingTextInputFormatter(15)]
+      },
     ];
 
     final conTypeMap = useState<Map>(tabs[0]); // true:invite,false:create
@@ -121,7 +142,18 @@ class PageClass extends HookWidget {
         icon: Icons.autorenew,
         isIcon: isTeacher.value,
         onTap: changeConType, // type切り替え
+        inputType: conTypeMap.value['inputType'],
+        inputFormatter: conTypeMap.value['inputFormat'],
       ),
+
+      isTeacher.value
+          ? const SizedBox.shrink()
+          : InfoForm(
+              label: '出席番号(なければ空欄)',
+              controller: studentNumController,
+              inputType: TextInputType.number,
+              inputFormatter: [FilteringTextInputFormatter.digitsOnly],
+            ),
       const SizedBox(height: 20),
       // 確定
       BasicButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../constant/colors.dart';
 
 class InfoForm extends StatelessWidget {
@@ -9,6 +10,8 @@ class InfoForm extends StatelessWidget {
     this.isIcon = false,
     this.onTap,
     this.icon = Icons.send,
+    this.inputType = TextInputType.text,
+    this.inputFormatter = const [],
   });
 
   final String label;
@@ -16,6 +19,8 @@ class InfoForm extends StatelessWidget {
   final bool isIcon;
   final void Function()? onTap;
   final TextEditingController controller;
+  final TextInputType inputType; // 数値以外許さないか
+  final List<TextInputFormatter> inputFormatter; 
 
   // TODO:バリデーション
   @override
@@ -26,6 +31,8 @@ class InfoForm extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.85,
       height: 50,
       child: TextFormField(
+        keyboardType: inputType,
+        inputFormatters: [...inputFormatter],
         controller: controller,
         cursorColor: AppColors.main, // カーソルの色
         decoration: InputDecoration(
@@ -33,7 +40,7 @@ class InfoForm extends StatelessWidget {
           fillColor: AppColors.iconLight, // 背景色
           filled: true, // 背景色を表示
           // 右側のアイコン
-          suffixIcon: isIcon 
+          suffixIcon: isIcon
               ? SizedBox(
                   width: 50, // IconButton の幅を固定
                   child: IconButton(

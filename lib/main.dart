@@ -14,15 +14,9 @@ class MyApp extends HookWidget {
   Widget build(BuildContext context) {
     final router = useState<GoRouter?>(null); // GoRouterのインスタンス// null許容
 
-    // ルーター再取得
-    Future<void> updateRouter() async {
-      final newRouter = await createRouter(updateRouter: updateRouter); // 非同期でルーターを取得
-      router.value = newRouter; // 取得したルーターを状態にセット
-    }
-
     // ルーターの初期化を非同期で行う
     Future<void> initializeRouter() async {
-      final getRouter = await createRouter(updateRouter: updateRouter); // 非同期でルーターを取得
+      final getRouter = await createRouter(updateRouter: initializeRouter); // 非同期でルーターを取得
       router.value = getRouter; // 取得したルーターを状態にセット
     }
 

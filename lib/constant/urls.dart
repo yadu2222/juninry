@@ -2,9 +2,24 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
+
+  // ループバックアドレス使いたい人におすすめ
   // static const String host = '127.0.0.1';
-  static const String host = '10.0.2.2';
+
+  // Androidエミュレーターにおすすめ
+
+  // static const String host = '10.200.1.53';
+  static const String host = '127.0.0.1';
+
+  // static const String host = '10.0.2.2';
+
+  // iOSエミュレーターにおすすめ
   // static const String host = 'localhost';
+
+  // ローカル環境
+  // static const String host = '10.200.1.53';
+  // static const String host = '192.168.3.168';
+  // static const String host = '192.168.0.12';
 
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
@@ -25,6 +40,7 @@ class Urls {
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
   static const String getNextdayHomeworks = '$version/auth/users/homeworks/nextday'; // GETつぎのひの宿題取得
   static const String submittionHomework = '$version/auth/users/homeworks/submit'; // POST宿題提出
+  static const String submissionLog = '$version/auth/users/homeworks/record?targetMonth='; // POST宿題提出履歴取得
 
   // class
   static const String getClassmates = '$version/auth/users/classes/users'; // GETクラスメイト取得
@@ -36,4 +52,17 @@ class Urls {
   // OUCHI
   static const String joinOUCHI = '$version/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
   static const String createOUCHI = '$version/auth/users/ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
+  static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
+
+  // help
+  static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
+  static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化
+  static const String registerHelp = '$version/auth/users/ouchies/helps/register'; // POSTおてつだい登録
+
+  // GOHOUBI
+  static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得
+  static const String exchangeReward = '$version/auth/users/ouchies/rewards/exchange'; // POSTごほうび交換
+  static const String registerReward = '$version/auth/users/ouchies/rewards/register'; // POSTごほうび登録
+  static const String getExchanges = '$version/auth/users/ouchies/rewards/exchanges'; // GET交換履歴取得
+  static const String digestionExchange = '$version/auth/users/ouchies/rewards/digestion'; // POST交換消化
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/pages/patron/page_reward.dart';
+import 'package:juninry/view/pages/patron/page_reward_register.dart';
 
 // 遷移先
 // patron
@@ -15,6 +17,8 @@ import '../view/pages/patron/page_submittion.dart';
 // ouchi
 import '../view/pages/share/page_ouchi.dart';
 import '../view/pages/patron/page_ouchi_top.dart';
+import '../view/pages/patron/page_help_register.dart';
+import '../view/pages/share/page_onedari.dart';
 // setting
 import '../view/pages/share/page_questions.dart';
 import '../view/pages/share/page_user.dart';
@@ -133,19 +137,55 @@ class PatronBranch {
           path: '/ouchi',
           routes: [
             GoRoute(
-              path: 'top',
-              pageBuilder: (context, state) => NoTransitionPage(
-                key: state.pageKey,
-                child: const PageOuchiTopPatron(),
-              ),
-            )
+                path: 'top',
+                pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageOuchiTopPatron(),
+                    ),
+                routes: [
+                  // 登録
+                  GoRoute(
+                    path: 'register',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageHelpRegisterPatron(),
+                    ),
+                  ),
+
+                  // ごほうびに遷移
+                  GoRoute(
+                      path: 'reward',
+                      pageBuilder: (context, state) => NoTransitionPage(
+                            key: state.pageKey,
+                            child: const PageRewardPatron(),
+                          ),
+                      routes: [
+                        // ごほうびの追加
+                        GoRoute(
+                          path: 'register',
+                          pageBuilder: (context, state) => NoTransitionPage(
+                            key: state.pageKey,
+                            child: const PageRewardRegisterPatron(),
+                          ),
+                        )
+                      ]),
+                  // onedari
+                  GoRoute(
+                    name: 'onedari',
+                    path: 'onedari',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageOnedari(),
+                    ),
+                  )
+                ])
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
 
-    // userData
+    // settings
     StatefulShellBranch(
       navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'setting'),
       routes: [

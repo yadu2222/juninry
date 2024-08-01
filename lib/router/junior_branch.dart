@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
 import '../models/homework_model.dart';
@@ -13,12 +14,15 @@ import '../view/pages/share/page_homework.dart';
 import '../view/pages/junior/page_submission.dart';
 // notice
 import '../view/pages/share/page_notice.dart';
+import '../view/pages/teacher/page_notice_detail.dart';
 // ouchi
 import '../view/pages/junior/page_reward.dart';
 import '../view/pages/share/page_ouchi.dart';
+import '../view/pages/share/page_onedari.dart';
 // user
 import '../view/pages/share/page_user.dart';
 import '../view/pages/share/page_questions.dart';
+import '../view/pages/share/page_my_page.dart';
 
 // こどもブランチ
 class JuniorBranch {
@@ -66,6 +70,17 @@ class JuniorBranch {
         GoRoute(
           name: 'notice',
           path: '/notice', // notice
+          routes: [
+            GoRoute(
+              name: 'detail',
+              path: 'detail',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageNoticeDetailTeacher(),
+              ),
+            ),
+          ],
+
           pageBuilder: (context, state) => NoTransitionPage(
             key: state.pageKey,
             child: PageNotice(),
@@ -141,6 +156,14 @@ class JuniorBranch {
                     child: const PageRewardJunior(),
                   ),
                 ),
+                GoRoute(
+                  name: 'onedari',
+                  path: 'onedari',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const PageOnedari(),
+                  ),
+                )
               ],
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
@@ -167,6 +190,14 @@ class JuniorBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageQuestions(),
+              ),
+            ),
+            GoRoute(
+              name: 'myPage',
+              path: 'myPage',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageMyPage(),
               ),
             ),
           ],

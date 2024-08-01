@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../constant/colors.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/user_model.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/atoms/alert_dialog.dart';
+
 
 class PageUserData extends StatelessWidget {
   const PageUserData({super.key});
@@ -13,6 +15,7 @@ class PageUserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     // オプション項目を構築するウィジェット
     Widget _buildOption(
       IconData icon,
@@ -22,6 +25,7 @@ class PageUserData extends StatelessWidget {
       bool noBottomBorder = false,
       Color textColor = Colors.black,
     }) {
+
       return GestureDetector(
         onTap: () {
           if (onLogout) {
@@ -75,6 +79,7 @@ class PageUserData extends StatelessWidget {
           ),
           child: Column(
             children: [
+
               _buildOption(Icons.person, 'マイページ', '/mypage'),
               _buildOption(Icons.notifications, '通知', '/notifications'),
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
@@ -83,6 +88,7 @@ class PageUserData extends StatelessWidget {
                   onLogout: true,
                   noBottomBorder: true,
                   textColor: AppColors.buttonCheck),
+
             ],
           ),
         ),
