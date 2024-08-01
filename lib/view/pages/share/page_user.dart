@@ -1,51 +1,12 @@
-// import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-// import '../../../constant/fonts.dart';
-// import '../../../view/components/atoms/basic_button.dart';
-// import '../../../models/user_model.dart';
-// import '../../components/template/basic_template.dart';
-
-// class PageUserData extends StatelessWidget {
-//   const PageUserData({super.key,});
-
-//   final String title = 'ユーザー';
-
-//   @override
-//   Widget build(BuildContext context) {
-//     void logout() async {
-//       // ログアウト処理
-//       bool isLogout = await User.logout();  // dbからデータを削除
-//       if (isLogout) {
-//         // ログイン画面に遷移
-//        context.go('/login');
-//       } else {}
-//     }
-
-//     return BasicTemplate(title: title, children: [
-//       const Text('ユーザー情報', style: Fonts.h3),
-//       BasicButton(
-//         text: 'ログアウト',
-//         isColor: false,
-//         onPressed: () {
-//           logout();
-//         },
-//       ),
-//     ]);
-//   }
-// }
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/constant/colors.dart';
-import 'package:juninry/view/components/atoms/basic_button.dart';
+
+import '../../../constant/colors.dart';
 import '../../../constant/fonts.dart';
 import '../../../models/user_model.dart';
 import '../../components/template/basic_template.dart';
-import '../../../apis/controller/ouchi_req.dart';
-import '../../components/atoms/toast.dart';
+import '../../components/atoms/alert_dialog.dart';
 
-import 'package:url_launcher/url_launcher.dart';
 
 class PageUserData extends StatelessWidget {
   const PageUserData({super.key});
@@ -54,30 +15,49 @@ class PageUserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OUCHIReq ouchiReq = OUCHIReq(context); // ClassReqクラスのインスタンスを生成
-    Widget _buildOption(IconData icon, String text, String route, {bool onLogout = false}) {
+
+    // オプション項目を構築するウィジェット
+    Widget _buildOption(
+      IconData icon,
+      String text,
+      String route, {
+      bool onLogout = false,
+      bool noBottomBorder = false,
+      Color textColor = Colors.black,
+    }) {
+
       return GestureDetector(
         onTap: () {
           if (onLogout) {
-            logout(context);
+            AlertDialogUtil.show(
+              context: context,
+              content: "ログアウトしますか？",
+              negativeAction: ("いいえ", () {}),
+              positiveAction: ("はい", () async {
+                await _performLogout(context);
+              }),
+            );
           } else {
-            context.go(route);
+            _navigateToRoute(context, route); // ルートに遷移
           }
         },
         child: Container(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           decoration: BoxDecoration(
+            color: Colors.white,
             border: Border(
-              bottom: BorderSide(color: Colors.grey.withOpacity(0.3)),
+              bottom: noBottomBorder
+                  ? BorderSide.none
+                  : BorderSide(color: AppColors.glay, width: 2),
             ),
           ),
           child: Row(
             children: [
-              Icon(icon, color: AppColors.iconGray, size: 30),
+              Icon(icon, color: AppColors.iconGray, size: 35),
               const SizedBox(width: 20),
               Text(
                 text,
-                style: Fonts.p,
+                style: Fonts.h5.copyWith(color: textColor),
               ),
             ],
           ),
@@ -89,36 +69,26 @@ class PageUserData extends StatelessWidget {
       title: '設定',
       popIcon: false,
       children: [
+        SizedBox(height: 20),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
             children: [
-              _buildOption(Icons.person, 'マイページ', '/settings/myPage'),
-              _buildOption(Icons.notifications_none_outlined, '通知', '/notifications'),
+
+              _buildOption(Icons.person, 'マイページ', '/mypage'),
+              _buildOption(Icons.notifications, '通知', '/notifications'),
               _buildOption(Icons.message, 'LINE連携', '/line-integration'),
               _buildOption(Icons.help, 'よくある質問', '/settings/questions'),
-              _buildOption(Icons.door_back_door, 'ログアウト', '', onLogout: true),
-              // BasicButton(
-              //     text: '',
-              //     isColor: true,
-              //     onPressed: () async {
-              //       String? link = await ouchiReq.friendLineAccount();
-              //       if (link != null) {
-              //         final Uri url = Uri.parse(link);
-              //         if (await canLaunchUrl(url)) {
-              //           await launchUrl(url);
-              //           ToastUtil.show(message: link);
-              //         } else {
-              //           // Error handling
-              //           ToastUtil.show(message: 'Could not launch $link');
-              //         }
-              //       }
-              //     })
+              _buildOption(Icons.meeting_room, 'ログアウト', '',
+                  onLogout: true,
+                  noBottomBorder: true,
+                  textColor: AppColors.buttonCheck),
+
             ],
           ),
         ),
@@ -126,13 +96,18 @@ class PageUserData extends StatelessWidget {
     );
   }
 
-  // ログアウトメソッド
-  void logout(BuildContext context) async {
-    bool isLogout = await User.logout(); // dbからデータを削除
+  void _navigateToRoute(BuildContext context, String route) {
+    if (route.isNotEmpty) {
+      context.go(route);
+    }
+  }
+
+  // 直接ログアウト処理を実行するメソッド
+  Future<void> _performLogout(BuildContext context) async {
+    bool isLogout = await User.logout();
     if (isLogout) {
-      context.go('/login'); // ログイン画面に遷移
+      context.go('/login');
     } else {
-      // エラーハンドリングを追加
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('ログアウトに失敗しました。もう一度お試しください。'),

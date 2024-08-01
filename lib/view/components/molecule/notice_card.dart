@@ -38,6 +38,7 @@ class NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
         onTap: () {
           debugPrint("noticeUUID: ${noticeData.noticeUUID}");
@@ -58,43 +59,22 @@ class NoticeCard extends StatelessWidget {
                   CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
 
               children: [
-                Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start, // 子ウィジェットを左揃えに設定
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        // 日付け
-                        Container(
-                          child: Text(
-                            noticeData.noticeDate!,
-                            style: Fonts.h3,
-                          ),
-                        ),
-
-                        //日時と学年のテキスト間のスペースを設定
-                        const SizedBox(width: 15),
-
-                        //学年
-                        Text(
-                          noticeData.className!,
-                          style: Fonts.py,
-                        ),
-                      ],
+                    // 日付け
+                    Text(
+                      noticeData.noticeDate!,
+                      style: Fonts.h3,
                     ),
-
-                    // 見出し
-                    Row(
-                      children: [
-                        const SizedBox(width: 2),
-                        Text(
-                          noticeData.noticeTitle,
-                          style: Fonts.notice,
-                        ),
-                      ],
-                    )
+                    const SizedBox(width: 15),
+                    // 学年
+                    Text(
+                      noticeData.className!,
+                      style: Fonts.py,
+                    ),
                   ],
                 ),
+
 
                 // アイコン
                 Container(
@@ -110,8 +90,19 @@ class NoticeCard extends StatelessWidget {
                                   : noticeData.readStatus == 1
                                       ? checkIcon
                                       : unknownIcon),
+
                 ),
               ],
-            )));
+            ),
+            // アイコン
+            if (!isTeacher) ...[
+              noticeData.readStatus == 1
+                  ? checkIcon
+                  : unknownIcon,
+            ],
+          ],
+        ),
+      ),
+    );
   }
 }

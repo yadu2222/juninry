@@ -55,6 +55,7 @@ class Notice {
 
   static Notice resToNotice(Map loadData) {
     try {
+
       return Notice(
         noticeUUID: loadData['noticeUUID'] as String?,
         noticeExplanatory: loadData['noticeExplanatory'] as String?,
@@ -68,6 +69,7 @@ class Notice {
             : loadData['readStatus'] as int?,
         noticeTitle: loadData['noticeTitle'] as String,
       );
+
     } catch (e) {
       debugPrint('Error converting map to Notice: $e');
       return errorNotice();

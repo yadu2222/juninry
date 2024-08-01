@@ -2,6 +2,7 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
+
   // ループバックアドレス使いたい人におすすめ
   // static const String host = '127.0.0.1';
 
@@ -35,6 +36,7 @@ class Urls {
   static const String noticeRead = '$version/auth/users/notices/read/'; // POST既読
   static const String noticeDetail = '$version/auth/users/notices/'; // GETお知らせ詳細
   static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
+  static const String noticeFilter = '$version/auth/users/notice/'; // POST特定のお知らせフilter
   static const String noticeReadStatus = '$version/auth/users/notices/status/';  // GET生徒の既読状態
 
   // homework

@@ -5,9 +5,11 @@ import '../../models/req_model.dart';
 import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
-// import 'package:http/http.dart' as http;
-// import '../error.dart';
+
+import 'package:http/http.dart' as http;
 import '../http_req.dart';
+import '../error.dart';
+
 
 class NoticeService {
   static Future<List<Notice>> getNotices(List<String> classUUIDs, int? readStatus) async {
@@ -51,6 +53,7 @@ class NoticeService {
     }
   }
 
+
   static Future<bool> updateReadStatus(String noticeUuid) async {
     final reqData = Request(
         url: Urls.noticeRead + noticeUuid,
@@ -73,6 +76,7 @@ class NoticeService {
     }
 
     return students;
+
   }
 
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {

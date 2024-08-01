@@ -1,5 +1,4 @@
 import 'package:juninry/models/class_model.dart';
-
 import '../models/homework_model.dart';
 import '../models/notice_model.dart';
 import '../models/drafted_notice_model.dart';

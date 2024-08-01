@@ -31,10 +31,12 @@ class FilterDrawer extends StatefulWidget {
 }
 
 class _FilterDrawerState extends State<FilterDrawer> {
+
   @override
   void initState() {
     super.initState();
   }
+
 
   final Icon checkIcon = const Icon(
     Icons.check,
@@ -43,9 +45,16 @@ class _FilterDrawerState extends State<FilterDrawer> {
   );
 
   @override
+
+
+  @override
+
   void dispose() {
     super.dispose();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +142,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
 
           // クラスのリスト
           Expanded(
+
             child: ListView(
               padding: const EdgeInsets.only(top: 0),
               children: [
@@ -154,6 +164,7 @@ class _FilterDrawerState extends State<FilterDrawer> {
                       },
                     )),
               ],
+
             ),
           ),
 
@@ -163,7 +174,9 @@ class _FilterDrawerState extends State<FilterDrawer> {
             child: BasicButton(
               text: '適用',
               onPressed: () {
+
                 widget.refreshNotices();
+
                 Navigator.pop(context); // ドロワーを閉じる
               },
               isColor: true,
