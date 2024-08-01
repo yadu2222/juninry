@@ -81,12 +81,12 @@ class HelpCard extends StatelessWidget {
                         bottom: 7,
                       ),
                       width: 0.3,
-                      icon: helpData.isReword! ? Icons.military_tech : Icons.check,
+                      icon: helpData.isReword! ? Icons.check : Icons.military_tech,
                       text: '${helpData.rewardPoint.toString()}P',
-                      isColor: helpData.isReword!,
+                      isColor: !helpData.isReword!,
                       onPressed: () {
                         // 未達成であれば
-                        if (helpData.isReword!) {
+                        if (!helpData.isReword!) {
                           if (onTap != null) {
                             onTap!(helpData);
                           }

@@ -63,7 +63,9 @@ class PageHomeworkDraftsTeacher extends HookWidget {
 
     return BasicTemplate(title: title, children: [
       // 下書き一覧
-      HomeworkDraftList(homeworkData: draftData.value, delete: deleteCheck, get: getDrafts),
+      Expanded(
+        child: HomeworkDraftList(homeworkData: draftData.value, delete: deleteCheck, get: getDrafts),
+      )
     ]);
   }
 }

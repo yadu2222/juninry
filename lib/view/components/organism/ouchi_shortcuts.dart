@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../atoms/shortcut_bottun.dart';
 
 class OuchiShortCuts extends StatelessWidget {
-  const OuchiShortCuts({super.key});
+  const OuchiShortCuts({super.key, this.onTap});
+
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +15,14 @@ class OuchiShortCuts extends StatelessWidget {
       ),
       width: double.infinity,
       alignment: Alignment.center,
-      child: const Row(children: [
-        ShortcutButton(title: 'GOHOUBI', icon: Icons.auto_awesome, movePage: '/ouchi/top/reward'),
-        ShortcutButton(title: 'ONEDARI', icon: Icons.auto_awesome, movePage: '/home'),
+      child: Row(children: [
+        ShortcutButton(
+          title: 'GOHOUBI',
+          icon: Icons.auto_awesome,
+          movePage: '/ouchi/top/reward',
+          onTap: onTap,
+        ),
+        const ShortcutButton(title: 'ONEDARI', icon: Icons.auto_awesome, movePage: '/home'),
       ]),
     );
   }
