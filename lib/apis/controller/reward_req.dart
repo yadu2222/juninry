@@ -6,6 +6,7 @@ import '../service/reward_service.dart';
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../../models/reward_model.dart';
+import '../../models/exchange_model.dart';
 // import '../../view/components/atoms/dialog.dart';
 // import '../error.dart';
 
@@ -45,4 +46,23 @@ class RewardReq {
     }
   }
 
+  // 交換されたごほうびを取得
+  Future<List<Exchange>> getExchangesHandler() async {
+    try {
+      return await RewardService.getExchange();
+    } catch (error) {
+      ToastUtil.show(message: "おわんないよ〜〜");
+      return [];
+    }
+  }
+
+  // 交換されたごほうびを消化
+  Future<void> digestExchangeHandler(Exchange exchange) async {
+    try {
+      await RewardService.digestionExchange(exchange);
+      ToastUtil.show(message: Messages.digestSuccess); // 消化に成功
+    } catch (error) {
+      ToastUtil.show(message: Messages.digestError);
+    }
+  }
 }

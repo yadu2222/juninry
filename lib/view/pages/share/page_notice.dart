@@ -76,7 +76,6 @@ class PageNotice extends HookWidget {
                           // スクロールで再取得
                           child: RefreshIndicator(
                               onRefresh: () async {
-                                debugPrint('Refreshed');
                                 await fetchNotices();
                               },
                               child: NoticeList(noticeDatas: notices.value, isTeacher: teacherExtension.value))),

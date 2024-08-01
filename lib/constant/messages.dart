@@ -2,6 +2,7 @@ class Messages {
   // かくにん
   static const String confirmation = "かくにん";
   static const String confirmationMsg = "入力内容が消えてしまいます！\n下書きに保存しますか？";
+  static const String digestConfirmation = "おねだりをお子さんに渡しましたか？";
 
   // 下書き
   static const String draft = "下書き";
@@ -19,6 +20,7 @@ class Messages {
   static const String createSuccess = '作成に成功しました！'; // 生成成功
   static const String destionHelpSuccess = 'おてつだいを報告しました！'; // 生成成功
   static const String exchangeSuccess = 'ごほうびを交換しました！'; // 生成成功
+  static const String digestSuccess = 'おねだりをお子さんに渡しました！'; // 生成成功
 
   // APIエラー
   static const String defaultError = "通信に失敗しました"; // データベースエラー
@@ -42,6 +44,8 @@ class Messages {
   static const String getHelpError = 'おてつだいの取得に失敗しました'; // 生成失敗
   static const String destionHelpError = 'おてつだいの報告に失敗しました'; // 生成失敗
   static const String exchangeError = 'ごほうびの交換に失敗しました'; // 生成失敗
+
+  static const String digestError = 'おねだりの報告に失敗しました'; // 生成失敗
 
 
   // 警告

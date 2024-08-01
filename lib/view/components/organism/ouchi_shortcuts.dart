@@ -22,7 +22,7 @@ class OuchiShortCuts extends StatelessWidget {
           movePage: '/ouchi/top/reward',
           onTap: onTap,
         ),
-        const ShortcutButton(title: 'ONEDARI', icon: Icons.auto_awesome, movePage: '/home'),
+        const ShortcutButton(title: 'ONEDARI', icon: Icons.auto_awesome, movePage: '/ouchi/top/onedari'),
       ]),
     );
   }
