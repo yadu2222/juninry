@@ -13,7 +13,7 @@ import '../../../apis/controller/reward_req.dart';
 
 class PageOnedari extends HookWidget {
   // タイトル
-  final String title = 'ONEDARI';
+  final String title = 'おねだり';
   // 右上に表示するアイコン
   final Icon featureIconButton = const Icon(
     Icons.drive_file_rename_outline_rounded,
