@@ -47,11 +47,11 @@ class PageNoticeDetail extends HookWidget {
                 icon: Icons.menu_book_outlined,
                 title: '確認状況',
               ),
+              Expanded(child: 
               // お知らせを確認した学生諸君
               StudentReadStatusList(
-                studentData: await noticeReq.getStudentReadStatusHandler(
-                    noticeUuid), // ここではサンプルのList<map>を渡している
-              )
+                studentData: await noticeReq.getStudentReadStatusHandler(noticeUuid), // ここではサンプルのList<map>を渡している
+              ))
             ],
           );
 
@@ -62,12 +62,8 @@ class PageNoticeDetail extends HookWidget {
             noticeState.value.readStatus == null
                 ? const Spacer()
                 : noticeState.value.readStatus == 1
-                    ? const BasicButton(
-                        text: '確認済です', icon: Icons.check, isColor: true)
-                    : const BasicButton(
-                        text: '未確認です',
-                        icon: Icons.error_outline,
-                        isColor: false)
+                    ? const BasicButton(text: '確認済です', icon: Icons.check, isColor: true)
+                    : const BasicButton(text: '未確認です', icon: Icons.error_outline, isColor: false)
           ]);
 
         // 親は既読通知を送信するボタンを表示
@@ -75,8 +71,7 @@ class PageNoticeDetail extends HookWidget {
           return Column(children: [
             const Spacer(),
             noticeState.value.readStatus == 1
-                ? const BasicButton(
-                    text: '確認済です', icon: Icons.check, isColor: true)
+                ? const BasicButton(text: '確認済です', icon: Icons.check, isColor: true)
                 : BasicButton(
                     text: '確認済みにする',
                     icon: Icons.send,
@@ -114,8 +109,7 @@ class PageNoticeDetail extends HookWidget {
           ? IconButton(
               onPressed: () {
                 // 引用付きの新規お知らせを作成
-                context.go('/notice/register',
-                    extra: {'quotedNoticeUUID': noticeUuid, 'newNotice': true});
+                context.go('/notice/register', extra: {'quotedNoticeUUID': noticeUuid, 'newNotice': true});
               },
               icon: const Icon(
                 Icons.attach_file, // 右側のアイコン
@@ -126,8 +120,8 @@ class PageNoticeDetail extends HookWidget {
           ? [const CircularProgressIndicator()]
           : [
               // なかみ
-              NoticeDetailTab(tabData: noticeState.value), // 詳細
-
+               NoticeDetailTab(tabData: noticeState.value), // 詳細
+              
               Expanded(
                 // リストビューは高さ制限を付けないと実行時エラーが出る
                 child: readWidget.value,

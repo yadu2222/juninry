@@ -18,8 +18,13 @@ class CountItem extends StatelessWidget {
         Container(
       margin: const EdgeInsets.only(left: 15),
       child: Center(
-        child: Text(
+        child:itemData.pageCount != 0 ?
+        
+         Text(
           "${itemData.startPage.toString()} ~ ${(itemData.startPage + itemData.pageCount - 1).toString()}ｐ",
+          style: Fonts.h4,
+        ) : Text(
+          "${itemData.startPage.toString()}枚",
           style: Fonts.h4,
         ),
       ),

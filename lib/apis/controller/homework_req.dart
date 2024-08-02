@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:juninry/apis/error.dart';
 import 'package:juninry/models/homework_submission_record.dart';
 import 'dart:io';
-// import '../../models/homework_model.dart';
+import '../../models/register_homework_model.dart';
+import '../../models/teaching_item_model.dart';
 import '../service/homework_service.dart';
 // import 'package:go_router/go_router.dart';
 
@@ -14,6 +15,34 @@ class HomeworkReq {
   final BuildContext context;
 
   HomeworkReq({required this.context});
+
+  // 宿題登録
+  Future<void> registerHomeworkHandler(List<RegisterHomework> registerHomeworks) async {
+    try {
+
+      for(RegisterHomework registerHomework in registerHomeworks) {
+        await HomeworkService.registerHomework(registerHomework); // 課題登録を待つ
+      }
+      ToastUtil.show(message: Messages.registerSuccess);
+      GoRouter.of(context).go('/homework'); // 画面遷移
+      // } on RegisterHomeworkError {
+      //   // handleException(ExceptionType.registerHomeworkError);
+      // }
+    } catch (e) {
+      print(e);
+      ToastUtil.show(message: Messages.registerError);
+    }
+  }
+
+  // 教材データを取得
+  Future<List<TeachingItem>> getTeachingItemsHandler(String classUUID) async {
+    try {
+      return await HomeworkService.getTeachingItems(classUUID); // 教材データ取得を待ち返却
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 
   // 宿題取得
   // 型こわすぎ
@@ -57,8 +86,7 @@ class HomeworkReq {
     }
   }
 
-  Future<List<HomeworkSubmissionRecord>> submissionLogHandler(
-      DateTime targetMonth) async {
+  Future<List<HomeworkSubmissionRecord>> submissionLogHandler(DateTime targetMonth) async {
     try {
       return await HomeworkService.submissionLog(targetMonth);
     } on DefaultException {

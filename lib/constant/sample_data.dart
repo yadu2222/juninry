@@ -23,25 +23,25 @@ class SampleData {
   static TeachingItem teachingItem1 = TeachingItem(
     teachingMaterialName: '漢字ドリル',
     subjectId: 1,
-    teachingMaterialImageUUID: 'aaaaa',
+    teachingMaterialUUID: '978f9835-5a16-4ac0-8581-7af8fac06b4e',
   );
 
   static TeachingItem teachingItem2 = TeachingItem(
     teachingMaterialName: '計算ドリル',
     subjectId: 2,
-    teachingMaterialImageUUID: 'aaaaa',
+    teachingMaterialUUID: '978f9835-5a16-4ac0-8581-7affac06b4e',
   );
 
   static TeachingItem teachingItem3 = TeachingItem(
     teachingMaterialName: '理科ワーク',
     subjectId: 3,
-    teachingMaterialImageUUID: 'aaaaa',
+    teachingMaterialUUID: '978f9835-5a16-4ac0-8581-7af8fac0b4e',
   );
 
   static TeachingItem teachingItem4 = TeachingItem(
     teachingMaterialName: '社会に貢献しよう',
     subjectId: 4,
-    teachingMaterialImageUUID: 'iiii',
+    teachingMaterialUUID: 'iiii',
   );
 
   static List<Homework> homeworkData = [

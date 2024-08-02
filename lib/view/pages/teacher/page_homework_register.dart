@@ -19,6 +19,7 @@ import '../../../models/class_model.dart';
 import '../../../models/teaching_item_model.dart';
 // api
 import '../../../apis/controller/class_req.dart';
+import '../../../apis/controller/homework_req.dart';
 // constant
 import '../../../constant/messages.dart';
 
@@ -39,6 +40,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
   @override
   Widget build(BuildContext context) {
     ClassReq classReq = ClassReq(context: context); // ClassReqクラスのインスタンスを生成
+    HomeworkReq homeworkReq = HomeworkReq(context: context); // HomeworkReqクラスのインスタンスを生成
     // 教材リスト
     final teachingMaterialData = useState<List<TeachingItem>>([]); // 表示する教材のリスト
     // 課題データ
@@ -49,6 +51,12 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     // クラスのデータ
     final classList = useState<List<Class>>([]); // 空で初期化  // apiから取得
     final selectClass = useState<Class>(Class(className: 'からっぽだね')); // nullで初期化 選択中のクラス
+
+    Future<void> getTeachingItem() async {
+      homeworkReq.getTeachingItemsHandler(selectClass.value.classUUID!).then((value) {
+        teachingMaterialData.value = value;
+      });
+    }
 
     // indexを受け取って配列に追加
     void add(int index) {
@@ -86,6 +94,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       // 日付とクラスを更新
       for (var homework in registerHomeworkData.value) {
         homework.classUUID = selectClass.value.classUUID!;
+
         homework.homeworkLimit = selectDate.value;
       }
       bool isRegister = await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
@@ -132,14 +141,33 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     //クラス選択時の処理
     void onClassChanged(Class value) {
+      // 配列を初期化
+      registerHomeworkData.value = [];
+      registerHomeworkDataOld.value = [];
+      // 選択中のクラスを更新
       selectClass.value = value;
+      // 教材データを再取得
+      getTeachingItem();
+    }
+
+    // 宿題登録
+    Future<void> registerHomework() async {
+      try {
+        await homeworkReq.registerHomeworkHandler(registerHomeworkData.value); // 課題登録を待つ
+        ToastUtil.show(message: Messages.registerSuccess);
+        GoRouter.of(context).go('/homework'); // 画面遷移
+      } catch (e) {
+        print(e);
+        ToastUtil.show(message: Messages.registerError);
+      }
     }
 
     // 初回のみ実行
     // ここでapiから教材リストを取得
     useEffect(() {
       Future<void> fetchData() async {
-        getClasses(); // クラス一覧を取得
+        await getClasses(); // クラス一覧を取得
+        getTeachingItem();
 
         // 下書きを呼び出している場合
         if (selectedDate != null) {
@@ -181,7 +209,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
           ),
 
           HomeworkRegisterTab(
-            teachingItemData: SampleData.teachingItemData,
+            teachingItemData: teachingMaterialData.value,
             onTap: add,
           ),
           // 区切り線
@@ -212,9 +240,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
                   icon: Icons.check,
                   text: '登録',
                   width: 0.37,
-                  onPressed: () {
-                    // TODO:APIに登録処理を投げる
-                  },
+                  onPressed: registerHomework,
                   isColor: false,
                 ),
               ])

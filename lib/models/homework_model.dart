@@ -38,7 +38,7 @@ class Homework {
     className: '',
     submitFlg: 0,
     teachingItem: TeachingItem(
-      teachingMaterialImageUUID: '',
+      teachingMaterialUUID: '',
       teachingMaterialName: '',
       subjectId: 0,
     ),
@@ -101,7 +101,7 @@ class Homework {
               className: loadHomework['className'],
               submitFlg: loadHomework['submitFlag'],
               teachingItem: TeachingItem(
-                teachingMaterialImageUUID: loadHomework['teachingMaterialImageUUID'], // 教材そのもののUUIDはこないらしいぞ！(そうなの！！？)
+                teachingMaterialUUID: loadHomework['teachingMaterialImageUUID'], // 教材そのもののUUIDはこないらしいぞ！(そうなの！！？)
                 teachingMaterialName: loadHomework['teachingMaterialName'],
                 subjectId: loadHomework['subjectId'],
               ),
@@ -124,7 +124,7 @@ class Homework {
               submitFlg: loadHomework['submitFlag'],
               className: loadHomework['className'],
               teachingItem: TeachingItem(
-                teachingMaterialImageUUID: loadHomework['teachingMaterialImageUUID'],
+                teachingMaterialUUID: loadHomework['teachingMaterialImageUUID'],
                 teachingMaterialName: loadHomework['teachingMaterialName'],
                 subjectId: loadHomework['subjectId'],
               ),
@@ -152,7 +152,7 @@ class Homework {
         homeworkNote: loadData['homework_note'],
         className: loadData['class_uuid'],
         teachingItem: TeachingItem(
-          teachingMaterialImageUUID: loadData['teaching_material_uuid'],
+          teachingMaterialUUID: loadData['teaching_material_uuid'],
           teachingMaterialName: loadData['teaching_material_name'],
           subjectId: loadData['subject_id'],
         ),

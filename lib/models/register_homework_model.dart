@@ -39,7 +39,7 @@ class RegisterHomework {
         startPageController: TextEditingController(text: loadData['start_page'].toString()),
         pageCountController: TextEditingController(text: loadData['page_count'].toString()),
         teachingItem: TeachingItem(
-          teachingMaterialImageUUID: loadData['teaching_material_uuid'],
+          teachingMaterialUUID: loadData['teaching_material_uuid'],
           teachingMaterialName: loadData['teaching_material_name'],
           subjectId: loadData['subject_id'],
         ),
@@ -54,12 +54,35 @@ class RegisterHomework {
         startPageController: TextEditingController(),
         pageCountController: TextEditingController(),
         teachingItem: TeachingItem(
-          teachingMaterialImageUUID: '',
+          teachingMaterialUUID: '',
           teachingMaterialName: '',
           subjectId: 0,
         ),
       );
     }
+  }
+
+  // リクエスト用のMAPに変換
+  static Map<String, dynamic> toMap(RegisterHomework homework) {
+    // ISO8601形式に変換
+    DateTime homeworkLimit = DateTime(2024, 8, 2); // 日付のみを設定（時間は00:00:00）
+
+    // UTCに変換し、ISO 8601形式の文字列にする
+    String isoDateString = homeworkLimit.toUtc().toIso8601String();
+
+    // 末尾に'Z'を追加
+    if (!isoDateString.endsWith('Z')) {
+      isoDateString += 'Z';
+    }
+    return {
+      'homeworkLimit': isoDateString,
+      'classUUID': homework.classUUID,
+      // 'homeworkNote': homework.noteController.text,
+      'homeworkNote': homework.noteController.text,
+      'startPage': int.tryParse(homework.startPageController.text) ?? 0,
+      'pageCount': homework.pageCountController.text != '' ? (int.parse(homework.pageCountController.text) - int.parse(homework.startPageController.text)) : null,
+      'teachingMaterialUUID': homework.teachingItem.teachingMaterialUUID,
+    };
   }
 
   // 下書きを保存
@@ -70,12 +93,13 @@ class RegisterHomework {
         deleteHomeworkDrafts(homework);
       }
       Map<String, dynamic> item = {
+        'homework_id': homework.homeworkId,
         'homework_limit': homework.homeworkLimit.toString(),
+        'class_uuid': homework.classUUID,
+        'homework_note': homework.noteController.text,
         'start_page': int.tryParse(homework.startPageController.text) ?? 0,
         'page_count': int.tryParse(homework.pageCountController.text) ?? 0,
-        'homework_note': homework.noteController.text,
-        'class_uuid': homework.classUUID,
-        'teaching_material_uuid': homework.teachingItem.teachingMaterialImageUUID,
+        'teaching_material_uuid': homework.teachingItem.teachingMaterialUUID,
         'teaching_material_name': homework.teachingItem.teachingMaterialName,
         'subject_id': homework.teachingItem.subjectId,
       };

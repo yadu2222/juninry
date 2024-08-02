@@ -17,8 +17,8 @@ class Urls {
   // static const String host = 'localhost';
 
   // ローカル環境
-  // static const String host = '10.200.1.53';
-  static const String host = '192.168.3.168';
+static const String host = '10.200.0.58';
+  // static const String host = '192.168.3.168';
   // static const String host = '192.168.0.12';
 
   static const String port = '4561';
@@ -44,6 +44,8 @@ class Urls {
   static const String getNextdayHomeworks = '$version/auth/users/homeworks/nextday'; // GETつぎのひの宿題取得
   static const String submittionHomework = '$version/auth/users/homeworks/submit'; // POST宿題提出
   static const String submissionLog = '$version/auth/users/homeworks/record?targetMonth='; // POST宿題提出履歴取得
+  static const String registerHomework = '$version/auth/users/homeworks/register'; // POST宿題登録
+  static const String getTeachingItems = '$version/auth/users/homeworks/tmaterials'; // GET教材取得
 
   // class
   static const String getClassmates = '$version/auth/users/classes/users'; // GETクラスメイト取得
