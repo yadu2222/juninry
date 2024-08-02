@@ -83,8 +83,7 @@ class TeacherBranch {
               pageBuilder: (context, state) {
                 debugPrint("state.extra: ${state.extra}");
                 // Map型でデータを送るためそれを取得
-                final Map<String, dynamic> extraData =
-                    state.extra as Map<String, dynamic>;
+                final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                 // データを取り出してみる
                 final String? noticeUUID = extraData['noticeUUID'];
                 return NoTransitionPage(
@@ -96,18 +95,15 @@ class TeacherBranch {
               },
             ),
             GoRoute(
-                path:
-                    'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
+                path: 'register', // お知らせ登録 お知らせの下書き、引用の管理はnotice_register_modelクラスを使う
                 pageBuilder: (context, state) {
                   // データが送られてきたとき
                   if (state.extra != null) {
                     // Map型でデータを送るためそれを取得
-                    final Map<String, dynamic> extraData =
-                        state.extra as Map<String, dynamic>;
+                    final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                     // データを取り出してみる
                     final int? draftedNoticeId = extraData['draftedNoticeId'];
-                    final String? quotedNoticeUUID =
-                        extraData['quotedNoticeUUID'];
+                    final String? quotedNoticeUUID = extraData['quotedNoticeUUID'];
                     final bool? newNotice = extraData['newNotice'];
                     return NoTransitionPage(
                       key: state.pageKey,
@@ -167,9 +163,7 @@ class TeacherBranch {
                 GoRoute(
                   name: 'drafts',
                   path: 'drafts',
-                  pageBuilder: (context, state) => NoTransitionPage(
-                      key: state.pageKey,
-                      child: const PageHomeworkDraftsTeacher()),
+                  pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomeworkDraftsTeacher()),
                 )
               ],
               pageBuilder: (context, state) {
@@ -180,14 +174,12 @@ class TeacherBranch {
                   // debugPrint("きちゃ");
 
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   final String selectDate = extraData['selectDate'];
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child:
-                        PageHomeworkRegisterTeacher(selectedDate: selectDate),
+                    child: PageHomeworkRegisterTeacher(selectedDate: selectDate),
                   );
 
                   // 下書きを選択していない場合
@@ -212,8 +204,7 @@ class TeacherBranch {
                       ],
                       pageBuilder: (context, state) {
                         // 遷移時に定義されたデータをrouterで再定義
-                        final Map<String, dynamic> extraData =
-                            state.extra as Map<String, dynamic>;
+                        final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                         final String homeworkUUID = extraData['homeworkUUID'];
                         final String studentUUID = extraData['studentUUID'];
                         return NoTransitionPage(
@@ -228,8 +219,7 @@ class TeacherBranch {
                 ],
                 pageBuilder: (context, state) {
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   final String homeworkUUID = extraData['homeworkUUID'];
                   return NoTransitionPage(
                     key: state.pageKey,
@@ -237,9 +227,19 @@ class TeacherBranch {
                     child: PageSubmissionsTeacher(homeworkUUID: homeworkUUID),
                   );
                 }),
+
+            GoRoute(
+              name: 'teachingItem',
+              path: 'teaching_item',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+
+                // TODO:かえる
+                child: const PageMyPage(),
+              ),
+            ),
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageHomework()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),
@@ -268,8 +268,7 @@ class TeacherBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),
