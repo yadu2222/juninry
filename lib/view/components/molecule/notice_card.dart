@@ -96,17 +96,17 @@ class NoticeCard extends StatelessWidget {
                   ],
                 ),
 
-                // アイコン
-                Container(
-                  alignment: Alignment.center,
-                  child: Center(
-                      child:
-                              noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
-                                  ? null
-                                  : noticeData.readStatus == 1
-                                      ? checkIcon
-                                      : unknownIcon),
-                ),
+                // // アイコン
+                // Container(
+                //   alignment: Alignment.center,
+                //   child: Center(
+                //       child:
+                //               noticeData.readStatus == null // 既読ステータスnullの人はお家ないのでアイコンなしで
+                //                   ? null
+                //                   : noticeData.readStatus == 1
+                //                       ? checkIcon
+                //                       : unknownIcon),
+                // ),
                        // 既読アイコン
               if (!isTeacher) ...[
                 // おうちない人はアイコンなし　おうちあるひとはアイコン表示
