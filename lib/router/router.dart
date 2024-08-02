@@ -138,6 +138,7 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
           ),
         ),
       ),
+      
       // ボトムバーが必要な画面のルーティング
       // いらなければ StatefulShellRoute と同じ階層に GoRoute で書く
       StatefulShellRoute.indexedStack(
@@ -148,5 +149,12 @@ Future<GoRouter> createRouter({required VoidCallback updateRouter}) async {
           },
           branches: [...await getBranches()])
     ],
+
+    redirect: (context, state) {
+      if (state.error != null) {
+        return '/home';
+      }
+      return null;
+    },
   );
 }

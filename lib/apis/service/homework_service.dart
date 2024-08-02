@@ -156,4 +156,20 @@ class HomeworkService {
     // 返す
     return HomeworkSubmissionRecord.resToHomeworkSubmissionRecords(resData['srvResData']);
   }
+
+  // 提出状況を取得(画像が来る)
+  static Future<Map> homeworkSubmittionInfo(String homeworkUUID) async {
+    // リクエストを生成
+    final reqData = Request(url: Urls.homeworkSubmittionInfo + homeworkUUID, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
+    Map resData = await HttpReq.httpReq(reqData);
+  
+
+    Map<String, dynamic> res = {};
+
+
+    debugPrint(resData.toString());
+    // 返す
+    return resData['srvResData'];
+  }
 }
