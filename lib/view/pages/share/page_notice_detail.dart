@@ -25,6 +25,7 @@ class PageNoticeDetail extends HookWidget {
 
     // お知らせ管理
     final noticeState = useState(Notice.errorNotice());
+    final quotedNoticeState = useState<(String, String)?>(null);
     final isLoading = useState(true);
 
     // 付随するウィジェットを管理
@@ -47,7 +48,7 @@ class PageNoticeDetail extends HookWidget {
                 icon: Icons.menu_book_outlined,
                 title: '確認状況',
               ),
-              Expanded(child: 
+              Expanded(child:
               // お知らせを確認した学生諸君
               StudentReadStatusList(
                 studentData: await noticeReq.getStudentReadStatusHandler(noticeUuid), // ここではサンプルのList<map>を渡している
@@ -92,6 +93,15 @@ class PageNoticeDetail extends HookWidget {
     Future<void> getNoticeDetail() async {
       noticeState.value = await noticeReq.fetchNoticeDetailHandler(noticeUuid);
       readWidget.value = await setReadWidget();
+
+      //　引用が設定されていた場合そのお知らせを取得
+      if (noticeState.value.quotedNoticeUUID != null) {
+        final resData = await noticeReq.fetchNoticeDetailHandler(noticeState.value.quotedNoticeUUID!);
+        quotedNoticeState.value = (resData.noticeTitle, resData.noticeUUID!);
+        debugPrint("引用されているお知らせを取得しました");
+        debugPrint("引用されているお知らせのUUIDは${quotedNoticeState.value!.$2}");
+        debugPrint("引用されているお知らせのタイトルは${quotedNoticeState.value!.$1}");
+      }
       isLoading.value = false;
     }
 
@@ -120,8 +130,8 @@ class PageNoticeDetail extends HookWidget {
           ? [const CircularProgressIndicator()]
           : [
               // なかみ
-               NoticeDetailTab(tabData: noticeState.value), // 詳細
-              
+               NoticeDetailTab(tabData: noticeState.value, quotedNoticeData: quotedNoticeState.value), // 詳細
+
               Expanded(
                 // リストビューは高さ制限を付けないと実行時エラーが出る
                 child: readWidget.value,

@@ -14,10 +14,10 @@ class Urls {
   // static const String host = '10.0.2.2';
 
   // iOSエミュレーターにおすすめ
-  static const String host = 'localhost';
+  // static const String host = 'localhost';
 
   // ローカル環境
-// static const String host = '10.200.0.58';
+static const String host = '10.200.0.220';
   // static const String host = '192.168.3.168';
   // static const String host = '192.168.0.12';
 

@@ -6,11 +6,13 @@ class QuoteFromNotice extends StatelessWidget {
   final String? quoteNoticeTitle;
   final Function() onQuoteClicked;
   final Function() onDeleteClicked;
+  final bool isDivider;
   const QuoteFromNotice(
       {super.key,
       required this.quoteNoticeTitle,
       required this.onQuoteClicked,
-      required this.onDeleteClicked});
+      required this.onDeleteClicked,
+      this.isDivider = true});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class QuoteFromNotice extends StatelessWidget {
               Text(quoteNoticeTitle ?? "投稿の引用", style: Fonts.p),
             ]),
           ),
+          isDivider ?
           const Divider(
             height: 5,
             thickness: 3.5,
@@ -47,6 +50,7 @@ class QuoteFromNotice extends StatelessWidget {
             indent: 0,
             endIndent: 0,
           )
+          : Container(),
         ],
       ),
     );
