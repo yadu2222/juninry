@@ -6,7 +6,7 @@ class TeachingItem {
   TeachingItem({
     this.teachingMaterialUUID,
     required this.teachingMaterialName,
-    required this.subjectId,
+     required this.subjectId,
   });
 
   // レスポンスデータをTeachingItemに変換

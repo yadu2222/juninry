@@ -19,8 +19,11 @@ class HomeworkReq {
   // 宿題登録
   Future<void> registerHomeworkHandler(List<RegisterHomework> registerHomeworks) async {
     try {
+      for (RegisterHomework homework in registerHomeworks) {
+        print(homework.homeworkLimit);
+      }
 
-      for(RegisterHomework registerHomework in registerHomeworks) {
+      for (RegisterHomework registerHomework in registerHomeworks) {
         await HomeworkService.registerHomework(registerHomework); // 課題登録を待つ
       }
       ToastUtil.show(message: Messages.registerSuccess);

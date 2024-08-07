@@ -65,7 +65,7 @@ class RegisterHomework {
   // リクエスト用のMAPに変換
   static Map<String, dynamic> toMap(RegisterHomework homework) {
     // ISO8601形式に変換
-    DateTime homeworkLimit = DateTime(2024, 8, 2); // 日付のみを設定（時間は00:00:00）
+    DateTime homeworkLimit = DateTime(homework.homeworkLimit.year, homework.homeworkLimit.month, homework.homeworkLimit.day); // 日付のみを設定（時間は00:00:00）
 
     // UTCに変換し、ISO 8601形式の文字列にする
     String isoDateString = homeworkLimit.toUtc().toIso8601String();

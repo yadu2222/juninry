@@ -94,7 +94,6 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       // 日付とクラスを更新
       for (var homework in registerHomeworkData.value) {
         homework.classUUID = selectClass.value.classUUID!;
-
         homework.homeworkLimit = selectDate.value;
       }
       bool isRegister = await RegisterHomework.registerHomeworkDrafts(registerHomeworkData.value);
@@ -153,6 +152,11 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     // 宿題登録
     Future<void> registerHomework() async {
       try {
+         // 日付とクラスを更新
+        for (var homework in registerHomeworkData.value) {
+          homework.classUUID = selectClass.value.classUUID!;
+          homework.homeworkLimit = selectDate.value;
+        }
         await homeworkReq.registerHomeworkHandler(registerHomeworkData.value); // 課題登録を待つ
         ToastUtil.show(message: Messages.registerSuccess);
         GoRouter.of(context).go('/homework'); // 画面遷移
