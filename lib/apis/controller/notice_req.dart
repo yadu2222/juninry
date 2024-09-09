@@ -4,6 +4,7 @@ import 'package:juninry/models/student_model.dart';
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../../models/notice_model.dart';
+import '../../models/notice_filters.dart';
 import '../service/notice_service.dart';
 import '../../models/quoted_notice_model.dart';
 
@@ -85,4 +86,6 @@ class NoticeReq {
       return false;
     }
   }
+
+
 }

@@ -31,7 +31,7 @@ inviteDialog({required BuildContext context, inviteClass.Class? classData, Ouchi
                 style: Fonts.h4,
               ),
               Text(
-                classData != null ? classData.inviteCode! : ouchiData!.inviteCode,
+                classData != null ? classData.inviteCode! : ouchiData!.inviteCode as String,
                 style: Fonts.h1,
               ),
               const Text(

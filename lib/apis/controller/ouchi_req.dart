@@ -49,5 +49,13 @@ class OUCHIReq {
     }
   }
 
-
+  // おうちメンバーを取得
+  Future<Ouchi> getOuchiMembersHandler() async {
+    try {
+      return await OUCHIService.getOuchiInfo(); // メンバーを取得
+    } catch (error) {
+      ToastUtil.show(message: Messages.createOuchiError); // 作成失敗メッセージ
+      return Ouchi.errorOuchi();
+    }
+  }
 }

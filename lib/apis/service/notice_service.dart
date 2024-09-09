@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/models/notice_filters.dart';
 import 'package:juninry/models/student_model.dart';
 
 import '../../models/req_model.dart';
@@ -10,9 +11,9 @@ import 'package:http/http.dart' as http;
 import '../http_req.dart';
 import '../error.dart';
 
-
 class NoticeService {
-  static Future<List<Notice>> getNotices(List<String> classUUIDs, int? readStatus) async {
+  static Future<List<Notice>> getNotices(
+      List<String> classUUIDs, int? readStatus) async {
     String queryParams = '?';
 
     classUUIDs.forEach((classUUID) {
@@ -26,14 +27,13 @@ class NoticeService {
     try {
       // リクエストを生成
       final reqData = Request(
-          url: Urls.getNotices + queryParams,
-          reqType: 'GET',
-          headers: {});
+          url: Urls.getNotices + queryParams, reqType: 'GET', headers: {});
       // リクエストメソッドにオブジェクトを投げる
       Map resData = await HttpReq.httpReq(reqData);
 
       List<Notice> notices = [];
-      if (resData['srvResData']['notices'] == null) { // 表示すべきお知らせがない
+      if (resData['srvResData']['notices'] == null) {
+        // 表示すべきお知らせがない
         return notices;
       }
       for (Map<String, dynamic> notice in resData['srvResData']['notices']) {
@@ -53,12 +53,9 @@ class NoticeService {
     }
   }
 
-
   static Future<bool> updateReadStatus(String noticeUuid) async {
     final reqData = Request(
-        url: Urls.noticeRead + noticeUuid,
-        reqType: 'POST',
-        headers: {});
+        url: Urls.noticeRead + noticeUuid, reqType: 'POST', headers: {});
     Map result = await HttpReq.httpReq(reqData);
     debugPrint(result.toString());
     return true;
@@ -66,9 +63,7 @@ class NoticeService {
 
   static Future<List<Student>> getStudentReadStatus(String noticeUUID) async {
     final reqData = Request(
-        url: Urls.noticeReadStatus + noticeUUID,
-        reqType: 'GET',
-        headers: {});
+        url: Urls.noticeReadStatus + noticeUUID, reqType: 'GET', headers: {});
     Map result = await HttpReq.httpReq(reqData);
     List<Student> students = [];
     for (Map<String, dynamic> student in result['srvResData']) {
@@ -76,7 +71,6 @@ class NoticeService {
     }
 
     return students;
-
   }
 
   static Future<QuotedNotice> getQuotedNotice(String noticeUuid) async {
@@ -114,4 +108,5 @@ class NoticeService {
     });
     await HttpReq.httpReq(reqData);
   }
+
 }
