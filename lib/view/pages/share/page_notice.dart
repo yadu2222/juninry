@@ -134,14 +134,23 @@ class PageNotice extends HookWidget {
           }
         }
       }
-      List<String> queryClass = []; // クエリ用のクラスリスト
-      if (classList.value.length != classListFilter.value.length) {
-        //全選択時は送らない
-        queryClass = List<String>.from(classListFilter.value);
-      }
+
       isLoading.value = true;
-      notices.value = await noticeReq.getNoticesHandler(
-          readStatus: readStatus, classUUIDs: queryClass);
+      // クラスと子供のどちらのフィルターを適用するか
+      if (isClassFilterMode.value != false) {
+        if (classList.value.length != classListFilter.value.length) {
+          //全選択時は送らない
+          notices.value = await noticeReq.getNoticesHandler(
+              readStatus: readStatus, classUUIDs: classListFilter.value);
+        }
+      } else {
+        if (childrenListFilter.value.length != childrenList.value.length) {
+          //全選択時は送らない
+          notices.value = await noticeReq.getNoticesHandler(
+              readStatus: readStatus, childrenUUIDs: childrenListFilter.value);
+        }
+      }
+
       isLoading.value = false;
     }
 

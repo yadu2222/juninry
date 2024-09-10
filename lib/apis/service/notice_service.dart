@@ -13,12 +13,17 @@ import '../error.dart';
 
 class NoticeService {
   static Future<List<Notice>> getNotices(
-      List<String> classUUIDs, int? readStatus) async {
+      List<String> classUUIDs, List<String> childrenUUIDs, int? readStatus) async {
     String queryParams = '?';
 
     classUUIDs.forEach((classUUID) {
       queryParams += 'classUUID[]=$classUUID&';
     });
+
+    childrenUUIDs.forEach((childrenUUID) {
+      queryParams += 'pupilUUID[]=$childrenUUID&';
+    });
+
     if (readStatus != null) {
       queryParams += 'readStatus=$readStatus';
     }

@@ -15,9 +15,9 @@ class NoticeReq {
 
   // 複数のお知らせを取得
   Future<List<Notice>> getNoticesHandler(
-      {List<String> classUUIDs = const [], int? readStatus}) async {
+      {List<String> classUUIDs = const [], List<String> childrenUUIDs = const [], int? readStatus}) async {
     try {
-      return await NoticeService.getNotices(classUUIDs, readStatus);
+      return await NoticeService.getNotices(classUUIDs,childrenUUIDs, readStatus);
     } catch (error) {
       debugPrint(error.toString());
       return [];

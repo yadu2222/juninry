@@ -15,6 +15,7 @@ class Urls {
 
   // iOSエミュレーターにおすすめ
   static const String host = 'localhost';
+  // static const String host = 'm2.local';
 
   // ローカル環境
   // static const String host = '10.200.0.220';
