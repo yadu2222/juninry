@@ -45,7 +45,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     final teachingMaterialData = useState<List<TeachingItem>>([]); // 表示する教材のリスト
     // 課題データ
     final selectDateOld = useState<String?>(selectedDate); // dbから取得する日付データ格納 stringじゃないと下書きページから渡されるときにエラーを吐く？様子
-    final selectDate = useState<DateTime>(DateTime.now()); // 登録する日付
+    final selectDate = useState<DateTime>(DateTime.now().add(const Duration(days: 1))); // 登録する日付
     final registerHomeworkData = useState<List<RegisterHomework>>([]); // 空で初期化 現在選択中の課題データを格納
     final registerHomeworkDataOld = useState<List<RegisterHomework>>([]); // 空で初期化 dbから読み込んだ課題データを格納
     // クラスのデータ
@@ -79,9 +79,11 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     // // 日付を選択
     Future<void> selectDatePicker() async {
-      DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime.now(), maxTime: DateTime(2030, 12, 31), onChanged: (date) {
+      DateTime tomorrow = DateTime.now().add(const Duration(days: 1));
+
+      DatePicker.showDatePicker(context, showTitleActions: true, minTime: tomorrow, maxTime: DateTime(2030, 12, 31), onChanged: (date) {
         selectDate.value = date;
-      }, currentTime: DateTime.now(), locale: LocaleType.jp);
+      }, currentTime: tomorrow, locale: LocaleType.jp);
     }
 
     // db保存処理
@@ -152,7 +154,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
     // 宿題登録
     Future<void> registerHomework() async {
       try {
-         // 日付とクラスを更新
+        // 日付とクラスを更新
         for (var homework in registerHomeworkData.value) {
           homework.classUUID = selectClass.value.classUUID!;
           homework.homeworkLimit = selectDate.value;
@@ -182,7 +184,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
           selectDate.value = DateTime.parse(selectDateOld.value!);
         } else {
           // 引数が空のときは変数に格納する日付をあわせる
-          selectDate.value = DateTime.now();
+          selectDate.value = DateTime.now().add(const Duration(days: 1));
           selectDateOld.value = selectDate.value.toString();
         }
       }
