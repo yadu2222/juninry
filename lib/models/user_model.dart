@@ -5,14 +5,15 @@ import './dbcon.dart';
 
 class User {
   String userName;
+  String? userUUID;
   int userTypeId;
-  String mailAddress;
-  String password;
+  String? mailAddress;
+  String? password;
   String? jwtKey;
   String? ouchiUUID;
   int? ouchiPoint;
 
-  User({required this.userName, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey, this.ouchiUUID,this.ouchiPoint});
+  User({required this.userName, this.userUUID, required this.userTypeId, required this.mailAddress, required this.password, this.jwtKey, this.ouchiUUID,this.ouchiPoint});
 
   static User errorUser() {
     return User(userName: '', userTypeId: 0, mailAddress: '', password: '', jwtKey: '', ouchiUUID: '');
@@ -35,15 +36,17 @@ class User {
     }
   }
 
+  // レスポンスデータをUserに変換
   static User resToUser(Map loadData) {
     try {
       return User(
         userName: loadData['userName'],
+        userUUID: loadData['userUUID'] as String?,
         userTypeId: loadData['userTypeId'],
-        mailAddress: loadData['mailAddress'],
-        password: loadData['password'],
-        ouchiUUID: loadData['ouchiUUID'],
-        ouchiPoint: loadData['ouchiPoint'],
+        mailAddress: loadData['mailAddress'] as String?,  
+        password: loadData['password'] as String?,
+        ouchiUUID: loadData['ouchiUUID'] as String?,
+        ouchiPoint: loadData['ouchiPoint'] as int?,
       );
     } catch (e) {
       debugPrint('Error converting map to User: $e');

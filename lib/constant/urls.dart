@@ -15,11 +15,12 @@ class Urls {
 
   // iOSエミュレーターにおすすめ
   // static const String host = 'localhost';
+  // static const String host = 'm2.local';
 
   // ローカル環境
-// static const String host = '10.200.0.220';
-  static const String host = '192.168.3.168';
-  // static const String host = '192.168.0.12';
+  // static const String host = '10.200.0.220';
+  // static const String host = '192.168.3.168';
+  static const String host = '192.168.0.12';
 
   static const String port = '4561';
   static const String baseUrl = '$protocol$host:$port';
@@ -36,8 +37,9 @@ class Urls {
   static const String noticeRead = '$version/auth/users/notices/read/'; // POST既読
   static const String noticeDetail = '$version/auth/users/notices/'; // GETお知らせ詳細
   static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
-  static const String noticeFilter = '$version/auth/users/notice/'; // POST特定のお知らせフilter
+  static const String noticeFilters = '$version/auth/users/notices/filters'; // GETお知らせフィルタリング取得
   static const String noticeReadStatus = '$version/auth/users/notices/status/';  // GET生徒の既読状態
+
 
   // homework
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
@@ -59,6 +61,7 @@ class Urls {
   static const String joinOUCHI = '$version/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
   static const String createOUCHI = '$version/auth/users/ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
   static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
+  static const String getOUCHIInfo = '$version/auth/users/ouchies/info'; // GETOUCHI情報取得
 
   // help
   static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得

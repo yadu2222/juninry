@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:juninry/constant/colors.dart';
+import 'package:juninry/models/user_model.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
 import 'package:juninry/view/components/molecule/divider.dart';
 import '../../../constant/fonts.dart';
@@ -12,7 +13,13 @@ class FilterDrawer extends StatefulWidget {
   bool readFilterEnabled;
   List<Class> classList; // 所属クラス
   List<String> classListFilter; // 取得クラスの絞り込み
+  List<User>? childrenList;
+  List<String>? childrenListFilter;
+  bool? isClassFilterMode;
+  void Function(bool value)? onFilterToggled;
   void Function(bool value, Class item) onClassListChanged;
+  void Function(bool value, User item)? onChildrenListChanged;
+  void Function(bool value)? onAllChildrenListChanged;
   void Function(bool value) onAllClassListChanged;
   void Function() refreshNotices;
 
@@ -21,7 +28,13 @@ class FilterDrawer extends StatefulWidget {
       this.readFilterEnabled = false,
       required this.classList,
       required this.classListFilter,
+      this.childrenList,
+      this.childrenListFilter,
+      this.isClassFilterMode,
+      this.onFilterToggled,
       required this.onClassListChanged,
+      this.onChildrenListChanged,
+      this.onAllChildrenListChanged,
       required this.onAllClassListChanged,
       required this.refreshNotices,
       super.key});
@@ -31,12 +44,10 @@ class FilterDrawer extends StatefulWidget {
 }
 
 class _FilterDrawerState extends State<FilterDrawer> {
-
   @override
   void initState() {
     super.initState();
   }
-
 
   final Icon checkIcon = const Icon(
     Icons.check,
@@ -45,16 +56,10 @@ class _FilterDrawerState extends State<FilterDrawer> {
   );
 
   @override
-
-
   @override
-
   void dispose() {
     super.dispose();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -130,41 +135,70 @@ class _FilterDrawerState extends State<FilterDrawer> {
           const SizedBox(
             height: 15,
           ),
-          const DividerView(
+          DividerView(
             icon: Icons.menu_book,
             iconColor: AppColors.iconMiddleGray,
-            title: 'クラス選択',
+            title: '絞込み条件',
             fontStyle: Fonts.h3,
             dividColor: AppColors.main,
             indent: 10,
             endIndent: 10,
+            endIcon: widget.isClassFilterMode == null // 子供でソートしない場合は非表示
+                ? null
+                : InkWell(
+                    onTap: () {
+                      if (widget.isClassFilterMode != null) {
+                        widget.onFilterToggled!(widget.isClassFilterMode!);
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(20),
+                    child: const Icon(Icons.autorenew,
+                        color: AppColors.iconMiddleGray, size: 26),
+                  ),
           ),
 
           // クラスのリスト
           Expanded(
-
             child: ListView(
               padding: const EdgeInsets.only(top: 0),
               children: [
-                _tile(
-                    title: '全選択/解除',
-                    value: widget.classListFilter.length ==
-                        widget.classList.length,
-                    onChanged: (bool? value) {
-                      widget.onAllClassListChanged(value!);
-                    }),
-                ...widget.classList.map((item) => _tile(
-                      title: item.className,
-                      value: widget.classListFilter.contains(item.classUUID!),
-                      onChanged: (bool? value) {
-                        if (value == null) return;
-
-                        widget.onClassListChanged(
-                            value, item); // pages内のクラスリストを変更する
-                      },
-                    )),
+                widget.isClassFilterMode != false // null 子供ソートなし、false 子供ソート中
+                    ? _tile(
+                        title: '全選択/解除',
+                        value: widget.classListFilter.length ==
+                            widget.classList.length,
+                        onChanged: (bool? value) {
+                          widget.onAllClassListChanged(value!);
+                        })
+                    : _tile(
+                        title: '全選択/解除',
+                        value: widget.childrenList!.length ==
+                            widget.childrenListFilter!.length,
+                        onChanged: (bool? value) {
+                          widget.onAllChildrenListChanged!(value!);
+                        }),
+                ...widget.isClassFilterMode != false
+                    ? // null 子供ソートなし、　false 子供ソート中　true クラスソート中
+                    widget.classList.map((item) => _tile(
+                          title: item.className,
+                          value:
+                              widget.classListFilter.contains(item.classUUID!),
+                          onChanged: (bool? value) {
+                            if (value == null) return;
+                            widget.onClassListChanged(
+                                value, item); // pages内のクラスリストを変更する
+                          },
+                        ))
+                    : widget.childrenList!.map((item) => _tile(
+                          title: item.userName,
+                          value: widget.childrenListFilter!
+                              .contains(item.userUUID!),
+                          onChanged: (bool? value) {
+                            if (value == null) return;
+                            widget.onChildrenListChanged!(value, item);
+                          },
+                        ))
               ],
-
             ),
           ),
 
@@ -174,7 +208,6 @@ class _FilterDrawerState extends State<FilterDrawer> {
             child: BasicButton(
               text: '適用',
               onPressed: () {
-
                 widget.refreshNotices();
 
                 Navigator.pop(context); // ドロワーを閉じる

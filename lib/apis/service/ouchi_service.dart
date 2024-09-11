@@ -30,8 +30,15 @@ class OUCHIService {
   static Future<String> friendLineAccount() async {
     // TODO:エラーハンドリング
     // リクエストを生成
-    final reqData = Request(url: Urls.friendLineAccount, reqType: 'GET', headers: {});
+    final reqData =
+        Request(url: Urls.friendLineAccount, reqType: 'GET', headers: {});
     final resData = await HttpReq.httpReq(reqData);
     return resData['url']; // おうちデータを返す
+  }
+
+  static Future<Ouchi> getOuchiInfo() async {
+    final reqData = Request(url: Urls.getOUCHIInfo, reqType: 'GET', headers: {});
+    final resData = await HttpReq.httpReq(reqData);
+    return Ouchi.resToOuchi(resData['srvResData']);
   }
 }
