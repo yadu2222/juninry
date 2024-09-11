@@ -98,9 +98,9 @@ class PageNoticeDetail extends HookWidget {
       if (noticeState.value.quotedNoticeUUID != null) {
         final resData = await noticeReq.fetchNoticeDetailHandler(noticeState.value.quotedNoticeUUID!);
         quotedNoticeState.value = (resData.noticeTitle, resData.noticeUUID!);
-        debugPrint("引用されているお知らせを取得しました");
-        debugPrint("引用されているお知らせのUUIDは${quotedNoticeState.value!.$2}");
-        debugPrint("引用されているお知らせのタイトルは${quotedNoticeState.value!.$1}");
+      } else {
+        // 引用されていない場合消す
+        quotedNoticeState.value = null;
       }
       isLoading.value = false;
     }
