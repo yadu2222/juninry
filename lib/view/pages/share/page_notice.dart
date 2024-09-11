@@ -73,19 +73,22 @@ class PageNotice extends HookWidget {
     Future<void> getNoticeFilters() async {
       // フィルターリストを取得
       try {
-        // おうちのメンバーを取得する
-        Ouchi ouchiData = await ouchiReq.getOuchiMembersHandler();
+        // 親であれば子供のリストを取得してみて、2人以上いたら子供ソートを実装する
+        if (await isBranch(BranchType.patron)) {
+          // おうちのメンバーを取得する
+          Ouchi ouchiData = await ouchiReq.getOuchiMembersHandler();
 
-        // 子供であれば絞り込みの選択肢に追加し、選択済みにする
-        for (User member in ouchiData.members!) {
-          if (member.userTypeId == 2) {
-            childrenList.value.add(member);
-            childrenListFilter.value.add(member.userUUID!);
+          // 子供であれば絞り込みの選択肢に追加し、選択済みにする
+          for (User member in ouchiData.members!) {
+            if (member.userTypeId == 2) {
+              childrenList.value.add(member);
+              childrenListFilter.value.add(member.userUUID!);
+            }
           }
-        }
 
-        if (childrenList.value.length > 1) {
-          isClassFilterMode.value = true;
+          if (childrenList.value.length > 1) {
+            isClassFilterMode.value = true;
+          }
         }
 
         // クラス一覧を取得する
@@ -138,17 +141,24 @@ class PageNotice extends HookWidget {
       isLoading.value = true;
       // クラスと子供のどちらのフィルターを適用するか
       if (isClassFilterMode.value != false) {
+        // 無効またはクラスフィルタリング
+
+        List<String> queryFilter = [];
         if (classList.value.length != classListFilter.value.length) {
-          //全選択時は送らない
-          notices.value = await noticeReq.getNoticesHandler(
-              readStatus: readStatus, classUUIDs: classListFilter.value);
+          //全選択されていないならばフィルターを適用する
+          queryFilter = classListFilter.value;
         }
+        // 再取得
+        notices.value = await noticeReq.getNoticesHandler(
+            readStatus: readStatus, classUUIDs: queryFilter);
       } else {
+        List<String> queryFilter = [];
         if (childrenListFilter.value.length != childrenList.value.length) {
-          //全選択時は送らない
-          notices.value = await noticeReq.getNoticesHandler(
-              readStatus: readStatus, childrenUUIDs: childrenListFilter.value);
+          //全選択されていないならばフィルターを適用する
+          queryFilter = childrenListFilter.value;
         }
+        notices.value = await noticeReq.getNoticesHandler(
+            readStatus: readStatus, childrenUUIDs: queryFilter);
       }
 
       isLoading.value = false;
