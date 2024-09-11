@@ -7,7 +7,7 @@ import '../atoms/listitem.dart';
 
 // 生徒カード
 class StudentCard extends StatelessWidget {
-  StudentCard({
+  const StudentCard({
     super.key,
     required this.studentData,
     this.readStatusList = false,

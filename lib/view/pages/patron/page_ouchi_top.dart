@@ -41,7 +41,15 @@ class PageOuchiTopPatron extends HookWidget {
     }, []);
 
     return Stack(children: [
-      BasicTemplate(title: title, children: [
+      BasicTemplate(title: title,
+      featureIconButton: IconButton(
+            icon: const Icon(Icons.info_outline, size: 35),
+            onPressed: () {
+              // おうちの説明ページへ遷移
+              context.go('/ouchi/top/info');
+            },
+          ),
+       children: [
         // ここにおうちのコンテンツを追加
         const OuchiShortCuts(),
         const DividerView(

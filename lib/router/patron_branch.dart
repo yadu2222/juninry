@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/pages/patron/page_reward.dart';
 import 'package:juninry/view/pages/patron/page_reward_register.dart';
+import 'package:juninry/view/pages/share/page_ouchi_info.dart';
 
 // 遷移先
 // patron
@@ -151,6 +152,14 @@ class PatronBranch {
                       child: const PageOuchiTopPatron(),
                     ),
                 routes: [
+                   GoRoute(
+                    name: 'info',
+                    path: 'info',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const PageOuchiInfo(),
+                    ),
+                  ),
                   // 登録
                   GoRoute(
                     path: 'register',

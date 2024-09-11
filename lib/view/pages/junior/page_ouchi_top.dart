@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 // view
 import '../../components/template/basic_template.dart';
 import '../../components/organism/help_list.dart';
@@ -15,7 +16,7 @@ import '../../../models/help_model.dart';
 import '../../../models/user_model.dart';
 
 class PageOuchiTopJunior extends HookWidget {
-  PageOuchiTopJunior({super.key});
+  const PageOuchiTopJunior({super.key});
 
   final String title = 'おうち';
 
@@ -75,7 +76,16 @@ class PageOuchiTopJunior extends HookWidget {
     }, []);
 
     void movePointHistory() {}
-    return BasicTemplate(title: title, children: [
+    return BasicTemplate(title: title, 
+    featureIconButton: IconButton(
+      icon: const Icon(Icons.info_outline, size: 35),
+      onPressed: () {
+        // おうちの説明ページへ遷移
+        context.go('/ouchi/top/info');
+      },
+    ),
+    
+    children: [
       // ここにおうちのコンテンツを追加
       // たまっているポイント
       ReweadPoint(rewards: ouchiPoint.value, onTap: movePointHistory),
