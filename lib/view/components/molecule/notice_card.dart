@@ -38,63 +38,60 @@ class NoticeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double leftPadding = isQuote ? 5 : 20;
+
     return InkWell(
         onTap: () {
           debugPrint("noticeUUID: ${noticeData.noticeUUID}");
-          isQuote
-              ? context.go('/notice/register',
-                  extra: {'quotedNoticeUUID': noticeData.noticeUUID})
-              : context.go('/notice/detail',
-                  extra: {'noticeUUID': noticeData.noticeUUID});
+          isQuote ? context.go('/notice/register', extra: {'quotedNoticeUUID': noticeData.noticeUUID}) : context.go('/notice/detail', extra: {'noticeUUID': noticeData.noticeUUID});
         },
         child: ListItem(
-            padding:
-                const EdgeInsets.only(top: 7, bottom: 10, left: 20, right: 20),
+            padding: EdgeInsets.only(top: 7, bottom: 10, left: leftPadding, right: 20),
             // 表示する要素を配置
             widget: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Rowの子ウィジェットを左右に配置
+              crossAxisAlignment: CrossAxisAlignment.center, // Rowの子ウィジェットを中央に配置
 
               children: [
-                Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start, // 子ウィジェットを左揃えに設定
-                  children: [
-                    Row(
-                      children: [
-                        // 日付け
-                        Container(
-                          child: Text(
-                            noticeData.noticeDate!,
-                            style: Fonts.h3,
+                Row(children: [
+                  isQuote ? const Icon(Icons.attach_file, size: 36, color: AppColors.iconGray) : const SizedBox.shrink(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start, // 子ウィジェットを左揃えに設定
+                    children: [
+                      Row(
+                        children: [
+                          // 日付け
+                          Container(
+                            child: Text(
+                              noticeData.noticeDate!,
+                              style: Fonts.h3,
+                            ),
                           ),
-                        ),
 
-                        //日時と学年のテキスト間のスペースを設定
-                        const SizedBox(width: 15),
+                          //日時と学年のテキスト間のスペースを設定
+                          const SizedBox(width: 15),
 
-                        //学年
-                        Text(
-                          noticeData.className!,
-                          style: Fonts.py,
-                        ),
-                      ],
-                    ),
+                          //学年
+                          Text(
+                            noticeData.className!,
+                            style: Fonts.py,
+                          ),
+                        ],
+                      ),
 
-                    // 見出し
-                    Row(
-                      children: [
-                        const SizedBox(width: 2),
-                        Text(
-                          noticeData.noticeTitle,
-                          style: Fonts.notice,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      // 見出し
+                      Row(
+                        children: [
+                          const SizedBox(width: 2),
+                          Text(
+                            noticeData.noticeTitle,
+                            style: Fonts.notice,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ]),
 
                 // // アイコン
                 // Container(
@@ -107,12 +104,15 @@ class NoticeCard extends StatelessWidget {
                 //                       ? checkIcon
                 //                       : unknownIcon),
                 // ),
-                       // 既読アイコン
-              if (!isTeacher) ...[
-                // おうちない人はアイコンなし　おうちあるひとはアイコン表示
-                noticeData.readStatus == null ?
-                Container() : noticeData.readStatus == 1 ? checkIcon : unknownIcon,
-              ],
+                // 既読アイコン
+                if (!isTeacher) ...[
+                  // おうちない人はアイコンなし　おうちあるひとはアイコン表示
+                  noticeData.readStatus == null
+                      ? Container()
+                      : noticeData.readStatus == 1
+                          ? checkIcon
+                          : unknownIcon,
+                ],
               ],
             )));
   }
