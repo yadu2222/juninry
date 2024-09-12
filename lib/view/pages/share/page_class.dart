@@ -61,6 +61,7 @@ class PageClass extends HookWidget {
 
     // クラスに参加
     void join() async {
+      FocusScope.of(context).unfocus(); // キーボードを閉じる
       if (inviteCodeController.text.isNotEmpty) {
         String? className = await classReq.joinClassHandler(inviteCodeController.text, studentNumController.text);
         if (className != null) {

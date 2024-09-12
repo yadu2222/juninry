@@ -28,6 +28,7 @@ class PageLogin extends StatelessWidget {
 
     // ログイン処理
     void login() async {
+      FocusScope.of(context).unfocus(); // キーボードを閉じる
       if (mailController.text.isNotEmpty && passController.text.isNotEmpty) {
         await userReq.loginHandler(User(userName: "", userTypeId: 0, mailAddress: mailController.text, password: passController.text, jwtKey: ""), updRouter);
       } else {

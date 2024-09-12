@@ -211,6 +211,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       width: 0.4,
                       text: "下書きに保存",
                       onPressed: () async {
+                        FocusScope.of(context).unfocus(); //キーボードを閉じる
                         // 保存できた時はIDを下書きデータに格納する　※上書き保存のため
                         if (await save()) {
                           AlertDialogUtil.show(
@@ -232,6 +233,7 @@ class PageNoticeRegisterTeacher extends HookWidget {
                       text: "投稿",
                       isColor: false,
                       onPressed: () async {
+                        FocusScope.of(context).unfocus(); //キーボードを閉じる
                         bool result = await noticeReq.postNoticeHandler(Notice(
                           noticeTitle: titleController.text,
                           noticeExplanatory: textController.text,
