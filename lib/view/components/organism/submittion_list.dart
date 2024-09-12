@@ -28,7 +28,17 @@ class SubmittionList extends StatelessWidget {
                 }
               },
               child: item != null
-                  ? Container(margin: const EdgeInsets.all(5), child: Column(children: [Image.file(item), Text('${(homeworkData.startPage + index).toString()}p', style: Fonts.h4)]))
+                  ? Container(
+                      margin: const EdgeInsets.all(5),
+                      child: Column(children: [
+                        Image.file(
+                          item,
+                          width: MediaQuery.of(context).size.width * 0.9, // 画像の幅を指定
+                          height: 200, // 高さを指定
+                          fit: BoxFit.contain, // サイズに合わせて画像を調整
+                        ),
+                        Text('${(homeworkData.startPage + index).toString()}p', style: Fonts.h4)
+                      ]))
                   : SubmittionCard(count: homeworkData.startPage + index));
         }).toList())));
   }

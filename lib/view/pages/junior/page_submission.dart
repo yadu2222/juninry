@@ -20,12 +20,12 @@ import 'package:path_provider/path_provider.dart';
 
 // 提出ページ
 class PageSubmissionJunior extends HookWidget {
-  // final String homeworkUUID;
-  final Homework homework;
+  final String homeworkUUID;
+  // final Homework homework;
   const PageSubmissionJunior({
     super.key,
-    // required this.homeworkUUID,
-    required this.homework
+    required this.homeworkUUID,
+    // required this.homework
   });
 
   final String title = '提出';
@@ -34,9 +34,16 @@ class PageSubmissionJunior extends HookWidget {
   Widget build(BuildContext context) {
     final picker = ImagePicker(); // カメラインスタンス
     final HomeworkReq homeworkReq = HomeworkReq(context: context); // APIコントローラー
-    // final homework = useState<Homework>(); // 課題データ
-    final images = useState<List<File?>>(List.filled(homework.pageCount, null)); // 画像配列 countの枚数を要素数にnullで初期化
-    final counter = useState<int>(homework.pageCount); //  画像の枚数をカウント
+    final homework = useState<Homework?>(null); // 課題データ
+    final images = useState<List<File?>>([]); // 画像配列 countの枚数を要素数にnullで初期化
+    final counter = useState<int>(0); //  画像の枚数をカウント
+    final submittionFlag = useState<bool>(false); // 提出フラグ
+
+    // 課題の情報と提出状況を取得
+    Future<void> getHomework() async {
+      final homeworkData = await homeworkReq.getHomeworkHandler(homeworkUUID);
+      homework.value = homeworkData;
+    }
 
     Future<File> saveImage(File image) async {
       final directory = await getApplicationDocumentsDirectory();
@@ -70,10 +77,26 @@ class PageSubmissionJunior extends HookWidget {
 
     // 初回起動時に実行
     useEffect(() {
-      // TODO:homework!!!!!!!!!!!!!!!!取得!!!!!!!!!!!!!!!!!!!!!!!!!
-      // TODO: ここでIDを元に提出が必要な課題データを取得する処理を追加
-      Future<void> fetchData() async {}
+      Future<void> fetchData() async {
+        await getHomework();
+        // 画像に関する変数を初期化
+        submittionFlag.value = true;
+
+        if (submittionFlag.value) {
+          // 画像パスから画像を取得
+          for (String imageFileName in homework.value!.imageUrls!) {
+            final image = await homeworkReq.getHomeworkImage(homeworkUUID, imageFileName);
+            // 新しいリストを作成して更新
+            images.value = [...images.value, image];
+          }
+        } else {
+          images.value = List.filled(homework.value!.pageCount, null);
+          counter.value = homework.value!.pageCount;
+        }
+      }
+
       fetchData();
+
       return () {};
     }, []);
 
@@ -93,32 +116,36 @@ class PageSubmissionJunior extends HookWidget {
         // submittionHomework メソッドに渡す
         // TODO:提出確認 特定のHOMEWORKを取得できるようになったら変更する
         // homeworkReq.submittionHomework(homeworkUUID, nonNullImages);
-        homeworkReq.submittionHomework(homework.homeworkUUID!, nonNullImages);
+        homeworkReq.submittionHomework(homeworkUUID, nonNullImages);
       }
     }
 
     // テンプレート呼び出し
     return BasicTemplate(title: title, children: [
-      HomeworkCard.teacher(homeworkData:homework), // 課題カード
+      homework.value == null ? const SizedBox.shrink() : HomeworkCard.junior(homeworkData: homework.value!), // 課題カード
       const DividerView(), // 区切り線
       // 提出リスト
-      Expanded(
-          child: SubmittionList(
-        homeworkData: homework,
-        images: images.value,
-        pickImage: pickImage,
-      )), // 提出リスト
+      homework.value == null
+          ? const SizedBox.shrink()
+          : Expanded(
+              child: SubmittionList(
+              homeworkData: homework.value!,
+              images: images.value,
+              pickImage: pickImage,
+            )), // 提出リスト
 
       // 状態を元に提出ボタンを呼び出し
-      isCounter()
-          ? BasicButton(
-              text: "提出",
-              onPressed: () {
-                submit();
-              },
-              isColor: true,
-            )
-          : BasicButton(text: "あと${counter.value.toString()}枚", isColor: false, onPressed: () {})
+      submittionFlag.value
+          ? BasicButton(text: "提出済です", onPressed: () {}, isColor: true)
+          : isCounter()
+              ? BasicButton(
+                  text: "提出",
+                  onPressed: () {
+                    submit();
+                  },
+                  isColor: true,
+                )
+              : BasicButton(text: "あと${counter.value.toString()}枚", isColor: false, onPressed: () {})
     ]);
   }
 }

@@ -32,7 +32,10 @@ class TeachingTag extends StatelessWidget {
         width: 100,
         height: 25,
         decoration: BoxDecoration(
-          color: colors[itemData.subjectId  - 1],
+
+          // TODO:一時的措置
+          // color: colors[itemData.subjectId  - 1],
+          color: colors[itemData.subjectId],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(

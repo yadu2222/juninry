@@ -54,7 +54,7 @@ class HomeworkCard extends StatelessWidget {
                     alignment: Alignment.center,
                     // 課題の提出状態を判別している
                     child: Center(
-                        child: homeworkData.submitFlg == 1
+                        child: homeworkData.submitFlg != null && homeworkData.submitFlg == 1
                             ? checkIcon
                             : isJunior
                                 ? cameraIcon

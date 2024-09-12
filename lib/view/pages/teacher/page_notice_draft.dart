@@ -31,16 +31,14 @@ class PageNoticeDraftTeacher extends HookWidget {
 
     // タップした時の遷移先
     void onTap(int draftedNoticeId) {
-
-      context.go('/notice/register',
-          extra: {'draftedNoticeId': draftedNoticeId});
-
+      context.go('/notice/register', extra: {'draftedNoticeId': draftedNoticeId});
     }
 
     // useEffect内で非同期処理を実行するための方法
     useEffect(() {
       // 直接非同期関数を書くことはできない
       getDrafts(); // 非同期関数を呼び出し
+      return null;
     }, []);
 
     return BasicTemplate(title: "下書き", children: [

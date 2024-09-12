@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import './teaching_item_model.dart';
 
 class Homework {
@@ -13,6 +12,7 @@ class Homework {
   String className;
   int? submitFlg;
   TeachingItem teachingItem;
+  List<String>? imageUrls;
 
   Homework({
     this.homeworkUUID,
@@ -25,6 +25,7 @@ class Homework {
     required this.className,
     this.submitFlg,
     required this.teachingItem,
+    this.imageUrls
   });
 
   static Homework errHomework = Homework(
@@ -43,6 +44,40 @@ class Homework {
       subjectId: 0,
     ),
   );
+
+//   {
+//   "srvResMsg":  "OK",
+//   "srvResData": {
+//     "teachingMaterialUUID": "978f9835-5a16-4ac0-8581-7af8fac06b4e",
+//     "teachingMaterialName": "漢字ドリル3",
+//     "subjectId": 1,
+//     "startPage": 2,
+//     "pageCount": 8,
+//     "isSubmitted": true,  // or false
+//     "images": ["bbbbbbbb-a6ad-4059-809c-6df866e7c5e6.jpg, gggggggg-176f-4dea-bec0-21464f192869.jpg, rrrrrrrr-bb84-4565-9666-d53dfcb59dd3.jpg"]
+//   },
+// }
+
+  static Homework resToHomework(Map resData){
+    try {
+      return Homework(
+        startPage: resData['startPage'],
+        pageCount: resData['pageCount'],
+        homeworkNote: resData['homeworkNote'] ?? '',
+        className: resData['className'] ?? '',
+        teachingItem: TeachingItem(
+          teachingMaterialUUID: resData['teachingMaterialUUID'],
+          teachingMaterialName: resData['teachingMaterialName'],
+          subjectId: resData['subjectId'],
+        ),
+        submitFlg: resData['submitStatus'],
+        imageUrls: (resData['images'] != null) ? resData['images'].split(', ').toList() : [],
+      );
+    } catch (e) {
+      print('Error converting resData to Homework: $e');
+      return errHomework;
+    }
+  }
 
   // 失敗したらサービスでエラーを返す
   // のでここでは特に対応しない
@@ -99,7 +134,7 @@ class Homework {
               pageCount: loadHomework['pageCount'],
               homeworkNote: loadHomework['homeworkNote'],
               className: loadHomework['className'],
-              submitFlg: loadHomework['submitFlag'],
+              submitFlg: loadHomework['submitStatus'],
               teachingItem: TeachingItem(
                 teachingMaterialUUID: loadHomework['teachingMaterialImageUUID'], // 教材そのもののUUIDはこないらしいぞ！(そうなの！！？)
                 teachingMaterialName: loadHomework['teachingMaterialName'],
@@ -121,7 +156,7 @@ class Homework {
               startPage: loadHomework['startPage'],
               pageCount: loadHomework['pageCount'],
               homeworkNote: loadHomework['homeworkNote'],
-              submitFlg: loadHomework['submitFlag'],
+              submitFlg: loadHomework['submitStatus'],
               className: loadHomework['className'],
               teachingItem: TeachingItem(
                 teachingMaterialUUID: loadHomework['teachingMaterialImageUUID'],
