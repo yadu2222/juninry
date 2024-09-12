@@ -11,12 +11,19 @@ class PictureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListItem(
-      widget: image == null ? const Column(
-        children: [
-          Icon(Icons.add_a_photo),
-          Text('no image'),
-        ],
-      ) : Image.file(image!),
+      widget: image == null
+          ? const Column(
+              children: [
+                Icon(Icons.add_a_photo),
+                Text('no image'),
+              ],
+            )
+          : Image.file(
+              image!,
+              width: MediaQuery.of(context).size.width * 0.9, // 画像の幅を指定
+
+              fit: BoxFit.fitWidth, // サイズに合わせて画像を調整
+            ),
     );
   }
 }
