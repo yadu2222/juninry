@@ -156,8 +156,12 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       try {
         // 日付とクラスを更新
         for (var homework in registerHomeworkData.value) {
-          homework.classUUID = selectClass.value.classUUID!;
-          homework.homeworkLimit = selectDate.value;
+          if (homework.startPageController.text != "" || homework.startPageController.text != "0" ) {
+            homework.classUUID = selectClass.value.classUUID!;
+            homework.homeworkLimit = selectDate.value;
+          } else {
+            throw Exception("startPage is empty");
+          }
         }
         await homeworkReq.registerHomeworkHandler(registerHomeworkData.value); // 課題登録を待つ
         ToastUtil.show(message: Messages.registerSuccess);

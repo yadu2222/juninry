@@ -12,13 +12,8 @@ class PictureList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListItemBox<File>(
-        itemDatas: images,
-        listItem: (file) => InkWell(
-              onTap: () {
-                // 画面遷移
-                // 特にいらないので記述なし
-              },
-              child: PictureCard(image: file),
-            ));
+      itemDatas: images,
+      listItem: (file) => PictureCard(image: file),
+    );
   }
 }
