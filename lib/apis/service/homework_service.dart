@@ -9,6 +9,7 @@ import '../../models/teaching_item_model.dart';
 import '../../models/register_homework_model.dart';
 import '../error.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart'; // 画像保存のために必要
 
 class HomeworkService {
   // 宿題登録
@@ -46,6 +47,26 @@ class HomeworkService {
     debugPrint(resData.toString());
     // 返す
     return TeachingItem.resToTeachingItem(resData['srvResData']);
+  }
+
+  // 1件の宿題を取得
+  static Future<Homework?> getHomework(String homeworkUUID) async{
+    // TODO:教員の場合と児童の場合で処理を分割
+    // リクエストを生成
+    final reqData = Request(url: Urls.getHomework, reqType: 'GET', headers: {'Content-Type': 'application/json'},pasParams: homeworkUUID);
+    // リクエストメソッドにオブジェクトを投げる
+    Map resData = await HttpReq.httpReq(reqData);
+    // 宿題のデータがあれば
+    try {
+      if (resData["srvResData"] == null) {
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    debugPrint(resData.toString());
+    // 返す
+    return Homework.resToHomework(resData['srvResData']);
   }
 
   // 宿題を取得
@@ -157,19 +178,33 @@ class HomeworkService {
     return HomeworkSubmissionRecord.resToHomeworkSubmissionRecords(resData['srvResData']);
   }
 
-  // 提出状況を取得(画像が来る)
-  static Future<Map> homeworkSubmittionInfo(String homeworkUUID) async {
+  // 宿題の画像を取得
+  static Future<File?> getHomeworkImage(String homeworkUUID,String imageFileName) async {
+
+    String url = "${Urls.getHomework}/$homeworkUUID/images";
     // リクエストを生成
-    final reqData = Request(url: Urls.homeworkSubmittionInfo + homeworkUUID, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+    final reqData = Request(url: url, reqType: 'GET', headers: {'Content-Type': 'multipart/form-data'},pasParams: imageFileName);
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-  
+    http.Response resData = await HttpReq.imagesReq(reqData);
+     // レスポンスデータを確認し、画像データがある場合は処理する
+    try {
+      // 画像データ（バイナリ）を取得
+      final List<int> imageBytes = resData.bodyBytes;
 
-    Map<String, dynamic> res = {};
+      // 画像を保存する場所を取得
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = "${directory.path}/$imageFileName";
 
+      // 画像ファイルとして保存
+      File imageFile = File(imagePath);
+      await imageFile.writeAsBytes(imageBytes);
 
-    debugPrint(resData.toString());
-    // 返す
-    return resData['srvResData'];
+      // 保存した画像ファイルを返す
+      return imageFile;
+    } catch (e) {
+      debugPrint('Error retrieving homework image: $e');
+    }
+
+    return null; // 画像が取得できなかった場合
   }
 }
