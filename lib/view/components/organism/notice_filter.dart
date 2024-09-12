@@ -9,21 +9,21 @@ import '../../../constant/fonts.dart';
 import '../../../models/class_model.dart'; // クラスモデルをインポート
 
 class FilterDrawer extends StatefulWidget {
-  Map<int, bool> readStatusFilter; // 未確認フィルタ
-  bool readFilterEnabled;
-  List<Class> classList; // 所属クラス
-  List<String> classListFilter; // 取得クラスの絞り込み
-  List<User>? childrenList;
-  List<String>? childrenListFilter;
-  bool? isClassFilterMode;
-  void Function(bool value)? onFilterToggled;
-  void Function(bool value, Class item) onClassListChanged;
-  void Function(bool value, User item)? onChildrenListChanged;
-  void Function(bool value)? onAllChildrenListChanged;
-  void Function(bool value) onAllClassListChanged;
-  void Function() refreshNotices;
+  final Map<int, bool> readStatusFilter; // 未確認フィルタ
+  final bool readFilterEnabled;
+  final List<Class> classList; // 所属クラス
+  final List<String> classListFilter; // 取得クラスの絞り込み
+  final List<User>? childrenList;
+  final List<String>? childrenListFilter;
+  final bool? isClassFilterMode;
+  final void Function(bool value)? onFilterToggled;
+  final void Function(bool value, Class item) onClassListChanged;
+  final void Function(bool value, User item)? onChildrenListChanged;
+  final void Function(bool value)? onAllChildrenListChanged;
+  final void Function(bool value) onAllClassListChanged;
+  final void Function() refreshNotices;
 
-  FilterDrawer(
+  const FilterDrawer(
       {this.readStatusFilter = const {},
       this.readFilterEnabled = false,
       required this.classList,
@@ -40,7 +40,7 @@ class FilterDrawer extends StatefulWidget {
       super.key});
 
   @override
-  _FilterDrawerState createState() => _FilterDrawerState();
+ _FilterDrawerState createState() => _FilterDrawerState();
 }
 
 class _FilterDrawerState extends State<FilterDrawer> {

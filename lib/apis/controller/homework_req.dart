@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/apis/error.dart';
+import 'package:juninry/models/homework_model.dart';
 import 'package:juninry/models/homework_submission_record.dart';
 import 'dart:io';
 import '../../models/register_homework_model.dart';
@@ -44,6 +45,16 @@ class HomeworkReq {
     } catch (e) {
       print(e);
       return [];
+    }
+  }
+
+  // 宿題取得
+  Future<Homework?> getHomeworkHandler(String homeworkUUID) async{
+    try {
+      return await HomeworkService.getHomework(homeworkUUID); // 課題取得を待ち返却
+    } on HomeworkIsEmptyException {
+      handleException(ExceptionType.homeworkIsEmpty);
+      return null;
     }
   }
 
@@ -95,6 +106,16 @@ class HomeworkReq {
     } on DefaultException {
       handleException(ExceptionType.DefaultException);
       return [];
+    }
+  }
+
+  // 宿題の画像を取得
+  Future<File?> getHomeworkImage(String homeworkUUID,String imageFileName) async {
+    try {
+      return await HomeworkService.getHomeworkImage(homeworkUUID, imageFileName);
+    } on DefaultException {
+      handleException(ExceptionType.DefaultException);
+      return null;
     }
   }
 }

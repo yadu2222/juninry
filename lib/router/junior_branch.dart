@@ -132,11 +132,11 @@ class JuniorBranch {
                   final Map<String, dynamic> extraData =
                       state.extra as Map<String, dynamic>;
                   // final String homeworkId = extraData['homeworkId'];
-                  final Homework homework = extraData['homework'];
+                  final String homeworkUUID = extraData['homeworkId'];
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageSubmissionJunior(homework: homework),
+                    child: PageSubmissionJunior(homeworkUUID: homeworkUUID),
                   );
 
                   // TODO:errorpage よういしたい

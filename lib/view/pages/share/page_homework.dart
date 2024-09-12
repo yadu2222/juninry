@@ -36,7 +36,7 @@ class PageHomework extends HookWidget {
     void cardPressed(Homework homework) async {
       // 児童のときは遷移
       if (await isBranch(BranchType.junior)) {
-        context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID, 'homework': homework});
+        context.go('/homework/submittion', extra: {'homeworkId': homework.homeworkUUID});
 
         // ほごしゃ
       } else if (await isBranch(BranchType.junior)) {
