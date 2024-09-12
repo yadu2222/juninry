@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/pages/patron/page_reward.dart';
 import 'package:juninry/view/pages/patron/page_reward_register.dart';
+import 'package:juninry/view/pages/share/page_my_page.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
 
 // 遷移先
@@ -216,6 +217,14 @@ class PatronBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const PageQuestions(),
+              ),
+            ),
+            GoRoute(
+              name: 'myPage',
+              path: 'myPage',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const PageMyPage(),
               ),
             ),
           ],

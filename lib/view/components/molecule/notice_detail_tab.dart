@@ -68,7 +68,7 @@ class NoticeDetailTab extends StatelessWidget {
                     onQuoteClicked: () {
                       debugPrint("何でだろう?");
                       context.go('/notice/detail',
-                          extra: {'noticeUUID': quotedNoticeData!.$1});
+                          extra: {'noticeUUID': quotedNoticeData!.$2});
                     },
                     onDeleteClicked: () {},
                     quoteNoticeTitle: quotedNoticeData!.$1,

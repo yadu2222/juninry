@@ -14,12 +14,12 @@ class Urls {
   // static const String host = '10.0.2.2';
 
   // iOSエミュレーターにおすすめ
-  // static const String host = 'localhost';
+  static const String host = 'localhost';
   // static const String host = 'm2.local';
 
   // ローカル環境
   // static const String host = '10.200.0.220';
-  static const String host = '192.168.33.168';
+  // static const String host = '192.168.33.168';
   // static const String host = '192.168.0.12';
 
   static const String port = '4561';
