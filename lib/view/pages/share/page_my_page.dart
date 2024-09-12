@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:juninry/constant/colors.dart';
 import 'package:juninry/view/components/atoms/life_gauge.dart';
@@ -136,7 +137,8 @@ class PageMyPage extends HookWidget {
                       ? LifeGauge(
                           record: submissionData.value
                               as List<HomeworkSubmissionRecord>)
-                      : Row(  // TODO: これマジで美しくないコード
+                      : Row(
+                          // TODO: これマジで美しくないコード
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(
                             3,
@@ -162,6 +164,15 @@ class PageMyPage extends HookWidget {
                               formatButtonVisible: false,
                               titleCentered: false,
                             ),
+                            onDaySelected: (selectedDay, focusedDay) {
+
+                              for (HomeworkSubmissionRecord record
+                                    in submissionData.value) {
+                                  if (selectedDay.day == record.limitDate.day) {
+                                    context.go('/homework');
+                                  }
+                                }
+                            },
                             calendarBuilders: CalendarBuilders(
                               markerBuilder: (context, date, events) {
                                 // ここにマーカーを表示する
