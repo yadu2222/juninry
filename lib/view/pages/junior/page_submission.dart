@@ -21,12 +21,9 @@ import 'package:path_provider/path_provider.dart';
 // 提出ページ
 class PageSubmissionJunior extends HookWidget {
   final String homeworkUUID;
-  // final Homework homework;
-  const PageSubmissionJunior({
-    super.key,
-    required this.homeworkUUID,
-    // required this.homework
-  });
+
+  final Homework homework;
+  const PageSubmissionJunior({super.key, required this.homeworkUUID, required this.homework});
 
   final String title = '提出';
 
@@ -34,15 +31,22 @@ class PageSubmissionJunior extends HookWidget {
   Widget build(BuildContext context) {
     final picker = ImagePicker(); // カメラインスタンス
     final HomeworkReq homeworkReq = HomeworkReq(context: context); // APIコントローラー
-    final homework = useState<Homework?>(null); // 課題データ
+
+    final homeworkData = useState<Homework?>(null); // 課題データ
     final images = useState<List<File?>>([]); // 画像配列 countの枚数を要素数にnullで初期化
     final counter = useState<int>(0); //  画像の枚数をカウント
     final submittionFlag = useState<bool>(false); // 提出フラグ
 
     // 課題の情報と提出状況を取得
     Future<void> getHomework() async {
-      final homeworkData = await homeworkReq.getHomeworkHandler(homeworkUUID);
-      homework.value = homeworkData;
+      final loadHomeworkData = await homeworkReq.getHomeworkHandler(homeworkUUID);
+
+      if (loadHomeworkData == null) {
+        homeworkData.value = homework;
+      } else {
+        homeworkData.value = loadHomeworkData;
+      }
+
     }
 
     Future<File> saveImage(File image) async {
@@ -80,18 +84,18 @@ class PageSubmissionJunior extends HookWidget {
       Future<void> fetchData() async {
         await getHomework();
         // 画像に関する変数を初期化
-        submittionFlag.value = true;
-
+        submittionFlag.value = homeworkData.value!.submitFlg == 1;
         if (submittionFlag.value) {
           // 画像パスから画像を取得
-          for (String imageFileName in homework.value!.imageUrls!) {
+          for (String imageFileName in homeworkData.value!.imageUrls!) {
+
             final image = await homeworkReq.getHomeworkImage(homeworkUUID, imageFileName);
             // 新しいリストを作成して更新
             images.value = [...images.value, image];
           }
         } else {
-          images.value = List.filled(homework.value!.pageCount, null);
-          counter.value = homework.value!.pageCount;
+          images.value = homeworkData.value!.pageCount != 0 ? List.filled(homeworkData.value!.pageCount, null) : List.filled(homeworkData.value!.startPage, null);
+          counter.value = homeworkData.value!.pageCount;
         }
       }
 
@@ -122,14 +126,15 @@ class PageSubmissionJunior extends HookWidget {
 
     // テンプレート呼び出し
     return BasicTemplate(title: title, children: [
-      homework.value == null ? const SizedBox.shrink() : HomeworkCard.junior(homeworkData: homework.value!), // 課題カード
+
+      homeworkData.value == null ? const SizedBox.shrink() : HomeworkCard.junior(homeworkData: homeworkData.value!), // 課題カード
       const DividerView(), // 区切り線
       // 提出リスト
-      homework.value == null
+      homeworkData.value == null
           ? const SizedBox.shrink()
           : Expanded(
               child: SubmittionList(
-              homeworkData: homework.value!,
+              homeworkData: homeworkData.value!,
               images: images.value,
               pickImage: pickImage,
             )), // 提出リスト
