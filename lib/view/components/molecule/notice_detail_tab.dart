@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/models/notice_model.dart';
-import 'package:juninry/models/quoted_notice_model.dart';
 import 'package:juninry/view/components/atoms/listitem.dart';
 import 'package:juninry/view/components/molecule/quote_from_notice.dart';
 import '../molecule/divider.dart';
