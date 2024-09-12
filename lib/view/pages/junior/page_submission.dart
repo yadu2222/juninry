@@ -91,7 +91,7 @@ class PageSubmissionJunior extends HookWidget {
             images.value = [...images.value, image];
           }
         } else {
-          images.value = List.filled(homeworkData.value!.pageCount, null);
+          images.value = homeworkData.value!.pageCount != 0 ? List.filled(homeworkData.value!.pageCount, null) : List.filled(homeworkData.value!.startPage, null);
           counter.value = homeworkData.value!.pageCount;
         }
       }
