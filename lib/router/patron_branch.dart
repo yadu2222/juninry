@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/view/pages/patron/page_reward.dart';
+
 import 'package:juninry/view/pages/patron/page_reward_register.dart';
 import 'package:juninry/view/pages/share/page_my_page.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
@@ -21,6 +21,7 @@ import '../view/pages/share/page_ouchi.dart';
 import '../view/pages/patron/page_ouchi_top.dart';
 import '../view/pages/patron/page_help_register.dart';
 import '../view/pages/share/page_onedari.dart';
+import 'package:juninry/view/pages/share/page_reward.dart';
 // setting
 import '../view/pages/share/page_questions.dart';
 import '../view/pages/share/page_user.dart';
@@ -71,8 +72,7 @@ class PatronBranch {
               pageBuilder: (context, state) {
                 debugPrint("state.extra: ${state.extra}");
                 // Map型でデータを送るためそれを取得
-                final Map<String, dynamic> extraData =
-                    state.extra as Map<String, dynamic>;
+                final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                 // データを取り出してみる
                 final String? noticeUUID = extraData['noticeUUID'];
                 return NoTransitionPage(
@@ -153,7 +153,7 @@ class PatronBranch {
                       child: const PageOuchiTopPatron(),
                     ),
                 routes: [
-                   GoRoute(
+                  GoRoute(
                     name: 'info',
                     path: 'info',
                     pageBuilder: (context, state) => NoTransitionPage(
@@ -175,7 +175,7 @@ class PatronBranch {
                       path: 'reward',
                       pageBuilder: (context, state) => NoTransitionPage(
                             key: state.pageKey,
-                            child: const PageRewardPatron(),
+                            child: const PageReward(),
                           ),
                       routes: [
                         // ごほうびの追加

@@ -18,7 +18,7 @@ import '../view/pages/junior/page_submission.dart';
 import '../view/pages/share/page_notice.dart';
 import '../view/pages/share/page_notice_detail.dart';
 // ouchi
-import '../view/pages/junior/page_reward.dart';
+import '../view/pages/share/page_reward.dart';
 import '../view/pages/share/page_ouchi.dart';
 import '../view/pages/share/page_onedari.dart';
 // user
@@ -79,8 +79,7 @@ class JuniorBranch {
               pageBuilder: (context, state) {
                 if (state.extra != null) {
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   String noticeUUID = extraData['noticeUUID'];
                   return NoTransitionPage(
                     key: state.pageKey,
@@ -118,8 +117,7 @@ class JuniorBranch {
             GoRoute(
               name: 'nextdayTask',
               path: 'nextday',
-              pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey, child: const PageHomework.near()),
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
             ),
             // 提出
             GoRoute(
@@ -130,15 +128,17 @@ class JuniorBranch {
                 // extraがnullである場合trycatchでエラーを回避
                 if (state.extra != null) {
                   // 遷移時に定義されたデータをrouterで再定義
-                  final Map<String, dynamic> extraData =
-                      state.extra as Map<String, dynamic>;
+                  final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
                   // final String homeworkId = extraData['homeworkId'];
                   final Homework homework = extraData['homework'];
                   final String homeworkUUID = extraData['homeworkId'];
                   return NoTransitionPage(
                     key: state.pageKey,
                     // 先ほど再定義したデータをここで渡す
-                    child: PageSubmissionJunior(homeworkUUID: homeworkUUID,homework: homework,),
+                    child: PageSubmissionJunior(
+                      homeworkUUID: homeworkUUID,
+                      homework: homework,
+                    ),
                   );
 
                   // TODO:errorpage よういしたい
@@ -151,8 +151,7 @@ class JuniorBranch {
               },
             )
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageHomework()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
       ],
     ),
@@ -170,14 +169,14 @@ class JuniorBranch {
               path: 'top', // notice
               routes: [
                 GoRoute(
-                  name: 'GOHOUBI',
-                  path: 'reward', // notice
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    key: state.pageKey,
-                    child: const PageRewardJunior(),
-                  ),
-                  routes: [
-                     GoRoute(
+                    name: 'GOHOUBI',
+                    path: 'reward', // notice
+                    pageBuilder: (context, state) => NoTransitionPage(
+                          key: state.pageKey,
+                          child: const PageReward(),
+                        ),
+                    routes: [
+                      GoRoute(
                         name: 'takarabako',
                         path: 'treasure',
                         pageBuilder: (context, state) => NoTransitionPage(
@@ -185,9 +184,7 @@ class JuniorBranch {
                           child: const PageTreasure(),
                         ),
                       ),
-
-                  ]
-                ),
+                    ]),
                 GoRoute(
                   name: 'onedari',
                   path: 'onedari',
@@ -196,7 +193,7 @@ class JuniorBranch {
                     child: const PageOnedari(),
                   ),
                 ),
-                 GoRoute(
+                GoRoute(
                   name: 'info',
                   path: 'info',
                   pageBuilder: (context, state) => NoTransitionPage(
@@ -211,8 +208,7 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
@@ -242,8 +238,7 @@ class JuniorBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) =>
-              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),
