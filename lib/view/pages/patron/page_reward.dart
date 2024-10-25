@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/components/template/basic_template.dart';
@@ -40,7 +41,11 @@ class PageRewardPatron extends HookWidget {
     void reward() {}
 
     return Stack(children: [
-      BasicTemplate(title: title, children: [
+      BasicTemplate(title: title, 
+      featureIconButton: IconButton(onPressed: (){
+        context.go('/ouchi/top/reward/treasure');
+      }, icon: Icon(Icons.add)),
+      children: [
         // ごほうびリスト
         Expanded(
             child: rewardData.value.isEmpty

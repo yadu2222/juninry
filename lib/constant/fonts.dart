@@ -43,4 +43,8 @@ class Fonts {
 
   // お知らせ一覧のために
   static const TextStyle notice = TextStyle(fontSize: 16, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold, height: 1.0);
+
+  // ポイント
+  static const TextStyle point = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.font, fontWeight: FontWeight.bold);
+  static const TextStyle totalPoint = TextStyle(fontSize: 20, fontFamily: 'Noto Sans JP', color: AppColors.fontLight, fontWeight: FontWeight.bold);
 }

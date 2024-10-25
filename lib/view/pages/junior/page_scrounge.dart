@@ -11,7 +11,6 @@ import '../../../models/reward_model.dart';
 import '../../../constant/messages.dart';
 import '../../../constant/sample_data.dart';
 
-
 // 現在おねだり中のリスト
 class PageScroungeJunior extends HookWidget {
   const PageScroungeJunior({super.key});

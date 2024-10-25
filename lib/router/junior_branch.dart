@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
+import 'package:juninry/view/pages/share/page_treasure.dart';
 import '../models/homework_model.dart';
 
 // junior遷移先
@@ -175,6 +176,17 @@ class JuniorBranch {
                     key: state.pageKey,
                     child: const PageRewardJunior(),
                   ),
+                  routes: [
+                     GoRoute(
+                        name: 'takarabako',
+                        path: 'treasure',
+                        pageBuilder: (context, state) => NoTransitionPage(
+                          key: state.pageKey,
+                          child: const PageTreasure(),
+                        ),
+                      ),
+
+                  ]
                 ),
                 GoRoute(
                   name: 'onedari',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import '../../../router/router.dart';
 // view
 import '../../components/template/basic_template.dart';
@@ -87,7 +88,13 @@ class PageRewardJunior extends HookWidget {
     // ポイントの取引履歴に遷移？
     void reward() {}
 
-    return BasicTemplate(title: title, children: [
+    return BasicTemplate(title: title, 
+    featureIconButton: IconButton(
+            onPressed: () {
+              context.go('/ouchi/top/reward/treasure');
+            },
+            icon: Icon(Icons.add)),
+    children: [
       // ここにおうちのコンテンツを追加
       // たまっているポイント
       ReweadPoint(rewards: ouchiPoint.value, onTap: reward),

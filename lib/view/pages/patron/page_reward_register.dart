@@ -48,7 +48,11 @@ class PageRewardRegisterPatron extends HookWidget {
     return BasicTemplate(title: title, children: [
       RewardIcons(choiceIcon: choiceIcon.value, choiceIconHandler: choiceIconHandler),
       InfoForm(label: 'タイトル', controller: titleController, inputFormatter: [LengthLimitingTextInputFormatter(10)]),
-      InfoForm(label: '概要', controller: contentController,inputFormatter: [LengthLimitingTextInputFormatter(20)],),
+      InfoForm(
+        label: '概要',
+        controller: contentController,
+        inputFormatter: [LengthLimitingTextInputFormatter(20)],
+      ),
       InfoForm(
         label: 'ポイント',
         controller: rewardPointController,

@@ -3,8 +3,8 @@ class Reward {
   final String rewardName; // GHOUBI名
   final String note; // 説明
   final int rewardPoint; // 必要ポイント
-  final int iconId;     // アイコンID
-  final int? stock;     // 在庫
+  final int iconId; // アイコンID
+  final int? stock; // 在庫
 
   Reward({
     this.rewardUuid,
@@ -15,8 +15,16 @@ class Reward {
     this.stock,
   });
 
+  static Reward testReward1 = Reward(
+    rewardUuid: '1',
+    rewardName: 'test1',
+    note: 'test1',
+    rewardPoint: 100,
+    iconId: 1,
+    stock: 10,
+  );
 
-  static Map<String,dynamic> rewardToMap(Reward reward) {
+  static Map<String, dynamic> rewardToMap(Reward reward) {
     return {
       'rewardTitle': reward.rewardName,
       'rewardContent': reward.note,
@@ -29,7 +37,7 @@ class Reward {
     List<Reward> rewards = [];
     for (Map loadItem in loadData['rewardData']) {
       rewards.add(Reward(
-       rewardUuid: loadItem['rewardUUID'],
+        rewardUuid: loadItem['rewardUUID'],
         rewardName: loadItem['rewardTitle'],
         note: loadItem['rewardContent'],
         iconId: loadItem['iconId'],
