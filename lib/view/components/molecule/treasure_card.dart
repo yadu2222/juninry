@@ -14,19 +14,13 @@ class TreasureCard extends StatelessWidget {
   const TreasureCard({
     super.key,
     required this.treasure,
-    required this.buy,
   });
 
   final Treasure treasure;
-  final void Function(Treasure) buy;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          buy(treasure);
-        },
-        child: ListItem(
+    return ListItem(
             padding: const EdgeInsets.only(left: 10, right: 10),
             widget: IntrinsicHeight(
                 child: Row(
@@ -35,7 +29,7 @@ class TreasureCard extends StatelessWidget {
                     children: [
                   // icon
                   Row(children: [
-                    RewardIcon.getIcon(treasure.reward.iconId),
+                    RewardIcon.getIcon(treasure.reward.iconId, border: treasure.totalPoint == treasure.reward.rewardPoint), // rewardポイントの状態を判別してアイコンに囲み線をつける
                     const SizedBox(width: 10), // 余白(アイコンとテキストの間
                     // おてつだいのタイトル
                     Text(
@@ -45,6 +39,6 @@ class TreasureCard extends StatelessWidget {
                   ]),
                   // 現在のポイント
                   TotalPoint(treasure: treasure)
-                ]))));
+                ])));
   }
 }

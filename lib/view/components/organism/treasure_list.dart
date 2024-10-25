@@ -6,19 +6,25 @@ import '../atoms/listItem_box.dart';
 // おてつだいリスト
 class TreasureList extends StatelessWidget {
   final List<Treasure> treasures;
-  final void Function(Treasure) buy;
+  final void Function(Treasure) charge;
 
   const TreasureList({
     super.key,
     required this.treasures,
-    required this.buy,
+    required this.charge,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListItemBox<Treasure>(
-      itemDatas: treasures,
-      listItem: (treasure) => TreasureCard(treasure: treasure, buy: buy, ),
-    );
+        itemDatas: treasures,
+        listItem: (treasure) => InkWell(
+              onTap: () {
+                charge(treasure);
+              },
+              child: TreasureCard(
+                treasure: treasure,
+              ),
+            ));
   }
 }

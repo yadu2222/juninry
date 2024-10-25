@@ -8,7 +8,6 @@ import '../../../router/router.dart';
 import '../../components/template/basic_template.dart';
 // api
 
-
 class PageTreasure extends HookWidget {
   const PageTreasure({super.key, this.near = false});
   const PageTreasure.near({super.key, this.near = true});
@@ -55,6 +54,7 @@ class PageTreasure extends HookWidget {
       return () {};
     }, []);
 
-    return BasicTemplate(title: title, featureIconButton: IconButton(onPressed: addPressed, icon: Icon(Icons.add)), children: [Expanded(child: TreasureList(treasures: treasureData.value, buy: buy))]);
+    return BasicTemplate(
+        title: title, featureIconButton: IconButton(onPressed: addPressed, icon: Icon(Icons.add)), children: [Expanded(child: TreasureList(treasures: treasureData.value, charge: buy))]);
   }
 }
