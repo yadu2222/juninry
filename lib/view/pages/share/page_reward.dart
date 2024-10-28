@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/constant/fonts.dart';
 import 'package:juninry/models/treasure_model.dart';
 import 'package:juninry/view/components/atoms/add_button.dart';
+import 'package:juninry/view/components/atoms/basic_button.dart';
 import 'package:juninry/view/components/molecule/refresh_list.dart';
 import 'package:juninry/view/components/organism/treasure_list.dart';
+import 'package:numberpicker/numberpicker.dart';
 import '../../../router/router.dart';
 // view
 import '../../components/template/basic_template.dart';
@@ -88,9 +91,21 @@ class PageReward extends HookWidget {
       }
     }
 
+    // addButton
+    void add() {
+      if (!isJunior.value) {
+        // rewardを選択している場合
+        if (isSelected.value) {
+          addReward();
+          // treasureを選択している場合
+        } else {
+          context.push('/ouchi/top/reward/treasure').then((_) => getRewards());
+        }
+      }
+    }
+
     // タブを切り替え
     void changeTab() {
-      debugPrint('changeTab');
       isSelected.value = !isSelected.value;
     }
 
@@ -99,9 +114,65 @@ class PageReward extends HookWidget {
       // 宝箱を取得
     }
 
+    Future<void> chargePoint(Treasure treasure, int point) async {}
+
     // 宝箱にポイントを貯める処理
     void charge(Treasure treasure) {
       // ポイントを貯める処理
+      // 保護者とrewardがない場合を弾く
+      if (isJunior.value) {
+        if (treasure.reward == null) {
+          ToastUtil.show(message: "中身がありません");
+          return;
+        }
+        if (treasure.reward!.rewardPoint - treasure.totalPoint < 1) {
+          // TODO：宝箱をあけるページに遷移
+           context.go('/ouchi/top/reward/treasure', extra: {'treasure': treasure});
+          return;
+        }
+        int maxValue = treasure.reward!.rewardPoint - treasure.totalPoint;
+        showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              int addPoint = 0;
+              // useStateを使えないのでstatefulで対応
+              return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                void changePoint(int value) {
+                  setState(() {
+                    addPoint = value;
+                  });
+                }
+                return AlertDialog(
+                    elevation: 0.0, // ダイアログの影を削除
+                    backgroundColor: Colors.transparent, // 背景色
+                    content: Container(
+                        height: 250,
+                        width: 300,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(children: [
+                          const Text("何ポイント貯めますか？", style: Fonts.h5),
+                          NumberPicker(minValue: 0, maxValue: maxValue > ouchiPoint.value ? ouchiPoint.value : maxValue, value: addPoint, onChanged: (value) => setState(() => changePoint(value))),
+                          BasicButton(
+                            isColor: true,
+                            text: "確定",
+                            onPressed: () {
+                              chargePoint(treasure, addPoint); // ポイントを貯める処理
+                              Navigator.pop(context); // ダイアログを閉じる
+                            },
+                          )
+                        ])));
+              });
+            });
+      } else {
+        if (treasure.reward == null) {
+          // TODO：中身を設定するページに遷移
+        }
+      }
     }
 
     useEffect(() {
@@ -141,6 +212,7 @@ class PageReward extends HookWidget {
         ),
         // 表示するリスト
         Expanded(
+            // isSelectの状態に合わせて表示を変更
             child: isSelected.value
                 // ごほうびリスト
                 ? RefreshList(
@@ -158,7 +230,7 @@ class PageReward extends HookWidget {
                 : RefreshList(itemDatas: rewardData.value, list: TreasureList(treasures: treasureData.value, charge: charge), text: "たからばこ", refresh: getTreasure))
       ]),
 
-      isJunior.value ? const SizedBox.shrink() : Positioned(bottom: 25, right: 25, child: AddButton(onPressed: addReward)) // 追加ボタン]);
+      isJunior.value ? const SizedBox.shrink() : Positioned(bottom: 25, right: 25, child: AddButton(onPressed: add)) // 追加ボタン]);
     ]);
   }
 }

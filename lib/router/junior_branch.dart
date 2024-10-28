@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/models/treasure_model.dart';
 import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
 import 'package:juninry/view/pages/share/page_treasure.dart';
@@ -177,13 +178,27 @@ class JuniorBranch {
                         ),
                     routes: [
                       GoRoute(
-                        name: 'takarabako',
-                        path: 'treasure',
-                        pageBuilder: (context, state) => NoTransitionPage(
-                          key: state.pageKey,
-                          child: const PageTreasure(),
-                        ),
-                      ),
+                          name: 'takarabako',
+                          path: 'treasure',
+                          pageBuilder: (context, state) {
+                            if (state.extra != null) {
+                              // 遷移時に定義されたデータをrouterで再定義
+                              final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                              final Treasure treasure = extraData['treasure'];
+                              return NoTransitionPage(
+                                key: state.pageKey,
+                                // 先ほど再定義したデータをここで渡す
+                                child: PageTreasure(treasure: treasure),
+                              );
+
+                              // TODO:errorpage よういしたい
+                            } else {
+                              return NoTransitionPage(
+                                key: state.pageKey,
+                                child: const PageHomework.near(),
+                              );
+                            }
+                          })
                     ]),
                 GoRoute(
                   name: 'onedari',

@@ -22,7 +22,7 @@ class TotalPoint extends StatelessWidget {
                   angle: 10 * 3.14 / 180,
                   child: const Text("/", style: Fonts.point),
                 )),
-            Text(treasure.reward.rewardPoint.toString(), style: Fonts.point),
+            Text(treasure.reward != null ? treasure.reward!.rewardPoint.toString() : "0", style: Fonts.point),
           ],
         ));
   }
