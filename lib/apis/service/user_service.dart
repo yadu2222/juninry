@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:juninry/constant/error_handler.dart';
+import 'package:juninry/apis/error_handler.dart';
 import '../http_req.dart';
 import '../../models/req_model.dart';
 import '../../constant/urls.dart';

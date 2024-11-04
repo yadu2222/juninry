@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:juninry/constant/error_handler.dart';
+import 'package:juninry/apis/error_handler.dart';
 import 'package:juninry/models/student_model.dart';
 
 import '../../models/req_model.dart';

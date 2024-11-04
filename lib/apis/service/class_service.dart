@@ -3,7 +3,7 @@ import '../../models/class_model.dart';
 import '../../constant/urls.dart';
 import '../../models/req_model.dart';
 import 'dart:convert';
-import '../../constant/error_handler.dart';
+import '../error_handler.dart';
 
 class ClassService {
   // クラスメイト取得

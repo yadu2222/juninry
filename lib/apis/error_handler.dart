@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'error.dart';
+import '../constant/error.dart';
 
 class ErrorHandler {
   static void defaultHandler(http.Response response) {

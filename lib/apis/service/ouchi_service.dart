@@ -1,4 +1,4 @@
-import 'package:juninry/constant/error_handler.dart';
+import 'package:juninry/apis/error_handler.dart';
 
 import '../http_req.dart';
 import '../../constant/urls.dart';
