@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import './dbcon.dart';
 // import '../constant/sample_data.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class User {
   String userName;
@@ -37,8 +39,13 @@ class User {
   }
 
   // レスポンスデータをUserに変換
-  static User resToUser(Map loadData) {
+  static User resToUser(http.Response response) {
     try {
+
+      // レスポンスデータをjsonに変換
+      Map json = jsonDecode(response.body) as Map<String, dynamic>;
+      Map loadData = json['srvResData']['userData'] as Map<String, dynamic>;
+
       return User(
         userName: loadData['userName'],
         userUUID: loadData['userUUID'] as String?,
@@ -52,6 +59,19 @@ class User {
       debugPrint('Error converting map to User: $e');
       return errorUser();
     }
+  }
+
+  static User mapToUser(Map map){
+    return User(
+      userName: map['userName'],
+      userUUID: map['userUUID'],
+      userTypeId: map['userTypeId'],
+      mailAddress: map['mailAddress'],
+      password: map['password'],
+      jwtKey: map['jwtKey'],
+      ouchiUUID: map['ouchiUUID'],
+      ouchiPoint: map['ouchiPoint'],
+    );
   }
 
   // ログアウト

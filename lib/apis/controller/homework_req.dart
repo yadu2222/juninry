@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/apis/error.dart';
+import 'package:juninry/constant/error.dart';
 import 'package:juninry/models/homework_model.dart';
 import 'package:juninry/models/homework_submission_record.dart';
 import 'dart:io';

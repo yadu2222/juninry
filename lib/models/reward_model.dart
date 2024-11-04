@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class Reward {
   final String? rewardUuid; // GHOUBIのUUID
   final String rewardName; // GHOUBI名
@@ -33,7 +36,11 @@ class Reward {
     };
   }
 
-  static List<Reward> resToReward(Map loadData) {
+  static List<Reward> resToReward(http.Response response) {
+
+    // レスポンスデータをjsonに変換
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    Map loadData = json['srvResData'] as Map<String, dynamic>;
     List<Reward> rewards = [];
     for (Map loadItem in loadData['rewardData']) {
       rewards.add(Reward(

@@ -6,7 +6,7 @@ import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
 import '../../models/class_model.dart';
 // import '../../view/components/atoms/dialog.dart';
-import '../error.dart';
+import '../../constant/error.dart';
 
 class ClassReq {
   final BuildContext context;

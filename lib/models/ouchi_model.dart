@@ -1,4 +1,6 @@
 import 'package:juninry/models/user_model.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Ouchi {
   String? ouchiUUID;
@@ -17,7 +19,12 @@ class Ouchi {
   }
 
   // レスポンスデータをおうち情報に変換
-  static Ouchi resToOuchi(Map loadData) {
+  static Ouchi resToOuchi(http.Response response) {
+
+    // レスポンスデータをjsonに変換
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    Map loadData = json['srvResData'] as Map<String, dynamic>;
+
     Ouchi ouchi = Ouchi(
       ouchiName: loadData['ouchiName'],
       ouchiUUID: loadData['ouchiUUID'] as String?,
@@ -26,7 +33,7 @@ class Ouchi {
 
     ouchi.members = [];
     for (Map member in loadData['ouchiMembers']) {
-      ouchi.members!.add(User.resToUser(member));
+      ouchi.members!.add(User.mapToUser(member));
     }
     return ouchi;
   }

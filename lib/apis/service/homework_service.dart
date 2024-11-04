@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/constant/error_handler.dart';
 import 'dart:io';
 import '../http_req.dart';
 import '../../models/homework_model.dart';
@@ -7,7 +8,6 @@ import '../../constant/urls.dart';
 import '../../models/req_model.dart';
 import '../../models/teaching_item_model.dart';
 import '../../models/register_homework_model.dart';
-import '../error.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart'; // 画像保存のために必要
 
@@ -18,15 +18,13 @@ class HomeworkService {
     // リクエストを生成
     final reqData = Request(url: Urls.registerHomework, reqType: 'POST', headers: {'Content-Type': 'application/json'}, body: body);
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
+    // エラーハンドリング
     try {
-      if (resData["srvResData"] == null) {}
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
+      rethrow;
     }
-    debugPrint(resData.toString());
-    // 返す
   }
 
   // 教材を取得
@@ -34,18 +32,13 @@ class HomeworkService {
     // リクエストを生成
     final reqData = Request(url: Urls.getTeachingItems, reqType: 'GET', headers: {'Content-Type': 'application/json'}, pasParams: classUUID);
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
     try {
-      if (resData["srvResData"] == null) {
-        return [];
-      }
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
-    }
-    debugPrint(resData.toString());
-    // 返す
-    return TeachingItem.resToTeachingItem(resData['srvResData']);
+      rethrow;
+    } // 返す
+    return TeachingItem.resToTeachingItem(response);
   }
 
   // 1件の宿題を取得
@@ -54,19 +47,14 @@ class HomeworkService {
     // リクエストを生成
     final reqData = Request(url: Urls.getHomework, reqType: 'GET', headers: {'Content-Type': 'application/json'}, pasParams: homeworkUUID);
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
+    // エラーハンドリング
     try {
-      if (resData["srvResData"] == null) {
-        return null;
-      }
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
       rethrow;
-    }
-    debugPrint(resData.toString());
-    // 返す
-    return Homework.resToHomework(resData['srvResData']);
+    } // 返す
+    return Homework.resToHomework(response);
   }
 
   // 宿題を取得
@@ -74,18 +62,13 @@ class HomeworkService {
     // リクエストを生成
     final reqData = Request(url: Urls.getHomeworks, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
     try {
-      if (resData["srvResData"] == null) {
-        return [];
-      }
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
-    }
-    debugPrint(resData.toString());
-    // 返す
-    return Homework.resToHomeworks(resData['srvResData'], 'homeworkLimit', true);
+      rethrow;
+    } // 返す
+    return Homework.resToHomeworks(response, 'homeworkLimit', true);
   }
 
   // 次の日の宿題を取得
@@ -93,65 +76,50 @@ class HomeworkService {
     // リクエストを生成
     final reqData = Request(url: Urls.getNextdayHomeworks, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
     try {
-      if (resData["srvResData"] == null) {
-        return [];
-      }
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
-    }
-    debugPrint(resData.toString());
-    // 返す
-    return Homework.resToHomeworks(resData['srvResData'], 'className');
+      rethrow;
+    } // 返す
+    return Homework.resToHomeworks(response, 'className');
   }
 
   // 次の日の宿題を取得
   static Future<List<dynamic>> getHomeScreenHomework() async {
-    errorHandling(http.Response response) {
-      throw SubmittionHomeworkError(); // 提出失敗したよ
-    }
-
     // リクエストを生成
     final reqData = Request(url: Urls.getNextdayHomeworks, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
     try {
-      if (resData["srvResData"] == null) {
-        return [];
-      }
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
-    }
-    debugPrint(resData.toString());
-    // 返す
-    return Homework.resToHomeworks(resData['srvResData'], null);
+      rethrow;
+    } // 返す
+    return Homework.resToHomeworks(response, null);
   }
 
   // 宿題を提出
   static Future<void> submittionHomework(String homeworkUUID, List<File> files) async {
-    errorHandling(http.Response response) {
-      throw SubmittionHomeworkError(); // 提出失敗したよ
-    }
-
     // bodyを加工
     Map<String, dynamic> body = {
       'homeworkUUID': homeworkUUID,
     };
     // リクエストを生成
-    final reqData = Request(url: Urls.submittionHomework, reqType: 'MULTIPART', headers: {'Content-Type': 'multipart/form-data'}, body: body, files: files, errorHandling: errorHandling);
+    final reqData = Request(
+      url: Urls.submittionHomework,
+      reqType: 'MULTIPART',
+      headers: {'Content-Type': 'multipart/form-data'},
+      body: body,
+      files: files,
+    );
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
     try {
-      if (resData["srvResData"] == null) {}
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
+      rethrow;
     }
-    debugPrint(resData.toString());
-    // 返す
   }
 
   // 提出ログを取得
@@ -164,18 +132,13 @@ class HomeworkService {
     );
 
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    // 宿題のデータがあれば
+    final response = await HttpReq.httpReq(reqData);
     try {
-      if (resData["srvResData"] == null) {
-        return [];
-      }
-      // 新しい形式のリストを作成
+      ErrorHandler.homeworkErrorHandler(response);
     } catch (e) {
-      debugPrint(e.toString());
+      rethrow;
     }
-    // 返す
-    return HomeworkSubmissionRecord.resToHomeworkSubmissionRecords(resData['srvResData']);
+    return HomeworkSubmissionRecord.resToHomeworkSubmissionRecords(response);
   }
 
   // 宿題の画像を取得

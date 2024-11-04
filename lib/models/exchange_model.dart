@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class Exchange {
   final int rewardExchangingId;
   final DateTime exchangeAt;
@@ -31,9 +34,13 @@ class Exchange {
     }
   }
 
-  static List<Exchange> resToExchanges(Map loadData) {
-    List<Exchange> exchanges = [];
+  static List<Exchange> resToExchanges(http.Response response) {
 
+    // レスポンスデータをjsonに変換
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    Map loadData = json['srvResData'] as Map<String, dynamic>;
+
+    List<Exchange> exchanges = [];
     try {
       for (Map loadItem in loadData['exchangeData']) {
         exchanges.add(Exchange(

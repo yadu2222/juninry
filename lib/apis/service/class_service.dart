@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
 import '../http_req.dart';
 import '../../models/class_model.dart';
 import '../../constant/urls.dart';
 import '../../models/req_model.dart';
-import 'package:http/http.dart' as http;
-import '../error.dart';
+import 'dart:convert';
+import '../../constant/error_handler.dart';
 
 class ClassService {
   // クラスメイト取得
@@ -13,25 +11,17 @@ class ClassService {
     // リクエストを生成
     final reqData = Request(url: Urls.getClassmates, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    debugPrint(resData.toString());
-    // 返す
-    return Class.resToClassmates(resData['srvResData']);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
+    return Class.resToClassmates(response);
   }
 
   // クラスに参加
   static Future<String> joinClass(String inviteCode, String? studentNum) async {
-    // エラーハンドリング
-    errorHandling(http.Response response) {
-      if (response.statusCode == 403) {
-        throw PermittionError(); // 親にはその権限がないよ
-      } else if (response.statusCode == 409) {
-        throw JoinClassConflictException(); // すでに参加している場合をthrow
-      } else {
-        throw DefaultException();
-      }
-    }
-
     // リクエストを生成
     final reqData = studentNum != ''
         ? Request(
@@ -40,22 +30,22 @@ class ClassService {
             body: {'studentNumber': int.parse(studentNum!)},
             pasParams: inviteCode,
             headers: {'Content-Type': 'application/json'},
-            errorHandling: errorHandling,
           )
         : Request(
             url: Urls.joinClass,
             reqType: 'POST',
             pasParams: inviteCode,
             headers: {'Content-Type': 'application/json'},
-            errorHandling: errorHandling,
           );
 
+    final response = await HttpReq.httpReq(reqData);
     try {
-      final resData = await HttpReq.httpReq(reqData);
-      return resData['srvResData']['className'];
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
     } catch (e) {
       rethrow;
     }
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
+    return resData['srvResData']['className'];
   }
 
   // クラス作成
@@ -67,28 +57,38 @@ class ClassService {
       body: {'className': className},
       headers: {'Content-Type': 'application/json'},
     );
-    final resData = await HttpReq.httpReq(reqData);
-    return Class.resToClass(resData['srvResData']);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
+    return Class.resToClass(response);
   }
 
   // クラス招待コード再発行
   static Future<Class> inviteClass(String classUUID) async {
     // リクエストを生成
     final reqData = Request(url: Urls.inviteClass, reqType: 'PUT', headers: {'Content-Type': 'application/json'}, pasParams: classUUID);
-    final resData = await HttpReq.httpReq(reqData);
-    return Class.resToClass(resData['srvResData']);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
+    return Class.resToClass(response);
   }
 
   static Future<List<Class>> getClasses() async {
     // リクエストを生成
     final reqData = Request(url: Urls.getClasses, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    final resData = await HttpReq.httpReq(reqData);
-    List<Class> classList = [];
-    for (Map c in resData['srvResData']['classes']) {
-      classList.add(Class.resToClass(c));
-    }
-    // 返す
-    return classList;
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    } // 返す
+    return Class.resToClasses(response);
   }
 }
