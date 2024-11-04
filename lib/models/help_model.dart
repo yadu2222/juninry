@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 class Help {
   final String? helpUuid;
   final String helpTitle; // タイトル
@@ -28,7 +29,7 @@ class Help {
     };
   }
 
-  static List<Help> resToHelps(Map loadData){
+  static List<Help> resToHelps(http.Response response) {
     List<Help> helps = [];
     for (Map loadItem in loadData['helpData']) {
       helps.add(Help(

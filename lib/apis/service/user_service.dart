@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import '../http_req.dart';
 import '../../models/req_model.dart';
 import '../../constant/urls.dart';
-import '../error.dart';
+import '../../constant/error.dart';
 // model
 import '../../models/user_model.dart';
 

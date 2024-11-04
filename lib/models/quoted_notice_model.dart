@@ -17,7 +17,10 @@ class QuotedNotice {
     return QuotedNotice(
       quotedNoticeUuid: '',
       quotedNoticeTitle: '',
-      quotedClass: Class.resToClass({}),
+      quotedClass: Class(
+        className: '',
+        classUUID: '',
+      ),
     );
   }
 

@@ -1,4 +1,6 @@
 import './student_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Class {
   String? classUUID;
@@ -13,9 +15,13 @@ class Class {
       this.inviteCode});
 
   // レスポンスデータをクラス情報に変換
-  static List<Map<String, dynamic>> resToClassmates(List resData) {
+  static List<Map<String, dynamic>> resToClassmates(http.Response response) {
+
+    // レスポンスデータをjsonに変換
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
+
     List<Map<String, dynamic>> classmates = [];
-    for (Map loadItem in resData) {
+    for (Map loadItem in resData['srvResData']) {
       Map<String, dynamic> addClassInfo = {};
       addClassInfo['className'] = loadItem['className'];
       addClassInfo['students'] = []; // mapに空リストを追加
@@ -32,27 +38,33 @@ class Class {
   }
 
   // 単一のクラス情報に変換
-  static Class resToClass(Map resData) {
+  static Class resToClass(http.Response response) {
+
+    // レスポンスデータをjsonに変換
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
+    Map srvResData = resData['srvResData'];
+
     return Class(
-      className: resData['className'],
-      classUUID: resData['classUUID'],
-      inviteCode: resData['inviteCode'],
+      className: srvResData['className'],
+      classUUID: srvResData['classUUID'],
+      inviteCode: srvResData['inviteCode'],
     );
   }
 
   // 複数のクラス情報に変換
-  static List<Class> resToClasses(List loadData) {
-    try {
-      return loadData.map((data) {
+  static List<Class> resToClasses(http.Response response) {
+     // レスポンスデータをjsonに変換
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
+    List<Map> srvResData = resData['srvResData']['classes'];
+
+
+      return srvResData.map((data) {
         return Class(
-          classUUID: data['classUuid'] ?? '',
+          classUUID: data['classUUID'] ?? '',
           className: data['className'] ?? '',
         );
       }).toList();
-    } catch (e) {
-      print("クラス情報を取得できませんでした: $e");
-      return [];
-    }
+   
   }
 
   // クラスが同一かどうかの判定はclassUUIDの一致とする

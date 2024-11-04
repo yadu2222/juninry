@@ -7,7 +7,7 @@ import '../../constant/urls.dart';
 import '../../models/req_model.dart';
 import '../../models/teaching_item_model.dart';
 import '../../models/register_homework_model.dart';
-import '../error.dart';
+import '../../constant/error.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart'; // 画像保存のために必要
 

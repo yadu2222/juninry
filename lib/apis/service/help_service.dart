@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/constant/error_handler.dart';
 
 import '../http_req.dart';
 import '../../models/help_model.dart';
@@ -14,10 +15,10 @@ class HelpService {
     // リクエストを生成
     final reqData = Request(url: Urls.getHelp, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    debugPrint(resData.toString());
+   final response = await HttpReq.httpReq(reqData);
+   ErrorHandler.helpErrorHandler(response); // エラーハンドリング
     // 返す
-    return Help.resToHelps(resData['srvResData']);
+    return Help.resToHelps(response);
   }
 
   // おてつだい消化

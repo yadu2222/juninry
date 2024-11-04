@@ -7,7 +7,7 @@ import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
 
 import '../http_req.dart';
-import '../error.dart';
+import '../../constant/error.dart';
 
 class NoticeService {
   static Future<List<Notice>> getNotices(
