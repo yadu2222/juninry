@@ -36,6 +36,10 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>宝箱の接続に使用します</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>宝箱の接続に使用します</string>
 	<key>NSCameraUsageDescription</key>
 	<string>教材の登録・課題の提出に使用します</string>
 	<key>NSMicrophoneUsageDescription</key>
