@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../constant/messages.dart';
-import '../error.dart';
+import '../../constant/error.dart';
 // view
 import '../../view/components/atoms/toast.dart';
 // model

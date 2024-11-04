@@ -1,4 +1,4 @@
-import '../constant/messages.dart';
+import 'messages.dart';
 import '../view/components/atoms/toast.dart';
 
 // APIとの通信における例外集

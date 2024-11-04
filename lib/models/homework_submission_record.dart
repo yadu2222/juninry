@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class HomeworkSubmissionRecord {
   final DateTime limitDate;
   final int homeworkCount;
@@ -9,7 +12,11 @@ class HomeworkSubmissionRecord {
     required this.submissionCount,
   });
 
-  static List<HomeworkSubmissionRecord> resToHomeworkSubmissionRecords (List resData) {
+  static List<HomeworkSubmissionRecord> resToHomeworkSubmissionRecords (http.Response response) {
+
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    List<Map> resData = json['srvResData'];
+
     List<HomeworkSubmissionRecord> homeworkSubmissionRecords = [];
     for (Map data in resData) {
       homeworkSubmissionRecords.add(HomeworkSubmissionRecord(

@@ -1,10 +1,12 @@
 import 'package:http/http.dart' as http;
+import 'package:juninry/apis/error_handler.dart';
 import '../http_req.dart';
 import '../../models/req_model.dart';
 import '../../constant/urls.dart';
-import '../error.dart';
+import '../../constant/error.dart';
 // model
 import '../../models/user_model.dart';
+import 'dart:convert';
 
 class UserService {
   static Future<void> registerUser(Map<String, dynamic> reqBody) async {
@@ -15,9 +17,14 @@ class UserService {
       body: reqBody,
       headers: {'Content-Type': 'application/json'},
     );
-    print('damedesu');
-    final resData = await HttpReq.httpReq(reqData, false);
-    print('damedesu');
+
+    final response = await HttpReq.httpReq(reqData, false);
+    try {
+      ErrorHandler.userErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>; // レスポンスをMapに変換
     // dbに保存するためのオブジェクトを生成
     User user = User(
         userName: reqBody['userName'], userTypeId: reqBody['userTypeId'], mailAddress: reqBody['mailAddress'], password: reqBody['password'], jwtKey: resData['srvResData']['authenticationToken']);
@@ -33,8 +40,13 @@ class UserService {
     // リクエストのオブジェクトを生成
     // ログイン処理
     final reqData = Request(url: Urls.login, reqType: 'POST', body: {'mailAddress': user.mailAddress, 'password': user.password}, headers: {'ContentType': 'application/json'});
-    Map resData = await HttpReq.httpReq(reqData); // 投げる
-
+    final response = await HttpReq.httpReq(reqData); // 投げる
+    try {
+      ErrorHandler.userErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>; // レスポンスをMapに変換
     user.jwtKey = resData['srvResData']['authenticationToken']; // jwtKeyを最新のものに書き換え
 
     // user情報がすでに存在しているかを判別して場合分け
@@ -56,9 +68,14 @@ class UserService {
     // リクエストを生成
     final reqData = Request(url: Urls.getUser, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.userErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
     // 返す
-    return User.resToUser(resData['srvResData']['userData']);
+    return User.resToUser(response);
   }
 
   // OUCHIに参加
@@ -66,7 +83,6 @@ class UserService {
   static Future<String> joinOUCHI(
     String inviteCode,
   ) async {
-    
     // リクエストを生成
     final reqData = Request(
       url: Urls.joinOUCHI,
@@ -83,10 +99,16 @@ class UserService {
         }
       },
     );
-    final resData = await HttpReq.httpReq(reqData);
-    // ユーザー情報の更新
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.userErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    } // ユーザー情報の更新
     User user = await getUser();
     await login(user);
+
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
 
     return resData['srvResData']['ouchiName'];
   }

@@ -1,5 +1,7 @@
 import 'class_model.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 // 引用しているお知らせの情報をまとめる
 class QuotedNotice {
@@ -17,12 +19,20 @@ class QuotedNotice {
     return QuotedNotice(
       quotedNoticeUuid: '',
       quotedNoticeTitle: '',
-      quotedClass: Class.resToClass({}),
+      quotedClass: Class(
+        className: '',
+        classUUID: '',
+      ),
     );
   }
 
-  static QuotedNotice resToQuotedNotice(Map resData) {
+  static QuotedNotice resToQuotedNotice(http.Response response) {
     try {
+
+      // レスポンスデータをjsonに変換
+      Map json = jsonDecode(response.body) as Map<String, dynamic>;
+      Map resData = json['srvResData'] as Map<String, dynamic>;
+      
       return QuotedNotice(
         quotedNoticeUuid: resData['srvResData']['noticeUUID'],
         quotedNoticeTitle: resData['srvResData']['noticeTitle'],

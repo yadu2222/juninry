@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class TeachingItem {
   String? teachingMaterialUUID;
   String teachingMaterialName;
@@ -10,10 +13,13 @@ class TeachingItem {
   });
 
   // レスポンスデータをTeachingItemに変換
-  static List<TeachingItem> resToTeachingItem(Map resData) {
-    List<TeachingItem> teachingItems = [];
+  static List<TeachingItem> resToTeachingItem(http.Response response) {
 
-    for (Map loadData in resData['teachingItems']) {
+    // jsonに変換
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
+    List<TeachingItem> teachingItems = [];
+   
+    for (Map loadData in resData['srvResData']['teachingItems']) {
       teachingItems.add(TeachingItem(
         teachingMaterialUUID: loadData['teachingMaterialUUID'],
         teachingMaterialName: loadData['teachingMaterialName'],

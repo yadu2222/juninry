@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import 'package:juninry/apis/error_handler.dart';
 import '../http_req.dart';
 import '../../models/reward_model.dart';
 import '../../constant/urls.dart';
@@ -7,6 +6,7 @@ import '../../models/req_model.dart';
 import '../../models/exchange_model.dart';
 // import 'package:http/http.dart' as http;
 // import '../error.dart';
+import 'dart:convert';
 
 class RewardService {
   // TODO:エラーハンドリング
@@ -15,10 +15,14 @@ class RewardService {
     // リクエストを生成
     final reqData = Request(url: Urls.getRewards, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    debugPrint(resData.toString());
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.rewardErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
     // 返す
-    return Reward.resToReward(resData['srvResData']);
+    return Reward.resToReward(response);
   }
 
   // ごほうび交換
@@ -26,7 +30,13 @@ class RewardService {
     // リクエストを生成
     final reqData = Request(url: Urls.exchangeReward, reqType: 'POST', body: {'rewardUUID': reward.rewardUuid}, headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.rewardErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
     return resData['srvResData']['ouchiPoint'];
   }
 
@@ -35,7 +45,12 @@ class RewardService {
     // リクエストを生成
     final reqData = Request(url: Urls.registerReward, reqType: 'POST', body: Reward.rewardToMap(reward), headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    await HttpReq.httpReq(reqData);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.rewardErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // 交換されたごほうびを取得
@@ -43,8 +58,13 @@ class RewardService {
     // リクエストを生成
     final reqData = Request(url: Urls.getExchanges, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
-    return Exchange.resToExchanges(resData['srvResData']);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.rewardErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    return Exchange.resToExchanges(response);
   }
 
   // 交換されたごほうびを消化
@@ -52,6 +72,11 @@ class RewardService {
     // リクエストを生成
     final reqData = Request(url: Urls.digestionExchange, reqType: 'PUT', pasParams: exchange.rewardExchangingId.toString(), headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    await HttpReq.httpReq(reqData);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.rewardErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
   }
 }

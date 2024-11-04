@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import './teaching_item_model.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class Homework {
   String? homeworkUUID;
   DateTime? homeworkLimit; // TODO:dateにすべきでは？
@@ -45,20 +48,13 @@ class Homework {
     ),
   );
 
-//   {
-//   "srvResMsg":  "OK",
-//   "srvResData": {
-//     "teachingMaterialUUID": "978f9835-5a16-4ac0-8581-7af8fac06b4e",
-//     "teachingMaterialName": "漢字ドリル3",
-//     "subjectId": 1,
-//     "startPage": 2,
-//     "pageCount": 8,
-//     "isSubmitted": true,  // or false
-//     "images": ["bbbbbbbb-a6ad-4059-809c-6df866e7c5e6.jpg, gggggggg-176f-4dea-bec0-21464f192869.jpg, rrrrrrrr-bb84-4565-9666-d53dfcb59dd3.jpg"]
-//   },
-// }
+  static Homework resToHomework(http.Response response) {
 
-  static Homework resToHomework(Map resData){
+
+    // jsonデータに変換
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    Map resData = json['srvResData'];
+
     try {
       return Homework(
         startPage: resData['startPage'],
@@ -91,7 +87,13 @@ class Homework {
   //   },
   //]
   // 型が安全じゃなさすぎるだろという怒り
-  static List<dynamic> resToHomeworks(List resData, String? key, [bool time = false]) {
+  static List<dynamic> resToHomeworks(http.Response response, String? key, [bool time = false]) {
+
+
+    // jsonに変換
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    List resData = json['srvResData'] ?? [];
+
     List<dynamic> homeworks = [];
     // リストをmapに変換
     try {

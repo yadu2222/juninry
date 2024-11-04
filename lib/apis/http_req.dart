@@ -11,7 +11,7 @@ import '../constant/urls.dart';
 import 'dart:io';
 
 class HttpReq {
-  static Future<Map> httpReq(Request reqData, [bool isAuth = true]) async {
+  static Future<http.Response> httpReq(Request reqData, [bool isAuth = true]) async {
     if (isAuth) {
       User user = await User.getUser(); // user情報をdbから取得
       reqData.headers['Authorization'] = user.jwtKey!; // ヘッダーに認証トークンを追加
@@ -77,15 +77,15 @@ class HttpReq {
     // レスポンスの処理
     debugPrint(response.body.toString());
     // 成功
-    if (response.statusCode < 300) {
-      return jsonDecode(response.body) as Map<String, dynamic>;
-      // 失敗時の処理
-    } else {
-      reqData.errorHandling(response);
-      return {};
-    }
+    // if (response.statusCode < 300) {
+    //   return jsonDecode(response.body) as Map<String, dynamic>;
+    //   // 失敗時の処理
+    // } else {
+    //   reqData.errorHandling(response);
+    //   return {};
+    // }
+    return response;
   }
-
 
   // mapでかえしてはいけない型でつかう
   static Future<http.Response> imagesReq(Request reqData, [bool isAuth = true]) async {
