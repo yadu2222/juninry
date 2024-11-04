@@ -8,9 +8,6 @@ enum ExceptionType { joinClassConflict, permittonError, homeworkIsEmpty, submitt
 
 // ひもづけ
 extension ExceptionTypeExtension on ExceptionType {
-
-  // 値を保持するためのMapを使用
-  static final Map<ExceptionType, int> _values = {};
   String get message {
     switch (this) {
       case ExceptionType.joinClassConflict:
@@ -25,18 +22,6 @@ extension ExceptionTypeExtension on ExceptionType {
         return Messages.defaultError;
     }
   }
-
-   int get value => _values[this] ?? 0;
-
-  set value(int newValue) {
-    if (newValue < 0 || newValue > 4) {
-      _values[this] = 4;
-    } else {
-      _values[this] = newValue;
-    }
-  }
-
-  
 }
 
 // 例外を渡してtoast表示

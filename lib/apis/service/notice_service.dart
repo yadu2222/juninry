@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:juninry/models/notice_filters.dart';
 import 'package:juninry/models/student_model.dart';
 
 import '../../models/req_model.dart';
@@ -7,7 +6,6 @@ import '../../constant/urls.dart';
 import '../../models/quoted_notice_model.dart';
 import '../../models/notice_model.dart';
 
-import 'package:http/http.dart' as http;
 import '../http_req.dart';
 import '../error.dart';
 

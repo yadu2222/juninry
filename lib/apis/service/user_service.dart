@@ -66,23 +66,22 @@ class UserService {
   static Future<String> joinOUCHI(
     String inviteCode,
   ) async {
-    errorHandling(http.Response response) {
-      if (response.statusCode == 403) {
-        throw const PermittionError(); // 親にはその権限がないよ
-      } else if (response.statusCode == 409) {
-        throw const JoinClassConflictException(); // すでに参加している場合をthrow
-      } else {
-        throw Exception('おうち参加に失敗しました');
-      }
-    }
-
+    
     // リクエストを生成
     final reqData = Request(
       url: Urls.joinOUCHI,
       reqType: 'POST',
       pasParams: inviteCode,
       headers: {'Content-Type': 'application/json'},
-      errorHandling: errorHandling,
+      errorHandling: (http.Response response) {
+        if (response.statusCode == 403) {
+          throw PermittionError(); // 親にはその権限がないよ
+        } else if (response.statusCode == 409) {
+          throw JoinClassConflictException(); // すでに参加している場合をthrow
+        } else {
+          throw DefaultException();
+        }
+      },
     );
     final resData = await HttpReq.httpReq(reqData);
     // ユーザー情報の更新

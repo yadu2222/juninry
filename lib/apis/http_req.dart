@@ -81,7 +81,8 @@ class HttpReq {
       return jsonDecode(response.body) as Map<String, dynamic>;
       // 失敗時の処理
     } else {
-      return reqData.errorHandling(response);
+      reqData.errorHandling(response);
+      return {};
     }
   }
 

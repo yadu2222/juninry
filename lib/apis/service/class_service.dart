@@ -21,14 +21,14 @@ class ClassService {
 
   // クラスに参加
   static Future<String> joinClass(String inviteCode, String? studentNum) async {
-    // こうやってthrowしてcatchで拾うのはどうだろうか
+    // エラーハンドリング
     errorHandling(http.Response response) {
       if (response.statusCode == 403) {
-        throw const PermittionError(); // 親にはその権限がないよ
+        throw PermittionError(); // 親にはその権限がないよ
       } else if (response.statusCode == 409) {
-        throw const JoinClassConflictException(); // すでに参加している場合をthrow
+        throw JoinClassConflictException(); // すでに参加している場合をthrow
       } else {
-        throw Exception('クラス参加に失敗しました');
+        throw DefaultException();
       }
     }
 
@@ -49,8 +49,13 @@ class ClassService {
             headers: {'Content-Type': 'application/json'},
             errorHandling: errorHandling,
           );
-    final resData = await HttpReq.httpReq(reqData);
-    return resData['srvResData']['className'];
+
+    try {
+      final resData = await HttpReq.httpReq(reqData);
+      return resData['srvResData']['className'];
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // クラス作成

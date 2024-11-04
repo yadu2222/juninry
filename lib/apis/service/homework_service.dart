@@ -14,7 +14,6 @@ import 'package:path_provider/path_provider.dart'; // 画像保存のために�
 class HomeworkService {
   // 宿題登録
   static Future<void> registerHomework(RegisterHomework registerHomework) async {
-  
     Map<String, dynamic> body = RegisterHomework.toMap(registerHomework);
     // リクエストを生成
     final reqData = Request(url: Urls.registerHomework, reqType: 'POST', headers: {'Content-Type': 'application/json'}, body: body);
@@ -33,7 +32,7 @@ class HomeworkService {
   // 教材を取得
   static Future<List<TeachingItem>> getTeachingItems(String classUUID) async {
     // リクエストを生成
-    final reqData = Request(url: Urls.getTeachingItems, reqType: 'GET', headers: {'Content-Type': 'application/json'},pasParams: classUUID);
+    final reqData = Request(url: Urls.getTeachingItems, reqType: 'GET', headers: {'Content-Type': 'application/json'}, pasParams: classUUID);
     // リクエストメソッドにオブジェクトを投げる
     Map resData = await HttpReq.httpReq(reqData);
     // 宿題のデータがあれば
@@ -50,10 +49,10 @@ class HomeworkService {
   }
 
   // 1件の宿題を取得
-  static Future<Homework?> getHomework(String homeworkUUID) async{
+  static Future<Homework?> getHomework(String homeworkUUID) async {
     // TODO:教員の場合と児童の場合で処理を分割
     // リクエストを生成
-    final reqData = Request(url: Urls.getHomework, reqType: 'GET', headers: {'Content-Type': 'application/json'},pasParams: homeworkUUID);
+    final reqData = Request(url: Urls.getHomework, reqType: 'GET', headers: {'Content-Type': 'application/json'}, pasParams: homeworkUUID);
     // リクエストメソッドにオブジェクトを投げる
     Map resData = await HttpReq.httpReq(reqData);
     // 宿題のデータがあれば
@@ -63,6 +62,7 @@ class HomeworkService {
       }
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
     debugPrint(resData.toString());
     // 返す
@@ -110,7 +110,7 @@ class HomeworkService {
   // 次の日の宿題を取得
   static Future<List<dynamic>> getHomeScreenHomework() async {
     errorHandling(http.Response response) {
-      throw const SubmittionHomeworkError(); // 提出失敗したよ
+      throw SubmittionHomeworkError(); // 提出失敗したよ
     }
 
     // リクエストを生成
@@ -133,7 +133,7 @@ class HomeworkService {
   // 宿題を提出
   static Future<void> submittionHomework(String homeworkUUID, List<File> files) async {
     errorHandling(http.Response response) {
-      throw const SubmittionHomeworkError(); // 提出失敗したよ
+      throw SubmittionHomeworkError(); // 提出失敗したよ
     }
 
     // bodyを加工
@@ -179,14 +179,13 @@ class HomeworkService {
   }
 
   // 宿題の画像を取得
-  static Future<File?> getHomeworkImage(String homeworkUUID,String imageFileName) async {
-
+  static Future<File?> getHomeworkImage(String homeworkUUID, String imageFileName) async {
     String url = "${Urls.getHomework}/$homeworkUUID/images";
     // リクエストを生成
-    final reqData = Request(url: url, reqType: 'GET', headers: {'Content-Type': 'multipart/form-data'},pasParams: imageFileName);
+    final reqData = Request(url: url, reqType: 'GET', headers: {'Content-Type': 'multipart/form-data'}, pasParams: imageFileName);
     // リクエストメソッドにオブジェクトを投げる
     http.Response resData = await HttpReq.imagesReq(reqData);
-     // レスポンスデータを確認し、画像データがある場合は処理する
+    // レスポンスデータを確認し、画像データがある場合は処理する
     try {
       // 画像データ（バイナリ）を取得
       final List<int> imageBytes = resData.bodyBytes;
