@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:juninry/constant/error_handler.dart';
 
 import '../http_req.dart';
@@ -15,8 +15,12 @@ class HelpService {
     // リクエストを生成
     final reqData = Request(url: Urls.getHelp, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-   final response = await HttpReq.httpReq(reqData);
-   ErrorHandler.helpErrorHandler(response); // エラーハンドリング
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.helpErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
     // 返す
     return Help.resToHelps(response);
   }
@@ -26,7 +30,12 @@ class HelpService {
     // リクエストを生成
     final reqData = Request(url: Urls.destionHelp, reqType: 'POST', body: {'helpUUID': help.helpUuid}, headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    Map resData = await HttpReq.httpReq(reqData);
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.helpErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
     return resData['srvResData']['ouchiPoint'];
   }
 
@@ -35,6 +44,11 @@ class HelpService {
     // リクエストを生成
     final reqData = Request(url: Urls.registerHelp, reqType: 'POST', body: Help.helpToMap(help), headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
-    await HttpReq.httpReq(reqData);
+    final response = await HttpReq.httpReq(reqData);
+      try {
+      ErrorHandler.helpErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
   }
 }

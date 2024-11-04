@@ -12,7 +12,11 @@ class ClassService {
     final reqData = Request(url: Urls.getClassmates, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
     final response = await HttpReq.httpReq(reqData);
-    ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
     return Class.resToClassmates(response);
   }
 
@@ -35,8 +39,11 @@ class ClassService {
           );
 
     final response = await HttpReq.httpReq(reqData);
-    ErrorHandler.classErrorHandler(response); // エラーハンドリング
-
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
     Map resData = jsonDecode(response.body) as Map<String, dynamic>;
     return resData['srvResData']['className'];
   }
@@ -51,7 +58,11 @@ class ClassService {
       headers: {'Content-Type': 'application/json'},
     );
     final response = await HttpReq.httpReq(reqData);
-    ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
     return Class.resToClass(response);
   }
 
@@ -60,7 +71,11 @@ class ClassService {
     // リクエストを生成
     final reqData = Request(url: Urls.inviteClass, reqType: 'PUT', headers: {'Content-Type': 'application/json'}, pasParams: classUUID);
     final response = await HttpReq.httpReq(reqData);
-    ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    }
     return Class.resToClass(response);
   }
 
@@ -69,8 +84,11 @@ class ClassService {
     final reqData = Request(url: Urls.getClasses, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     // リクエストメソッドにオブジェクトを投げる
     final response = await HttpReq.httpReq(reqData);
-    ErrorHandler.classErrorHandler(response); // エラーハンドリング
-    // 返す
+    try {
+      ErrorHandler.classErrorHandler(response); // エラーハンドリング
+    } catch (e) {
+      rethrow;
+    } // 返す
     return Class.resToClasses(response);
   }
 }

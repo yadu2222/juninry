@@ -34,4 +34,32 @@ class ErrorHandler {
     }
     defaultHandler(response);
   }
+
+  static void homeworkErrorHandler(http.Response response) {
+    if (response.statusCode == 403) {
+      throw PermittionError();
+    }
+    defaultHandler(response);
+  }
+
+  static void noticeErrorHandler(http.Response response) {
+    if (response.statusCode == 403) {
+      throw PermittionError();
+    }
+    defaultHandler(response);
+  }
+
+  static void ouchiErrorHandler(http.Response response){
+    if (response.statusCode == 403) {
+      throw PermittionError();
+    }
+    defaultHandler(response);
+  }
+
+  static void rewardErrorHandler(http.Response response){
+    if (response.statusCode == 403) {
+      throw PermittionError();
+    }
+    defaultHandler(response);
+  }
 }

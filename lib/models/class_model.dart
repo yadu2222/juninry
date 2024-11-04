@@ -55,7 +55,7 @@ class Class {
   static List<Class> resToClasses(http.Response response) {
      // レスポンスデータをjsonに変換
     Map resData = jsonDecode(response.body) as Map<String, dynamic>;
-    List<Map> srvResData = resData['srvResData']['classes'];
+    List<dynamic> srvResData = resData['srvResData']['classes'];
 
 
       return srvResData.map((data) {

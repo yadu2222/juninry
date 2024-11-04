@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 class Help {
   final String? helpUuid;
@@ -30,8 +31,12 @@ class Help {
   }
 
   static List<Help> resToHelps(http.Response response) {
+
+    // レスポンスデータをjsonに変換
+    Map loadData = jsonDecode(response.body) as Map<String, dynamic>;
+
     List<Help> helps = [];
-    for (Map loadItem in loadData['helpData']) {
+    for (Map loadItem in loadData['srvResData']['helpData']) {
       helps.add(Help(
         helpUuid: loadItem['helpUUID'],
         helpTitle: loadItem['helpTitle'],
