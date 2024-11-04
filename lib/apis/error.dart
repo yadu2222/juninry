@@ -45,34 +45,50 @@ void handleException(ExceptionType exceptionType) {
   ToastUtil.show(message: exceptionType.message);
 }
 
+// 例外をthrowする関数
+void throwExceptionForType(ExceptionType type) {
+  switch (type) {
+    case ExceptionType.permittonError:
+      throw PermittionError();
+    case ExceptionType.homeworkIsEmpty:
+      throw HomeworkIsEmptyException();
+    case ExceptionType.joinClassConflict:
+      throw JoinClassConflictException();
+    case ExceptionType.submittionHomeworkError:
+      throw SubmittionHomeworkError();
+    case ExceptionType.DefaultException:
+      throw DefaultException();
+  }
+}
+
 // ーーーー ここに足していってね ーーーー
 // enumとひもづけに足すことも忘れずに
 
 // 宿題が空のとき
 class HomeworkIsEmptyException implements Exception {
   final String message;
-  const HomeworkIsEmptyException({this.message = Messages.homeworkIsEmpty});
+  HomeworkIsEmptyException({this.message = Messages.homeworkIsEmpty});
 }
 
 // すでに参加している
 class JoinClassConflictException implements Exception {
   final String message;
-  const JoinClassConflictException({this.message = Messages.joinClassConflictError});
+  JoinClassConflictException({this.message = Messages.joinClassConflictError});
 }
 
 // 権限がない！！！！！
 class PermittionError implements Exception {
   final String message;
-  const PermittionError({this.message = Messages.permittonError});
+  PermittionError({this.message = Messages.permittonError});
 }
 
 // 提出に失敗
 class SubmittionHomeworkError implements Exception {
   final String message;
-  const SubmittionHomeworkError({this.message = Messages.submittionHomeworkError});
+  SubmittionHomeworkError({this.message = Messages.submittionHomeworkError});
 }
 
 class DefaultException implements Exception {
   final String message;
-  const DefaultException({this.message = Messages.defaultError});
+  DefaultException({this.message = Messages.defaultError});
 }

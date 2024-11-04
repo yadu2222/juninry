@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:juninry/view/pages/patron/page_reward_register.dart';
+import 'package:juninry/view/pages/patron/page_treasure_register.dart';
 import 'package:juninry/view/pages/share/page_my_page.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
+import 'package:juninry/view/pages/junior/page_treasure.dart';
 
 // 遷移先
 // patron
@@ -184,6 +186,13 @@ class PatronBranch {
                           pageBuilder: (context, state) => NoTransitionPage(
                             key: state.pageKey,
                             child: const PageRewardRegisterPatron(),
+                          ),
+                        ),
+                        GoRoute(
+                          path: 'treasure',
+                          pageBuilder: (context, state) => NoTransitionPage(
+                            key: state.pageKey,
+                            child: const PageTreasureRegister(),
                           ),
                         )
                       ]),

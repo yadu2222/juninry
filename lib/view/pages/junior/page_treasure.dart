@@ -14,12 +14,19 @@ class PageTreasure extends HookWidget {
 
   final String title = 'たからばこ';
 
-  Future<void> open() async {
-    // たからばこを開く処理
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
+    final imgPath = useState<String>("assets/images/close_treasure.png");
+
+     Future<void> open() async {
+      // たからばこを開く処理
+      imgPath.value = "assets/images/open_treasure.png";
+    }
+
+
+
     // テンプレート呼び出し
     return BasicTemplate(title: title, children: [
       const Spacer(),
@@ -33,7 +40,7 @@ class PageTreasure extends HookWidget {
             width: 300,
             height: 300,
             padding: const EdgeInsets.all(10),
-            child: Image.asset("assets/images/close_treasure.png", fit: BoxFit.cover),
+            child: Image.asset(imgPath.value, fit: BoxFit.cover),
           ))
     ]);
   }
