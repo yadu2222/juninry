@@ -14,6 +14,7 @@ class ListItemBox<Model> extends StatelessWidget {
   final Widget Function(Model item) listItem; // カード ウィジェット関数
 
   @override
+
   Widget build(BuildContext context) {
     return SizedBox(
         width: MediaQuery.of(context).size.width * 0.92,

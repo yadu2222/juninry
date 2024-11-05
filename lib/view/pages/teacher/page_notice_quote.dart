@@ -79,17 +79,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:juninry/apis/controller/notice_req.dart';
 import 'package:juninry/constant/colors.dart';
-import 'package:go_router/go_router.dart';
-import 'package:juninry/router/router.dart';
 import 'package:juninry/view/components/organism/notice_list.dart';
 import '../../../models/notice_model.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.dartをインポート
-import '../../components/atoms/add_button.dart';
 import '../../../models/class_model.dart';
 import '../../../apis/controller/class_req.dart';
 
-import '../../components/molecule/no_resourcs.dart'; // からっぽ表示用のモジュール
 
 class PageNoticeQuoteTeacher extends HookWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

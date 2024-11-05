@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:juninry/constant/sample_data.dart';
 import 'package:juninry/models/notice_model.dart';
 import 'package:juninry/router/router.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
@@ -8,7 +7,6 @@ import 'package:juninry/view/components/organism/student_read_status_list.dart';
 import '../../../apis/controller/notice_req.dart';
 import '../../components/template/basic_template.dart';
 import 'package:juninry/view/components/molecule/notice_detail_tab.dart';
-import 'package:juninry/view/components/organism/student_list.dart';
 import '../../components/molecule/divider.dart';
 import 'package:go_router/go_router.dart';
 
