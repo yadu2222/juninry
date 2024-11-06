@@ -21,6 +21,7 @@ class Messages {
   static const String destionHelpSuccess = 'おてつだいを報告しました！'; // 生成成功
   static const String exchangeSuccess = 'ごほうびを交換しました！'; // 生成成功
   static const String digestSuccess = 'おねだりをお子さんに渡しました！'; // 生成成功
+  static const String addPointSuccess = 'ポイントを追加しました！'; // 生成成功
 
   // APIエラー
   static const String defaultError = "通信に失敗しました"; // データベースエラー
@@ -46,6 +47,7 @@ class Messages {
   static const String exchangeError = 'ごほうびの交換に失敗しました'; // 生成失敗
 
   static const String digestError = 'おねだりの報告に失敗しました'; // 生成失敗
+  static const String addPointError = 'ポイントの追加に失敗しました'; // 生成失敗
 
 
   // 警告
@@ -55,7 +57,7 @@ class Messages {
   static const String databaseError = "ごめんなさい";
   static const String databaseErrorMsg = "保存に失敗しました\n再度実行してください";
 
-  
+
 
   // 空だねというとき
   static const String homeworkIsEmpty = "宿題はありません"; // 取得エラー

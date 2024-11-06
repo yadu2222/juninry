@@ -15,11 +15,11 @@ class Urls {
 
   // iOSエミュレーターにおすすめ
   // static const String host = 'localhost';
-  // static const String host = 'm2.local';
+  static const String host = 'm2.local';
 
   // ローカル環境
   // static const String host = '10.200.0.220';
-  static const String host = 'yadu.local';
+  // static const String host = 'yadu.local';
   // static const String host = '192.168.0.12';
 
   static const String port = '4561';
@@ -75,4 +75,8 @@ class Urls {
   static const String registerReward = '$version/auth/users/ouchies/rewards/register'; // POSTごほうび登録
   static const String getExchanges = '$version/auth/users/ouchies/rewards/exchanges'; // GET交換履歴取得
   static const String digestionExchange = '$version/auth/users/ouchies/rewards/digestion'; // POST交換消化
+
+  // box
+  static const String addPoint = '$version/auth/users/ouchies/rewards/boxes/points/'; // POUTボックスにポイントを追加
+  static const String getTreasure = '$version/auth/users/ouchies/rewards/boxes/'; // GETボックス取得
 }

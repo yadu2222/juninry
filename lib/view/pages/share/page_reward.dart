@@ -39,7 +39,8 @@ class PageReward extends HookWidget {
     final ouchiPoint = useState<int>(0); // ouchipoint
     final rewardData = useState<List<Reward>>([]); // GOHOUBIデータ
     final isSelected = useState<bool>(true);
-    final treasureData = useState<List<Treasure>>(Treasure.testTresure); // 宝箱のデータを格納するための変数
+    final treasureData =
+        useState<List<Treasure>>([]); // 宝箱のデータを格納するための変数
 
     // ごほうび交換
     void exchange(Reward reward) {
@@ -112,9 +113,19 @@ class PageReward extends HookWidget {
     // 宝箱を取得
     Future<void> getTreasure() async {
       // 宝箱を取得
+      treasureData.value = await rewardReq.getTreasuresHandler();
     }
 
-    Future<void> chargePoint(Treasure treasure, int point) async {}
+    // 宝箱にポイントを貯める通信を行う
+    Future<void> chargePoint(Treasure treasure, int point) async {
+      int pointResult = await rewardReq.addPointBoxHandler(treasure.boxUuid, point);
+
+      if (pointResult != 0) {
+        // ポイントを更新
+        treasure.totalPoint = pointResult;
+        ouchiPoint.value -= point;
+      }
+    }
 
     // 宝箱にポイントを貯める処理
     void charge(Treasure treasure) {
@@ -127,7 +138,8 @@ class PageReward extends HookWidget {
         }
         if (treasure.reward!.rewardPoint - treasure.totalPoint < 1) {
           // TODO：宝箱をあけるページに遷移
-           context.go('/ouchi/top/reward/treasure', extra: {'treasure': treasure});
+          context
+              .go('/ouchi/top/reward/treasure', extra: {'treasure': treasure});
           return;
         }
         int maxValue = treasure.reward!.rewardPoint - treasure.totalPoint;
@@ -137,12 +149,14 @@ class PageReward extends HookWidget {
             builder: (BuildContext context) {
               int addPoint = 0;
               // useStateを使えないのでstatefulで対応
-              return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+              return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
                 void changePoint(int value) {
                   setState(() {
                     addPoint = value;
                   });
                 }
+
                 return AlertDialog(
                     elevation: 0.0, // ダイアログの影を削除
                     backgroundColor: Colors.transparent, // 背景色
@@ -156,7 +170,14 @@ class PageReward extends HookWidget {
                         ),
                         child: Column(children: [
                           const Text("何ポイント貯めますか？", style: Fonts.h5),
-                          NumberPicker(minValue: 0, maxValue: maxValue > ouchiPoint.value ? ouchiPoint.value : maxValue, value: addPoint, onChanged: (value) => setState(() => changePoint(value))),
+                          NumberPicker(
+                              minValue: 0,
+                              maxValue: maxValue > ouchiPoint.value
+                                  ? ouchiPoint.value
+                                  : maxValue,
+                              value: addPoint,
+                              onChanged: (value) =>
+                                  setState(() => changePoint(value))),
                           BasicButton(
                             isColor: true,
                             text: "確定",
@@ -184,6 +205,7 @@ class PageReward extends HookWidget {
 
       getOuchiPoint();
       getRewards();
+      getTreasure();
       // 児童かを判別
       isBranch(BranchType.junior).then((value) => isJunior.value = value);
       return () {};
@@ -202,7 +224,11 @@ class PageReward extends HookWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IndexTab(onTap: changeTab, icon: Icons.auto_awesome, isSelected: isSelected.value, margin: const EdgeInsets.only(right: 5)),
+            IndexTab(
+                onTap: changeTab,
+                icon: Icons.auto_awesome,
+                isSelected: isSelected.value,
+                margin: const EdgeInsets.only(right: 5)),
             IndexTab(
               onTap: changeTab,
               icon: Icons.redeem,
@@ -227,10 +253,20 @@ class PageReward extends HookWidget {
                     refresh: getRewards)
 
                 // 宝箱リスト
-                : RefreshList(itemDatas: rewardData.value, list: TreasureList(treasures: treasureData.value, charge: charge), text: "たからばこ", refresh: getTreasure))
+                : RefreshList(
+                    itemDatas: rewardData.value,
+                    list: TreasureList(
+                        treasures: treasureData.value, charge: charge),
+                    text: "たからばこ",
+                    refresh: getTreasure))
       ]),
 
-      isJunior.value ? const SizedBox.shrink() : Positioned(bottom: 25, right: 25, child: AddButton(onPressed: add)) // 追加ボタン]);
+      isJunior.value
+          ? const SizedBox.shrink()
+          : Positioned(
+              bottom: 25,
+              right: 25,
+              child: AddButton(onPressed: add)) // 追加ボタン]);
     ]);
   }
 }
