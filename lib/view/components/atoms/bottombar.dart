@@ -5,10 +5,11 @@ import '../../../constant/colors.dart';
 // bottombar
 // 基本触らない
 class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
-  const BottomBarView({super.key, required this.selectedIndex, required this.onItemTapped, required this.isOuchi});
-  const BottomBarView.teacher({super.key, required this.selectedIndex, required this.onItemTapped, required this.isOuchi});
+  const BottomBarView({super.key, required this.selectedIndex, required this.onItemTapped, required this.isOuchi, required this.isJunior});
+  const BottomBarView.teacher({super.key, required this.selectedIndex, required this.onItemTapped, required this.isOuchi, required this.isJunior});
 
   final bool isOuchi;
+  final bool isJunior;
 
   List<BottomNavigationBarItem> getItems() {
     BottomNavigationBarItem home = const BottomNavigationBarItem(
@@ -24,6 +25,10 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
       icon: Icon(Icons.book_outlined),
       label: '宿題',
     );
+    BottomNavigationBarItem nyariot = const BottomNavigationBarItem(
+      icon: Icon(Icons.catching_pokemon),
+      label: 'お世話',
+    );
     BottomNavigationBarItem ouchi = const BottomNavigationBarItem(
       icon: Icon(Icons.door_front_door),
       label: 'おうち',
@@ -38,6 +43,10 @@ class BottomBarView extends StatelessWidget implements PreferredSizeWidget {
     items.add(home);
     items.add(notice);
     items.add(homework);
+    if (isJunior) {
+      debugPrint('isJunior');
+      items.add(nyariot);
+    }
     if (isOuchi) {
       items.add(ouchi);
     }

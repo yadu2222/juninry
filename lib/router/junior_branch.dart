@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:juninry/models/treasure_model.dart';
+import 'package:juninry/view/pages/junior/page_collection.dart';
+import 'package:juninry/view/pages/junior/page_gatya.dart';
+import 'package:juninry/view/pages/junior/page_meal.dart';
+import 'package:juninry/view/pages/junior/page_nyariot.dart';
 import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
+import 'package:juninry/view/pages/junior/page_stamp.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
 import 'package:juninry/view/pages/junior/page_treasure.dart';
 import '../models/homework_model.dart';
@@ -55,6 +60,15 @@ class JuniorBranch {
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: PageClass(),
+              ),
+            ),
+            // スタンプカード
+            GoRoute(
+              name: 'stamp',
+              path: 'stamp',
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: PageStamp(),
               ),
             ),
           ],
@@ -154,6 +168,35 @@ class JuniorBranch {
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework()),
         ),
+      ],
+    ),
+
+    // nyariot
+    StatefulShellBranch(
+      navigatorKey: GlobalKey<NavigatorState>(debugLabel: 'nyariot'),
+      routes: [
+        GoRoute(
+          name: 'nyariot',
+          path: '/nyariot',
+          routes: [
+            GoRoute(
+              name: 'gatya',
+              path: 'gatya',
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageGatya()),
+            ),
+            GoRoute(
+              name: 'collection',
+              path: 'collection',
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageCollection()),
+            ),
+            GoRoute(
+              name: 'meal',
+              path: 'meal',
+              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageMeal()),
+            )
+          ],
+          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNyariot()),
+        )
       ],
     ),
 

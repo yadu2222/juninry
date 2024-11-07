@@ -36,13 +36,13 @@ class Shortcuts extends StatelessWidget {
         '宿題一覧',
         'マイページ',
         '生徒一覧',
-        '????',
+        'スタンプ'
       ],
       'pass': [
         '/homework/register',
         '/ouchi',
         '/home/students',
-        '/home',
+        '/home/stamp',
       ],
       'icons': [
         Icons.menu_book_rounded,

@@ -27,11 +27,16 @@ class BasicScreenView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isOuchi = useState<bool>(false); // おうちモードかどうか
+    final isJunior = useState<bool>(false); // ニャリオットモードかどうか
     useEffect(() {
       // 初回起動時に選択
       Future<void> isOuchiCheck() async {
         isOuchi.value = await getBranches() != BranchType.teacher.branch;
       }
+      Future<void> isJuniorCheck() async{
+        isJunior.value = await getBranches() == BranchType.junior.branch;
+      }
+      isJuniorCheck();
       isOuchiCheck();
       return () {};
     }, []);
@@ -42,6 +47,7 @@ class BasicScreenView extends HookWidget {
         selectedIndex: navigationShell.currentIndex,
         onItemTapped: _onItemTapped,
         isOuchi: isOuchi.value,
+        isJunior:isJunior.value,
       ),
     );
   }

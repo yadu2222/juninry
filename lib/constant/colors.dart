@@ -11,8 +11,9 @@ class AppColors {
   static const Color iconDark = Color(0xFF353535);
   static const Color iconGray = Color(0xFFDDDDDD);
   static const Color iconMiddleGray = Color(0xFF484848);
-
-
+  static const Color iconPink = Color.fromARGB(255, 255, 178, 158);
+  static const Color iconBlue = Color.fromARGB(255, 129, 218, 250);
+  static const Color iconGlean = Color.fromARGB(255, 197, 215, 63);
   // フォントカラー
   static const Color font = Color(0xFF353535);
   static const Color fontLight = Color(0xFFC1A14E);
@@ -35,11 +36,8 @@ class AppColors {
   static const Color dialogNeutral = Color(0xFF8E8E93);
   static const Color dialogPositive = Color(0xFF007AFF);
 
-
-
   // ヘルプからー
   static const Color help = Color.fromARGB(255, 196, 196, 198);
-
 
   // つかいやすい色
   static const Color glay = Color(0xFFE8EAED);

@@ -88,6 +88,14 @@ flutter:
   assets:
     - assets/images/open_treasure.png
     - assets/images/close_treasure.png
+    - assets/images/IMG_0065.png
+    - assets/images/stamp_card.png
+    - assets/images/stamp.png
+    - assets/images/hatena.PNG
+    - assets/images/collection_icon.png
+    - assets/images/meal_icon.png
+    - assets/images/gatya_icon.png
+    - assets/images/gatya.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
