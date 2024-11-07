@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:juninry/models/reward_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Treasure {
   final Reward? reward;
-   int totalPoint;
+  int totalPoint;
   final bool isOpen;
   final String boxUuid;
 
@@ -34,18 +35,21 @@ class Treasure {
     Map resData = jsonDecode(response.body) as Map<String, dynamic>;
 
     List<Treasure> treasures = [];
-    for (Map<String, dynamic> loadData in resData['srvResData']['boxes']) {
-      treasures.add(Treasure(
-          reward: Reward(
-            rewardName: loadData['rewardTitle'] ?? '',
-            rewardPoint: loadData['rewardPoint'] ?? 0,
-            note: loadData['rewardContent'] ?? '',
-            iconId: loadData['iconId'] ?? 0,
-            stock: loadData['stock'] ?? 0,
-          ),
-          totalPoint: loadData['depositPoint'],
-          isOpen: loadData['isOpen'] ?? false,
-          boxUuid: loadData['hardwareUUID'] ?? ''));
+    debugPrint(resData.toString());
+    if (resData['srvResData']['boxes'] != null) {
+      for (Map<String, dynamic> loadData in resData['srvResData']?['boxes']) {
+        treasures.add(Treasure(
+            reward: Reward(
+              rewardName: loadData['reward']?['rewardTitle'] ?? '',
+              rewardPoint: loadData['reward']?['rewardPoint'] ?? 0,
+              note: loadData['reward']?['rewardContent'] ?? '',
+              iconId: loadData['reward']?['iconId'] ?? 0,
+              stock: loadData['reward']?['stock'] ?? 0,
+            ),
+            totalPoint: loadData['depositPoint'] ?? 0,
+            isOpen: loadData['isOpen'] ?? false,
+            boxUuid: loadData['hardwareUUID'] ?? ''));
+      }
     }
     return treasures;
   }

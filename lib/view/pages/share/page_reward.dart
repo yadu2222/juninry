@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/constant/colors.dart';
 import 'package:juninry/constant/fonts.dart';
+import 'package:juninry/models/reward_detail.dart';
 import 'package:juninry/models/treasure_model.dart';
 import 'package:juninry/view/components/atoms/add_button.dart';
 import 'package:juninry/view/components/atoms/basic_button.dart';
@@ -39,8 +41,7 @@ class PageReward extends HookWidget {
     final ouchiPoint = useState<int>(0); // ouchipoint
     final rewardData = useState<List<Reward>>([]); // GOHOUBIデータ
     final isSelected = useState<bool>(true);
-    final treasureData =
-        useState<List<Treasure>>([]); // 宝箱のデータを格納するための変数
+    final treasureData = useState<List<Treasure>>([]); // 宝箱のデータを格納するための変数
 
     // ごほうび交換
     void exchange(Reward reward) {
@@ -105,20 +106,27 @@ class PageReward extends HookWidget {
       }
     }
 
-    // タブを切り替え
-    void changeTab() {
-      isSelected.value = !isSelected.value;
-    }
-
     // 宝箱を取得
     Future<void> getTreasure() async {
       // 宝箱を取得
       treasureData.value = await rewardReq.getTreasuresHandler();
     }
 
+    // タブを切り替え
+    void changeTab() {
+      isSelected.value = !isSelected.value;
+
+      if (isSelected.value) {
+        getRewards();
+      } else {
+        getTreasure();
+      }
+    }
+
     // 宝箱にポイントを貯める通信を行う
     Future<void> chargePoint(Treasure treasure, int point) async {
-      int pointResult = await rewardReq.addPointBoxHandler(treasure.boxUuid, point);
+      int pointResult =
+          await rewardReq.addPointBoxHandler(treasure.boxUuid, point);
 
       if (pointResult != 0) {
         // ポイントを更新
@@ -129,14 +137,16 @@ class PageReward extends HookWidget {
 
     // 宝箱にポイントを貯める処理
     void charge(Treasure treasure) {
-      // ポイントを貯める処理
-      // 保護者とrewardがない場合を弾く
-      if (isJunior.value) {
-        if (treasure.reward == null) {
-          ToastUtil.show(message: "中身がありません");
-          return;
-        }
-        if (treasure.reward!.rewardPoint - treasure.totalPoint < 1) {
+      // 宝箱にものが入っていない場合
+      if (treasure.reward == null) {
+        ToastUtil.show(message: "中身がありません");
+        //TODO: 宝箱の中身を設定するページに遷移
+        return;
+      } else {
+        // 宝箱にものが入っている場合
+        // 宝箱が開けられる状態の時
+        if (isJunior.value &&
+            treasure.reward!.rewardPoint - treasure.totalPoint < 1) {
           // TODO：宝箱をあけるページに遷移
           context
               .go('/ouchi/top/reward/treasure', extra: {'treasure': treasure});
@@ -147,7 +157,7 @@ class PageReward extends HookWidget {
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
-              int addPoint = 0;
+              int addPoint = 1;
               // useStateを使えないのでstatefulで対応
               return StatefulBuilder(
                   builder: (BuildContext context, StateSetter setState) {
@@ -158,41 +168,49 @@ class PageReward extends HookWidget {
                 }
 
                 return AlertDialog(
-                    elevation: 0.0, // ダイアログの影を削除
-                    backgroundColor: Colors.transparent, // 背景色
-                    content: Container(
-                        height: 250,
-                        width: 300,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(children: [
-                          const Text("何ポイント貯めますか？", style: Fonts.h5),
-                          NumberPicker(
-                              minValue: 0,
-                              maxValue: maxValue > ouchiPoint.value
-                                  ? ouchiPoint.value
-                                  : maxValue,
-                              value: addPoint,
-                              onChanged: (value) =>
-                                  setState(() => changePoint(value))),
-                          BasicButton(
-                            isColor: true,
-                            text: "確定",
-                            onPressed: () {
-                              chargePoint(treasure, addPoint); // ポイントを貯める処理
-                              Navigator.pop(context); // ダイアログを閉じる
-                            },
-                          )
-                        ])));
+                  elevation: 0.0, // ダイアログの影を削除
+                  backgroundColor: Colors.transparent, // 背景色
+                  content: Container(
+                      width: 500,
+                      // padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: AppColors.iconLight,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          RewardDetail(
+                            rewardData: treasure.reward!,
+                          ),
+                          isJunior.value && ouchiPoint.value > 0
+                              ? Column(children: [
+                                  const Text("何ポイント貯めますか？", style: Fonts.h5),
+                                  NumberPicker(
+                                      minValue: 1,
+                                      maxValue: maxValue > ouchiPoint.value
+                                          ? ouchiPoint.value
+                                          : maxValue,
+                                      value: addPoint,
+                                      onChanged: (value) =>
+                                          setState(() => changePoint(value))),
+                                  BasicButton(
+                                    isColor: true,
+                                    text: "確定",
+                                    onPressed: () {
+                                      chargePoint(
+                                          treasure, addPoint); // ポイントを貯める処理
+                                      Navigator.pop(context); // ダイアログを閉じる
+                                    },
+                                  )
+                                ])
+                              : const SizedBox(),
+                        ],
+                      )),
+                );
               });
             });
-      } else {
-        if (treasure.reward == null) {
-          // TODO：中身を設定するページに遷移
-        }
       }
     }
 
