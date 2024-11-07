@@ -7,16 +7,15 @@ class BasicTemplate extends StatelessWidget {
   final bool popIcon;
   final List<Widget> children;
   final IconButton? featureIconButton;
-   final bool Function()? popFunction;
+  final bool Function()? popFunction;
 
-  const BasicTemplate({
-    super.key,
-    required this.title,
-    this.popIcon = false,
-    required this.children,
-    this.featureIconButton,
-    this.popFunction
-  });
+  const BasicTemplate(
+      {super.key,
+      required this.title,
+      this.popIcon = false,
+      required this.children,
+      this.featureIconButton,
+      this.popFunction});
 
   @override
   Widget build(BuildContext context) {

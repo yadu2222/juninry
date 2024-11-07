@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/models/treasure_model.dart';
 
 import '../service/reward_service.dart';
 
@@ -63,6 +64,29 @@ class RewardReq {
       ToastUtil.show(message: Messages.digestSuccess); // 消化に成功
     } catch (error) {
       ToastUtil.show(message: Messages.digestError);
+    }
+  }
+
+  // 宝箱にポイントを追加
+  Future<int> addPointBoxHandler(String boxUuid, int point) async {
+    try {
+      int pointResult = await RewardService.addPointBox(boxUuid, point);
+
+      ToastUtil.show(message: Messages.addPointSuccess); // 登録に成功
+      return pointResult;
+    } catch (error) {
+      ToastUtil.show(message: Messages.addPointError);
+      return 0;
+    }
+  }
+
+  Future<List<Treasure>> getTreasuresHandler() async {
+    try {
+      return await RewardService.getTreasure();
+
+    } catch (error) {
+      ToastUtil.show(message: "おわんないよ〜〜");
+      return [];
     }
   }
 }

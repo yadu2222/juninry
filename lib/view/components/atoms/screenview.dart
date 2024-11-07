@@ -26,6 +26,7 @@ class ScreenView extends StatelessWidget {
       // appBar:appBar,
       body: widget,
       bottomNavigationBar: bottomBar,
+      resizeToAvoidBottomInset: false,
     );
   }
 }

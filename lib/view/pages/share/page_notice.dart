@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,12 +6,10 @@ import 'package:juninry/apis/controller/notice_req.dart';
 import 'package:juninry/apis/controller/ouchi_req.dart';
 import 'package:juninry/constant/colors.dart';
 import 'package:go_router/go_router.dart';
-import 'package:juninry/models/notice_filters.dart';
 import 'package:juninry/models/ouchi_model.dart';
 import 'package:juninry/models/user_model.dart';
 import 'package:juninry/router/router.dart';
 import 'package:juninry/view/components/organism/notice_list.dart';
-import 'package:path/path.dart';
 import '../../../models/notice_model.dart';
 import '../../components/template/basic_template.dart';
 import '../../components/organism/notice_filter.dart'; // 追加: notice_filter.dartをインポート
