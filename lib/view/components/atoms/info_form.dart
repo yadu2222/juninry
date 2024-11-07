@@ -8,6 +8,7 @@ class InfoForm extends StatelessWidget {
     required this.label,
     required this.controller,
     this.isIcon = false,
+    this.isBorder = false,
     this.onTap,
     this.icon = Icons.send,
     this.inputType = TextInputType.text,
@@ -17,10 +18,11 @@ class InfoForm extends StatelessWidget {
   final String label;
   final IconData icon;
   final bool isIcon;
+  final bool isBorder;
   final void Function()? onTap;
   final TextEditingController controller;
   final TextInputType inputType; // 数値以外許さないか
-  final List<TextInputFormatter> inputFormatter; 
+  final List<TextInputFormatter> inputFormatter;
 
   // TODO:バリデーション
   @override
@@ -52,11 +54,24 @@ class InfoForm extends StatelessWidget {
                   ),
                 )
               : const SizedBox.shrink(),
+          enabledBorder: isBorder
+              ? const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.main, width: 1.5),
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                )
+              : null,
+          focusedBorder: isBorder
+              ? const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.main, width: 1.5),
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                )
+              : null,
           border: const OutlineInputBorder(
               borderSide: BorderSide.none, // ボーダーを非表示にする
               borderRadius: BorderRadius.all(Radius.circular(50)) // 角を丸くする
               ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0), // テキストの内側の余白
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20.0, vertical: 15.0), // テキストの内側の余白
         ),
       ),
     );
