@@ -5,7 +5,6 @@ import 'package:juninry/view/pages/patron/page_reward_register.dart';
 import 'package:juninry/view/pages/patron/page_treasure_register.dart';
 import 'package:juninry/view/pages/share/page_my_page.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
-import 'package:juninry/view/pages/junior/page_treasure.dart';
 
 // 遷移先
 // patron

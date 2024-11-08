@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:juninry/models/treasure_model.dart';
 import 'package:juninry/view/pages/junior/page_collection.dart';
 import 'package:juninry/view/pages/junior/page_gatya.dart';
+import 'package:juninry/view/pages/junior/page_gatya2.dart';
 import 'package:juninry/view/pages/junior/page_meal.dart';
 import 'package:juninry/view/pages/junior/page_nyariot.dart';
 import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
@@ -182,6 +183,34 @@ class JuniorBranch {
             GoRoute(
               name: 'gatya',
               path: 'gatya',
+              routes: [
+                 GoRoute(
+                  name: 'gatyagatya',
+                  path: 'gatyagatya',
+                  pageBuilder: (context, state) {
+                    // 遷移時のデータの受け渡し
+                    // extraがnullである場合trycatchでエラーを回避
+                    if (state.extra != null) {
+                      // 遷移時に定義されたデータをrouterで再定義
+                      final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                      // final String homeworkId = extraData['homeworkId'];
+                      final bool isFirst = extraData['isFirst'];
+                      return NoTransitionPage(
+                        key: state.pageKey,
+                        // 先ほど再定義したデータをここで渡す
+                        child: PageGatyaGatya(
+                          isFirst: isFirst,
+                        ),
+                      );
+                    } else {
+                      return NoTransitionPage(
+                        key: state.pageKey,
+                        child: PageGatya(),
+                      );
+                    }
+                  },
+                ),
+              ],
               pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageGatya()),
             ),
             GoRoute(

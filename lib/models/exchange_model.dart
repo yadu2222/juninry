@@ -35,7 +35,6 @@ class Exchange {
   }
 
   static List<Exchange> resToExchanges(http.Response response) {
-
     // レスポンスデータをjsonに変換
     Map json = jsonDecode(response.body) as Map<String, dynamic>;
     Map loadData = json['srvResData'] as Map<String, dynamic>;
