@@ -63,7 +63,18 @@ class PageNyariot extends HookWidget {
                                     Wrap(
                                         children: itemCollections.value.map((collection) {
                                       return collection.quantity != 0
-                                          ? Column(children: [CollectionBox(imagePath: collection.imgPath), Text("×${collection.quantity.toString()}", style: Fonts.p)])
+                                          ? Column(children: [
+                                              InkWell(
+                                                  onTap: () async {
+                                                    // ごはんをあげる処理
+                                                    hungry.value = await collectionReq.mealNyariot(collection.collectionUUID) / 100;
+                                                    nyariot.value.talk = collection.talk;
+                                                    itemCollections.value = await collectionReq.getItems();
+                                                    context.pop(context);
+                                                  },
+                                                  child: CollectionBox(imagePath: collection.imgPath)),
+                                              Text("×${collection.quantity.toString()}", style: Fonts.p)
+                                            ])
                                           : const SizedBox.shrink();
                                     }).toList())
                                   ]))))
@@ -106,9 +117,12 @@ class PageNyariot extends HookWidget {
                       children: [
                         // ガチャ
                         InkWell(
-                            onTap: () {
+                            onTap: () async {
+                              // TODO:ガチャ画面を経由すると画面が更新されない
                               // ガチャ画面に遷移
-                              context.go("/nyariot/gatya");
+                              await context.push("/nyariot/gatya");
+                              // 戻ってきたらデータを取得する処理
+                              itemCollections.value = await collectionReq.getItems();
                             },
                             child: SizedBox(
                               width: 100,

@@ -88,4 +88,5 @@ class Urls {
   static const String stampGatya = '$nyariots/stamp_gacha'; // GETスタンプガチャ
   static const String getNyariot = '$nyariots/main'; // GETスタンプガチャ
   static const String getHungry = '$nyariots/hungry'; // GETスタンプガチャ
+  static const String mealNyariot = '$nyariots/meal'; // GETスタンプガチャ
 }

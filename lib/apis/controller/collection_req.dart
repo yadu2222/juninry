@@ -71,4 +71,14 @@ class CollectionReq {
       return Future.value(0); // 空の Future<int> を返す
     }
   }
+
+  // ニャリオットにごはんをあげる
+  Future<int> mealNyariot(String itemUUID) {
+    try {
+      return CollectionService.mealNyariot(itemUUID);
+    } catch (error) {
+      ToastUtil.show(message: "おわんないよ〜〜");
+      return Future.value(0); // 空の Future<void> を返す
+    }
+  }
 }

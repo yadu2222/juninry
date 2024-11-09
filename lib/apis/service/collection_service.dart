@@ -59,7 +59,7 @@ class CollectionService {
   }
 
   // メインニャリオットを取得
-  static Future<Collection> getMainNyariot() async{
+  static Future<Collection> getMainNyariot() async {
     final reqData = Request(url: Urls.getNyariot, reqType: 'GET', headers: {'Content-Type': 'application/json'});
     final response = await HttpReq.httpReq(reqData);
     try {
@@ -73,6 +73,19 @@ class CollectionService {
   // ニャリオットの空腹度を取得
   static Future<int> getNyariotHunger() async {
     final reqData = Request(url: Urls.getHungry, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.collectionErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    return json['srvResData']['satityDegrees'];
+  }
+
+  // ニャリオットトにご飯をあげる
+  static Future<int> mealNyariot(String itemUUID) async {
+    final reqData = Request(url: Urls.mealNyariot, reqType: 'PUT', headers: {'Content-Type': 'application/json'}, pasParams: itemUUID);
     final response = await HttpReq.httpReq(reqData);
     try {
       ErrorHandler.collectionErrorHandler(response);

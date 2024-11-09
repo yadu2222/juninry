@@ -8,7 +8,7 @@ class Collection {
   final String imgPath;
   final String name;
   final String description;
-  final String talk;
+  String talk;
   final bool hasItem;
   final int quantity;
   final int rarity;
@@ -72,7 +72,7 @@ class Collection {
       for (Map loadItem in loadData) {
         collections.add(Collection(
             collectionID: loadItem['itemNumber'],
-            collectionUUID: loadItem['itemName'],
+            collectionUUID: loadItem['itemUUID'],
             imgPath: loadItem['imagePath'],
             name: loadItem['itemName'],
             description: loadItem['detail'],

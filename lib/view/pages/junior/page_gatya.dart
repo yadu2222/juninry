@@ -24,7 +24,7 @@ class PageGatya extends HookWidget {
       // ダイアログを表示
       showDialog(
           context: context,
-          barrierDismissible: false,
+          barrierDismissible: true,
           builder: (BuildContext context) {
             // useStateを使えないのでstatefulで対応
             return AlertDialog(
@@ -32,9 +32,9 @@ class PageGatya extends HookWidget {
                 backgroundColor: Colors.transparent, // 背景色
                 contentPadding: const EdgeInsets.all(0),
                 content: Container(
-                    height: 150,
+                    height: 120,
                     width: 450,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
