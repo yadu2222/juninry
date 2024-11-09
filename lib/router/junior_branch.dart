@@ -5,7 +5,6 @@ import 'package:juninry/models/treasure_model.dart';
 import 'package:juninry/view/pages/junior/page_collection.dart';
 import 'package:juninry/view/pages/junior/page_gatya.dart';
 import 'package:juninry/view/pages/junior/page_gatya2.dart';
-import 'package:juninry/view/pages/junior/page_meal.dart';
 import 'package:juninry/view/pages/junior/page_nyariot.dart';
 import 'package:juninry/view/pages/junior/page_ouchi_top.dart';
 import 'package:juninry/view/pages/junior/page_stamp.dart';
@@ -218,11 +217,6 @@ class JuniorBranch {
               path: 'collection',
               pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageCollection()),
             ),
-            GoRoute(
-              name: 'meal',
-              path: 'meal',
-              pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: PageMeal()),
-            )
           ],
           pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageNyariot()),
         )

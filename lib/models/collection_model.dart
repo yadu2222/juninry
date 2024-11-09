@@ -24,19 +24,19 @@ class Collection {
       required this.hasItem,
       this.quantity = 0});
 
-  static resToCollections(http.Response response) {
+  static resItemToCollections(http.Response response) {
     Map json = jsonDecode(response.body) as Map<String, dynamic>;
-    Map loadData = json['srvResData'] as Map<String, dynamic>;
+    List loadData = json['srvResData'] as List<dynamic>;
 
     List<Collection> collections = [];
     try {
-      for (Map loadItem in loadData['collectionData']) {
+      for (Map loadItem in loadData) {
         collections.add(Collection(
             collectionID: loadItem['itemNumber'],
             collectionUUID: loadItem['itemName'],
             imgPath: loadItem['imagePath'],
             image: null,
-            name: loadItem['name'],
+            name: loadItem['itemName'],
             description: loadItem['detail'],
             talk: loadItem['talk'],
             hasItem: loadItem['hasItem'],
@@ -79,7 +79,7 @@ class Collection {
   ];
 
   static List<Collection> nyariotCollection = [
-    Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "", image: null, name: "name", description: "ddd", talk: "", hasItem: false),
+    Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "item/IMG_0071.PNG", image: null, name: "name", description: "ddd", talk: "", hasItem: false),
     Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "", image: null, name: "name", description: "ddd", talk: "", hasItem: false),
     Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "", image: null, name: "name", description: "ddd", talk: "", hasItem: false),
     Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "", image: null, name: "name", description: "ddd", talk: "", hasItem: false),

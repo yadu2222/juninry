@@ -59,7 +59,7 @@ class PageNyariot extends HookWidget {
                                     ),
                                     Wrap(
                                         children: itemCollections.value.map((collection) {
-                                      return collection.quantity != 0 ? Column(children: [CollectionBox(image: collection.image), Text(collection.name, style: Fonts.p)]) : const SizedBox.shrink();
+                                      return collection.quantity != 0 ? Column(children: [CollectionBox(imagePath: collection.imgPath), Text(collection.name, style: Fonts.p)]) : const SizedBox.shrink();
                                     }).toList())
                                   ]))))
                     ])));

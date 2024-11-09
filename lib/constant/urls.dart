@@ -58,21 +58,37 @@ class Urls {
   static const String inviteClass = '$version/auth/users/classes/refresh'; // POST招待コード再発行
   static const String getClasses = '$version/auth/users/classes/affiliations'; // GETクラス一覧取得
 
+
+
+  // ouchi
+  static const String ouchies = '$version/auth/users/ouchies'; // GETおうち取得
+
   // OUCHI
-  static const String joinOUCHI = '$version/auth/users/ouchies/join'; // POST招待コードでOUCHIに参加
-  static const String createOUCHI = '$version/auth/users/ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
+  static const String joinOUCHI = '$ouchies/join'; // POST招待コードでOUCHIに参加
+  static const String createOUCHI = '$ouchies/register'; // POSTクラス作成  static const String createClass = '$version/auth/users/classes/register'; // POSTクラス作成
   static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
-  static const String getOUCHIInfo = '$version/auth/users/ouchies/info'; // GETOUCHI情報取得
+  static const String getOUCHIInfo = '$ouchies/info'; // GETOUCHI情報取得
+
 
   // help
-  static const String getHelp = '$version/auth/users/ouchies/helps/helps'; // GETおてつだい取得
-  static const String destionHelp = '$version/auth/users/ouchies/helps/submittion'; // POSTおてつだい消化
-  static const String registerHelp = '$version/auth/users/ouchies/helps/register'; // POSTおてつだい登録
+  static const String helps = '$ouchies/helps';
+  static const String getHelp = '$helps/helps'; // GETおてつだい取得
+  static const String destionHelp = '$helps/submittion'; // POSTおてつだい消化
+  static const String registerHelp = '$helps/register'; // POSTおてつだい登録
+
 
   // GOHOUBI
-  static const String getRewards = '$version/auth/users/ouchies/rewards/rewards'; // GETごほうび取得
-  static const String exchangeReward = '$version/auth/users/ouchies/rewards/exchange'; // POSTごほうび交換
-  static const String registerReward = '$version/auth/users/ouchies/rewards/register'; // POSTごほうび登録
-  static const String getExchanges = '$version/auth/users/ouchies/rewards/exchanges'; // GET交換履歴取得
-  static const String digestionExchange = '$version/auth/users/ouchies/rewards/digestion'; // POST交換消化
+    static const String rewards = '$ouchies/rewards';
+  static const String getRewards = '$rewards/rewards'; // GETごほうび取得
+  static const String exchangeReward = '$rewards/exchange'; // POSTごほうび交換
+  static const String registerReward = '$rewards/register'; // POSTごほうび登録
+  static const String getExchanges = '$rewards/exchanges'; // GET交換履歴取得
+  static const String digestionExchange = '$rewards/digestion'; // POST交換消化
+
+  // nyariot
+  static const String nyariots = '$rewards/nyariots'; // GETにゃりお取得
+  static const String getNyariots = nyariots; // GETにゃりお取得
+
+  // item
+  static const String getItems = '$nyariots/items'; // GETアイテム取得
 }

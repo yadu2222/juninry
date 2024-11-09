@@ -48,14 +48,14 @@ class PageGatyaGatya extends HookWidget {
                         width: 450,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.main,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(children: [
                           const Text("ガチャ結果", style: Fonts.h5),
                           Wrap(
                               children: collections.value.map((collection) {
-                            return CollectionBox(image: collection.image);
+                            return CollectionBox(imagePath: collection.imgPath);
                           }).toList()),
                           BasicButton(
                               isColor: true,

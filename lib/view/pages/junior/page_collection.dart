@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:juninry/apis/controller/collection_req.dart';
 // import 'package:go_router/go_router.dart';
 import 'package:juninry/models/collection_model.dart';
 import 'package:juninry/view/components/molecule/collection_box.dart';
@@ -16,11 +17,19 @@ class PageCollection extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final collectionReq = CollectionReq(context: context);
     final itemCollections = useState<List<Collection>>(Collection.itemCollection);
     final nyariotCollections = useState<List<Collection>>(Collection.nyariotCollection);
 
     useEffect(() {
-      // TODO:コレクションのデータを取得
+      Future<void> getCollection() async {
+        itemCollections.value = await collectionReq.getItems();
+        // nyariotCollections.value = await getCollection();
+        debugPrint(itemCollections.value.toString());
+      }
+
+      getCollection();
+
       return () {};
     }, []);
 
@@ -40,7 +49,7 @@ class PageCollection extends HookWidget {
                     ),
                     Wrap(
                         children: nyariotCollections.value.map((collection) {
-                      return CollectionBox(image: collection.image);
+                      return CollectionBox(imagePath: collection.imgPath);
                     }).toList()),
                     const DividerView(
                       title: "アイテム",
@@ -49,7 +58,7 @@ class PageCollection extends HookWidget {
                     ),
                     Wrap(
                         children: itemCollections.value.map((collection) {
-                      return CollectionBox(image: collection.image);
+                      return CollectionBox(imagePath: collection.imgPath);
                     }).toList())
                   ]))))
     ]);

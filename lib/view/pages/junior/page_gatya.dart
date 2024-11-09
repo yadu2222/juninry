@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/view/components/atoms/basic_button.dart';
 // import 'package:go_router/go_router.dart';
 
 // view
@@ -14,6 +15,55 @@ class PageGatya extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ouchiPoint = useState<int>(220); // ouchipoint
+
+    void gatya(bool isFirst) async {
+      int needPoint = isFirst ? 20 : 200;
+      String defPointStr = "ポイントが不足しています";
+      // ポイントが足りているか確認
+      // ダイアログを表示
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            // useStateを使えないのでstatefulで対応
+            return AlertDialog(
+                elevation: 0.0, // ダイアログの影を削除
+                backgroundColor: Colors.transparent, // 背景色
+                contentPadding: const EdgeInsets.all(0),
+                content: Container(
+                    height: 150,
+                    width: 450,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(children: [
+                      const Text("ガチャを回しますか？"),
+                      Text(isFirst ? "1回20P" : "11回200P"),
+                      BasicButton(
+                          onPressed: () {
+                            if (ouchiPoint.value >= needPoint) {
+                              Navigator.pop(context);
+                              context.go("/nyariot/gatya/gatyagatya", extra: {'isFirst': isFirst});
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                          width: 0.7,
+                          text: isFirst
+                              ? ouchiPoint.value >= needPoint
+                                  ? "1回20P"
+                                  : defPointStr
+                              : ouchiPoint.value >= needPoint
+                                  ? "11回200P"
+                                  : defPointStr,
+                          isColor: ouchiPoint.value >= needPoint)
+                    ])));
+          });
+    }
+
     useEffect(() {
       return () {};
     }, []);
@@ -42,7 +92,7 @@ class PageGatya extends HookWidget {
                     children: [
                       InkWell(
                           onTap: () {
-                            context.go("/nyariot/gatya/gatyagatya", extra: {'isFirst': true});
+                            gatya(true);
                           },
                           child: Image.asset(
                             "assets/images/1_button.png",
@@ -51,7 +101,7 @@ class PageGatya extends HookWidget {
                       const SizedBox(width: 10),
                       InkWell(
                           onTap: () {
-                            context.go("/nyariot/gatya/gatyagatya", extra: {'isFirst': false});
+                            gatya(false);
                           },
                           child: Image.asset(
                             "assets/images/11_button.png",

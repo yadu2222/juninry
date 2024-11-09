@@ -62,4 +62,11 @@ class ErrorHandler {
     }
     defaultHandler(response);
   }
+
+  static void collectionErrorHandler(http.Response response){
+    if (response.statusCode == 403) {
+      throw PermittionError();
+    }
+    defaultHandler(response);
+  }
 }
