@@ -78,7 +78,7 @@ class Urls {
 
 
   // GOHOUBI
-    static const String rewards = '$ouchies/rewards';
+  static const String rewards = '$ouchies/rewards';
   static const String getRewards = '$rewards/rewards'; // GETごほうび取得
   static const String exchangeReward = '$rewards/exchange'; // POSTごほうび交換
   static const String registerReward = '$rewards/register'; // POSTごほうび登録
@@ -87,8 +87,7 @@ class Urls {
 
   // nyariot
   static const String nyariots = '$rewards/nyariots'; // GETにゃりお取得
-  static const String getNyariots = nyariots; // GETにゃりお取得
-
-  // item
+  static const String getNyariots = '$nyariots/nyariots'; // GETにゃりお取得
   static const String getItems = '$nyariots/items'; // GETアイテム取得
+  static const String getStamps = '$nyariots/stamps'; // GETスタンプ取得
 }

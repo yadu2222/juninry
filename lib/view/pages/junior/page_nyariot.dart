@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:juninry/constant/colors.dart';
 import 'package:juninry/constant/fonts.dart';
 import 'package:juninry/models/collection_model.dart';
-import 'package:juninry/view/components/atoms/alert_dialog.dart';
-import 'package:juninry/view/components/atoms/dialog.dart';
 import 'package:juninry/view/components/molecule/collection_box.dart';
 import 'package:juninry/view/components/molecule/progress_bar.dart';
 import 'package:juninry/view/components/template/basic_template.dart';

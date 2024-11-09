@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:juninry/apis/controller/collection_req.dart';
 import 'package:juninry/view/components/molecule/stamp.dart';
 // view
 import '../../components/template/basic_template.dart';
@@ -12,13 +13,14 @@ class PageStamp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CollectionReq collectionReq = CollectionReq(context: context);
     final stampBool = useState<List<bool>>([false, false, false, false, false, false, false]);
     final stamp = useState<int>(5);
 
     useEffect(() {
       void getStamp() async {
         // スタンプの数を取得
-        // stamp.value = await getStamp();
+        stamp.value = await collectionReq.getStamps();
         // スタンプの数によってboolを変更
         for (int i = 0; i < stamp.value; i++) {
           stampBool.value[i] = true;
