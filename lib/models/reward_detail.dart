@@ -6,7 +6,7 @@ import 'package:juninry/models/reward_model.dart';
 import 'package:juninry/view/components/molecule/divider.dart';
 
 class RewardDetail extends StatelessWidget {
-  final Reward rewardData;
+  final Reward? rewardData;
 
   const RewardDetail({
     super.key,
@@ -25,19 +25,26 @@ class RewardDetail extends StatelessWidget {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          RewardIcon.getIcon(rewardData.iconId),
+          RewardIcon.getIcon(
+            rewardData != null ? rewardData!.iconId : 10,
+          ),
           const SizedBox(width: 10), // 余白(アイコンとテキストの間
-          Text(rewardData.rewardName, style: Fonts.h4),
+          rewardData != null
+              ? Text(rewardData!.rewardName, style: Fonts.h4)
+              : const Text("未設定", style: Fonts.h4g),
         ]),
         const DividerView(
           dividColor: AppColors.main,
           indent: 0,
           endIndent: 0,
         ),
-        Text(
-          rewardData.note,
-          style: Fonts.p,
-        ), // 中身
+        rewardData != null
+            ? Text(
+                rewardData!.note,
+                style: Fonts.p,
+              )
+            : const Text("ご褒美が設定されていません。", style: Fonts.p),
+        // 中身
       ]),
     );
   }

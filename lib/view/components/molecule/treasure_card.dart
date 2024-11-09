@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:juninry/constant/colors.dart';
 import 'package:juninry/view/components/atoms/total_point.dart';
-
 // view
 import '../atoms/listitem.dart';
 // model
@@ -10,36 +9,52 @@ import 'package:juninry/models/treasure_model.dart';
 import 'package:juninry/constant/fonts.dart';
 import '../../../constant/reward_icon.dart';
 
-class TreasureCard extends StatelessWidget {
+class TreasureCard extends StatefulWidget {
+  final Treasure treasure;
+
   const TreasureCard({
     super.key,
     required this.treasure,
   });
 
-  final Treasure treasure;
+  @override
+  State<TreasureCard> createState() => _TreasureCardState();
+}
 
+class _TreasureCardState extends State<TreasureCard> {
   @override
   Widget build(BuildContext context) {
-    return ListItem(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        widget: IntrinsicHeight(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // 両端に寄せる
-                crossAxisAlignment: CrossAxisAlignment.center, // 子要素を縦方向に中央揃え
-                children: [
-              // icon
-              Row(children: [
-                RewardIcon.getIcon(treasure.reward != null ? treasure.reward!.iconId : 10,
-                    border: treasure.reward != null ? treasure.totalPoint == treasure.reward!.rewardPoint : false), // rewardポイントの状態を判別してアイコンに囲み線をつける
-                const SizedBox(width: 10), // 余白(アイコンとテキストの間
-                // たからばこのタイトル
-                Text(
-                  treasure.reward != null ? treasure.reward!.rewardName : "空っぽです",
-                  style: Fonts.p,
-                ),
-              ]),
-              // 現在のポイント
-              TotalPoint(treasure: treasure)
-            ])));
+    return ValueListenableBuilder<int?>(
+      valueListenable: widget.treasure.isOpenNotifier,
+      builder: (context, isOpen, child) {
+        return ListItem(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            widget: IntrinsicHeight(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                  Row(children: [
+                    RewardIcon.getIcon(
+                        widget.treasure.reward != null
+                            ? isOpen == 1 || isOpen == 2
+                                ? widget.treasure.reward!.iconId
+                                : 11
+                            : 10,
+                        border: widget.treasure.reward != null
+                            ? widget.treasure.totalPoint == widget.treasure.reward!.rewardPoint
+                            : false,
+                        mainColor: isOpen == 3
+                            ? AppColors.iconGray
+                            : AppColors.main),
+                    const SizedBox(width: 10),
+                    widget.treasure.reward != null
+                        ? Text(widget.treasure.reward!.rewardName, style: Fonts.p)
+                        : const Text("未設定", style: Fonts.pg),
+                  ]),
+                  TotalPoint(treasure: widget.treasure),
+                ])));
+      },
+    );
   }
 }

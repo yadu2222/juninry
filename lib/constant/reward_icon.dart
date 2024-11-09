@@ -32,6 +32,7 @@ class RewardIcon {
     Icons.local_movies_rounded, // えいが
     Icons.card_travel_outlined, // りょこう
     Icons.money, // おこづかい
-    Icons.close
+    Icons.close,
+    Icons.build
   ];
 }

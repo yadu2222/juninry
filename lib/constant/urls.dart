@@ -107,4 +107,5 @@ class Urls {
   // box
   static const String addPoint = '$version/auth/users/ouchies/rewards/boxes/points/'; // POUTボックスにポイントを追加
   static const String getTreasure = '$version/auth/users/ouchies/rewards/boxes/'; // GETボックス取得
+  static const String toggleBoxLock = '$version/auth/users/ouchies/rewards/boxes/lock/'; // GETボックス取得
 }

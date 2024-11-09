@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/models/reward_model.dart';
+import 'package:juninry/models/treasure_model.dart';
 
 import 'package:juninry/view/pages/patron/page_reward_register.dart';
 import 'package:juninry/view/pages/patron/page_treasure_register.dart';
+import 'package:juninry/view/pages/patron/page_tresure_register.dart';
 import 'package:juninry/view/pages/share/page_my_page.dart';
 import 'package:juninry/view/pages/share/page_ouchi_info.dart';
 import 'package:juninry/view/pages/junior/page_treasure.dart';
@@ -74,7 +77,8 @@ class PatronBranch {
               pageBuilder: (context, state) {
                 debugPrint("state.extra: ${state.extra}");
                 // Map型でデータを送るためそれを取得
-                final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                final Map<String, dynamic> extraData =
+                    state.extra as Map<String, dynamic>;
                 // データを取り出してみる
                 final String? noticeUUID = extraData['noticeUUID'];
                 return NoTransitionPage(
@@ -119,7 +123,8 @@ class PatronBranch {
                 pageBuilder: (context, state) {
                   if (state.extra != null) {
                     // 遷移時に定義されたデータをrouterで再定義
-                    final Map<String, dynamic> extraData = state.extra as Map<String, dynamic>;
+                    final Map<String, dynamic> extraData =
+                        state.extra as Map<String, dynamic>;
                     final String homeworkId = extraData['homeworkId'];
                     return NoTransitionPage(
                       key: state.pageKey,
@@ -136,7 +141,8 @@ class PatronBranch {
                   }
                 })
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageHomework.near()),
+          pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey, child: const PageHomework.near()),
         ),
       ],
     ),
@@ -189,6 +195,39 @@ class PatronBranch {
                           ),
                         ),
                         GoRoute(
+                            path: 'treasureRegister',
+                            pageBuilder: (context, state) {
+                              // 遷移時に定義されたデータをrouterで再定義
+                              final Map<String, dynamic> extraData =
+                                  state.extra as Map<String, dynamic>;
+                              Reward? reward;
+                              // ご褒美に設定されているものならばご褒美のデータを箱に紐づける
+                              if (extraData['treasure']['rewardName'] != null) {
+                                reward = Reward(
+                                  rewardName: extraData['treasure']
+                                      ['rewardName'],
+                                  note: extraData['treasure']['note'],
+                                  rewardPoint: extraData['treasure']
+                                      ['rewardPoint'],
+                                  iconId: extraData['treasure']['iconId'],
+                                );
+                              }
+
+                              final Treasure treasure = Treasure(
+                                boxUuid: extraData['treasure']['boxUuid'],
+                                reward: reward,
+                              );
+                            
+
+                              return NoTransitionPage(
+                                key: state.pageKey,
+                                // 先ほど再定義したデータをここで渡す
+                                child: PageTreasureRegisterPatron(
+                                  treasure: treasure,
+                                ),
+                              );
+                            }),
+                        GoRoute(
                           path: 'treasure',
                           pageBuilder: (context, state) => NoTransitionPage(
                             key: state.pageKey,
@@ -207,7 +246,8 @@ class PatronBranch {
                   )
                 ])
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageOuchi()),
         )
       ],
     ),
@@ -237,7 +277,8 @@ class PatronBranch {
               ),
             ),
           ],
-          pageBuilder: (context, state) => NoTransitionPage(key: state.pageKey, child: const PageUserData()),
+          pageBuilder: (context, state) =>
+              NoTransitionPage(key: state.pageKey, child: const PageUserData()),
         )
       ],
     ),
