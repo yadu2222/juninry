@@ -41,7 +41,7 @@ class PageGatya extends HookWidget {
                     ),
                     child: Column(children: [
                       const Text("ガチャを回しますか？"),
-                      Text(isFirst ? "1回20P" : "11回200P"),
+                      // Text(isFirst ? "1回20P" : "11回200P"),
                       BasicButton(
                           onPressed: () {
                             if (ouchiPoint.value >= needPoint) {

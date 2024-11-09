@@ -2,7 +2,6 @@ class Urls {
   // base URL
   static const String protocol = 'http://';
 
-
   // ループバックアドレス使いたい人におすすめ
   // static const String host = '127.0.0.1';
 
@@ -38,8 +37,7 @@ class Urls {
   static const String noticeDetail = '$version/auth/users/notices/'; // GETお知らせ詳細
   static const String noticeRegister = '$version/auth/users/notices/register'; // POSTお知らせ登録
   static const String noticeFilters = '$version/auth/users/notices/filters'; // GETお知らせフィルタリング取得
-  static const String noticeReadStatus = '$version/auth/users/notices/status/';  // GET生徒の既読状態
-
+  static const String noticeReadStatus = '$version/auth/users/notices/status/'; // GET生徒の既読状態
 
   // homework
   static const String getHomeworks = '$version/auth/users/homeworks/upcoming'; // GET宿題取得
@@ -58,8 +56,6 @@ class Urls {
   static const String inviteClass = '$version/auth/users/classes/refresh'; // POST招待コード再発行
   static const String getClasses = '$version/auth/users/classes/affiliations'; // GETクラス一覧取得
 
-
-
   // ouchi
   static const String ouchies = '$version/auth/users/ouchies'; // GETおうち取得
 
@@ -69,13 +65,11 @@ class Urls {
   static const String friendLineAccount = '$version/auth/users/ouchies/line'; // GETLINEアカウントと連携
   static const String getOUCHIInfo = '$ouchies/info'; // GETOUCHI情報取得
 
-
   // help
   static const String helps = '$ouchies/helps';
   static const String getHelp = '$helps/helps'; // GETおてつだい取得
   static const String destionHelp = '$helps/submittion'; // POSTおてつだい消化
   static const String registerHelp = '$helps/register'; // POSTおてつだい登録
-
 
   // GOHOUBI
   static const String rewards = '$ouchies/rewards';
@@ -90,4 +84,8 @@ class Urls {
   static const String getNyariots = '$nyariots/nyariots'; // GETにゃりお取得
   static const String getItems = '$nyariots/items'; // GETアイテム取得
   static const String getStamps = '$nyariots/stamps'; // GETスタンプ取得
+  static const String pointGatya = '$nyariots/points_gacha'; // GETガチャ
+  static const String stampGatya = '$nyariots/stamp_gacha'; // GETスタンプガチャ
+  static const String getNyariot = '$nyariots/main'; // GETスタンプガチャ
+  static const String getHungry = '$nyariots/hungry'; // GETスタンプガチャ
 }

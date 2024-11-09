@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Collection {
@@ -23,10 +24,49 @@ class Collection {
       this.quantity = 0,
       required this.rarity});
 
-  static resItemToCollections(http.Response response) {
+  static List<Collection> resToGatyaResults(http.Response response) {
     Map json = jsonDecode(response.body) as Map<String, dynamic>;
     List loadData = json['srvResData'] as List<dynamic>;
 
+    List<Collection> collections = [];
+    try {
+      for (Map loadItem in loadData) {
+        if (loadItem['rarity'] < 4) {
+          debugPrint("aaaaa");
+          // アイテム
+          collections.add(Collection(
+              collectionID: loadItem['itemNumber'],
+              collectionUUID: loadItem['itemUUID'],
+              imgPath: loadItem['imagePath'],
+              name: loadItem['itemName'],
+              description: loadItem['detail'],
+              talk: loadItem['talk'],
+              hasItem: loadItem['hasItem'],
+              quantity: loadItem['quantity'] ?? 0,
+              rarity: loadItem['rarity']));
+        } else {
+          // ニャリオット
+          collections.add(Collection(
+              collectionID: loadItem['itemNumber'],
+              collectionUUID: loadItem['itemUUID'],
+              imgPath: loadItem['imagePath'],
+              name: loadItem['itemName'],
+              description: loadItem['detail'],
+              talk: loadItem['talk'],
+              hasItem: loadItem['hasItem'],
+              quantity: loadItem['quantity'] ?? 0,
+              rarity: loadItem['rarity']));
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return collections;
+  }
+
+  static List<Collection> resItemToCollections(http.Response response) {
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    List loadData = json['srvResData'] as List<dynamic>;
     List<Collection> collections = [];
     try {
       for (Map loadItem in loadData) {
@@ -60,7 +100,37 @@ class Collection {
 //     ConvexNumber     int    `json:"convexNumber"`     //所持数
 // }
 
-  static resNyariotToCollections(http.Response response) {
+//  "srvResData": [
+//     {
+//       "itemUUID": "4b52cf51-583e-4390-9f5c-5b7dbdfd65ef",
+//       "itemName": "あああああああ",
+//       "imagePath": "item/IMG_3.PNG",
+//       "itemNumber": 6,
+//       "detail": "いいいいい",
+//       "talk": "ううううううう",
+//       "rarity": 1,
+//       "hasItem": false
+//     }
+//   ],
+
+  static Collection resNyariotToCollction(http.Response response) {
+    Map json = jsonDecode(response.body) as Map<String, dynamic>;
+    Map loadItem = json['srvResData'] as Map;
+
+    return Collection(
+      collectionID: loadItem['nyarindex'],
+      collectionUUID: loadItem['nyariotUUID'],
+      imgPath: loadItem['nyariotImagePath'],
+      name: loadItem['nyariotName'],
+      description: loadItem['detail'],
+      talk: loadItem['talk'],
+      hasItem: loadItem['hasItem'],
+      quantity: loadItem['convexNumber'],
+      rarity: loadItem['rarity'],
+    );
+  }
+
+  static List<Collection> resNyariotToCollections(http.Response response) {
     Map json = jsonDecode(response.body) as Map<String, dynamic>;
     List loadData = json['srvResData'] as List<dynamic>;
 
@@ -129,4 +199,14 @@ class Collection {
     Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "", name: "name", description: "ddd", talk: "", hasItem: false, rarity: 1),
     Collection(collectionID: 1, collectionUUID: "adsjkaf", imgPath: "", name: "name", description: "ddd", talk: "", hasItem: false, rarity: 1),
   ];
+
+  static Collection errorCollection = Collection(
+      collectionID: 0,
+      collectionUUID: "",
+      imgPath: "",
+      name: "",
+      description: "",
+      talk: "",
+      hasItem: false,
+      rarity: 0);
 }

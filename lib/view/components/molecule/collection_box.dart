@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:juninry/constant/colors.dart';
+import 'package:juninry/constant/urls.dart';
 
 // 画像カード 通信の失敗などが起こっていればアイコン表示
 class CollectionBox extends StatelessWidget {
@@ -20,7 +21,7 @@ class CollectionBox extends StatelessWidget {
       child: imagePath == null
           ? Image.asset("assets/images/hatena.PNG", fit: BoxFit.contain)
           : Image.network(
-              "http://localhost:4561/images/${imagePath!}",
+              "${Urls.baseUrl}/images/${imagePath!}",
               fit: BoxFit.contain, // サイズに合わせて画像を調整
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset("assets/images/hatena.PNG", fit: BoxFit.contain);

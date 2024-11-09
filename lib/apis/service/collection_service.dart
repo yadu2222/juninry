@@ -30,9 +30,7 @@ class CollectionService {
     } catch (e) {
       rethrow;
     }
-    // TODO:サーバーが更新次第、resNyariotTOCollectionsに変更
-    // return Collection.resNyariotToCollections(response);
-    return Collection.resItemToCollections(response);
+    return Collection.resNyariotToCollections(response);
   }
 
   // スタンプの数を取得
@@ -46,5 +44,42 @@ class CollectionService {
     }
     final json = jsonDecode(response.body) as Map<String, dynamic>;
     return json['srvResData']['quantity'];
+  }
+
+  // ポイントでガチャを回す
+  static Future<List<Collection>> pointGatya(int count) async {
+    final reqData = Request(url: Urls.pointGatya, reqType: 'GET', headers: {'Content-Type': 'application/json'}, pasParams: count.toString());
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.collectionErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    return Collection.resToGatyaResults(response);
+  }
+
+  // メインニャリオットを取得
+  static Future<Collection> getMainNyariot() async{
+    final reqData = Request(url: Urls.getNyariot, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.collectionErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    return Collection.resNyariotToCollction(response);
+  }
+
+  // ニャリオットの空腹度を取得
+  static Future<int> getNyariotHunger() async {
+    final reqData = Request(url: Urls.getHungry, reqType: 'GET', headers: {'Content-Type': 'application/json'});
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.collectionErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    return json['srvResData']['satityDegrees'];
   }
 }

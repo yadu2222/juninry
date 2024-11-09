@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:juninry/apis/controller/collection_req.dart';
 import 'package:juninry/constant/colors.dart';
 import 'package:juninry/constant/fonts.dart';
 import 'package:juninry/models/collection_model.dart';
@@ -22,9 +23,10 @@ class PageGatyaGatya extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // final imgPath = useState<String>("assets/images/close_treasure.png");
+    final CollectionReq collectionReq = CollectionReq(context: context);
     final AnimationController controller = useAnimationController();
     final isMoved = useState<bool>(false);
-    final collections = useState<List<Collection>>(isFirst ? Collection.testCollection : Collection.nyariotCollection);
+    final collections = useState<List<Collection>>([]);
 
     // ガチャ結果
     void _animateAndShowDialog() {
@@ -73,6 +75,14 @@ class PageGatyaGatya extends HookWidget {
     }
 
     useEffect(() {
+      // ガチャ
+      Future<void> gacha() async {
+        // ガチャの結果を取得
+        collections.value = await collectionReq.gacha(isFirst ? 1 : 11);
+      }
+
+      gacha();
+
       return () {};
     }, []);
 

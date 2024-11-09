@@ -17,12 +17,12 @@ class PageTreasure extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final imgPath = useState<String>("assets/images/close_treasure.png");
+    final imgPath = useState<String>("assets/images/close_treasure.png");
     final AnimationController controller = useAnimationController();
 
     Future<void> open() async {
       // たからばこを開く処理
-      // imgPath.value = "assets/images/open_treasure.png";
+      imgPath.value = "assets/images/open_treasure.png";
     }
 
     useEffect(() {
@@ -38,25 +38,25 @@ class PageTreasure extends HookWidget {
           onTap: () {
             open();
           },
-          // child: Container(
-          //   width: 300,
-          //   height: 300,
-          //   padding: const EdgeInsets.all(10),
-          //   child: Image.asset(imgPath.value, fit: BoxFit.cover),
-          // ))
           child: Container(
             width: 300,
             height: 300,
             padding: const EdgeInsets.all(10),
-            child: Lottie.asset(
-              'assets/lotties/lottie_treasure.json', // Lottieファイルのパス
-              controller: controller,
-              onLoaded: (composition) {
-                controller.duration = composition.duration;
-                controller.repeat();
-              },
-            ),
-          )),
+            child: Image.asset(imgPath.value, fit: BoxFit.cover),
+          ))
+      // child: Container(
+      //   width: 300,
+      //   height: 300,
+      //   padding: const EdgeInsets.all(10),
+      //   child: Lottie.asset(
+      //     'assets/lotties/lottie_treasure.json', // Lottieファイルのパス
+      //     controller: controller,
+      //     onLoaded: (composition) {
+      //       controller.duration = composition.duration;
+      //       controller.repeat();
+      //     },
+      //   ),
+      // )),
     ]);
   }
 }
