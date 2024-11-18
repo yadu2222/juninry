@@ -50,7 +50,8 @@ class RewardService {
   }
 
   // ごほうび登録
-  static Future<void> registerReward(Reward reward) async {
+  static Future<void> registerReward(Reward reward,
+      [String? hardwareUuid]) async {
     // リクエストを生成
     final reqData = Request(
         url: Urls.registerReward,
@@ -132,5 +133,22 @@ class RewardService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  static Future<int> toggleBoxLock(String boxUuid) async {
+    // リクエストを生成
+    final reqData = Request(
+        url: Urls.toggleBoxLock + boxUuid,
+        reqType: 'PUT',
+        headers: {'Content-Type': 'application/json'});
+    // リクエストメソッドにオブジェクトを投げる
+    final response = await HttpReq.httpReq(reqData);
+    try {
+      ErrorHandler.rewardErrorHandler(response);
+    } catch (e) {
+      rethrow;
+    }
+    Map resData = jsonDecode(response.body) as Map<String, dynamic>;
+    return resData['srvResData']['boxStatus'];
   }
 }

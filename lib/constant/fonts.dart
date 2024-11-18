@@ -31,6 +31,7 @@ class Fonts {
   static const TextStyle pb = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.dialogPositive, fontWeight: FontWeight.bold);
 
   // グレー
+  static const TextStyle h4g = TextStyle(fontSize: 18, fontFamily: 'Noto Sans JP', color: AppColors.dialogNeutral, fontWeight: FontWeight.bold);
   static const TextStyle pg = TextStyle(fontSize: 14, fontFamily: 'Noto Sans JP', color: AppColors.dialogNeutral, fontWeight: FontWeight.bold);
 
   // そんなに目立たない

@@ -7,6 +7,7 @@ class Reward {
   final String note; // 説明
    int rewardPoint; // 必要ポイント
   final int iconId; // アイコンID
+  final String? hardwareUUID;
   final int? stock; // 在庫
 
   Reward({
@@ -15,6 +16,7 @@ class Reward {
     required this.note,
     required this.rewardPoint,
     required this.iconId,
+    this.hardwareUUID,
     this.stock,
   });
 
@@ -33,6 +35,7 @@ class Reward {
       'rewardContent': reward.note,
       'iconId': reward.iconId,
       'rewardPoint': reward.rewardPoint,
+      'hardwareUUID':reward.hardwareUUID
     };
   }
 

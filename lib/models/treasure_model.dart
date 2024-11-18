@@ -5,28 +5,29 @@ import 'dart:convert';
 
 class Treasure {
   final Reward? reward;
-  int totalPoint;
-  final bool isOpen;
+  int? totalPoint;
+  final ValueNotifier<int?> isOpenNotifier;
   final String boxUuid;
 
   Treasure({
     this.reward,
-    required this.totalPoint,
-    required this.isOpen,
+    this.totalPoint,
+    int? isOpen,
     required this.boxUuid,
-  });
+  }) : isOpenNotifier = ValueNotifier(isOpen);
+
+  // isOpenのgetterとsetter
+  int? get isOpen => isOpenNotifier.value;
+  set isOpen(int? value) => isOpenNotifier.value = value;
 
   static List<Treasure> testTresure = [
     Treasure(
-        reward: Reward.testReward1,
-        totalPoint: 100,
-        isOpen: true,
-        boxUuid: '1'),
-    Treasure(totalPoint: 0, isOpen: false, boxUuid: '2'),
+        reward: Reward.testReward1, totalPoint: 100, isOpen: 1, boxUuid: '1'),
+    Treasure(totalPoint: 0, isOpen: 0, boxUuid: '2'),
     Treasure(
         reward: Reward.testReward1,
         totalPoint: 0,
-        isOpen: false,
+        isOpen: 2,
         boxUuid: 'df2b1f4c-b49a-4068-80c5-3120dceb14c8'),
   ];
 
@@ -38,16 +39,20 @@ class Treasure {
     debugPrint(resData.toString());
     if (resData['srvResData']['boxes'] != null) {
       for (Map<String, dynamic> loadData in resData['srvResData']?['boxes']) {
+        final rewardMap = loadData['reward'] as Map<String, dynamic>?;
+        Reward? reward;
+        if (rewardMap != null) {
+          reward = Reward(
+              rewardName: rewardMap['rewardTitle'],
+              note: rewardMap['rewardContent'],
+              rewardPoint: rewardMap['rewardPoint'],
+              iconId: rewardMap['iconId']);
+        }
+
         treasures.add(Treasure(
-            reward: Reward(
-              rewardName: loadData['reward']?['rewardTitle'] ?? '',
-              rewardPoint: loadData['reward']?['rewardPoint'] ?? 0,
-              note: loadData['reward']?['rewardContent'] ?? '',
-              iconId: loadData['reward']?['iconId'] ?? 0,
-              stock: loadData['reward']?['stock'] ?? 0,
-            ),
+            reward: reward,
             totalPoint: loadData['depositPoint'] ?? 0,
-            isOpen: loadData['isOpen'] ?? false,
+            isOpen: loadData['boxStatus'] ?? 0,
             boxUuid: loadData['hardwareUUID'] ?? ''));
       }
     }

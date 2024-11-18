@@ -89,4 +89,13 @@ class RewardReq {
       return [];
     }
   }
+
+  Future<int> toggleBoxLockHandler(Treasure treasure) async {
+    try {
+      return await RewardService.toggleBoxLock(treasure.boxUuid);
+    } catch (error) {
+      ToastUtil.show(message: "おわんないよ〜〜");
+      return treasure.isOpen!;
+    }
+  }
 }
