@@ -26,23 +26,20 @@ class MyApp extends HookWidget {
       return () {};
     }, []);
 
-    if (router.value == null) {
-      // ルーターが初期化されていない場合、ローディングインジケーターを表示
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false, //デバッグの表示を消す
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
-        // useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.main, 
-          iconTheme: IconThemeData(color: AppColors.iconLight),
-        ),
-      ),
-      // ルーティングの設定
-      routerConfig: router.value,
-    );
+    return router.value == null
+        ? const Center(child: CircularProgressIndicator())
+        : MaterialApp.router(
+            debugShowCheckedModeBanner: false, //デバッグの表示を消す
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
+              // useMaterial3: true,
+              appBarTheme: const AppBarTheme(
+                backgroundColor: AppColors.main,
+                iconTheme: IconThemeData(color: AppColors.iconLight),
+              ),
+            ),
+            // ルーティングの設定
+            routerConfig: router.value,
+          );
   }
 }
