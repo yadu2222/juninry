@@ -35,11 +35,13 @@ class ClassReq extends BaseController {
   }
 
   // クラス作成
-  Future<Map<String, dynamic>> createClassHandler(String className) async {
+  Future<Map<String, dynamic>?> createClassHandler(String className) async {
     try {
-      Class inviteClass = await ClassService.createClass(className); // クラス作成処理を待つ
-      Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
-      return result;
+      return await execute(() async {
+       Class inviteClass = await ClassService.createClass(className); // クラス作成処理を待つ
+        Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
+        return result;
+      });
     } catch (error) {
       debugPrint(error.toString());
       ToastUtil.show(message: Messages.createClassError); // 参加失敗メッセージ
@@ -48,11 +50,13 @@ class ClassReq extends BaseController {
   }
 
   // クラス招待コード再発行
-  Future<Map<String, dynamic>> inviteClassHandler(String classUUID) async {
+  Future<Map<String, dynamic>?> inviteClassHandler(String classUUID) async {
     try {
-      Class inviteClass = await ClassService.inviteClass(classUUID); // 招待コード発行処理を待つ
-      Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
-      return result;
+       return await execute(() async {
+        Class inviteClass = await ClassService.inviteClass(classUUID); // 招待コード発行処理を待つ
+        Map<String, dynamic> result = {'isCreate': true, 'classData': inviteClass};
+        return result;
+      });
     } catch (error) {
       debugPrint(error.toString());
       ToastUtil.show(message: Messages.createClassError); // 参加失敗メッセージ
@@ -62,8 +66,9 @@ class ClassReq extends BaseController {
 
   // 宿題取得
   // 型こわすぎ
-  Future<List<Map<String, dynamic>>> getClassmatesHandler() async {
+  Future<List<Map<String, dynamic>>?> getClassmatesHandler() async {
     try {
+      
       return await ClassService.getClassmates(); // 課題取得を待ち返却
     } catch (error) {
       debugPrint(error.toString());
@@ -72,9 +77,12 @@ class ClassReq extends BaseController {
     }
   }
 
-  Future<List<Class>> getClassesHandler() async {
+  Future<List<Class>?> getClassesHandler() async {
     try {
-      return await ClassService.getClasses(); // クラス一覧を取得
+       return await execute(() async {
+        final result = await ClassService.getClasses(); // クラス一覧を取得
+        return result;
+      });
     } catch (error) {
       debugPrint(error.toString());
       ToastUtil.show(message: Messages.getClasses);

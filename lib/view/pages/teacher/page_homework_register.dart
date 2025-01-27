@@ -73,7 +73,9 @@ class PageHomeworkRegisterTeacher extends HookWidget {
 
     // クラス一覧を取得
     Future<void> getClasses() async {
-      classList.value = await classReq.getClassesHandler();
+      final result = await classReq.getClassesHandler();
+      if (result == null) return;
+      classList.value = result;
       selectClass.value = classList.value[0]; // 初期値
     }
 
@@ -156,7 +158,7 @@ class PageHomeworkRegisterTeacher extends HookWidget {
       try {
         // 日付とクラスを更新
         for (var homework in registerHomeworkData.value) {
-          if (homework.startPageController.text != "" || homework.startPageController.text != "0" ) {
+          if (homework.startPageController.text != "" || homework.startPageController.text != "0") {
             homework.classUUID = selectClass.value.classUUID!;
             homework.homeworkLimit = selectDate.value;
           } else {

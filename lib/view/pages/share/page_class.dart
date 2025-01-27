@@ -36,13 +36,18 @@ class PageClass extends HookWidget {
     // クラス一覧取得
     Future<void> getClasses() async {
       // TODO:APIからクラス一覧を取得
-      classReq.getClassesHandler().then((value) => joinClasses.value = value);
+      classReq.getClassesHandler().then((value) {
+        if (value == null) return;
+        joinClasses.value = value;
+      });
     }
 
     // クラス作成
     void create() async {
       if (classNameController.text.isNotEmpty) {
-        Map<String, dynamic> resData = await classReq.createClassHandler(classNameController.text);
+        final result = await classReq.createClassHandler(classNameController.text);
+        if (result == null) return;
+        Map<String, dynamic>? resData = result;
         if (resData['isCreate']) {
           inviteDialog(context: context, classData: resData['classData']); // 作成成功ダイアログ
 
@@ -88,7 +93,8 @@ class PageClass extends HookWidget {
         'controller': inviteCodeController,
         'api': join,
         'inputType': TextInputType.number,
-        'inputFormat': [FilteringTextInputFormatter.digitsOnly,
+        'inputFormat': [
+          FilteringTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(4),
         ]
       },
@@ -115,7 +121,9 @@ class PageClass extends HookWidget {
 
     // 招待コード再発行
     void invite(Class classData) async {
-      Map<String, dynamic> resData = await classReq.inviteClassHandler(classData.classUUID!);
+      final result = await classReq.inviteClassHandler(classData.classUUID!);
+      if (result == null) return;
+      Map<String, dynamic> resData = result;
       if (resData['isCreate']) {
         inviteDialog(context: context, classData: resData['classData']); // 作成成功ダイアログ
         // 成功したということは参加クラスが増えたということなので、クラスも再取得

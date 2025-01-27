@@ -16,6 +16,7 @@ class BaseController {
       return null;
     } on NetworkException {
       handleException(ExceptionType.networkException);
+      return null;
     }
   }
 }

@@ -72,8 +72,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -107,13 +105,12 @@ class PageNoticeQuoteTeacher extends HookWidget {
 
     final classListFilter = useState<List<String>>([]);
 
-
-
-
     // クラスリスト取得
     Future<void> getClassList() async {
       try {
-        List<Class> fetchedClassList = await classReq.getClassesHandler();
+        final result = await classReq.getClassesHandler();
+        if (result == null) return;
+        List<Class> fetchedClassList = result;
         classList.value = fetchedClassList;
         fetchedClassList.forEach((element) {
           classListFilter.value.add(element.classUUID!);
@@ -137,15 +134,13 @@ class PageNoticeQuoteTeacher extends HookWidget {
 
     // お知らせ再取得
     Future<void> refreshNotices() async {
-
       List<String> queryClass = []; // クエリ用のクラスリスト
       if (classList.value.length != classListFilter.value.length) {
         //全選択時は送らない
         queryClass = List<String>.from(classListFilter.value);
       }
       isLoading.value = true;
-      notices.value = await noticeReq.getNoticesHandler(
-        classUUIDs: queryClass);
+      notices.value = await noticeReq.getNoticesHandler(classUUIDs: queryClass);
       isLoading.value = false;
     }
 
@@ -187,31 +182,26 @@ class PageNoticeQuoteTeacher extends HookWidget {
         refreshNotices: refreshNotices,
       ), // 追加: FilterDrawerの設定
       backgroundColor: AppColors.main, // HACK:背景色パワープレイ！！
-      body:
-          BasicTemplate(
-            title: '引用元',
-            popIcon: false,
-            featureIconButton: IconButton(
-              icon: const Icon(Icons.sort, size: 35),
-              onPressed: () {
-                _scaffoldKey.currentState?.openEndDrawer(); // Drawerを開く
-              },
-            ),
-            children: [
-              isLoading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : Expanded(
-                      child: NoticeList(
-                      noticeDatas: notices.value,
-                      isTeacher: true,
-                      isQuote: true,
-                    )),
-
-            ],
-          ),
-
-
-
+      body: BasicTemplate(
+        title: '引用元',
+        popIcon: false,
+        featureIconButton: IconButton(
+          icon: const Icon(Icons.sort, size: 35),
+          onPressed: () {
+            _scaffoldKey.currentState?.openEndDrawer(); // Drawerを開く
+          },
+        ),
+        children: [
+          isLoading.value
+              ? const Center(child: CircularProgressIndicator())
+              : Expanded(
+                  child: NoticeList(
+                  noticeDatas: notices.value,
+                  isTeacher: true,
+                  isQuote: true,
+                )),
+        ],
+      ),
     );
   }
 }

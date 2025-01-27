@@ -25,6 +25,7 @@ class PageStudents extends HookWidget {
         debugPrint('クラスメイトを取得するよ');
         final data = await classReq.getClassmatesHandler();
         debugPrint(data.toString());
+        if(data == null) return;
         classmates.value = data;
         showClass.value = List.filled(data.length, false); // クラス表示を初期化
       }

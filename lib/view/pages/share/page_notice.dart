@@ -92,8 +92,11 @@ class PageNotice extends HookWidget {
         }
 
         // クラス一覧を取得する
-        List<Class> fetchedClassList = await classReq.getClassesHandler();
+        List<Class>? fetchedClassList = await classReq.getClassesHandler();
 
+        if(fetchedClassList == null) {
+          return;
+        }
         // クラス一覧に追加する
         classList.value = fetchedClassList;
         // 取得したクラスを選択済みリストに追加
