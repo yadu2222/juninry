@@ -6,6 +6,8 @@ class ErrorHandler {
     if (response.statusCode > 300) {
       if (response.statusCode == 403) {
         throw PermittionError();
+      } else if (response.statusCode == 401) {
+        throw AuthenticationException();
       } else {
         throw DefaultException();
       }
@@ -49,21 +51,21 @@ class ErrorHandler {
     defaultHandler(response);
   }
 
-  static void ouchiErrorHandler(http.Response response){
+  static void ouchiErrorHandler(http.Response response) {
     if (response.statusCode == 403) {
       throw PermittionError();
     }
     defaultHandler(response);
   }
 
-  static void rewardErrorHandler(http.Response response){
+  static void rewardErrorHandler(http.Response response) {
     if (response.statusCode == 403) {
       throw PermittionError();
     }
     defaultHandler(response);
   }
 
-  static void collectionErrorHandler(http.Response response){
+  static void collectionErrorHandler(http.Response response) {
     if (response.statusCode == 403) {
       throw PermittionError();
     }

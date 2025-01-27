@@ -75,7 +75,7 @@ class HttpReq {
       //   break;
     }
     // レスポンスの処理
-    debugPrint(response.body.toString());
+    debugPrint("code:${response.statusCode.toString()}\nbody:${response.body.toString()}");
     // 成功
     // if (response.statusCode < 300) {
     //   return jsonDecode(response.body) as Map<String, dynamic>;

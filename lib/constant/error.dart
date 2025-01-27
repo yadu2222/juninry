@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
 import 'messages.dart';
 import '../view/components/atoms/toast.dart';
+import 'package:go_router/go_router.dart';
 
 // APIとの通信における例外集
 
 // enumおじさんになることで可読性が上がる？気がする
-enum ExceptionType { joinClassConflict, permittonError, homeworkIsEmpty, submittionHomeworkError, DefaultException }
+enum ExceptionType { joinClassConflict, permittonError, homeworkIsEmpty, submittionHomeworkError, DefaultException, authenticationException, networkException }
 
 // ひもづけ
 extension ExceptionTypeExtension on ExceptionType {
@@ -20,6 +22,10 @@ extension ExceptionTypeExtension on ExceptionType {
         return Messages.submittionHomeworkError;
       case ExceptionType.DefaultException:
         return Messages.defaultError;
+      case ExceptionType.authenticationException:
+        return Messages.authError;
+      case ExceptionType.networkException:
+        return Messages.defaultError;
     }
   }
 }
@@ -28,6 +34,14 @@ extension ExceptionTypeExtension on ExceptionType {
 void handleException(ExceptionType exceptionType) {
   // ここでToastを表示
   ToastUtil.show(message: exceptionType.message);
+}
+
+// authエラーのみ特定の処理を行う
+// ここでいいのかな。。。。
+// どこかに切り分けたい
+void authCatch(BuildContext context) {
+  context.go("/login");
+  ToastUtil.show(message: "ログイン情報が不正です。ログインし直してください"); // 登録成功メッセージ
 }
 
 // 例外をthrowする関数
@@ -43,6 +57,10 @@ void throwExceptionForType(ExceptionType type) {
       throw SubmittionHomeworkError();
     case ExceptionType.DefaultException:
       throw DefaultException();
+    case ExceptionType.authenticationException:
+      throw AuthenticationException();
+    case ExceptionType.networkException:
+      throw NetworkException();
   }
 }
 
@@ -76,4 +94,14 @@ class SubmittionHomeworkError implements Exception {
 class DefaultException implements Exception {
   final String message;
   DefaultException({this.message = Messages.defaultError});
+}
+
+class AuthenticationException implements Exception {
+  final String message;
+  AuthenticationException({this.message = Messages.authError});
+}
+
+class NetworkException implements Exception {
+  final String message;
+  NetworkException({this.message = Messages.defaultError});
 }

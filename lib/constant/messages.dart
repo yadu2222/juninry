@@ -23,6 +23,7 @@ class Messages {
   static const String digestSuccess = 'おねだりをお子さんに渡しました！'; // 生成成功
 
   // APIエラー
+  static const String authError = "認証エラー"; // 認証エラー
   static const String defaultError = "通信に失敗しました"; // データベースエラー
   static const String permittonError = "権限がありません"; // 権限エラー
   static const String inputError = "入力内容が不足しています"; // 入力エラー

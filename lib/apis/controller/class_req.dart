@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juninry/apis/controller/base_controller.dart';
 
 import '../service/class_service.dart';
 // import 'package:go_router/go_router.dart';
@@ -8,15 +9,19 @@ import '../../models/class_model.dart';
 // import '../../view/components/atoms/dialog.dart';
 import '../../constant/error.dart';
 
-class ClassReq {
-  final BuildContext context;
-
-  ClassReq({required this.context});
+// baseControllerを継承することで共通のエラーハンドリングを一括化する
+class ClassReq extends BaseController {
+  ClassReq({required BuildContext super.context});
 
   // クラス参加
-  Future<String?> joinClassHandler(String inviteCode,String? studentNum) async {
+  Future<String?> joinClassHandler(String inviteCode, String? studentNum) async {
     try {
-      return await ClassService.joinClass(inviteCode,studentNum); // クラス参加処理を待つ
+      // 継承したexcuteに渡す無名関数を宣言し、その中で処理を行う
+      return await execute(() async {
+        final result = ClassService.joinClass(inviteCode, studentNum);
+        return result;
+      });
+    // excute内にないハンドリングを行う
     } on PermittionError {
       handleException(ExceptionType.permittonError);
       return null;

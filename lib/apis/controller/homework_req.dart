@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:juninry/apis/error_handler.dart';
 import 'package:juninry/constant/error.dart';
 import 'package:juninry/models/homework_model.dart';
 import 'package:juninry/models/homework_submission_record.dart';
@@ -7,7 +8,6 @@ import 'dart:io';
 import '../../models/register_homework_model.dart';
 import '../../models/teaching_item_model.dart';
 import '../service/homework_service.dart';
-// import 'package:go_router/go_router.dart';
 
 import '../../view/components/atoms/toast.dart';
 import '../../../constant/messages.dart';
@@ -49,7 +49,7 @@ class HomeworkReq {
   }
 
   // 宿題取得
-  Future<Homework?> getHomeworkHandler(String homeworkUUID) async{
+  Future<Homework?> getHomeworkHandler(String homeworkUUID) async {
     try {
       return await HomeworkService.getHomework(homeworkUUID); // 課題取得を待ち返却
     } on HomeworkIsEmptyException {
@@ -97,6 +97,9 @@ class HomeworkReq {
     } on HomeworkIsEmptyException {
       handleException(ExceptionType.homeworkIsEmpty);
       return [];
+    } on AuthenticationException {
+      authCatch(context);
+      return [];
     }
   }
 
@@ -110,7 +113,7 @@ class HomeworkReq {
   }
 
   // 宿題の画像を取得
-  Future<File?> getHomeworkImage(String homeworkUUID,String imageFileName) async {
+  Future<File?> getHomeworkImage(String homeworkUUID, String imageFileName) async {
     try {
       return await HomeworkService.getHomeworkImage(homeworkUUID, imageFileName);
     } on DefaultException {
